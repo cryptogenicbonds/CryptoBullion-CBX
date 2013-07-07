@@ -942,7 +942,9 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 		int64 nSubsidy = 10 * COIN;
 		
 			
-    return nSubsidy;
+    nSubsidy >>= (nHeight / 50000); // every 50,000 blocks for a total of around 284000+ blocks
+    	
+    	return nSubsidy;
 }
 
 // miner's coin stake reward based on nBits and coin age spent (coin-days)

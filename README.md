@@ -8,7 +8,8 @@ Linear Difficulty Retarget (2 block retarget)
 
 5 Confirms
 
-Block reward halves after every 50000 blocks
+Block reward halves after every 50000 blocks;
+
 Blocks 1-50000 = 10 Bullion per 
 Blocks 50001-100000 = 5 Bullion per
 Blocks 100001-150000 = 2.5 Bullion per

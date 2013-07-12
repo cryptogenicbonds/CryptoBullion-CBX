@@ -939,10 +939,9 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(unsigned int nHeight)
 {
-		int64 nSubsidy = 10 * COIN;
+  	int64 nSubsidy = 10 * COIN;
 		
-			
-    nSubsidy >>= (nHeight / 50000); // every 50,000 blocks for a total of around 284000+ blocks
+		//nSubsidy >>= (nHeight / 50000); // every 50,000 blocks for a total of around 284000+ blocks
     	
     	return nSubsidy;
 }

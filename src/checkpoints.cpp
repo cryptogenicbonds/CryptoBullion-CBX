@@ -24,7 +24,16 @@ namespace Checkpoints
     //
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-        ( 0, hashGenesisBlockOfficial )   
+        ( 0, hashGenesisBlockOfficial )
+        ( 1, uint256("0x00000c98ca5027576dcdf662cedd271db881f5fe6e781a220bdd08e11da1a094") )
+		( 2048, uint256("0x00000000f15435e7fbc783c2de4650ede9bcbdcf91cfcd405491e33ce73a4a4b") )
+		( 4096, uint256("0x00000002451e25091ad7b0f21952f720886da0633800208498a570845a485f9e") )
+		( 8048, uint256("0x00000001093928ee031247e1f96790cd61357d3bc6fe3b740c4ee9c0cdb28c02") )
+		( 12000, uint256("0x00000004243e17f9b8606dd1858c1f6a246066179f80e49216f8cb5de3b29b7d") )
+		( 15000, uint256("0x00000006d149e96f86a350a1e901d1b4c695e63984279998f39c0a0e068d4bc8") )
+		( 16622, uint256("0x00000002ec3a12b81047695f6b91a1f96110ce552e148e7d4b8fd4795879de11") )
+		( 20000, uint256("0x0000000289d00ba307f8757a52d4ebe7a913426ceb614496a969c669eab52cc5") )
+		( 21250, uint256("0x0000000110bdaf64c6e2937798bac702f169f24181eed8a618c1c7b5ae5060bb") )
         ;
 
     static MapCheckpoints mapCheckpointsTestnet =
@@ -185,11 +194,11 @@ namespace Checkpoints
         return false;
     }
 
-    // Automatically select a suitable sync-checkpoint 
+    // Automatically select a suitable sync-checkpoint
     uint256 AutoSelectSyncCheckpoint()
     {
         // Proof-of-work blocks are immediately checkpointed
-        // to defend against 51% attack which rejects other miners block 
+        // to defend against 51% attack which rejects other miners block
 
         // Select the last proof-of-work block
         const CBlockIndex *pindex = GetLastBlockIndex(pindexBest, false);
@@ -234,7 +243,7 @@ namespace Checkpoints
             return false;
         if (hashBlock == hashPendingCheckpoint)
             return true;
-        if (mapOrphanBlocks.count(hashPendingCheckpoint) 
+        if (mapOrphanBlocks.count(hashPendingCheckpoint)
             && hashBlock == WantedByOrphan(mapOrphanBlocks[hashPendingCheckpoint]))
             return true;
         return false;

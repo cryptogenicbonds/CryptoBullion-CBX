@@ -939,10 +939,41 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(unsigned int nHeight)
 {
-  	int64 nSubsidy = 10 * COIN;
-		
-		//nSubsidy >>= (nHeight / 50000); // every 50,000 blocks for a total of around 284000+ blocks
-    	
+		int64 nSubsidy = 0 * COIN;
+
+		if (nHeight > 0)
+		{
+			nSubsidy = 10 * COIN; // 500,000 coins
+		}
+    	else if (nHeight > 50000)
+    	{
+			nSubsidy = 5 * COIN; // 250,000 coins
+		}
+		else if (nHeight > 100000)
+		{
+			nSubsidy = 2.5 * COIN; // 125,000 coins
+		}
+		else if (nHeight > 150000)
+		{
+			nSubsidy = 1.25 * COIN; // 62,500 coins
+		}
+		else if (nHeight > 200000)
+		{
+			nSubsidy = 0.75 * COIN; // 37,500 coins
+		}
+		else if (nHeight > 250000)
+		{
+			nSubsidy = 0.375 * COIN; // 18,750 coins
+		}
+		else if (nHeight > 300000)
+		{
+			nSubsidy = 0.1875 * COIN; // 9,375 coins
+		}
+		else if (nHeight > 333334)
+		{
+			nSubsidy = 0 * COIN; // no reward
+		}
+
     	return nSubsidy;
 }
 
@@ -1851,7 +1882,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
 // ppcoin: total coin age spent in transaction, in the unit of coin-days.
 // Only those coins meeting minimum age requirement counts. As those
 // transactions not in main chain are not currently indexed so we
-// might not find out about their coin age. Older transactions are 
+// might not find out about their coin age. Older transactions are
 // guaranteed to be in main chain by sync-checkpoint. This rule is
 // introduced to help nodes establish a consistent view of the coin
 // age (trust score) of competing branches.
@@ -2042,12 +2073,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
     if (nTimeBlock < REWARD_SWITCH_TIME) {
 
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
-		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s", 
+		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		               FormatMoney(vtx[0].GetValueOut()).c_str(),
 		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
 	} else {
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
-		return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s", 
+		return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		           FormatMoney(vtx[0].GetValueOut()).c_str(),
 		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
 	}
@@ -2510,7 +2541,7 @@ bool LoadBlockIndex(bool fAllowNew)
             return false;
 
         // Genesis Block:
-//CBlock(hash=0000068e0b99f3db472b, ver=1, hashPrevBlock=00000000000000000000, 
+//CBlock(hash=0000068e0b99f3db472b, ver=1, hashPrevBlock=00000000000000000000,
 // hashMerkleRoot=ea6fed5e25, nTime=1368496587, nBits=1e0fffff, nNonce=578618, vtx=1, vchBlockSig=)
 //  Coinbase(hash=ea6fed5e25, nTime=1368496567, ver=1, vin.size=1, vout.size=1, nLockTime=0)
 //    CTxIn(COutPoint(0000000000, 4294967295), coinbase 04ffff001d020f2706787878787878)
@@ -2534,7 +2565,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nNonce   = 173202;
 
  	   if (false  && (block.GetHash() != hashGenesisBlock)) {
-	 
+
 		// This will figure out a valid hash and Nonce if you're
 		// creating a different genesis block:
 		    uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
@@ -2776,12 +2807,12 @@ string GetWarnings(string strFor)
 
     // ppcoin: should not enter safe mode for longer invalid chain
     // ppcoin: if sync-checkpoint is too old do not enter safe mode
-    if (Checkpoints::IsSyncCheckpointTooOld(60 * 60 * 24 * 90) && !fTestNet && !IsInitialBlockDownload())
-    {
-    	nPriority = 100;
-    	strStatusBar = "WARNING: Checkpoint is too old. Wait for block chain to download, or notify developers.";
-    }
-  
+	if (Checkpoints::IsSyncCheckpointTooOld(60 * 60 * 24 * 90) && !fTestNet && !IsInitialBlockDownload())
+	{
+		nPriority = 100;
+		strStatusBar = "WARNING: Checkpoint is too old. Wait for block chain to download, or notify developers.";
+	}
+
 
     // ppcoin: if detected invalid checkpoint enter safe mode
     if (Checkpoints::hashInvalidCheckpoint != 0)
@@ -3165,7 +3196,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                     if (inv.hash == pfrom->hashContinue)
                     {
                         // ppcoin: send latest proof-of-work block to allow the
-                        // download node to accept as orphan (proof-of-stake 
+                        // download node to accept as orphan (proof-of-stake
                         // block might be rejected by stake connection check)
                         vector<CInv> vInv;
                         vInv.push_back(CInv(MSG_BLOCK, GetLastBlockIndex(pindexBest, false)->GetBlockHash()));
@@ -3881,7 +3912,7 @@ public:
 uint64 nLastBlockTx = 0;
 uint64 nLastBlockSize = 0;
 int64 nLastCoinStakeSearchInterval = 0;
- 
+
 // We want to sort transactions by priority and fee, so:
 typedef boost::tuple<double, double, CTransaction*> TxPriority;
 class TxPriorityCompare
@@ -4352,7 +4383,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                     continue;
                 }
                 strMintWarning = "";
-                printf("CPUMiner : proof-of-stake block found %s\n", pblock->GetHash().ToString().c_str()); 
+                printf("CPUMiner : proof-of-stake block found %s\n", pblock->GetHash().ToString().c_str());
                 SetThreadPriority(THREAD_PRIORITY_NORMAL);
                 CheckWork(pblock.get(), *pwalletMain, reservekey);
                 SetThreadPriority(THREAD_PRIORITY_LOWEST);

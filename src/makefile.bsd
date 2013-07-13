@@ -136,7 +136,7 @@ OBJS= \
     obj/scrypt-x86_64.o
 
 
-all: CryptogenicBulliond
+all: cryptogenicbulliond
 
 test check: test_CryptogenicBullion FORCE
 	./test_CryptogenicBullion
@@ -163,7 +163,7 @@ obj/%.o: %.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-CryptogenicBulliond: $(OBJS:obj/%=obj/%)
+cryptogenicbulliond: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -179,7 +179,7 @@ test_CryptogenicBullion: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $(LIBPATHS) $^ -Wl,-B$(LMODE) -lboost_unit_test_framework $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f CryptogenicBulliond test_CryptogenicBullion
+	-rm -f cryptogenicbulliond test_CryptogenicBullion
 	-rm -f obj/*.o
 	-rm -f obj-test/*.o
 	-rm -f obj/*.P

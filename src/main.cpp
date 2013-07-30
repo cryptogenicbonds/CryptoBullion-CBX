@@ -971,7 +971,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 		}
 		else if (nHeight > 333334)
 		{
-			nSubsidy = 0 * COIN; // no reward
+			nSubsidy = 0.01 * COIN; // 5256 coins per year roughly 0.053% yearly inflation
 		}
 
     	return nSubsidy;

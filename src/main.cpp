@@ -945,33 +945,36 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 		{
 			nSubsidy = 10 * COIN; // 550,000 coins
 		}
-    	else if (nHeight >= 55000 && nHeight < 95000)
-    	{
-			nSubsidy = 5 * COIN; // 200,000 coins
-		}
-		else if (nHeight >= 95000 && nHeight < 150000)
+		else if (nHeight > 54999)
 		{
-			nSubsidy = 2.5 * COIN; // 125,000 coins
-		}
-		else if (nHeight >= 150000 && nHeight < 200000)
-		{
-			nSubsidy = 1.25 * COIN; // 62,500 coins
-		}
-		else if (nHeight >= 200000 && nHeight < 250000)
-		{
-			nSubsidy = 0.75 * COIN; // 37,500 coins
-		}
-		else if (nHeight >= 250000 && nHeight < 300000)
-		{
-			nSubsidy = 0.375 * COIN; // 18,750 coins
-		}
-		else if (nHeight >= 300000 && < 333335)
-		{
-			nSubsidy = 0.1875 * COIN; // 9,375 coins
-		}
-		else if (nHeight >= 333335)
-		{
-			nSubsidy = 0.01 * COIN; // 5256 coins per year roughly 0.053% yearly inflation
+			if (nHeight >= 55000 && nHeight < 95000)
+			{
+				nSubsidy = 5 * COIN; // 200,000 coins
+			}
+			else if (nHeight >= 95000 && nHeight < 150000)
+			{
+				nSubsidy = 2.5 * COIN; // 125,000 coins
+			}
+			else if (nHeight >= 150000 && nHeight < 200000)
+			{
+				nSubsidy = 1.25 * COIN; // 62,500 coins
+			}
+			else if (nHeight >= 200000 && nHeight < 250000)
+			{
+				nSubsidy = 0.75 * COIN; // 37,500 coins
+			}
+			else if (nHeight >= 250000 && nHeight < 300000)
+			{
+				nSubsidy = 0.375 * COIN; // 18,750 coins
+			}
+			else if (nHeight >= 300000 && nHeight < 333335)
+			{
+				nSubsidy = 0.1875 * COIN; // 9,375 coins
+			}
+			else (nHeight >= 333335)
+			{
+				nSubsidy = 0.01 * COIN; // 5256 coins per year roughly 0.053% yearly inflation
+			}
 		}
 
     	return nSubsidy;

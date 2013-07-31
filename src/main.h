@@ -32,7 +32,7 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64 MIN_TX_FEE = 0.1 * CENT;
 static const int64 MIN_RELAY_TX_FEE = 0.1 * CENT;
-static const int64 MAX_MONEY = 1000000 * COIN;
+static const int64 MAX_MONEY = 2000000 * COIN; //Max initial coins 1 million + 200 years inflation
 static const int64 MAX_MINT_PROOF_OF_WORK = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
@@ -41,6 +41,8 @@ static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int PROTOCOL_SWITCH_TIME = 1371686400; // 20 Jun 2013 00:00:00
 
 static const unsigned int REWARD_SWITCH_TIME = 1369432800; // 25 May 2013 00:00:00
+
+static const unsigned int ROUND_SWITCH_TIME = 1375660800; // 5 August 2013 00:00:00
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -1140,7 +1142,7 @@ public:
     int64 nMoneySupply;
 
     unsigned int nFlags;  // ppcoin: block index flags
-    enum  
+    enum
     {
         BLOCK_PROOF_OF_STAKE = (1 << 0), // is proof-of-stake block
         BLOCK_STAKE_ENTROPY  = (1 << 1), // entropy bit for stake modifier
@@ -1345,7 +1347,7 @@ public:
             pprev, pnext, nFile, nBlockPos, nHeight,
             FormatMoney(nMint).c_str(), FormatMoney(nMoneySupply).c_str(),
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",
-            nStakeModifier, nStakeModifierChecksum, 
+            nStakeModifier, nStakeModifierChecksum,
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),

@@ -941,35 +941,35 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 {
 		int64 nSubsidy = 0 * COIN;
 
-		if (nHeight > 0)
+		if (nHeight > 0 && nHeight < 55000)
 		{
-			nSubsidy = 10 * COIN; // 500,000 coins
+			nSubsidy = 10 * COIN; // 550,000 coins
 		}
-    	else if (nHeight > 50000)
+    	else if (nHeight >= 55000 && nHeight < 95000)
     	{
-			nSubsidy = 5 * COIN; // 250,000 coins
+			nSubsidy = 5 * COIN; // 200,000 coins
 		}
-		else if (nHeight > 100000)
+		else if (nHeight >= 95000 && nHeight < 150000)
 		{
 			nSubsidy = 2.5 * COIN; // 125,000 coins
 		}
-		else if (nHeight > 150000)
+		else if (nHeight >= 150000 && nHeight < 200000)
 		{
 			nSubsidy = 1.25 * COIN; // 62,500 coins
 		}
-		else if (nHeight > 200000)
+		else if (nHeight >= 200000 && nHeight < 250000)
 		{
 			nSubsidy = 0.75 * COIN; // 37,500 coins
 		}
-		else if (nHeight > 250000)
+		else if (nHeight >= 250000 && nHeight < 300000)
 		{
 			nSubsidy = 0.375 * COIN; // 18,750 coins
 		}
-		else if (nHeight > 300000)
+		else if (nHeight >= 300000 && < 333335)
 		{
 			nSubsidy = 0.1875 * COIN; // 9,375 coins
 		}
-		else if (nHeight > 333334)
+		else if (nHeight >= 333335)
 		{
 			nSubsidy = 0.01 * COIN; // 5256 coins per year roughly 0.053% yearly inflation
 		}
@@ -1014,7 +1014,11 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
         }
 
         nRewardCoinYear = bnUpperBound.getuint64();
-        nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
+
+		if (nTime > ROUND_SWITCH_TIME)
+			nRewardCoinYear = min(nRewardCoinYear, MAX_MINT_PROOF_OF_STAKE);
+		else
+		nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
     }
     else
     {
@@ -1023,6 +1027,12 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
     }
 
     int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+
+	if (nTime > ROUND_SWITCH_TIME)
+		nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8) ;
+	else
+		nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
     return nSubsidy;

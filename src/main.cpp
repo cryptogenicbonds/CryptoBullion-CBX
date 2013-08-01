@@ -942,27 +942,27 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 		int64 nSubsidy = 0 * COIN;
 
 		if (nHeight < 55001)
-			nSubsidy = 10 * COIN; // 550,000 coins
+			nSubsidy = (int64)10 * COIN; // 550,000 coins
 		else if (nHeight < 95001)
-			nSubsidy = 5 * COIN; // 200,000 coins
+			nSubsidy = (int64)5 * COIN; // 200,000 coins
 		else if (nHeight < 145001)
-			nSubsidy = 2.5 * COIN; // 125000 coins
+			nSubsidy = (int64)2.5 * COIN; // 125000 coins
 		else if (nHeight < 195001)
-			nSubsidy = 1.25 * COIN; // 62,500 coins
+			nSubsidy = (int64)1.25 * COIN; // 62,500 coins
 		else if (nHeight < 245001)
-			nSubsidy = 0.625 * COIN; // 31,250 coins
+			nSubsidy = (int64)0.625 * COIN; // 31,250 coins
 		else if (nHeight < 295001)
-			nSubsidy = 0.3125 * COIN; // 15,625 coins
+			nSubsidy = (int64)0.3125 * COIN; // 15,625 coins
 		else if (nHeight < 345001)
-			nSubsidy = 0.15625 * COIN; // 7,812.5 coins
+			nSubsidy = (int64)0.15625 * COIN; // 7,812.5 coins
 		else if (nHeight < 395001)
-			nSubsidy = 0.078125 * COIN; // 3,906.25 coins
+			nSubsidy = (int64)0.078125 * COIN; // 3,906.25 coins
 		else if (nHeight < 445001)
-			nSubsidy = 0.0390625 * COIN; // 1,953.125 coins
+			nSubsidy = (int64)0.0390625 * COIN; // 1,953.125 coins
 		else if (nHeight < 545001)
-			nSubsidy = 0.01953125 * COIN; // 1,953.125 coins - 1M POW
+			nSubsidy = (int64)0.01953125 * COIN; // 1,953.125 coins - 1M POW
 		else if (nHeight > 545000)
-			nSubsidy = 0.00952 * COIN; // 0.5% coins per year POW Inflation
+			nSubsidy = (int64)0.00952 * COIN; // 0.5% coins per year POW Inflation
 
     	return nSubsidy;
 }

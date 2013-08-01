@@ -939,29 +939,31 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(unsigned int nHeight)
 {
-		int64 nSubsidy = 10 * COIN;
- /*
-		if (nHeight > 55000 && nHeight < 95001)
-			nSubsidy = (int64)5 * COIN; // 200,000 coins
+		int64 nSubsidy = 0 * COIN;
+
+		if (nHeight < 55001)
+			nSubsidy = 10 * COIN; // 200,000 coins
+		else if (nHeight < 95001)
+			nSubsidy = 5 * COIN; // 200,000 coins
 		else if (nHeight < 145001)
-			nSubsidy = (int64)2.5 * COIN; // 125000 coins
+			nSubsidy = 2.5 * COIN; // 125000 coins
 		else if (nHeight < 195001)
-			nSubsidy = (int64)1.25 * COIN; // 62,500 coins
+			nSubsidy = 1.25 * COIN; // 62,500 coins
 		else if (nHeight < 245001)
-			nSubsidy = (int64)0.625 * COIN; // 31,250 coins
+			nSubsidy = 0.625 * COIN; // 31,250 coins
 		else if (nHeight < 295001)
-			nSubsidy = (int64)0.3125 * COIN; // 15,625 coins
+			nSubsidy = 0.3125 * COIN; // 15,625 coins
 		else if (nHeight < 345001)
-			nSubsidy = (int64)0.15625 * COIN; // 7,812.5 coins
+			nSubsidy = 0.15625 * COIN; // 7,812.5 coins
 		else if (nHeight < 395001)
-			nSubsidy = (int64)0.078125 * COIN; // 3,906.25 coins
+			nSubsidy = 0.078125 * COIN; // 3,906.25 coins
 		else if (nHeight < 445001)
-			nSubsidy = (int64)0.0390625 * COIN; // 1,953.125 coins
+			nSubsidy = 0.0390625 * COIN; // 1,953.125 coins
 		else if (nHeight < 545001)
-			nSubsidy = (int64)0.01953125 * COIN; // 1,953.125 coins - 1M POW
+			nSubsidy = 0.01953125 * COIN; // 1,953.125 coins - 1M POW
 		else if (nHeight > 545000)
-			nSubsidy = (int64)0.00952 * COIN; // 0.5% coins per year POW Inflation
- */
+			nSubsidy = 0.00952 * COIN; // 0.5% coins per year POW Inflation
+
     	return nSubsidy;
 }
 
@@ -2074,12 +2076,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
 		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		               FormatMoney(vtx[0].GetValueOut()).c_str(),
-		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
+		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
 	} else {
-		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(0) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
 		return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		           FormatMoney(vtx[0].GetValueOut()).c_str(),
-		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
+		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
 	}
 
     // Check transactions
@@ -4202,7 +4204,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
             printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
         if (pblock->IsProofOfWork())
-            pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pblock->nBits);
+            pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1);
 
         // Fill in header
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();

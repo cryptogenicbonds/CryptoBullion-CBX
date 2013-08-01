@@ -2068,6 +2068,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
 
     // Check coinbase reward
     int64 nTimeBlock = GetBlockTime();
+    CBlockIndex* pindexPrev;
     if (nTimeBlock < REWARD_SWITCH_TIME) {
 
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))

@@ -941,7 +941,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 {
 		int64 nSubsidy = 0 * COIN;
 
-		if (nHeight > 0 && nHeight < 55000)
+		if (nHeight < 55000)
 		{
 			nSubsidy = 10 * COIN; // 550,000 coins
 		}
@@ -959,7 +959,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 				nSubsidy = 0.375 * COIN; // 18,750 coins
 			else if (nHeight >= 300000 && nHeight < 333335)
 				nSubsidy = 0.1875 * COIN; // 9,375 coins
-			else
+			else if (nHeight >= 333335)
 				nSubsidy = 0.01 * COIN; // 5256 coins per year roughly 0.053% yearly inflation
 		}
 

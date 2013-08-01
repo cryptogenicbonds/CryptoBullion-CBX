@@ -2073,12 +2073,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
 		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		               FormatMoney(vtx[0].GetValueOut()).c_str(),
-		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
+		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight+1) : 0).c_str()));
 	} else {
-		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(pindexPrev->nHeight+1) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
 		return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		           FormatMoney(vtx[0].GetValueOut()).c_str(),
-		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
+		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight+1) : 0).c_str()));
 	}
 
     // Check transactions
@@ -4201,7 +4201,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
             printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
         if (pblock->IsProofOfWork())
-            pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pblock->nBits);
+            pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1);
 
         // Fill in header
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();

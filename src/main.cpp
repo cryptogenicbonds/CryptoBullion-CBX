@@ -940,7 +940,7 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 int64 GetProofOfWorkReward(unsigned int nHeight)
 {
 		int64 nSubsidy = 10 * COIN;
-
+ /*
 		if (nHeight > 55000 && nHeight < 95001)
 			nSubsidy = (int64)5 * COIN; // 200,000 coins
 		else if (nHeight < 145001)
@@ -961,7 +961,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 			nSubsidy = (int64)0.01953125 * COIN; // 1,953.125 coins - 1M POW
 		else if (nHeight > 545000)
 			nSubsidy = (int64)0.00952 * COIN; // 0.5% coins per year POW Inflation
-
+ */
     	return nSubsidy;
 }
 
@@ -2068,18 +2068,18 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
 
     // Check coinbase reward
     int64 nTimeBlock = GetBlockTime();
-    CBlockIndex* pindexPrev;
+
     if (nTimeBlock < REWARD_SWITCH_TIME) {
 
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
 		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		               FormatMoney(vtx[0].GetValueOut()).c_str(),
-		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight+1) : 0).c_str()));
+		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
 	} else {
-		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(pindexPrev->nHeight+1) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
 		return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		           FormatMoney(vtx[0].GetValueOut()).c_str(),
-		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight+1) : 0).c_str()));
+		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
 	}
 
     // Check transactions
@@ -4202,7 +4202,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
             printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
         if (pblock->IsProofOfWork())
-            pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1);
+            pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(nBits);
 
         // Fill in header
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();

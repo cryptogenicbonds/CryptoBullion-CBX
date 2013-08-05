@@ -963,7 +963,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 			nSubsidy = 0.01953125 * COIN; // 1,953.125 coins - 1M POW
 		else if (nHeight > 545000)
 			nSubsidy = 0.00952 * COIN; // 0.5% coins per year POW Inflation
-
+		//printf(">>> nHeight = %d, Reward = %d\n", nHeight, nSubsidy);
     	return nSubsidy;
 }
 
@@ -2070,18 +2070,25 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
 
     // Check coinbase reward
     int64 nTimeBlock = GetBlockTime();
-
+    CBlockIndex* pindexPrev = pindexBest;
     if (nTimeBlock < REWARD_SWITCH_TIME) {
-
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
 		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		               FormatMoney(vtx[0].GetValueOut()).c_str(),
 		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
 	} else {
-		if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(0) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
-		return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
+		if ((pindexPrev->nHeight) < 59700)
+		{
+			if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(0) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+			return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
 		           FormatMoney(vtx[0].GetValueOut()).c_str(),
 		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
+		} else {
+			if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(pindexPrev->nHeight) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+			return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
+				   FormatMoney(vtx[0].GetValueOut()).c_str(),
+		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight) : 0).c_str()));
+		}
 	}
 
     // Check transactions

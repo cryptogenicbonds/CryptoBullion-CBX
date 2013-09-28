@@ -11,6 +11,7 @@
 const std::string CLIENT_NAME("Satoshi");
 
 // Client version number
+// Refer to version.h for current version number
 #define CLIENT_VERSION_SUFFIX   "-cgb"
 
 

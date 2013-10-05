@@ -1,4 +1,4 @@
-Cryptogenic Bullion Cryptographic Currency
+Cryptogenic Bullion Cryptographic Commodity
 
 Proof of Work/Proof of Stake Hybrid
 
@@ -8,14 +8,22 @@ Linear Difficulty Retarget (2 block retarget)
 
 5 Confirms
 
-Block reward halves after every 50000 blocks:
+Block reward halves after every ~50000 blocks:
 
-Blocks 1-50000 = 10 Bullion per; 
-Blocks 50001-100000 = 5 Bullion per;
-Blocks 100001-150000 = 2.5 Bullion per;
+Blocks 1-55000 = 10 CGB per; 
+Blocks 55001-95000 = 5 CGB per;
+Blocks 95001-145000 = 2.5 CGB per;
+Blocks 145001-195000 = 1.25 CGB per
 etc
 
-Maximum of 1000000 Bullion
+First year coin mint of ~1000000
+
+Aiming to be PoS-only blockchain once PoW block subsidy reaches baseline reward of 0.01.
+Much research will go into maintaining security of the blockchain if/when CGB goes PoS only.  Many possible schemes and solutions are being analyzed for potential implmentation, including but not limited to:
+
+-CoinJoin revision for additional PoS overlay scheme
+-Increasing PoS rewards to slightly accelerate coin cap growth, to make it more difficult for 51% stake attack.
+-Revision to current PoS trust score algorithm
 
 Default P2P Port: 7695
 

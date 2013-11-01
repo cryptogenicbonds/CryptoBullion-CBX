@@ -42,49 +42,27 @@ create a file and name it CryptogenicBullion.conf
 And copy/paste the following contents:
 
 rpcuser=username
-
 rpcpassword=password
-
 rpcallowip=127.0.0.1
-
 rpcconnect=127.0.0.1
-
 DNSSEED=1
-
 daemon=1
-
 server=1
-
 gen=0
-
 testnet=0
-
 listen=0
-
 maxconnections=100
-
 addnode=173.230.133.205
-
 addnode=72.78.100.7
-
 addnode=70.98.114.237
-
 addnode=192.81.209.17
-
 addnode=192.241.222.16
-
 addnode=88.198.184.231
-
 addnode=109.169.220.58
-
 addnode=80.255.6.123
-
 addnode=66.58.170.165
-
 addnode=37.187.9.53
-
 addnode=216.158.85.123
-
 addnode=119.9.15.177
 
 

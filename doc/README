@@ -1,4 +1,4 @@
-NovaCoin 0.3.0 BETA
+Copyright (c) 2013-2014 Cryptogenic Bullion Developers
 
 Copyright (c) 2013 NovaCoin Developers
 Copyright (c) 2011-2012 PPCoin Developers
@@ -11,9 +11,22 @@ cryptographic software written by Eric Young (eay@cryptsoft.com).
 
 Intro
 -----
-NovaCoin is a free open source project derived from PPCoin, with
+Cryptogenic Bullion is  a free open source project derived from Novacoin, with
 the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
 Built on the foundation of Bitcoin and PPCoin, innovations such as proof-of-stake
+help further advance the field of crypto-currency.
+
+Moreover, modifications to the Cryptogenic Bullion protocol will support all new
+facets of internet applications.  Please see http://MADEsparq.org for an example
+project in current development.
+-----
+
+NovaCoin 0.4.0 BETA
+
+Copyright (c) 2013 NovaCoin Developers
+NovaCoin is a free open source project derived from PPCoin, with
+the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
+Built on the foundation of Bitcoin, innovations such as proof-of-stake and scrypt
 help further advance the field of crypto-currency.
 
 -----
@@ -34,34 +47,6 @@ PPCoin is a free open source project derived from Bitcoin, with
 the goal of providing a long-term energy-efficient crypto-currency.
 Built on the foundation of Bitcoin, innovations such as proof-of-stake
 help further advance the field of crypto-currency.
-
-
-Setup
------
-Unpack the files into a directory and run:
- bin/32/ppcoind (headless, 32-bit)
- bin/64/ppcoind (headless, 64-bit)
-
-The software automatically finds other nodes to connect to.  You can
-enable Universal Plug and Play (UPnP) with your router/firewall
-or forward port 9901 (TCP) to your computer so you can receive
-incoming connections.  PPCoin works without incoming connections,
-but allowing incoming connections helps the PPCoin network.
-
-
-Upgrade
--------
-All you existing coins/transactions should be intact with the upgrade.
-To upgrade from 0.2, first backup wallet
-ppcoind backupwallet <destination_backup_file>
-Then shutdown ppcoind by
-ppcoind stop
-Start up the new ppcoind (0.2.2).
-
-
-See the documentation/wiki at the ppcoin website:
-  http://www.ppcoin.org/
-for help and more information.
 
 
 ------------------
@@ -86,3 +71,5 @@ with each other, with the help of a P2P network to check for double-spending.
 See the documentation at the bitcoin wiki:
   https://en.bitcoin.it/wiki/Main_Page
 for help and more information.
+
+Visit https://CryptogenicBullion.org for more info.

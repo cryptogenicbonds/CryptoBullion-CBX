@@ -1,7 +1,7 @@
-NovaCoin 0.4.0 BETA
+Copyright (c) 2013-2014 Cryptogenic Bullion Developers
 
 Copyright (c) 2013 NovaCoin Developers
-Copyright (c) 2011-2013 PPCoin Developers
+Copyright (c) 2011-2012 PPCoin Developers
 Distributed under the MIT/X11 software license, see the accompanying
 file license.txt or http://www.opensource.org/licenses/mit-license.php.
 This product includes software developed by the OpenSSL Project for use in
@@ -11,36 +11,42 @@ cryptographic software written by Eric Young (eay@cryptsoft.com).
 
 Intro
 -----
+Cryptogenic Bullion is  a free open source project derived from Novacoin, with
+the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
+Built on the foundation of Bitcoin and PPCoin, innovations such as proof-of-stake
+help further advance the field of crypto-currency.
+
+Moreover, modifications to the Cryptogenic Bullion protocol will support all new
+facets of internet applications.  Please see http://MADEsparq.org for an example
+project in current development.
+-----
+
+NovaCoin 0.4.0 BETA
+
+Copyright (c) 2013 NovaCoin Developers
 NovaCoin is a free open source project derived from PPCoin, with
 the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
 Built on the foundation of Bitcoin, innovations such as proof-of-stake and scrypt
 help further advance the field of crypto-currency.
 
-
-Setup
 -----
-After completing windows setup then run windows command line (cmd)
-  cd daemon
-  novacoind
-You would need to create a configuration file novacoin.conf in the default
-wallet directory. Grant access to novacoind.exe in anti-virus and firewall
-applications if necessary.
 
-The software automatically finds other nodes to connect to.  You can
-enable Universal Plug and Play (UPnP) with your router/firewall
-or forward port 9901 (TCP) to your computer so you can receive
-incoming connections.  PPCoin works without incoming connections,
-but allowing incoming connections helps the PPCoin network.
+PPCoin 0.3.0 BETA
+
+Copyright (c) 2011-2012 PPCoin Developers
+Distributed under the MIT/X11 software license, see the accompanying
+file license.txt or http://www.opensource.org/licenses/mit-license.php.
+This product includes software developed by the OpenSSL Project for use in
+the OpenSSL Toolkit (http://www.openssl.org/).  This product includes
+cryptographic software written by Eric Young (eay@cryptsoft.com).
 
 
-Upgrade
--------
-All you existing coins/transactions should be intact with the upgrade.
-To upgrade from 0.2.x, first backup wallet
-novacoind backupwallet <destination_backup_file>
-Then shutdown ppcoind by
-novacoind stop
-Start up the new novacoind (0.3.0).
+Intro
+-----
+PPCoin is a free open source project derived from Bitcoin, with
+the goal of providing a long-term energy-efficient crypto-currency.
+Built on the foundation of Bitcoin, innovations such as proof-of-stake
+help further advance the field of crypto-currency.
 
 
 ------------------
@@ -62,6 +68,8 @@ parties.  Users hold the crypto keys to their own money and transact directly
 with each other, with the help of a P2P network to check for double-spending.
 
 
-See the bitcoin wiki at:
+See the documentation at the bitcoin wiki:
   https://en.bitcoin.it/wiki/Main_Page
-for more help and information.
+for help and more information.
+
+Visit https://CryptogenicBullion.org for more info.

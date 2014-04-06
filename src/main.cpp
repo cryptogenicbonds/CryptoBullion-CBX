@@ -2150,8 +2150,9 @@ bool CBlock::AcceptBlock()
         return DoS(100, error("AcceptBlock() : incorrect %s", IsProofOfWork() ? "proof-of-work" : "proof-of-stake"));
 
     // Check timestamp against prev
-    if (GetBlockTime() <= pindexPrev->GetMedianTimePast() || GetBlockTime() + nMaxClockDrift < pindexPrev->GetBlockTime())
-        return error("AcceptBlock() : block's timestamp is too early");
+	int64 driftAllowed = (nHeight < 405000 ) ? nOldMaxClockDrift : nMaxClockDrift;
+    if (GetBlockTime() <= pindexPrev->GetMedianTimePast() || GetBlockTime() + driftAllowed < pindexPrev->GetBlockTime())
+		return error("AcceptBlock() : block's timestamp is too early");
 
     // Check that all transactions are finalized
     BOOST_FOREACH(const CTransaction& tx, vtx)
@@ -4015,7 +4016,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         {
             if (pwallet->CreateCoinStake(*pwallet, pblock->nBits, nSearchTime-nLastCoinStakeSearchTime, txCoinStake))
             {
-                if (txCoinStake.nTime >= max(pindexPrev->GetMedianTimePast()+1, pindexPrev->GetBlockTime() - nMaxClockDrift))
+                //if the median time is more than nMaxClockDrift into the future don't use it 
+                int64 nMedianTime = pindexPrev->GetMedianTimePast();
+                if ( txCoinStake.nTime + nMaxClockDrift > nMedianTime) nMedianTime = 0;
+
+                if (txCoinStake.nTime >= max(nMedianTime+1, pindexPrev->GetBlockTime() - nMaxClockDrift))
                 {   // make sure coinstake would meet timestamp protocol
                     // as it would be the same as the block timestamp
                     pblock->vtx[0].vout[0].SetEmpty();

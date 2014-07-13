@@ -6,7 +6,7 @@ Scrypt
 
 Linear Difficulty Retarget (2 block retarget)
 
-Transactions require 6 confirmations
+Transactions require 5 confirmations
 
 Block reward halves after every ~50000 blocks:
 
@@ -18,16 +18,32 @@ etc
 
 First year coin mint of ~1000000
 
-Aiming to be PoS-only blockchain once PoW block subsidy reaches baseline reward of 0.01.
-Much research will go into maintaining security of the blockchain if/when CGB goes PoS only.  Many possible schemes and solutions are being analyzed for potential implementation, including but not limited to:
+Released in late June 2013, CGB was designed primarily for the purpose of storing wealth. Cryptogenic Bullion is a second generation crypto-currency designed to emulate the properties and supply of gold. It’s the first crypto-currency to display all of the properties of money, while providing the bearer with interest for holding it.
+Unlike most other crypto-currencies, Cryptogenic Bullion has already completed its volatile monetary base expansion stage and is settling in to its maximum target of 2% expansion per year.
 
--CoinJoin revision for additional PoS overlay scheme
+To qualify for interest, an investor must keep their funds unspent in their wallets for a minimum of 30 days (for 1.2% interest), and up to a maximum of 90 days (1.5% interest).
 
--Increasing PoS rewards to slightly accelerate coin cap growth, to make it more difficult for 51% stake attack.
+With the baseline mining reward expected to be reached within 1 year of release, and the annual inflation target of 2% fast approaching, there is no better time for the serious investor to get involved and claim a stake in this unique digital asset.
 
--Revision to current PoS trust score algorithm
+New feature developments currently being assembled for client 2.0 release include but are not limited to:
 
--Additional randomized trust score scheme to increase scrutiny for randomly selected new PoS blocks
+- Balance POS/POW block creation - POS time changes, POW time changes
+
+- Add stake visualization
+
+- Add unlock button to easily unlock wallet for staking
+
+- Client styling
+
+- Fully implement multisig, and make sure getrawtransaction PRC call is available - to support distributed exchange
+
+- Add coin control
+
+- Improve client start up time
+
+- Merged mining
+
+- Stealth addresses
 
 Default P2P Port: 7695
 
@@ -89,7 +105,7 @@ addnode=119.9.15.177
 
 
 
-replace username and password with your own username and password.  Do not use the same username/password that is the same as something sensitive, like a website.  
+Replace username and password with your own username and password.  Do not use the same username/password that is the same as something sensitive, like a website.  
 
 Place the file in your data directory. (you need to run the Qt or daemon once before you do this)
 

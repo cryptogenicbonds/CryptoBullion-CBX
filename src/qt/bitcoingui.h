@@ -78,6 +78,7 @@ private:
     QAction *quitAction;
     QAction *sendCoinsAction;
     QAction *addressBookAction;
+    QAction *unlockForStakingAction;
     QAction *signMessageAction;
     QAction *verifyMessageAction;
     QAction *aboutAction;

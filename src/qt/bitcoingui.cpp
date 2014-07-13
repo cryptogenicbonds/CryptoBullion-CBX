@@ -222,6 +222,12 @@ void BitcoinGUI::createActions()
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
 
+    unlockToStakeAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Unlock Wallet"), this);
+    unlockToStakeAction->setToolTip(tr("Unlock Wallet for Staking"));
+    unlockToStakeAction->setCheckable(true);
+    unlockToStakeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(unlockToStakeAction);
+
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -232,6 +238,8 @@ void BitcoinGUI::createActions()
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
+    connect(unlockToStakeAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(unlockToStakeAction, SIGNAL(triggered()), this, SLOT(toggleWalletLock()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
@@ -315,6 +323,7 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
+    toolbar->addAction(unlockToStakeAction);
 
     QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
     toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -388,6 +397,8 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
 
         // Ask for passphrase if needed
         connect(walletModel, SIGNAL(requireUnlock()), this, SLOT(unlockWallet()));
+
+        handleUnlockButtonState();
     }
 }
 
@@ -815,6 +826,8 @@ void BitcoinGUI::encryptWallet(bool status)
     dlg.exec();
 
     setEncryptionStatus(walletModel->getEncryptionStatus());
+
+    handleUnlockButtonState(); // enable/disable
 }
 
 void BitcoinGUI::backupWallet()
@@ -873,4 +886,37 @@ void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
 void BitcoinGUI::toggleHidden()
 {
     showNormalIfMinimized(true);
+}
+
+void BitcoinGUI::handleUnlockButtonState()
+{
+    if (walletModel->getEncryptionStatus() == WalletModel::Unencrypted)
+        unlockToStakeAction->setDisabled(true);
+    else
+        unlockToStakeAction->setEnabled(true);
+}
+
+void BitcoinGUI::toggleWalletLock()
+{
+    if(!walletModel)
+        return;
+
+    if (walletModel->getEncryptionStatus() == WalletModel::Locked)
+    {
+        unlockWallet();
+        if (walletModel->getEncryptionStatus() == WalletModel::Unlocked)
+        {
+            unlockToStakeAction->setIcon(QIcon(":/icons/lock_open"));
+            unlockToStakeAction->setText(QString(tr("Lock Wallet")));
+            QString strMessage = tr("Wallet unlocked. Please click again or close the applicaton to re-lock the wallet.");
+            QMessageBox::information(this, tr("Wallet Unlocked"), strMessage);
+        }
+    }else{
+        walletModel->setWalletLocked(true);
+        if (walletModel->getEncryptionStatus() == WalletModel::Locked)
+        {
+            unlockToStakeAction->setIcon(QIcon(":/icons/lock_closed"));
+            unlockToStakeAction->setText(QString(tr("Unlock Wallet")));
+        }
+    }
 }

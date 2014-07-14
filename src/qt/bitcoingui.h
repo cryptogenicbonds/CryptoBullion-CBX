@@ -78,8 +78,7 @@ private:
     QAction *quitAction;
     QAction *sendCoinsAction;
     QAction *addressBookAction;
-    QAction *unlockForStakingAction;
-    QAction *signMessageAction;
+    QAction *signMessageAction;    
     QAction *verifyMessageAction;
     QAction *aboutAction;
     QAction *receiveCoinsAction;
@@ -91,6 +90,7 @@ private:
     QAction *changePassphraseAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
+    QAction *unlockToStakeAction;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -175,6 +175,10 @@ private slots:
     void showNormalIfMinimized(bool fToggleHidden = false);
     /** simply calls showNormalIfMinimized(true) for use in SLOT() macro */
     void toggleHidden();
+    /** enable/disable the unlock button according to wallet encryption state */
+    void handleUnlockButtonState();
+    /** unlock (for staking) or lock the wallet */
+    void toggleWalletLock();
 };
 
 #endif

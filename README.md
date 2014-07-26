@@ -19,11 +19,11 @@ etc
 First year coin mint of ~1000000
 
 Released in late June 2013, CGB was designed primarily for the purpose of storing wealth. Cryptogenic Bullion is a second generation crypto-currency designed to emulate the properties and supply of gold. It’s the first crypto-currency to display all of the properties of money, while providing the bearer with interest for holding it.
-Unlike most other crypto-currencies, Cryptogenic Bullion has already completed its volatile monetary base expansion stage and is settling in to its maximum target of 2% expansion per year.
+Unlike most other crypto-currencies, Cryptogenic Bullion has already completed its volatile monetary base expansion stage and has settled in to its maximum target of 2% expansion per year.
 
-To qualify for interest, an investor must keep their funds unspent in their wallets for a minimum of 30 days (for 1.2% interest), and up to a maximum of 90 days (1.5% interest).
+To qualify for interest, an investor must keep their funds unspent in their wallets for a minimum of 30 days (for 1.2% annual interest), and up to a maximum of 90 days (1.5% annual interest).
 
-With the baseline mining reward expected to be reached within 1 year of release, and the annual inflation target of 2% fast approaching, there is no better time for the serious investor to get involved and claim a stake in this unique digital asset.
+Now that the baseline mining reward has been reached after a year of fair distribution, the annual inflation target of 2% is locked in. There is no better time for the serious investor to get involved and claim a stake in this unique digital asset.
 
 New feature developments currently being assembled for client 2.0 release include but are not limited to:
 
@@ -35,9 +35,9 @@ New feature developments currently being assembled for client 2.0 release includ
 
 - Client styling
 
-- Fully implement multisig, and make sure getrawtransaction PRC call is available - to support distributed exchange
+- Fully implement multisig, and make sure getrawtransaction RPC call is available - to support distributed exchange
 
-- Add coin control
+- Add Coin Control
 
 - Improve client start up time
 

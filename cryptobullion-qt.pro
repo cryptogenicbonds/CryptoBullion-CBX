@@ -275,7 +275,6 @@ FORMS += \
     src/qt/forms/sendcoinsentry.ui \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
-    src/qt/forms/optionsdialog.ui \
     src/qt/forms/coincontroldialog.ui \
     src/qt/forms/debugdialog.ui
 

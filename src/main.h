@@ -55,7 +55,7 @@ static const int fHaveUPnP = false;
 #endif
 
 static const uint256 hashGenesisBlockOfficial("0x000002655a721555160ea9bcb1072faf63ff0c8dffed173d60b1d3556a134dc1");
-static const uint256 hashGenesisBlockTestNet("0x");
+static const uint256 hashGenesisBlockTestNet("0x61d0019e85d49d536ede59e12c4390f11ef5380be5abb3e8698fcaf0519d3c52");
 
 static const int64 nMaxClockDrift = 20 * 60;        // 20 minutes
 static const int64 nOldMaxClockDrift = 2 * 60 * 60;        // 2 hours
@@ -1516,7 +1516,7 @@ public:
             if (vHave.size() > 10)
                 nStep *= 2;
         }
-        vHave.push_back((!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
+        vHave.push_back(hashGenesisBlock);
     }
 
     int GetDistanceBack()
@@ -1569,7 +1569,7 @@ public:
                     return hash;
             }
         }
-        return (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet);
+        return hashGenesisBlock;
     }
 
     int GetHeight()

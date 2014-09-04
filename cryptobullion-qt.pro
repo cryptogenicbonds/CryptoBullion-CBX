@@ -24,6 +24,11 @@ CONFIG += static
 #MINIUPNPC_INCLUDE_PATH=C:/deps/
 #MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
 
+# pass USE_MXE flag to cross compile Win32 wallet using MXE.
+contains(USE_MXE, 1) {
+	BOOST_THREAD_LIB_SUFFIX = _win32-mt
+}
+
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
@@ -184,7 +189,9 @@ HEADERS += src/qt/bitcoingui.h \
     src/clientversion.h \
     src/coincontrol.h \
     src/qt/coincontroltreewidget.h \
-    src/qt/coincontroldialog.h
+    src/qt/coincontroldialog.h \
+    src/qt/forms/debugdialog.h \
+    src/qt/debugdialog.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -251,7 +258,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/scrypt_mine.cpp \
     src/pbkdf2.cpp \
     src/qt/coincontroltreewidget.cpp \
-    src/qt/coincontroldialog.cpp
+    src/qt/coincontroldialog.cpp \
+    src/qt/debugdialog.cpp
 
 RESOURCES += \
     src/qt/bitcoin.qrc
@@ -268,7 +276,8 @@ FORMS += \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
     src/qt/forms/optionsdialog.ui \
-    src/qt/forms/coincontroldialog.ui
+    src/qt/forms/coincontroldialog.ui \
+    src/qt/forms/debugdialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h
@@ -312,7 +321,8 @@ OTHER_FILES += \
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    windows:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
+    #windows:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
+    windows:BOOST_LIB_SUFFIX = -mt    
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {

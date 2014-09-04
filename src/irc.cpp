@@ -302,8 +302,8 @@ void ThreadIRCSeed2(void* parg)
         }
 
         if (fTestNet) {
-            Send(hSocket, "JOIN #CryptogenicBullionTEST2\r");
-            Send(hSocket, "WHO #CryptogenicBullionTEST2\r");
+            Send(hSocket, "JOIN #CryptogenicBullionTEST3\r");
+            Send(hSocket, "WHO #CryptogenicBullionTEST3\r");
         } else {
             // randomly join #CryptogenicBullion00-#CryptogenicBullion05
             // int channel_number = GetRandInt(5);

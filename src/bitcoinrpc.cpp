@@ -35,6 +35,8 @@ using namespace json_spirit;
 
 void ThreadRPCServer2(void* parg);
 
+
+
 static std::string strRPCUserColonPass;
 
 const Object emptyobj;
@@ -267,6 +269,11 @@ static const CRPCCommand vRPCCommands[] =
     { "resendtx",               &resendtx,               false,  true},
     { "makekeypair",            &makekeypair,            false,  true},
     { "sendalert",              &sendalert,              false,  false},
+
+    //{ "decodescript",           &decodescript,           false,  false },
+    //{ "importaddress",          &importaddress,          false,  true  },
+   // { "createmultisig",         &createmultisig,         false,  false },
+    //s{ "getcheckpoint",          &getcheckpoint,          true,   false },
 };
 
 CRPCTable::CRPCTable()

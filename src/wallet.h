@@ -87,7 +87,7 @@ public:
     std::string strWalletFile;
 
     std::set<int64> setKeyPool;
-
+    std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
 
     typedef std::map<unsigned int, CMasterKey> MasterKeyMap;
     MasterKeyMap mapMasterKeys;
@@ -120,6 +120,7 @@ public:
     std::map<CTxDestination, std::string> mapAddressBook;
 
     CPubKey vchDefaultKey;
+    int64 nTimeFirstKey;
 
     // check whether we are allowed to upgrade (or already support) to the named feature
     bool CanSupportFeature(enum WalletFeature wf) { return nWalletMaxVersion >= wf; }
@@ -133,6 +134,8 @@ public:
     bool AddKey(const CKey& key);
     // Adds a key to the store, without saving it to disk (used by LoadWallet)
     bool LoadKey(const CKey& key) { return CCryptoKeyStore::AddKey(key); }
+    // Load metadata (used by LoadWallet)
+    bool LoadKeyMetadata(const CPubKey &pubkey, const CKeyMetadata &metadata);
 
     bool LoadMinVersion(int nVersion) { nWalletVersion = nVersion; nWalletMaxVersion = std::max(nWalletMaxVersion, nVersion); return true; }
 
@@ -143,9 +146,16 @@ public:
     bool AddCScript(const CScript& redeemScript);
     bool LoadCScript(const CScript& redeemScript) { return CCryptoKeyStore::AddCScript(redeemScript); }
 
+    // Adds a watch-only address to the store, and saves it to disk.
+    bool AddWatchOnly(const CScript &dest);
+    // Adds a watch-only address to the store, without saving it to disk (used by LoadWallet)
+    bool LoadWatchOnly(const CScript &dest);
+
     bool Unlock(const SecureString& strWalletPassphrase);
     bool ChangeWalletPassphrase(const SecureString& strOldWalletPassphrase, const SecureString& strNewWalletPassphrase);
     bool EncryptWallet(const SecureString& strWalletPassphrase);
+
+    void GetKeyBirthTimes(std::map<CKeyID, int64> &mapKeyBirth) const;
 
     /** Increment the next transaction order id
         @return next transaction order id

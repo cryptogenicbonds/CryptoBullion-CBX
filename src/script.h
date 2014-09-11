@@ -27,6 +27,16 @@ enum
     SIGHASH_ANYONECANPAY = 0x80,
 };
 
+/** Script verification flags */
+enum
+{
+    SCRIPT_VERIFY_NONE      = 0,
+    SCRIPT_VERIFY_P2SH      = (1U << 0), // evaluate P2SH (BIP16) subscripts
+    SCRIPT_VERIFY_STRICTENC = (1U << 1), // enforce strict conformance to DER and SEC2 for signatures and pubkeys
+    SCRIPT_VERIFY_LOW_S     = (1U << 2), // enforce low S values in signatures (depends on STRICTENC)
+    SCRIPT_VERIFY_NOCACHE   = (1U << 3), // do not store results in signature cache (but do query it)
+    SCRIPT_VERIFY_NULLDUMMY = (1U << 4), // verify dummy stack item consumed by CHECKMULTISIG is of zero-length
+};
 
 enum txnouttype
 {
@@ -582,7 +592,8 @@ public:
 };
 
 
-
+bool IsCanonicalPubKey(const std::vector<unsigned char> &vchPubKey, unsigned int flags);
+bool IsCanonicalSignature(const std::vector<unsigned char> &vchSig, unsigned int flags);
 
 
 bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, const CTransaction& txTo, unsigned int nIn, int nHashType);
@@ -591,6 +602,7 @@ int ScriptSigArgsExpected(txnouttype t, const std::vector<std::vector<unsigned c
 bool IsStandard(const CScript& scriptPubKey);
 bool IsMine(const CKeyStore& keystore, const CScript& scriptPubKey);
 bool IsMine(const CKeyStore& keystore, const CTxDestination &dest);
+void ExtractAffectedKeys(const CKeyStore &keystore, const CScript& scriptPubKey, std::vector<CKeyID> &vKeys);
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet);
 bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<CTxDestination>& addressRet, int& nRequiredRet);
 bool SignSignature(const CKeyStore& keystore, const CScript& fromPubKey, CTransaction& txTo, unsigned int nIn, int nHashType=SIGHASH_ALL);

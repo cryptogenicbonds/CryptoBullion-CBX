@@ -44,8 +44,14 @@ public:
     }
 };
 
+// keypair map
+// storing vchPubKeyH, it's used in HaveKeyPair method
+typedef std::pair<uint256, std::pair<CPubKey, std::pair<CSecret, CSecret> > > KeyPair;
+typedef std::map<uint256, std::pair<CPubKey, std::pair<CSecret, CSecret> > > KeyPairMap;
+
 typedef std::map<CKeyID, std::pair<CSecret, bool> > KeyMap;
 typedef std::map<CScriptID, CScript > ScriptMap;
+typedef std::set<CScript> WatchOnlySet;
 
 /** Basic key store, that keeps keys in an address->secret map */
 class CBasicKeyStore : public CKeyStore
@@ -53,6 +59,7 @@ class CBasicKeyStore : public CKeyStore
 protected:
     KeyMap mapKeys;
     ScriptMap mapScripts;
+    WatchOnlySet setWatchOnly;
 
 public:
     bool AddKey(const CKey& key);
@@ -95,6 +102,9 @@ public:
     virtual bool AddCScript(const CScript& redeemScript);
     virtual bool HaveCScript(const CScriptID &hash) const;
     virtual bool GetCScript(const CScriptID &hash, CScript& redeemScriptOut) const;
+
+    virtual bool AddWatchOnly(const CScript &dest);
+    virtual bool HaveWatchOnly(const CScript &dest) const;
 };
 
 typedef std::map<CKeyID, std::pair<CPubKey, std::vector<unsigned char> > > CryptedKeyMap;

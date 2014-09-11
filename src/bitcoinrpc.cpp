@@ -309,7 +309,7 @@ static const CRPCCommand vRPCCommands[] =
 
     { "decodescript",           &decodescript,           false,  false },
     { "importaddress",          &importaddress,          false,  true  },
-   // { "createmultisig",         &createmultisig,         false,  false },
+    { "createmultisig",         &createmultisig,         false,  false },
     //s{ "getcheckpoint",          &getcheckpoint,          true,   false },
 };
 

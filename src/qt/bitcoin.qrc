@@ -1,4 +1,30 @@
 <RCC>
+    <qresource prefix="/qss_icons">
+        <file alias="arrow_disabled">res/qss/up_arrow_disabled.png</file>
+        <file>res/qss/Hmovetoolbar.png</file>
+        <file>res/qss/stylesheet-branch-end.png</file>
+        <file>res/qss/branch_closed-on.png</file>
+        <file>res/qss/stylesheet-vline.png</file>
+        <file>res/qss/branch_closed.png</file>
+        <file>res/qss/branch_open-on.png</file>
+        <file>res/qss/transparent.png</file>
+        <file>res/qss/right_arrow_disabled.png</file>
+        <file>res/qss/sizegrip.png</file>
+        <file>res/qss/close.png</file>
+        <file>res/qss/down_arrow.png</file>
+        <file>res/qss/Vmovetoolbar.png</file>
+        <file>res/qss/left_arrow.png</file>
+        <file>res/qss/stylesheet-branch-more.png</file>
+        <file>res/qss/up_arrow.png</file>
+        <file>res/qss/right_arrow.png</file>
+        <file>res/qss/left_arrow_disabled.png</file>
+        <file>res/qss/Hsepartoolbar.png</file>
+        <file alias="checkbox">res/qss/checkbox.png</file>
+        <file>res/qss/branch_open.png</file>
+        <file>res/qss/Vsepartoolbar.png</file>
+        <file>res/qss/down_arrow_disabled.png</file>
+        <file>res/qss/undock.png</file>
+    </qresource>
     <qresource prefix="/icons">
         <file alias="bitcoin">res/icons/CryptogenicBullion-128.png</file>
         <file alias="address-book">res/icons/address-book.png</file>
@@ -51,5 +77,8 @@
     <qresource prefix="/translations">
         <file alias="en">locale/bitcoin_en.qm</file>
         <file alias="ru">locale/bitcoin_ru.qm</file>
+    </qresource>
+    <qresource prefix="/style">
+        <file alias="cgbstyle.qss">res/style/cgbstyle.qss</file>
     </qresource>
 </RCC>

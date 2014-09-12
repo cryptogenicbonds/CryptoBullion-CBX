@@ -27,6 +27,7 @@ using namespace boost;
 CWallet* pwalletMain;
 CClientUIInterface uiInterface;
 bool fUseFastIndex;
+enum Checkpoints::CPMode CheckpointsMode;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -419,6 +420,18 @@ bool AppInit2()
     fPrintToDebugger = GetBoolArg("-printtodebugger");
     fLogTimestamps = GetBoolArg("-logtimestamps");
     fUseFastIndex = GetBoolArg("-fastindex", true);
+
+    CheckpointsMode = Checkpoints::kStrict;
+    std::string strCpMode = GetArg("-cppolicy", "strict");
+
+    if(strCpMode == "strict")
+        CheckpointsMode = Checkpoints::kStrict;
+
+    if(strCpMode == "advisory")
+        CheckpointsMode = Checkpoints::kAdvisory;
+
+    if(strCpMode == "permissive")
+        CheckpointsMode = Checkpoints::kPermissive;
 
     if (mapArgs.count("-timeout"))
     {

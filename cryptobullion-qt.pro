@@ -262,7 +262,9 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/debugdialog.cpp
 
 RESOURCES += \
-    src/qt/bitcoin.qrc
+src/qt/bitcoin.qrc
+#    src/qt/qdarkstyle/style.qrc
+#    src/qt/bitcoin.qrc
 
 FORMS += \
     src/qt/forms/sendcoinsdialog.ui \

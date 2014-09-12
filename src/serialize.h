@@ -96,11 +96,6 @@ enum
 
 #define READWRITE(obj)      (nSerSize += ::SerReadWrite(s, (obj), nType, nVersion, ser_action))
 
-
-
-
-
-
 //
 // Basic types
 //

@@ -299,7 +299,6 @@ static const CRPCCommand vRPCCommands[] =
     { "decoderawtransaction",   &decoderawtransaction,   false,  false },
     { "signrawtransaction",     &signrawtransaction,     false,  false },
     { "sendrawtransaction",     &sendrawtransaction,     false,  false },
-    { "getcheckpoint",          &getcheckpoint,          true,   false },
     { "reservebalance",         &reservebalance,         false,  true},
     { "checkwallet",            &checkwallet,            false,  true},
     { "repairwallet",           &repairwallet,           false,  true},
@@ -310,7 +309,7 @@ static const CRPCCommand vRPCCommands[] =
     { "decodescript",           &decodescript,           false,  false },
     { "importaddress",          &importaddress,          false,  true  },
     { "createmultisig",         &createmultisig,         false,  false },
-    //s{ "getcheckpoint",          &getcheckpoint,          true,   false },
+    { "getcheckpoint",          &getcheckpoint,          true,   false },
 };
 
 CRPCTable::CRPCTable()

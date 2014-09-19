@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>729</width>
-    <height>136</height>
+    <height>138</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,9 @@
    </property>
    <item row="5" column="0">
     <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">background: transparent; color:rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>A&amp;mount:</string>
      </property>
@@ -38,6 +41,10 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
+     <property name="styleSheet">
+      <string notr="true">background: transparent; 
+color:rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>Pay &amp;To:</string>
      </property>
@@ -71,6 +78,9 @@
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="label_4">
+     <property name="styleSheet">
+      <string notr="true">background: transparent; color:rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>&amp;Label:</string>
      </property>

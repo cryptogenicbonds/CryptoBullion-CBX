@@ -162,6 +162,29 @@ void copyEntryData(QAbstractItemView *view, int column, int role)
     }
 }
 
+void SetWidgetGradient(QWidget* widget)
+{
+    widget->setStyleSheet("background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #484849, stop: 1 #2f2f30);");
+}
+
+void SetEditGradient(QWidget* widget)
+{
+    widget->setStyleSheet("background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2f2f30, stop: 1 #484849);");
+}
+
+void SetupPushButton(QWidget* widget)
+{
+    widget->setStyleSheet("color:#FFFFFF;\nbackground-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(164, 161, 161, 255), stop:0.0409091 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 255));");
+}
+
+void SetWidgetColor(QWidget* widget, char* color)
+{
+    widget->styleSheet().append("color:#");
+    widget->styleSheet().append(color);
+    //widget->setStyleSheet("color:#FFFFFF;\nbackground-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(164, 161, 161, 255), stop:0.0409091 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 255));");
+
+}
+
 QString getSaveFileName(QWidget *parent, const QString &caption,
                                  const QString &dir,
                                  const QString &filter,

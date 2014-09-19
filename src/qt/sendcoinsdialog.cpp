@@ -74,6 +74,15 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
     ui->labelCoinControlLowOutput->addAction(clipboardLowOutputAction);
     ui->labelCoinControlChange->addAction(clipboardChangeAction);
 
+    GUIUtil::SetEditGradient(ui->lineEditCoinControlChange);
+
+    GUIUtil::SetupPushButton(ui->addButton);
+    GUIUtil::SetupPushButton(ui->clearButton);
+    GUIUtil::SetupPushButton(ui->pushButtonCoinControl);
+    GUIUtil::SetupPushButton(ui->sendButton);
+
+
+
     fNewRecipientAllowed = true;
 }
 
@@ -462,7 +471,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!addr.IsValid()) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid Bitcoin address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid CGB address"));
         }
         else // Valid address
         {

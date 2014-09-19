@@ -47,6 +47,15 @@ namespace GUIUtil
      */
     void copyEntryData(QAbstractItemView *view, int column, int role=Qt::EditRole);
 
+    /**
+     * @brief SetWidgetGradient Apply the CGB GUI gradient to a control.
+     * @param widget QWidget to apply the gradient to.
+     */
+    void SetWidgetGradient(QWidget* widget);
+    void SetEditGradient(QWidget* widget);
+    void SetupPushButton(QWidget* widget);
+    void SetWidgetColor(QWidget* widget, char* color);
+
     /** Get save filename, mimics QFileDialog::getSaveFileName, except that it appends a default suffix
         when no suffix is provided by the user.
 

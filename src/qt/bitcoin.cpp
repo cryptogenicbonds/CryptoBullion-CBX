@@ -125,8 +125,8 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(bitcoin);
     QApplication app(argc, argv);
 
-    //QFile f(":/style/cgbstyle.qss");#
-    QFile f("/root/Documents/CGB/master/CGB/src/qt/res/style/cgbstyle.qss");
+    QFile f(":/style/cgbstyle.qss");
+    //QFile f("/root/Documents/CGB/master/CGB/src/qt/res/style/cgbstyle.qss");
     if (!f.exists())
     {
         printf("Unable to set stylesheet, file not found\n");

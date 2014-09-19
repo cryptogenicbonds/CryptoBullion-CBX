@@ -122,6 +122,12 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     centralWidget->addWidget(debugPage);
     setCentralWidget(centralWidget);
 
+    // set gradient background
+    GUIUtil::SetWidgetGradient(centralWidget);
+
+    //QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #78879b, stop: 1 #78879b);
+    //qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:0.772727 rgba(132, 132, 132, 255))QListView { background: transparent; }
+
     // Create status bar
     statusBar();
 
@@ -203,13 +209,13 @@ void BitcoinGUI::createActions()
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
 
-    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
+    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send Bullion"), this);
     sendCoinsAction->setToolTip(tr("Send coins to a CryptogenicBullion address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
-    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive coins"), this);
+    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive Bullion"), this);
     receiveCoinsAction->setToolTip(tr("Show the list of addresses for receiving payments"));
     receiveCoinsAction->setCheckable(true);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));

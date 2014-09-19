@@ -15,7 +15,7 @@ SendCoinsEntry::SendCoinsEntry(QWidget *parent) :
     ui(new Ui::SendCoinsEntry),
     model(0)
 {
-    ui->setupUi(this);
+    ui->setupUi(this); 
 
 #ifdef Q_OS_MAC
     ui->payToLayout->setSpacing(4);
@@ -29,6 +29,9 @@ SendCoinsEntry::SendCoinsEntry(QWidget *parent) :
     setFocusProxy(ui->payTo);
 
     GUIUtil::setupAddressWidget(ui->payTo, this);
+
+
+   // GUIUtil::SetWidgetGradient(ui->payTo);
 }
 
 SendCoinsEntry::~SendCoinsEntry()

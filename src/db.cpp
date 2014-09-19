@@ -853,7 +853,7 @@ bool CTxDB::LoadBlockIndexGuts()
             if (!pindexNew->CheckIndex())
                 return error("LoadBlockIndex() : CheckIndex failed at %d", pindexNew->nHeight);
 
-            // ppcoin: build setStakeSeen
+            // cgb: build setStakeSeen
             if (pindexNew->IsProofOfStake())
                 setStakeSeen.insert(make_pair(pindexNew->prevoutStake, pindexNew->nStakeTime));
         }

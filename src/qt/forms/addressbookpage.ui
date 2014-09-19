@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>877</width>
+    <width>909</width>
     <height>380</height>
    </rect>
   </property>
@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="labelExplanation">
+     <property name="styleSheet">
+      <string notr="true">background: transparent;color:#FFFFFF;</string>
+     </property>
      <property name="text">
       <string>These are your CGB addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</string>
      </property>

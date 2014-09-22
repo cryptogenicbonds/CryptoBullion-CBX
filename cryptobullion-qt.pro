@@ -96,6 +96,34 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
+# ** LEVELDB **
+contains(USE_LEVELDB, 1) {
+    message(Building with LevelDB transaction index)
+    DEFINES += USE_LEVELDB
+	INCLUDEPATH += src/leveldb/include src/leveldb/helpers
+	LIBS += $$PWD/src/leveldb/libleveldb.a $$PWD/src/leveldb/libmemenv.a
+	SOURCES += src/txdb-leveldb.cpp
+	!win32 {
+		# we use QMAKE_CXXFLAGS_RELEASE even without RELEASE=1 because we use RELEASE to indicate linking preferences not -O preferences
+		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
+	} else {
+		# make an educated guess about what the ranlib command is called
+		isEmpty(QMAKE_RANLIB) {
+		QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
+		}
+		LIBS += -lshlwapi
+		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
+	}
+	genleveldb.target = $$PWD/src/leveldb/libleveldb.a
+	genleveldb.depends = FORCE
+	PRE_TARGETDEPS += $$PWD/src/leveldb/libleveldb.a
+	QMAKE_EXTRA_TARGETS += genleveldb
+	# Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
+	QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
+} else {
+    message(Building with Berkeley DB transaction index)
+    SOURCES += src/txdb-bdb.cpp
+}
 
 # regenerate src/build.h
 !windows|contains(USE_BUILD_INFO, 1) {
@@ -141,6 +169,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/net.h \
     src/key.h \
     src/db.h \
+    src/txdb.h \
     src/walletdb.h \
     src/script.h \
     src/init.h \
@@ -189,9 +218,10 @@ HEADERS += src/qt/bitcoingui.h \
     src/clientversion.h \
     src/coincontrol.h \
     src/qt/coincontroltreewidget.h \
-    src/qt/coincontroldialog.h \
-    src/qt/forms/debugdialog.h \
-    src/qt/debugdialog.h
+    src/qt/coincontroldialog.h \ 
+    src/txdb.h \
+    src/txdb-bdb.h \
+    src/txdb-leveldb.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -258,8 +288,7 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/scrypt_mine.cpp \
     src/pbkdf2.cpp \
     src/qt/coincontroltreewidget.cpp \
-    src/qt/coincontroldialog.cpp \
-    src/qt/debugdialog.cpp
+    src/qt/coincontroldialog.cpp
 
 RESOURCES += \
 src/qt/bitcoin.qrc
@@ -277,8 +306,7 @@ FORMS += \
     src/qt/forms/sendcoinsentry.ui \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
-    src/qt/forms/coincontroldialog.ui \
-    src/qt/forms/debugdialog.ui
+    src/qt/forms/coincontroldialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h

@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#include "db.h"
+#include "txdb.h"
 #include "walletdb.h"
 #include "bitcoinrpc.h"
 #include "net.h"
@@ -27,6 +27,8 @@ using namespace boost;
 CWallet* pwalletMain;
 CClientUIInterface uiInterface;
 bool fUseFastIndex;
+//bool fUseFastStakeMiner;
+bool fUseMemoryLog;
 enum Checkpoints::CPMode CheckpointsMode;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -420,6 +422,7 @@ bool AppInit2()
     fPrintToDebugger = GetBoolArg("-printtodebugger");
     fLogTimestamps = GetBoolArg("-logtimestamps");
     fUseFastIndex = GetBoolArg("-fastindex", true);
+    fUseMemoryLog = GetBoolArg("-memorylog", true);
 
     CheckpointsMode = Checkpoints::kStrict;
     std::string strCpMode = GetArg("-cppolicy", "strict");

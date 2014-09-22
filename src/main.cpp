@@ -6,6 +6,7 @@
 #include "alert.h"
 #include "checkpoints.h"
 #include "db.h"
+#include "txdb.h"
 #include "net.h"
 #include "init.h"
 #include "ui_interface.h"
@@ -2026,10 +2027,7 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
     return true;
 }
 
-
-
-
-bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
+bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) const
 {
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
@@ -2074,24 +2072,24 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
     int64 nTimeBlock = GetBlockTime();
     CBlockIndex* pindexPrev = pindexBest;
     if (nTimeBlock < REWARD_SWITCH_TIME) {
-		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
-		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
-		               FormatMoney(vtx[0].GetValueOut()).c_str(),
-		               FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
-	} else {
-		if ((pindexPrev->nHeight) < 59700)
-		{
-			if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(0) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
-			return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
-		           FormatMoney(vtx[0].GetValueOut()).c_str(),
-		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
-		} else {
-			if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(pindexPrev->nHeight) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
-			return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
-				   FormatMoney(vtx[0].GetValueOut()).c_str(),
-		           FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight) : 0).c_str()));
-		}
-	}
+        if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
+            return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
+                       FormatMoney(vtx[0].GetValueOut()).c_str(),
+                       FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
+    } else {
+        if ((pindexPrev->nHeight) < 59700)
+        {
+            if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(0) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+            return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
+                   FormatMoney(vtx[0].GetValueOut()).c_str(),
+                   FormatMoney(IsProofOfWork()? GetProofOfWorkReward(0) : 0).c_str()));
+        } else {
+            if (vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(pindexPrev->nHeight) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+            return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
+                   FormatMoney(vtx[0].GetValueOut()).c_str(),
+                   FormatMoney(IsProofOfWork()? GetProofOfWorkReward(pindexPrev->nHeight) : 0).c_str()));
+        }
+    }
 
     // Check transactions
     BOOST_FOREACH(const CTransaction& tx, vtx)
@@ -2127,7 +2125,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
         return DoS(100, error("CheckBlock() : hashMerkleRoot mismatch"));
 
     // ppcoin: check block signature
-    if (!CheckBlockSignature())
+    if (fCheckSig && !CheckBlockSignature())
         return DoS(100, error("CheckBlock() : bad block signature"));
 
     return true;

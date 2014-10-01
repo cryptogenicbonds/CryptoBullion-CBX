@@ -11,7 +11,7 @@
 class CTxDB : public CDB
 {
 public:
-    CTxDB(const char* pszMode="r+") : CDB("blkindex.dat", pszMode) { }
+    CTxDB(const char* pszMode="r+", const char* filename = "blkindex.dat") : CDB(filename, pszMode) { }
 private:
     CTxDB(const CTxDB&);
     void operator=(const CTxDB&);
@@ -42,4 +42,17 @@ private:
     bool LoadBlockIndexGuts();
 };
 
+// Called from the initialization code. Checks to see if there is an old
+// blkindex.dat file. If so, deletes it and begins re-importing the block
+// chain, which will create the new database.
+enum BerkeleyDBUpgradeResult {
+  NONE_NEEDED,
+  INSUFFICIENT_DISK_SPACE,
+  COMPLETED,
+  OTHER_ERROR,
+};
+
+
+
+BerkeleyDBUpgradeResult UpgradeBerkeleyDB(BerkerleyDBUpgradeProgress &progress);
 #endif

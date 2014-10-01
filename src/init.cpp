@@ -304,6 +304,30 @@ std::string HelpMessage()
     return strUsage;
 }
 
+bool LoadBlockIndexFromDisk(std::ostringstream *errors) {
+    uiInterface.InitMessage(_("Loading block index..."));
+    printf("Loading block index...\n");
+    int64 nStart = GetTimeMillis();
+    if (!LoadBlockIndex())
+        *errors << _("Error loading block index database") << "\n";
+
+    // as LoadBlockIndex can take several minutes, it's possible the user
+    // requested to kill bitcoin-qt during the last operation. If so, exit.
+    // As the program has not fully started yet, Shutdown() is possibly overkill.
+    if (fRequestShutdown)
+    {
+        printf("Shutdown requested. Exiting.\n");
+        return false;
+    }
+    printf(" block index %15"PRI64d"ms\n", GetTimeMillis() - nStart);
+    return true;
+}
+
+void UpdateUIWithDBUpgradeProgress(double percent) {
+    uiInterface.InitMessage(
+        strprintf(_("Upgrade database\n%0.2f%% complete"), percent));
+}
+
 /** Initialize bitcoin.
  *  @pre Parameters should be parsed and config file should be read.
  */
@@ -677,6 +701,12 @@ bool AppInit2()
         return InitError(msg);
     }
 
+    // As we now store the block hashes in the transaction DB, we should attempt to perform an in-place
+    // upgrade of the Berkeley transaction DB.
+
+    //BerkerleyDBUpgradeProgress prog;
+    //BerkeleyDBUpgradeResult migrationResult = UpgradeBerkeleyDB(prog);
+
     if (GetBoolArg("-loadblockindextest"))
     {
         CTxDB txdb("r");
@@ -685,11 +715,38 @@ bool AppInit2()
         return false;
     }
 
+    // check if TX DB needs upgrading
+    uiInterface.InitMessage(_("Inspecting TX database..."));
+    printf("Inspecting TX database...\n");
+    CTxDB txdb("cr");
+    int ver;
+    txdb.ReadVersion(ver);
+    txdb.Close();
+    bitdb.CloseDb("blkindex.dat");
+
+    if (ver < DB_MINVER_INCHASH)
+    {
+        // update berkeley tx db to include block hashes.
+        // TOOD: revisit this when we switch to level-db.
+
+        uiInterface.InitMessage(_("Upgrading TX database to include block hashes..."));
+        printf("Rewriting transaction database to include block hashes...\n");
+
+        BerkerleyDBUpgradeProgress progress;
+        progress.connect(UpdateUIWithDBUpgradeProgress);
+        //BerkeleyDBUpgradeResult migrationResult = UpgradeBerkeleyDB(prog);
+
+        bool rewriteOk = CDB::Rewrite("blkindex.dat", progress, NULL, ver, CLIENT_VERSION);
+    }
+
     uiInterface.InitMessage(_("Loading block index..."));
     printf("Loading block index...\n");
     nStart = GetTimeMillis();
-    if (!LoadBlockIndex())
-        return InitError(_("Error loading blkindex.dat"));
+
+    // Load as normal.
+    if (!LoadBlockIndexFromDisk(&strErrors)) {
+        return false;
+    }
 
     // as LoadBlockIndex can take several minutes, it's possible the user
     // requested to kill bitcoin-qt during the last operation. If so, exit.

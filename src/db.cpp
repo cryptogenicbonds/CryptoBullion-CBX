@@ -367,7 +367,25 @@ bool CDBEnv::RemoveDb(const string& strFile)
     return (rc == 0);
 }
 
-bool CDB::Rewrite(const string& strFile, const char* pszSkip)
+static uint64 nTotalBytes;
+static uint64 nTotalBytesCompleted;
+static double nProgressPercent;
+static BerkerleyDBUpgradeProgress *callbackTotalOperationProgress;
+
+void RewriteProgress(unsigned int bytesRead) {
+    // Called from inside LoadExternalBlockFile with how many bytes were
+    // processed so far.
+    nTotalBytesCompleted += bytesRead;
+    double newProgressPercent = 100.0 * ((double)nTotalBytesCompleted / (double)nTotalBytes);
+    // Throttle UI notifications.
+    if (newProgressPercent - nProgressPercent < 0.01)
+        return;
+    nProgressPercent = newProgressPercent;
+    printf("Database upgrade %0.2f%% complete.\n", nProgressPercent);
+    (*callbackTotalOperationProgress)(nProgressPercent);
+}
+
+bool CDB::Rewrite(const string& strFile, BerkerleyDBUpgradeProgress &progress, const char* pszSkip, int previousVer, int currentVer)
 {
     while (!fShutdown)
     {
@@ -401,6 +419,45 @@ bool CDB::Rewrite(const string& strFile, const char* pszSkip)
 
                     Dbc* pcursor = db.GetCursor();
                     if (pcursor)
+
+                        nTotalBytesCompleted = 0;
+                        nProgressPercent = 0;
+
+                        int numRows = 0;
+
+                        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+                        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+
+                        while (fSuccess)
+                        {
+                            int ret = db.ReadAtCursor(pcursor, ssKey, ssValue, DB_NEXT);
+
+                            if (ret == DB_NOTFOUND)
+                            {
+                                pcursor->close();
+                                break;
+                            }
+                            else if (ret != 0)
+                            {
+                                pcursor->close();
+                                fSuccess = false;
+                                break;
+                            }
+
+                            numRows++;
+                        }
+
+                        db.ReadAtCursor(pcursor, ssKey, ssValue, DB_FIRST);
+
+                        //boost::filesystem::path blkpath = ;
+                        nTotalBytes = numRows;
+                        // Set up progress calculations and callbacks.
+                        callbackTotalOperationProgress = &progress;
+                        ExternalBlockFileProgress callbackProgress;
+                        callbackProgress.connect(RewriteProgress);
+                        (*callbackTotalOperationProgress)(0.0);
+
+                        fSuccess = true;
                         while (fSuccess)
                         {
                             CDataStream ssKey(SER_DISK, CLIENT_VERSION);
@@ -417,17 +474,39 @@ bool CDB::Rewrite(const string& strFile, const char* pszSkip)
                                 fSuccess = false;
                                 break;
                             }
-                            if (pszSkip &&
-                                strncmp(&ssKey[0], pszSkip, std::min(ssKey.size(), strlen(pszSkip))) == 0)
+
+                            /*
+                            if (strncmp(&ssKey[0], "\x02tx", 3) != 0)
+                            {
+                                char* k = &ssKey[0];
+                                int xx = 1;
+                            }
+*/
+
+                            if (pszSkip && strncmp(&ssKey[0], pszSkip, std::min(ssKey.size(), strlen(pszSkip))) == 0)
                                 continue;
+
                             if (strncmp(&ssKey[0], "\x07version", 8) == 0)
                             {
                                 // Update version:
                                 ssValue.clear();
-                                ssValue << CLIENT_VERSION;
+                                ssValue << currentVer;
                             }
+
+                            // update blockindex to include block hash
+                            if (previousVer <= DB_MINVER_INCHASH && strncmp(&ssKey[0], "\nblockindex", 11) == 0)
+                            {
+                                CDiskBlockIndex diskindex(DB_PREV_VER);
+                                ssValue >> diskindex;
+                                diskindex.fileVersion = CLIENT_VERSION; // update version
+                                uint256 blockHash = diskindex.GetBlockHash(); // calc hash
+                                ssValue << diskindex; // serialize
+                            }
+
                             Dbt datKey(&ssKey[0], ssKey.size());
                             Dbt datValue(&ssValue[0], ssValue.size());
+                            (callbackProgress)(1);
+
                             int ret2 = pdbCopy->put(NULL, &datKey, &datValue, DB_NOOVERWRITE);
                             if (ret2 > 0)
                                 fSuccess = false;

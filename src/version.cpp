@@ -10,6 +10,8 @@
 // target servers or GUI users specifically.
 const std::string CLIENT_NAME("Satoshi");
 
+//static int TransactionDbVersion = DB_MINVER_INCHASH;
+
 // Client version number
 // Refer to version.h for current version number
 #define CLIENT_VERSION_SUFFIX   "-cgb"

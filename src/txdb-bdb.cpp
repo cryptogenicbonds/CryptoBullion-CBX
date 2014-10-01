@@ -190,7 +190,7 @@ bool CTxDB::LoadBlockIndex()
     {
         CBlockIndex* pindex = item.second;
         pindex->bnChainTrust = (pindex->pprev ? pindex->pprev->bnChainTrust : 0) + pindex->GetBlockTrust();
-        // ppcoin: calculate stake modifier checksum
+        // cgb: calculate stake modifier checksum
         pindex->nStakeModifierChecksum = GetStakeModifierChecksum(pindex);
         if (!CheckStakeModifierCheckpoints(pindex->nHeight, pindex->nStakeModifierChecksum))
             return error("CTxDB::LoadBlockIndex() : Failed stake modifier checkpoint height=%d, modifier=0x%016"PRI64x, pindex->nHeight, pindex->nStakeModifier);
@@ -212,7 +212,7 @@ bool CTxDB::LoadBlockIndex()
       hashBestChain.ToString().substr(0,20).c_str(), nBestHeight, CBigNum(bnBestChainTrust).ToString().c_str(),
       DateTimeStrFormat("%x %H:%M:%S", pindexBest->GetBlockTime()).c_str());
 
-    // ppcoin: load hashSyncCheckpoint
+    // cgb: load hashSyncCheckpoint
     if (!ReadSyncCheckpoint(Checkpoints::hashSyncCheckpoint))
         return error("CTxDB::LoadBlockIndex() : hashSyncCheckpoint not loaded");
     printf("LoadBlockIndex(): synchronized checkpoint %s\n", Checkpoints::hashSyncCheckpoint.ToString().c_str());
@@ -350,10 +350,11 @@ bool CTxDB::LoadBlockIndex()
     return true;
 }
 
-
-
 bool CTxDB::LoadBlockIndexGuts()
 {
+    int fileVersion;
+    ReadVersion(fileVersion);
+
     // Get database cursor
     Dbc* pcursor = GetCursor();
     if (!pcursor)
@@ -365,8 +366,10 @@ bool CTxDB::LoadBlockIndexGuts()
     {
         // Read next record
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+
         if (fFlags == DB_SET_RANGE)
             ssKey << make_pair(string("blockindex"), uint256(0));
+
         CDataStream ssValue(SER_DISK, CLIENT_VERSION);
         int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
         fFlags = DB_NEXT;
@@ -382,7 +385,7 @@ bool CTxDB::LoadBlockIndexGuts()
         ssKey >> strType;
         if (strType == "blockindex" && !fRequestShutdown)
         {
-            CDiskBlockIndex diskindex;
+            CDiskBlockIndex diskindex(fileVersion);
             ssValue >> diskindex;
 
             uint256 blockHash = diskindex.GetBlockHash();
@@ -414,7 +417,7 @@ bool CTxDB::LoadBlockIndexGuts()
             if (!pindexNew->CheckIndex())
                 return error("LoadBlockIndex() : CheckIndex failed at %d", pindexNew->nHeight);
 
-            // ppcoin: build setStakeSeen
+            // cgb: build setStakeSeen
             if (pindexNew->IsProofOfStake())
                 setStakeSeen.insert(make_pair(pindexNew->prevoutStake, pindexNew->nStakeTime));
         }
@@ -432,4 +435,106 @@ bool CTxDB::LoadBlockIndexGuts()
     return true;
 }
 
+extern bool fDisableSignatureChecking;
 
+/*
+BerkeleyDBUpgradeResult UpgradeBerkeleyDB(BerkerleyDBUpgradeProgress &progress) {
+    // Check if we have a blkindex.dat: if so, delete it. Because leveldb is
+    // more efficient (space-wise) than bdb, this should ensure we have enough
+    // disk space to perform the migration. We delete before migrate because if
+    // we got here, the code to handle the BDB based block index is not compiled
+    // in anymore, so there's no point in keeping the old file around - it's
+    // onwards and upwards.
+    //
+    // The act of replaying would normally append data to the blk data files,
+    // but we're reading from them so we don't want that. We disable it here,
+    // along with the signature checking as it doesn't help us right now. Note
+    // that replaying the chain could b0rk the wallet, but this process takes
+    // place before any wallets are registered.
+    //
+    // TODO(hearn): Assert on lack of a wallet here.
+
+    CTxDB txdb("r+");
+    int64 nStart = GetTimeMillis();
+
+
+
+    boost::filesystem::path oldIndex = GetDataDir() / "blkindex.dat";
+    if (!boost::filesystem::exists(oldIndex)) {
+        return NONE_NEEDED;
+    }
+
+    // Check we have enough disk space for migration. We need at least 2GB free
+    // to hold the blk file we are migrating, and leveldb may have transient
+    // storage spikes, so we ask for at least 3GB.
+    uint64 nFreeBytesAvailable = filesystem::space(GetDataDir()).available;
+    if (nFreeBytesAvailable < 3UL * 1024UL * 1024UL * 1024UL) {
+        return INSUFFICIENT_DISK_SPACE;
+    }
+
+    //boost::filesystem::remove(oldIndex);
+    boost::filesystem::rename(oldIndex, GetDataDir() / "blkindex.tmp");
+    FILE *file;
+    int nFile = 1;
+    // Firstly, figure out the total number of bytes we need to migrate, for
+    // the progress indicator.
+    nTotalBytes = 0;
+    while (true)
+    {
+        std::string filename = strprintf("blk%04d.dat", nFile);
+        boost::filesystem::path blkpath = GetDataDir() / filename;
+        if (!boost::filesystem::exists(blkpath))
+            break;
+        uintmax_t nFileSize = boost::filesystem::file_size(blkpath);
+        if (nFileSize == static_cast<uintmax_t>(-1))   // Some other error.
+            break;
+        nTotalBytes += nFileSize;
+        nFile++;
+    }
+    nFile = 1;
+
+    // Set up progress calculations and callbacks.
+    callbackTotalOperationProgress = &progress;
+    ExternalBlockFileProgress callbackProgress;
+    callbackProgress.connect(MigrationProgress);
+    (*callbackTotalOperationProgress)(0.0);
+
+    // We don't need to re-run scripts during migration as they were run already
+    // and this saves a lot of time.
+    fDisableSignatureChecking = true;
+    // There may be multiple blk0000?.dat files, iterate over each one, rename
+    // it and then reimport it. For the first one, we need to initialize the
+    // fresh file with the genesis block.
+    while (true)
+    {
+        std::string filename = strprintf("blk%04d.dat", nFile);
+        std::string tmpname = strprintf("tmp-blk%04d.dat", nFile);
+        boost::filesystem::path blkpath = GetDataDir() / filename;
+        if (!boost::filesystem::exists(blkpath)) {
+            // No more work to do.
+            break;
+        }
+        boost::filesystem::path tmppath = GetDataDir() / tmpname;
+        boost::filesystem::rename(blkpath, tmppath);
+        printf("Migrating blk%04d.dat to BerkeleyDB\n", nFile);
+        file = fopen(tmppath.string().c_str(), "rb");
+        if (nFile == 1) {
+            // This will create a fresh blk0001.dat ready for usage.
+            LoadBlockIndex();
+        }
+        // LoadExternalBlockFile will close the given input file itself.
+        // It reads each block from the storage files and calls ProcessBlock
+        // on each one, which will go back and add to the database.
+        if (!(file, &callbackProgress)) {
+            // We can't really clean up elegantly here.
+            fDisableSignatureChecking = false;
+            return OTHER_ERROR;
+        }
+        boost::filesystem::remove(tmppath);
+        nFile++;
+    }    
+    fDisableSignatureChecking = false;
+    printf("BerkeleyDB migration took %fs\n", (GetTimeMillis() - nStart) / 1000.0);
+    return COMPLETED;
+}
+*/

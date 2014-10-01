@@ -464,7 +464,7 @@ QToolBar::separator:vertical {
 
 QPushButton
 {
-    color: silver;
+    color: #dad1b0;
     background-color: QLinearGradient( x1: 0, y1: 1, x2: 0, y2: 0,
     stop: 0 #302F2F, stop: 1 #484846);
     border-width: 1px;
@@ -489,7 +489,7 @@ QPushButton:disabled
     padding-left: 10px;
     padding-right: 10px;
     /*border-radius: 3px;*/
-    color: #454545;
+    color: #707070;
 }
 
 QComboBox

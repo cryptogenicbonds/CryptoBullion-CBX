@@ -239,6 +239,7 @@ int main(int argc, char *argv[])
 
                 optionsModel.Upgrade(); // Must be done after AppInit2
 
+                // hide splash screen
                 if (splashref)
                     splash.finish(&window);
 

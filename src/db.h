@@ -93,6 +93,7 @@ public:
 
 extern CDBEnv bitdb;
 
+typedef boost::signals2::signal<void (double progress)> BerkerleyDBUpgradeProgress;
 
 /** RAII class that provides access to a Berkeley database */
 class CDB
@@ -309,7 +310,7 @@ public:
         return Write(std::string("version"), nVersion);
     }
 
-    bool static Rewrite(const std::string& strFile, const char* pszSkip = NULL);
+    bool static Rewrite(const std::string& strFile, BerkerleyDBUpgradeProgress &progress, const char* pszSkip = NULL, int previousVer = CLIENT_VERSION, int currentVer = CLIENT_VERSION);
 };
 
 
@@ -323,5 +324,6 @@ public:
     bool Write(const CAddrMan& addr);
     bool Read(CAddrMan& addr);
 };
+
 
 #endif // BITCOIN_DB_H

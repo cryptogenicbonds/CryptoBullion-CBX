@@ -21,10 +21,14 @@ extern const std::string CLIENT_NAME;
 extern const std::string CLIENT_BUILD;
 extern const std::string CLIENT_DATE;
 
+//extern int TransactionDbVersion;
+
 //
 // database format versioning
 //
 static const int DATABASE_VERSION = 70507;
+static const int DB_PREV_VER = 70200;
+static const int DB_MINVER_INCHASH = 70300;
 
 //
 // network protocol versioning

@@ -2,6 +2,8 @@
 #define ASKPASSPHRASEDIALOG_H
 
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 namespace Ui {
     class AskPassphraseDialog;
@@ -26,7 +28,7 @@ public:
     explicit AskPassphraseDialog(Mode mode, QWidget *parent = 0);
     ~AskPassphraseDialog();
 
-    void accept();
+    void accept(bool stakingOnly);
 
     void setModel(WalletModel *model);
 
@@ -35,11 +37,18 @@ private:
     Mode mode;
     WalletModel *model;
     bool fCapsLock;
+    QPushButton* buttonCancel;
+    QPushButton* buttonUnlock;
+    QPushButton* buttonUnlockStakingOnly;
 
 private slots:
-    void textChanged();
+    void textChanged();    
     bool event(QEvent *event);
     bool eventFilter(QObject *, QEvent *event);
+
+    void closeForm();
+    void unlockWallet();
+    void unlockWalletForStakingOnly();
 };
 
 #endif // ASKPASSPHRASEDIALOG_H

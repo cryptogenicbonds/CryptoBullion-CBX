@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = CryptogenicBullion-qt
-VERSION = 0.7.2
+VERSION = 0.7.3
 INCLUDEPATH += src src/json src/qt
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
@@ -27,11 +27,14 @@ CONFIG += static
 # pass USE_MXE flag to cross compile Win32 wallet using MXE.
 contains(USE_MXE, 1) {
 	BOOST_THREAD_LIB_SUFFIX = _win32-mt
+	OBJECTS_DIR = x86/build
+	MOC_DIR = x86/build
+	UI_DIR = x86/build
+}else{
+	OBJECTS_DIR = build
+	MOC_DIR = build
+	UI_DIR = build
 }
-
-OBJECTS_DIR = build
-MOC_DIR = build
-UI_DIR = build
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
@@ -96,8 +99,11 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
-# ** LEVELDB **
-contains(USE_LEVELDB, 1) {
+# ** LEVELDB (DEFAULT) **
+contains(USE_BDB, 1) {
+    message(Building with Berkeley DB transaction index)
+    SOURCES += src/txdb-bdb.cpp
+} else {
     message(Building with LevelDB transaction index)
     DEFINES += USE_LEVELDB
 	INCLUDEPATH += src/leveldb/include src/leveldb/helpers
@@ -120,9 +126,6 @@ contains(USE_LEVELDB, 1) {
 	QMAKE_EXTRA_TARGETS += genleveldb
 	# Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
 	QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
-} else {
-    message(Building with Berkeley DB transaction index)
-    SOURCES += src/txdb-bdb.cpp
 }
 
 # regenerate src/build.h
@@ -218,10 +221,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/clientversion.h \
     src/coincontrol.h \
     src/qt/coincontroltreewidget.h \
-    src/qt/coincontroldialog.h \ 
-    src/txdb.h \
-    src/txdb-bdb.h \
-    src/txdb-leveldb.h
+    src/qt/coincontroldialog.h 
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -331,7 +331,8 @@ CODECFORTR = UTF-8
 TRANSLATIONS = $$files(src/qt/locale/bitcoin_*.ts)
 
 isEmpty(QMAKE_LRELEASE) {
-    win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
+    #win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
+	win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease
     else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
 }
 isEmpty(QM_DIR):QM_DIR = $$PWD/src/qt/locale
@@ -346,6 +347,7 @@ QMAKE_EXTRA_COMPILERS += TSQM
 # "Other files" to show in Qt Creator
 OTHER_FILES += \
     doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc src/test/*.cpp src/test/*.h src/qt/test/*.cpp src/qt/test/*.h \
+	src/qt/locale/*.ts \
     src/qt/res/style/cgbstyle.qss
 
 # platform specific defaults, if not overridden on command line

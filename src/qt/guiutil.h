@@ -55,6 +55,7 @@ namespace GUIUtil
     void SetEditGradient(QWidget* widget);
     void SetupPushButton(QWidget* widget);
     void SetWidgetColor(QWidget* widget, char* color);
+    void ColorChildren(QWidget* widget, bool recursive = false);
 
     /** Get save filename, mimics QFileDialog::getSaveFileName, except that it appends a default suffix
         when no suffix is provided by the user.

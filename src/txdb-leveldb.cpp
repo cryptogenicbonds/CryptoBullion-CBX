@@ -120,8 +120,14 @@ CTxDB::CTxDB(const char* pszMode)
     printf("Opened LevelDB successfully\n");
 }
 
-void CTxDB::Close()
+extern bool fDisableSignatureChecking;
+
+void CTxDB::Close(bool forceClose)
 {
+    // avoid frequent closures when migrating
+    if (fDisableSignatureChecking && !forceClose)
+        return;
+
     delete txdb;
     txdb = pdb = NULL;
     delete options.filter_policy;
@@ -130,6 +136,8 @@ void CTxDB::Close()
     options.block_cache = NULL;
     delete activeBatch;
     activeBatch = NULL;
+
+    printf("Closed LevelDB successfully\n");
 }
 
 bool CTxDB::TxnBegin()
@@ -687,7 +695,8 @@ LevelDBMigrationResult MaybeMigrateToLevelDB(LevelDBMigrationProgress &progress)
         // LoadExternalBlockFile will close the given input file itself.
         // It reads each block from the storage files and calls ProcessBlock
         // on each one, which will go back and add to the database.
-        if (!LoadExternalBlockFile(file, &callbackProgress)) {
+        // We send the previous DB version to force scrypt hash generation and storage.
+        if (!LoadExternalBlockFile(file, &callbackProgress, DB_PREV_VER)) {
             // We can't really clean up elegantly here.
             fDisableSignatureChecking = false;
             return OTHER_ERROR;

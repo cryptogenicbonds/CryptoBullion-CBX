@@ -97,6 +97,14 @@ AddressBookPage::AddressBookPage(Mode mode, Tabs tab, QWidget *parent) :
 
     // Pass through accept action from button box
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+
+    GUIUtil::SetupPushButton(ui->newAddressButton);
+    GUIUtil::SetupPushButton(ui->deleteButton);
+    GUIUtil::SetupPushButton(ui->copyToClipboard);
+    GUIUtil::SetupPushButton(ui->showQRCode);
+    GUIUtil::SetupPushButton(ui->signMessage);
+    GUIUtil::SetupPushButton(ui->verifyMessage);
+    GUIUtil::SetupPushButton(ui->deleteButton);
 }
 
 AddressBookPage::~AddressBookPage()

@@ -185,6 +185,23 @@ void SetWidgetColor(QWidget* widget, char* color)
 
 }
 
+void ColorChildren(QWidget *widget, bool recursive)
+{
+    QList<QWidget*> list;
+
+    foreach(QObject* child, widget->children())
+    {
+        QString childType = child->metaObject()->className();
+        if (childType == "QPushButton")
+        {
+            SetupPushButton((QWidget*)child);
+        }else if (childType == "QLineEdit")
+        {
+            SetEditGradient((QLineEdit*)child);
+        }
+    }
+}
+
 QString getSaveFileName(QWidget *parent, const QString &caption,
                                  const QString &dir,
                                  const QString &filter,

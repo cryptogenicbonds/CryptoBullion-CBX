@@ -1,3 +1,4 @@
+
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
@@ -532,6 +533,12 @@ bool AppInit2()
 
     int64 nStart;
 
+    // ********************************************************* Step 4b: upgrade to leveldb
+
+    LevelDBMigrationProgress progress;
+    progress.connect(UpdateUIWithDBUpgradeProgress);
+    LevelDBMigrationResult migrationResult = MaybeMigrateToLevelDB(progress);
+
     // ********************************************************* Step 5: verify database integrity
 
     uiInterface.InitMessage(_("Verifying database integrity..."));
@@ -714,7 +721,7 @@ bool AppInit2()
         PrintBlockTree();
         return false;
     }
-
+/*
     // check if TX DB needs upgrading
     uiInterface.InitMessage(_("Inspecting TX database..."));
     printf("Inspecting TX database...\n");
@@ -724,7 +731,7 @@ bool AppInit2()
     txdb.Close();
     bitdb.CloseDb("blkindex.dat");
 
-    if (ver < DB_MINVER_INCHASH)
+    if (ver < DB_MINVER_INCHASH && true)
     {
         // update berkeley tx db to include block hashes.
         // TOOD: revisit this when we switch to level-db.
@@ -736,8 +743,9 @@ bool AppInit2()
         progress.connect(UpdateUIWithDBUpgradeProgress);
         //BerkeleyDBUpgradeResult migrationResult = UpgradeBerkeleyDB(prog);
 
-        bool rewriteOk = CDB::Rewrite("blkindex.dat", progress, NULL, ver, CLIENT_VERSION);
+        //bool rewriteOk = CDB::Rewrite("blkindex.dat", progress, NULL, ver, CLIENT_VERSION);
     }
+*/
 
     uiInterface.InitMessage(_("Loading block index..."));
     printf("Loading block index...\n");

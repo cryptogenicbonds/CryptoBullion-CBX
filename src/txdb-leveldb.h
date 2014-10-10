@@ -38,7 +38,7 @@ public:
     }
 
     // Destroys the underlying shared global state accessed by this TxDB.
-    void Close();
+    void Close(bool forceClose = false);
 
 private:
     leveldb::DB *pdb;  // Points to the global instance.

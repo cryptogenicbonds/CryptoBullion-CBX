@@ -273,6 +273,7 @@ unsigned int LimitOrphanTxSize(unsigned int nMaxOrphans)
 bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout, CTxIndex& txindexRet)
 {
     SetNull();
+    string sss = prevout.hash.GetHex();
     if (!txdb.ReadTxIndex(prevout.hash, txindexRet))
         return false;
     if (!ReadFromDisk(txindexRet.pos))
@@ -2183,6 +2184,8 @@ bool CBlock::AcceptBlock()
     if (!std::equal(expect.begin(), expect.end(), vtx[0].vin[0].scriptSig.begin()))
         return DoS(100, error("AcceptBlock() : block height mismatch in coinbase"));
 
+    // todo raizor: skip space check if fDisableSignatureChecking
+
     // Write block to history file
     if (!CheckDiskSpace(::GetSerializeSize(*this, SER_DISK, CLIENT_VERSION)))
         return error("AcceptBlock() : out of disk space");
@@ -2710,7 +2713,7 @@ void PrintBlockTree()
     }
 }
 
-bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress)
+bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress, int blockfileVersion)
 {
     int64 nStart = GetTimeMillis();
 
@@ -2718,12 +2721,18 @@ bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress)
     {
         LOCK(cs_main);
         try {
-            CAutoFile blkdat(fileIn, SER_DISK, CLIENT_VERSION);
+            CAutoFile blkdat(fileIn, SER_DISK, blockfileVersion);
             unsigned int nPos = 0;
             while (nPos != (unsigned int)-1 && blkdat.good() && !fRequestShutdown)
-            {
+            {                
                 unsigned char pchData[65536];
                 do {
+
+                    if (nLoaded == 8575)
+                    {
+                       // nLoaded=8575;
+                    }
+
                     fseek(blkdat, nPos, SEEK_SET);
                     int nRead = fread(pchData, 1, sizeof(pchData), blkdat);
                     if (nRead <= 8)
@@ -3427,7 +3436,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CInv inv(MSG_BLOCK, block.GetHash());
         pfrom->AddInventoryKnown(inv);
 
-        if (ProcessBlock(pfrom, &block))
+        if ( ProcessBlock(pfrom, &block))
             mapAlreadyAskedFor.erase(inv);
         if (block.nDoS) pfrom->Misbehaving(block.nDoS);
     }

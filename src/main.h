@@ -116,7 +116,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle);
 // Processes a blk*.dat file and fires the given signal to indicate how far
 // through the file the load has reached, if provided.
 typedef boost::signals2::signal<void (unsigned int bytesRead)> ExternalBlockFileProgress;
-bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress=NULL);
+bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress=NULL, int blockfileVersion = CLIENT_VERSION);
 
 void GenerateBitcoins(bool fGenerate, CWallet* pwallet);
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);

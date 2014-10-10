@@ -35,6 +35,7 @@ bool CTxDB::ReadTxIndex(uint256 hash, CTxIndex& txindex)
 {
     assert(!fClient);
     txindex.SetNull();
+    string sss = hash.GetHex();
     return Read(make_pair(string("tx"), hash), txindex);
 }
 
@@ -382,11 +383,14 @@ bool CTxDB::LoadBlockIndexGuts()
 
         try {
         string strType;
+        unsigned int cnt = 0;
         ssKey >> strType;
         if (strType == "blockindex" && !fRequestShutdown)
         {
             CDiskBlockIndex diskindex(fileVersion);
             ssValue >> diskindex;
+
+            cnt++;
 
             uint256 blockHash = diskindex.GetBlockHash();
 

@@ -3,6 +3,7 @@
 
 #include "guiconstants.h"
 #include "walletmodel.h"
+#include "guiutil.h"
 
 #include <QMessageBox>
 #include <QPushButton>
@@ -25,6 +26,10 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
     ui->passEdit2->installEventFilter(this);
     ui->passEdit3->installEventFilter(this);
 
+    bool addUnlockButton = false;
+    bool addUnlockStakingOnlyButton = false;
+    bool addCancelButton = true;
+
     switch(mode)
     {
         case Encrypt: // Ask passphrase x2
@@ -34,6 +39,8 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
             setWindowTitle(tr("Encrypt wallet"));
             break;
         case Unlock: // Ask passphrase
+            addUnlockButton = true;
+            addUnlockStakingOnlyButton = true;
             ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
             ui->passLabel2->hide();
             ui->passEdit2->hide();
@@ -55,6 +62,36 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
             break;
     }
 
+    if (addUnlockButton){
+        buttonUnlock = new QPushButton(tr("&Unlock"));
+        buttonUnlock->setDefault(true);
+        ui->buttonBox->addButton(buttonUnlock, QDialogButtonBox::ActionRole);
+        connect(buttonUnlock, SIGNAL(clicked()), this, SLOT(unlockWallet()));
+        GUIUtil::SetupPushButton(buttonUnlock);
+    }
+
+    if (addUnlockStakingOnlyButton){
+        buttonUnlockStakingOnly = new QPushButton(tr("U&nlock for Staking only"));
+        buttonUnlockStakingOnly->setDefault(true);
+        ui->buttonBox->addButton(buttonUnlockStakingOnly, QDialogButtonBox::ActionRole);
+        connect(buttonUnlockStakingOnly, SIGNAL(clicked()), this, SLOT(unlockWalletForStakingOnly()));
+        GUIUtil::SetupPushButton(buttonUnlockStakingOnly);
+    }
+
+    if (addCancelButton){
+        buttonCancel = new QPushButton(tr("&Cancel"));
+        buttonCancel->setDefault(true);
+        ui->buttonBox->addButton(buttonCancel, QDialogButtonBox::ActionRole);
+        connect(buttonCancel, SIGNAL(clicked()), this, SLOT(closeForm()));
+        GUIUtil::SetupPushButton(buttonCancel);
+    }
+
+
+
+
+
+
+
     textChanged();
     connect(ui->passEdit1, SIGNAL(textChanged(QString)), this, SLOT(textChanged()));
     connect(ui->passEdit2, SIGNAL(textChanged(QString)), this, SLOT(textChanged()));
@@ -75,7 +112,7 @@ void AskPassphraseDialog::setModel(WalletModel *model)
     this->model = model;
 }
 
-void AskPassphraseDialog::accept()
+void AskPassphraseDialog::accept(bool stakingOnly)
 {
     SecureString oldpass, newpass1, newpass2;
     if(!model)
@@ -245,4 +282,19 @@ bool AskPassphraseDialog::eventFilter(QObject *object, QEvent *event)
         }
     }
     return QDialog::eventFilter(object, event);
+}
+
+void AskPassphraseDialog::closeForm()
+{
+    close();
+}
+
+void AskPassphraseDialog::unlockWallet()
+{
+    accept(false); // Success
+}
+
+void AskPassphraseDialog::unlockWalletForStakingOnly()
+{
+    accept(true);
 }

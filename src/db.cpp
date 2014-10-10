@@ -401,7 +401,8 @@ bool CDB::Rewrite(const string& strFile, BerkerleyDBUpgradeProgress &progress, c
                 bool fSuccess = true;
                 printf("Rewriting %s...\n", strFile.c_str());
                 string strFileRes = strFile + ".rewrite";
-                { // surround usage of db with extra {}
+                {
+                    // surround usage of db with extra {}
                     CDB db(strFile.c_str(), "r");
                     Db* pdbCopy = new Db(&bitdb.dbenv, 0);
 
@@ -448,8 +449,6 @@ bool CDB::Rewrite(const string& strFile, BerkerleyDBUpgradeProgress &progress, c
                         }
 
                         db.ReadAtCursor(pcursor, ssKey, ssValue, DB_FIRST);
-
-                        //boost::filesystem::path blkpath = ;
                         nTotalBytes = numRows;
                         // Set up progress calculations and callbacks.
                         callbackTotalOperationProgress = &progress;
@@ -499,7 +498,29 @@ bool CDB::Rewrite(const string& strFile, BerkerleyDBUpgradeProgress &progress, c
                                 CDiskBlockIndex diskindex(DB_PREV_VER);
                                 ssValue >> diskindex;
                                 diskindex.fileVersion = CLIENT_VERSION; // update version
-                                uint256 blockHash = diskindex.GetBlockHash(); // calc hash
+
+                                /*
+                                // Construct block index object
+                                CBlockIndex* pindexNew = InsertBlockIndex(blockHash);
+                                pindexNew->pprev          = InsertBlockIndex(diskindex.hashPrev);
+                                pindexNew->pnext          = InsertBlockIndex(diskindex.hashNext);
+                                pindexNew->nFile          = diskindex.nFile;
+                                pindexNew->nBlockPos      = diskindex.nBlockPos;
+                                pindexNew->nHeight        = diskindex.nHeight;
+                                pindexNew->nMint          = diskindex.nMint;
+                                pindexNew->nMoneySupply   = diskindex.nMoneySupply;
+                                pindexNew->nFlags         = diskindex.nFlags;
+                                pindexNew->nStakeModifier = diskindex.nStakeModifier;
+                                pindexNew->prevoutStake   = diskindex.prevoutStake;
+                                pindexNew->nStakeTime     = diskindex.nStakeTime;
+                                pindexNew->hashProofOfStake = diskindex.hashProofOfStake;
+                                pindexNew->nVersion       = diskindex.nVersion;
+                                pindexNew->hashMerkleRoot = diskindex.hashMerkleRoot;
+                                pindexNew->nTime          = diskindex.nTime;
+                                pindexNew->nBits          = diskindex.nBits;
+                                pindexNew->nNonce         = diskindex.nNonce;
+                                */
+                                uint256 blockHash = diskindex.GetBlockHash(); // calc hash (force)
                                 ssValue << diskindex; // serialize
                             }
 

@@ -464,7 +464,7 @@ QToolBar::separator:vertical {
 
 QPushButton
 {
-    color: #dad1b0;
+    color: #silver;
     background-color: QLinearGradient( x1: 0, y1: 1, x2: 0, y2: 0,
     stop: 0 #302F2F, stop: 1 #484846);
     border-width: 1px;

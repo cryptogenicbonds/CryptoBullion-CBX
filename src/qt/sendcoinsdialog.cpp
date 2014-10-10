@@ -81,8 +81,6 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
     GUIUtil::SetupPushButton(ui->pushButtonCoinControl);
     GUIUtil::SetupPushButton(ui->sendButton);
 
-
-
     fNewRecipientAllowed = true;
 }
 

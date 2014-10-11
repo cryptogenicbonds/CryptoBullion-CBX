@@ -47,9 +47,11 @@ class FileState {
     }
   }
 
-  uint64_t Size() const { return size_; }
+#ifdef WIN32
+    #define SIZE_MAX sizeof(size_t)
+#endif
 
-#define SIZE_MAX sizeof(size_t)
+  uint64_t Size() const { return size_; }  
 
   Status Read(uint64_t offset, size_t n, Slice* result, char* scratch) const {
     if (offset > size_) {

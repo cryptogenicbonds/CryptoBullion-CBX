@@ -24,6 +24,10 @@ SendCoinsEntry::SendCoinsEntry(QWidget *parent) :
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
     ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
     ui->payTo->setPlaceholderText(tr("Enter a valid CryptogenicBullion address"));
+    // style editboxes
+    GUIUtil::SetEditGradient(ui->payTo);
+    GUIUtil::SetEditGradient(ui->addAsLabel);
+    GUIUtil::SetEditGradient(ui->payAmount);
 #endif
     setFocusPolicy(Qt::TabFocus);
     setFocusProxy(ui->payTo);

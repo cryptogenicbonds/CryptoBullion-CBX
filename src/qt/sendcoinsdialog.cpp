@@ -75,6 +75,8 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
     ui->labelCoinControlChange->addAction(clipboardChangeAction);
 
     GUIUtil::SetEditGradient(ui->lineEditCoinControlChange);
+    GUIUtil::SetEditGradient(ui->lineEditCoinControlChange);
+    GUIUtil::SetEditGradient(ui->lineEditCoinControlChange);
 
     GUIUtil::SetupPushButton(ui->addButton);
     GUIUtil::SetupPushButton(ui->clearButton);

@@ -169,7 +169,7 @@ void SetWidgetGradient(QWidget* widget)
 
 void SetEditGradient(QWidget* widget)
 {
-    widget->setStyleSheet("background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2f2f30, stop: 1 #484849);");
+    widget->setStyleSheet("background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #19191a, stop: 1 #262626);");
 }
 
 void SetupPushButton(QWidget* widget)

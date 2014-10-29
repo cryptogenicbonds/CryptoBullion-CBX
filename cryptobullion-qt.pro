@@ -30,6 +30,8 @@ contains(USE_MXE, 1) {
 	OBJECTS_DIR = x86/build
 	MOC_DIR = x86/build
 	UI_DIR = x86/build
+	LIBS+=$$PWD/ex_lib/qrencode-3.4.1-1-mingw32-dev/lib/libqrencode.dll.a
+	INCLUDEPATH += $$PWD/ex_lib/qrencode-3.4.1-1-mingw32-dev/include/
 }else{
 	OBJECTS_DIR = build
 	MOC_DIR = build
@@ -64,7 +66,9 @@ win32:QMAKE_LFLAGS *= -Wl,--large-address-aware -static
 contains(USE_QRCODE, 1) {
     message(Building with QRCode support)
     DEFINES += USE_QRCODE
-    LIBS += -lqrencode
+	!contains(USE_MXE, 1) {
+		LIBS += -lqrencode
+	}   
 }
 
 # use: qmake "USE_UPNP=1" ( enabled by default; default)

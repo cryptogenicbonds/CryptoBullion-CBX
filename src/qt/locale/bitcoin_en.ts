@@ -180,33 +180,33 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="+33"/>
-        <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
+        <translation>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Encrypt wallet</source>
-        <translation>Encrypt wallet</translation>
+        <source>Encrypt vault</source>
+        <translation>Encrypt vault</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation>This operation needs your wallet passphrase to unlock the wallet.</translation>
+        <source>This operation needs your vault passphrase to unlock the vault.</source>
+        <translation>This operation needs your vault passphrase to unlock the vault.</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Unlock wallet</source>
-        <translation>Unlock wallet</translation>
+        <source>Unlock vault</source>
+        <translation>Unlock vault</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
-        <translation>This operation needs your wallet passphrase to decrypt the wallet.</translation>
+        <source>This operation needs your vault passphrase to enter the vault.</source>
+        <translation>This operation needs your vault passphrase to enter the vault.</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Decrypt wallet</source>
-        <translation>Decrypt wallet</translation>
+        <source>Decrypt vault</source>
+        <translation>Decrypt vault</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -215,27 +215,27 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+1"/>
-        <source>Enter the old and new passphrase to the wallet.</source>
-        <translation>Enter the old and new passphrase to the wallet.</translation>
+        <source>Enter the old and new passphrase to the vault.</source>
+        <translation>Enter the old and new passphrase to the vault.</translation>
     </message>
     <message>
         <location line="+46"/>
-        <source>Confirm wallet encryption</source>
-        <translation>Confirm wallet encryption</translation>
+        <source>Confirm vault encryption</source>
+        <translation>Confirm vault encryption</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your vault and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
+        <translation>Warning: If you encrypt your vault and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>Are you sure you wish to encrypt your wallet?</translation>
+        <source>Are you sure you wish to encrypt your vault?</source>
+        <translation>Are you sure you wish to encrypt your vault?</translation>
     </message>
     <message>
         <location line="+15"/>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
+        <source>IMPORTANT: Any previous backups you have made of your vault file should be replaced with the newly generated, encrypted vault file. For security reasons, previous backups of the unencrypted vault file will become useless as soon as you start using the new, encrypted vault.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -247,26 +247,26 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-130"/>
         <location line="+58"/>
-        <source>Wallet encrypted</source>
-        <translation>Wallet encrypted</translation>
+        <source>Vault encrypted</source>
+        <translation>Vault encrypted</translation>
     </message>
     <message>
         <location line="-56"/>
-        <source>CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
+        <source>CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
     </message>
     <message>
         <location line="+13"/>
         <location line="+7"/>
         <location line="+42"/>
         <location line="+6"/>
-        <source>Wallet encryption failed</source>
-        <translation>Wallet encryption failed</translation>
+        <source>Vault encryption failed</source>
+        <translation>Vault encryption failed</translation>
     </message>
     <message>
         <location line="-54"/>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</translation>
+        <source>Vault encryption failed due to an internal error. Your vault was not encrypted.</source>
+        <translation>Vault encryption failed due to an internal error. Your vault was not encrypted.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -276,25 +276,25 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-37"/>
-        <source>Wallet unlock failed</source>
-        <translation>Wallet unlock failed</translation>
+        <source>Vault unlock failed</source>
+        <translation>Vault unlock failed</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+11"/>
         <location line="+19"/>
-        <source>The passphrase entered for the wallet decryption was incorrect.</source>
-        <translation>The passphrase entered for the wallet decryption was incorrect.</translation>
+        <source>The passphrase entered for the vault decryption was incorrect.</source>
+        <translation>The passphrase entered for the vault decryption was incorrect.</translation>
     </message>
     <message>
         <location line="-20"/>
-        <source>Wallet decryption failed</source>
-        <translation>Wallet decryption failed</translation>
+        <source>Vault decryption failed</source>
+        <translation>Vault decryption failed</translation>
     </message>
     <message>
         <location line="+14"/>
-        <source>Wallet passphrase was successfully changed.</source>
-        <translation>Wallet passphrase was successfully changed.</translation>
+        <source>Vault passphrase was successfully changed.</source>
+        <translation>Vault passphrase was successfully changed.</translation>
     </message>
 </context>
 <context>
@@ -316,8 +316,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+1"/>
-        <source>Show general overview of wallet</source>
-        <translation>Show general overview of wallet</translation>
+        <source>Show general overview of vault</source>
+        <translation>Show general overview of vault</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -386,13 +386,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>&amp;Encrypt Wallet...</source>
-        <translation>&amp;Encrypt Wallet...</translation>
+        <source>&amp;Encrypt Vault...</source>
+        <translation>&amp;Encrypt Vault...</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Backup Wallet...</source>
-        <translation>&amp;Backup Wallet...</translation>
+        <source>&amp;Backup Vault...</source>
+        <translation>&amp;Backup Vault...</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -434,18 +434,18 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Encrypt or decrypt wallet</source>
-        <translation>Encrypt or decrypt wallet</translation>
+        <source>Encrypt or decrypt vault</source>
+        <translation>Encrypt or decrypt vault</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Backup wallet to another location</source>
-        <translation>Backup wallet to another location</translation>
+        <source>Backup vault to another location</source>
+        <translation>Backup vault to another location</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Change the passphrase used for wallet encryption</source>
-        <translation>Change the passphrase used for wallet encryption</translation>
+        <source>Change the passphrase used for vault encryption</source>
+        <translation>Change the passphrase used for vault encryption</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -469,8 +469,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+0"/>
-        <source>Wallet</source>
-        <translation>Wallet</translation>
+        <source>Vault</source>
+        <translation>Vault</translation>
     </message>
     <message>
         <location line="+168"/>
@@ -626,22 +626,22 @@ Address: %4
     </message>
     <message>
         <location line="+16"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
+        <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
+        <translation>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
+        <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
+        <translation>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+23"/>
-        <source>Backup Wallet</source>
-        <translation>Backup Wallet</translation>
+        <source>Backup Vault</source>
+        <translation>Backup Vault</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Wallet Data (*.dat)</source>
+        <source>Vault Data (*.dat)</source>
         <translation>Wallet Data (*.dat)</translation>
     </message>
     <message>
@@ -651,8 +651,8 @@ Address: %4
     </message>
     <message>
         <location line="+0"/>
-        <source>There was an error trying to save the wallet data to the new location.</source>
-        <translation>There was an error trying to save the wallet data to the new location.</translation>
+        <source>There was an error trying to save the vault data to the new location.</source>
+        <translation>There was an error trying to save the vault data to the new location.</translation>
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
@@ -727,8 +727,8 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>Could not unlock wallet.</source>
-        <translation>Could not unlock wallet.</translation>
+        <source>Could not unlock vault.</source>
+        <translation>Could not unlock vault.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -814,8 +814,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The wallet is always detached.</source>
-        <translation>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The wallet is always detached.</translation>
+        <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The vault is always detached.</source>
+        <translation>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The vault is always detached.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -985,8 +985,8 @@ Address: %4
     <message>
         <location line="+33"/>
         <location line="+183"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</translation>
+        <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
+        <translation>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="-141"/>
@@ -1010,8 +1010,8 @@ Address: %4
     </message>
     <message>
         <location line="-78"/>
-        <source>Wallet</source>
-        <translation>Wallet</translation>
+        <source>Vault</source>
+        <translation>Vault</translation>
     </message>
     <message>
         <location line="+124"/>
@@ -1045,8 +1045,8 @@ Address: %4
     </message>
     <message>
         <location line="+20"/>
-        <source>Total number of transactions in wallet</source>
-        <translation>Total number of transactions in wallet</translation>
+        <source>Total number of transactions in vault</source>
+        <translation>Total number of transactions in vault</translation>
     </message>
     <message>
         <location filename="../overviewpage.cpp" line="+112"/>
@@ -1366,8 +1366,8 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>Error: The transaction was rejected. This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
-        <translation>Error: The transaction was rejected. This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</translation>
+        <source>Error: The transaction was rejected. This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
+        <translation>Error: The transaction was rejected. This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</translation>
     </message>
 </context>
 <context>
@@ -1569,8 +1569,8 @@ Address: %4
     </message>
     <message>
         <location line="-73"/>
-        <source>Wallet unlock was cancelled.</source>
-        <translation>Wallet unlock was cancelled.</translation>
+        <source>Vault unlock was cancelled.</source>
+        <translation>Vault unlock was cancelled.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -2225,7 +2225,7 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>Error: The transaction was rejected.  This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
+        <source>Error: The transaction was rejected.  This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2250,7 +2250,7 @@ Address: %4
     </message>
     <message>
         <location line="+1"/>
-        <source>Error: Wallet locked, unable to create transaction  </source>
+        <source>Error: Vault locked, unable to create transaction  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2485,8 +2485,8 @@ Address: %4
     </message>
     <message>
         <location line="+122"/>
-        <source>Upgrade wallet to latest format</source>
-        <translation>Upgrade wallet to latest format</translation>
+        <source>Upgrade vault to latest format</source>
+        <translation>Upgrade vault to latest format</translation>
     </message>
     <message>
         <location line="-15"/>
@@ -2495,8 +2495,8 @@ Address: %4
     </message>
     <message>
         <location line="-14"/>
-        <source>Rescan the block chain for missing wallet transactions</source>
-        <translation>Rescan the block chain for missing wallet transactions</translation>
+        <source>Rescan the block chain for missing vault transactions</source>
+        <translation>Rescan the block chain for missing vault transactions</translation>
     </message>
     <message>
         <location line="-24"/>
@@ -2575,18 +2575,18 @@ Address: %4
     </message>
     <message>
         <location line="+2"/>
-        <source>Error loading wallet.dat: Wallet corrupted</source>
-        <translation>Error loading wallet.dat: Wallet corrupted</translation>
+        <source>Error loading wallet.dat: Vault corrupted</source>
+        <translation>Error loading wallet.dat: Vault corrupted</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of CryptogenicBullion</source>
-        <translation>Error loading wallet.dat: Wallet requires newer version of CryptogenicBullion</translation>
+        <source>Error loading wallet.dat: Vault requires newer version of CryptogenicBullion</source>
+        <translation>Error loading wallet.dat: Vault requires newer version of CryptogenicBullion</translation>
     </message>
     <message>
         <location line="+73"/>
-        <source>Wallet needed to be rewritten: restart CryptogenicBullion to complete</source>
-        <translation>Wallet needed to be rewritten: restart CryptogenicBullion to complete</translation>
+        <source>Vault needed to be rewritten: restart CryptogenicBullion to complete</source>
+        <translation>Vault needed to be rewritten: restart CryptogenicBullion to complete</translation>
     </message>
     <message>
         <location line="-75"/>
@@ -2670,13 +2670,13 @@ Address: %4
     </message>
     <message>
         <location line="+19"/>
-        <source>Loading wallet...</source>
-        <translation>Loading wallet...</translation>
+        <source>Loading vault...</source>
+        <translation>Loading vault...</translation>
     </message>
     <message>
         <location line="-39"/>
-        <source>Cannot downgrade wallet</source>
-        <translation>Cannot downgrade wallet</translation>
+        <source>Cannot downgrade vault</source>
+        <translation>Cannot downgrade vault</translation>
     </message>
     <message>
         <location line="+1"/>

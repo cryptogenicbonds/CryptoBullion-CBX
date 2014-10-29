@@ -180,32 +180,32 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="+33"/>
-        <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
+        <source>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
         <translation>Введите новый пароль для бумажника. &lt;br/&gt; Пожалуйста, используйте фразы из &lt;b&gt;10 или более случайных символов,&lt;/b&gt; или &lt;b&gt;восьми и более слов.&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Encrypt wallet</source>
+        <source>Encrypt vault</source>
         <translation>Зашифровать бумажник</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>This operation needs your wallet passphrase to unlock the wallet.</source>
+        <source>This operation needs your vault passphrase to unlock the vault.</source>
         <translation>Для выполнения операции требуется пароль вашего бумажника.</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Unlock wallet</source>
+        <source>Unlock vault</source>
         <translation>Разблокировать бумажник</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
+        <source>This operation needs your vault passphrase to decrypt the vault.</source>
         <translation>Для выполнения операции требуется пароль вашего бумажника.</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Decrypt wallet</source>
+        <source>Decrypt vault</source>
         <translation>Расшифровать бумажник</translation>
     </message>
     <message>
@@ -215,27 +215,27 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+1"/>
-        <source>Enter the old and new passphrase to the wallet.</source>
+        <source>Enter the old and new passphrase to the vault.</source>
         <translation>Введите старый и новый пароль для бумажника.</translation>
     </message>
     <message>
         <location line="+46"/>
-        <source>Confirm wallet encryption</source>
+        <source>Confirm vault encryption</source>
         <translation>Подтвердите шифрование бумажника</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your vault and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
         <translation>Внимание: если вы зашифруете бумажник и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ МОНЕТЫ&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Are you sure you wish to encrypt your wallet?</source>
+        <source>Are you sure you wish to encrypt your vault?</source>
         <translation>Вы уверены, что хотите зашифровать ваш бумажник?</translation>
     </message>
     <message>
         <location line="+15"/>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
+        <source>IMPORTANT: Any previous backups you have made of your vault file should be replaced with the newly generated, encrypted vault file. For security reasons, previous backups of the unencrypted vault file will become useless as soon as you start using the new, encrypted vault.</source>
         <translation>ВАЖНО: все предыдущие резервные копии вашего кошелька должны быть заменены новым зашифрованным файлом. В целях безопасности предыдущие резервные копии нешифрованного кошелька станут бесполезны, как только вы начнёте использовать новый шифрованный кошелёк.</translation>
     </message>
     <message>
@@ -247,12 +247,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-130"/>
         <location line="+58"/>
-        <source>Wallet encrypted</source>
+        <source>Vault encrypted</source>
         <translation>Бумажник зашифрован</translation>
     </message>
     <message>
         <location line="-56"/>
-        <source>BottleCaps will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <source>BottleCaps will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
         <translation>Сейчас программа закроется для завершения процесса шифрования. Помните, что шифрование вашего бумажника не может полностью защитить ваши монеты от кражи с помощью инфицирования вашего компьютера вредоносным ПО.</translation>
     </message>
     <message>
@@ -260,12 +260,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+7"/>
         <location line="+42"/>
         <location line="+6"/>
-        <source>Wallet encryption failed</source>
+        <source>Vault encryption failed</source>
         <translation>Не удалось зашифровать бумажник</translation>
     </message>
     <message>
         <location line="-54"/>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Vault encryption failed due to an internal error. Your vault was not encrypted.</source>
         <translation>Шифрование бумажника не удалось из-за внутренней ошибки. Ваш бумажник не был зашифрован.</translation>
     </message>
     <message>
@@ -276,24 +276,24 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-37"/>
-        <source>Wallet unlock failed</source>
+        <source>Vault unlock failed</source>
         <translation>Разблокировка бумажника не удалась</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+11"/>
         <location line="+19"/>
-        <source>The passphrase entered for the wallet decryption was incorrect.</source>
+        <source>The passphrase entered for the vault decryption was incorrect.</source>
         <translation>Указанный пароль не подходит.</translation>
     </message>
     <message>
         <location line="-20"/>
-        <source>Wallet decryption failed</source>
+        <source>Vault decryption failed</source>
         <translation>Расшифрование бумажника не удалось</translation>
     </message>
     <message>
         <location line="+14"/>
-        <source>Wallet passphrase was successfully changed.</source>
+        <source>Vault passphrase was successfully changed.</source>
         <translation>Пароль бумажника успешно изменён.</translation>
     </message>
 </context>
@@ -316,7 +316,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+1"/>
-        <source>Show general overview of wallet</source>
+        <source>Show general overview of vault</source>
         <translation>Показать общий обзор действий с бумажником</translation>
     </message>
     <message>
@@ -386,12 +386,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>&amp;Encrypt Wallet...</source>
+        <source>&amp;Encrypt Vault...</source>
         <translation>&amp;Зашифровать бумажник</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Backup Wallet...</source>
+        <source>&amp;Backup Vault...</source>
         <translation>&amp;Сделать резервную копию бумажника</translation>
     </message>
     <message>
@@ -435,17 +435,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Encrypt or decrypt wallet</source>
+        <source>Encrypt or decrypt vault</source>
         <translation>Зашифровать или расшифровать бумажник</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Backup wallet to another location</source>
+        <source>Backup vault to another location</source>
         <translation>Сделать резервную копию бумажника в другом месте</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Change the passphrase used for wallet encryption</source>
+        <source>Change the passphrase used for vault encryption</source>
         <translation>Изменить пароль шифрования бумажника</translation>
     </message>
     <message>
@@ -470,7 +470,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+0"/>
-        <source>Wallet</source>
+        <source>Vault</source>
         <translation>Бумажник</translation>
     </message>
     <message>
@@ -632,17 +632,17 @@ Address: %4
     </message>
     <message>
         <location line="+16"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
+        <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>Бумажник &lt;b&gt;зашифрован&lt;/b&gt; и в настоящее время &lt;b&gt;разблокирован&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
+        <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Бумажник &lt;b&gt;зашифрован&lt;/b&gt; и в настоящее время &lt;b&gt;заблокирован&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+23"/>
-        <source>Backup Wallet</source>
+        <source>Backup Vault</source>
         <translation>Сделать резервную копию бумажника</translation>
     </message>
     <message>
@@ -657,7 +657,7 @@ Address: %4
     </message>
     <message>
         <location line="+0"/>
-        <source>There was an error trying to save the wallet data to the new location.</source>
+        <source>There was an error trying to save the vault data to the new location.</source>
         <translation>При попытке сохранения данных бумажника в новое место произошла ошибка.</translation>
     </message>
     <message>
@@ -733,7 +733,7 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>Could not unlock wallet.</source>
+        <source>Could not unlock vault.</source>
         <translation>Не удается разблокировать бумажник.</translation>
     </message>
     <message>
@@ -820,7 +820,7 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The wallet is always detached.</source>
+        <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The vault is always detached.</source>
         <translation>Отключить базы данных блоков и адресов при выходе. Это означает, что их можно будет переместить в другой каталог данных, но завершение работы будет медленнее. Бумажник всегда отключается.</translation>
     </message>
     <message>
@@ -991,7 +991,7 @@ Address: %4
     <message>
         <location line="+33"/>
         <location line="+183"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the BottleCaps network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your vault automatically synchronizes with the BottleCaps network after a connection is established, but this process has not completed yet.</source>
         <translation>Отображаемая информация может быть устаревшей. Ваш бумажник автоматически синхронизируется с сетью BottleCaps после подключения, но этот процесс пока не завершён.</translation>
     </message>
     <message>
@@ -1016,7 +1016,7 @@ Address: %4
     </message>
     <message>
         <location line="-78"/>
-        <source>Wallet</source>
+        <source>Vault</source>
         <translation>Бумажник</translation>
     </message>
     <message>
@@ -1051,7 +1051,7 @@ Address: %4
     </message>
     <message>
         <location line="+20"/>
-        <source>Total number of transactions in wallet</source>
+        <source>Total number of transactions in vault</source>
         <translation>Общее количество транзакций в Вашем бумажнике</translation>
     </message>
     <message>
@@ -1372,7 +1372,7 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>Error: The transaction was rejected. This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
+        <source>Error: The transaction was rejected. This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
         <translation>Ошибка: В транзакции отказано.  Такое может произойти, если некоторые монеты уже были потрачены, например, если Вы используете одну копию файла wallet.dat, а монеты были потрачены из другой копии, но не были отмечены как потраченные в этой.</translation>
     </message>
 </context>
@@ -1575,7 +1575,7 @@ Address: %4
     </message>
     <message>
         <location line="-73"/>
-        <source>Wallet unlock was cancelled.</source>
+        <source>Vault unlock was cancelled.</source>
         <translation>Разблокировка бумажника была отменена.</translation>
     </message>
     <message>
@@ -2126,7 +2126,7 @@ Address: %4
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+82"/>
-        <source>BottleCaps version</source>
+        <source>CGB version</source>
         <translation>Версия</translation>
     </message>
     <message>
@@ -2297,7 +2297,7 @@ Address: %4
     </message>
     <message>
         <location line="-42"/>
-        <source>Error: The transaction was rejected.  This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
+        <source>Error: The transaction was rejected.  This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
         <translation>Ошибка: В транзакции отказано.  Такое может произойти, если некоторые монеты уже были потрачены, например, если Вы используете одну копию файла wallet.dat, а монеты были потрачены из другой копии, но не были отмечены как потраченные в этой.</translation>
     </message>
     <message>
@@ -2347,7 +2347,7 @@ Address: %4
     </message>
     <message>
         <location line="+1"/>
-        <source>Error: Wallet locked, unable to create transaction  </source>
+        <source>Error: vault locked, unable to create transaction  </source>
         <translation>Ошибка: бумажник заблокирован, невозможно создать транзакцию  </translation>
     </message>
     <message>
@@ -2498,7 +2498,7 @@ Address: %4
     </message>
     <message>
         <location line="+122"/>
-        <source>Upgrade wallet to latest format</source>
+        <source>Upgrade vault to latest format</source>
         <translation>Обновить бумажник до последнего формата</translation>
     </message>
     <message>
@@ -2508,7 +2508,7 @@ Address: %4
     </message>
     <message>
         <location line="-14"/>
-        <source>Rescan the block chain for missing wallet transactions</source>
+        <source>Rescan the block chain for missing vault transactions</source>
         <translation>Перепроверить цепь блоков на предмет отсутствующих в бумажнике транзакций</translation>
     </message>
     <message>
@@ -2588,18 +2588,18 @@ Address: %4
     </message>
     <message>
         <location line="+2"/>
-        <source>Error loading wallet.dat: Wallet corrupted</source>
+        <source>Error loading wallet.dat: Vault corrupted</source>
         <translation>Ошибка загрузки wallet.dat: Бумажник поврежден</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of BottleCaps</source>
-        <translation>Ошибка загрузки wallet.dat: бумажник требует более новую версию BottleCaps</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of CGB</source>
+        <translation>Ошибка загрузки wallet.dat: бумажник требует более новую версию CGB</translation>
     </message>
     <message>
         <location line="+73"/>
-        <source>Wallet needed to be rewritten: restart BottleCaps to complete</source>
-        <translation>Необходимо перезаписать бумажник, перезапустите BottleCaps для завершения операции.</translation>
+        <source>Wallet needed to be rewritten: restart Vault to complete</source>
+        <translation>Необходимо перезаписать бумажник, перезапустите Vault для завершения операции.</translation>
     </message>
     <message>
         <location line="-75"/>

@@ -38,7 +38,8 @@ private:
     WalletModel *model;
     bool fCapsLock;
     QPushButton* buttonCancel;
-    QPushButton* buttonUnlock;
+    QPushButton* buttonOk;
+    QPushButton* buttonUnlock;    
     QPushButton* buttonUnlockStakingOnly;
 
 private slots:
@@ -49,6 +50,7 @@ private slots:
     void closeForm();
     void unlockWallet();
     void unlockWalletForStakingOnly();
+    void encryptWallet();
 };
 
 #endif // ASKPASSPHRASEDIALOG_H

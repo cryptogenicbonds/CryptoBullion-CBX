@@ -29,36 +29,38 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
     bool addUnlockButton = false;
     bool addUnlockStakingOnlyButton = false;
     bool addCancelButton = true;
+    bool addOkButton = false;
 
     switch(mode)
     {
         case Encrypt: // Ask passphrase x2
+            addOkButton = true;
             ui->passLabel1->hide();
             ui->passEdit1->hide();
-            ui->warningLabel->setText(tr("Enter the new passphrase to the wallet.<br/>Please use a passphrase of <b>10 or more random characters</b>, or <b>eight or more words</b>."));
-            setWindowTitle(tr("Encrypt wallet"));
+            ui->warningLabel->setText(tr("Enter the new passphrase to the vault.<br/>Please use a passphrase of <b>10 or more random characters</b>, or <b>eight or more words</b>."));
+            setWindowTitle(tr("Encrypt Vault"));            
             break;
         case Unlock: // Ask passphrase
             addUnlockButton = true;
             addUnlockStakingOnlyButton = true;
-            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
+            ui->warningLabel->setText(tr("This operation needs your vault passphrase to unlock the vault."));
             ui->passLabel2->hide();
             ui->passEdit2->hide();
             ui->passLabel3->hide();
             ui->passEdit3->hide();
-            setWindowTitle(tr("Unlock wallet"));
+            setWindowTitle(tr("Unlock vault"));
             break;
         case Decrypt:   // Ask passphrase
-            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to decrypt the wallet."));
+            ui->warningLabel->setText(tr("This operation needs your vault passphrase to decrypt the vault."));
             ui->passLabel2->hide();
             ui->passEdit2->hide();
             ui->passLabel3->hide();
             ui->passEdit3->hide();
-            setWindowTitle(tr("Decrypt wallet"));
+            setWindowTitle(tr("Decrypt Vault"));
             break;
         case ChangePass: // Ask old passphrase + new passphrase x2
             setWindowTitle(tr("Change passphrase"));
-            ui->warningLabel->setText(tr("Enter the old and new passphrase to the wallet."));
+            ui->warningLabel->setText(tr("Enter the old and new passphrase to the vault."));
             break;
     }
 
@@ -78,6 +80,14 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
         GUIUtil::SetupPushButton(buttonUnlockStakingOnly);
     }
 
+    if (addOkButton){
+        buttonOk = new QPushButton(tr("&Ok"));
+        buttonOk->setDefault(false);
+        ui->buttonBox->addButton(buttonOk, QDialogButtonBox::ActionRole);
+        connect(buttonOk, SIGNAL(clicked()), this, SLOT(encryptWallet()));
+        GUIUtil::SetupPushButton(buttonOk);
+    }
+
     if (addCancelButton){
         buttonCancel = new QPushButton(tr("&Cancel"));
         buttonCancel->setDefault(true);
@@ -85,12 +95,6 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
         connect(buttonCancel, SIGNAL(clicked()), this, SLOT(closeForm()));
         GUIUtil::SetupPushButton(buttonCancel);
     }
-
-
-
-
-
-
 
     textChanged();
     connect(ui->passEdit1, SIGNAL(textChanged(QString)), this, SLOT(textChanged()));
@@ -297,4 +301,9 @@ void AskPassphraseDialog::unlockWallet()
 void AskPassphraseDialog::unlockWalletForStakingOnly()
 {
     accept(true);
+}
+
+void AskPassphraseDialog::encryptWallet()
+{
+    accept(false);
 }

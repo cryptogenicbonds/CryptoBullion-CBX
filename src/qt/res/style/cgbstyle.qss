@@ -239,7 +239,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 QScrollBar:vertical
 {
     background-color: QLinearGradient( x1: 1, y1: 0, x2: 0, y2: 0,
-    stop: 0 #2F2F, stop: 1 #484846);
+    stop: 0 #2F2F2F, stop: 1 #484846);
     width: 15px;
     margin: 11px 0 11px 0;
     border: 1px solid #3A3939;

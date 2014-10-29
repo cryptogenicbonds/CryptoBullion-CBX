@@ -283,9 +283,9 @@ std::string HelpMessage()
         "  -rpcallowip=<ip>       " + _("Allow JSON-RPC connections from specified IP address") + "\n" +
         "  -rpcconnect=<ip>       " + _("Send commands to node running on <ip> (default: 127.0.0.1)") + "\n" +
         "  -blocknotify=<cmd>     " + _("Execute command when the best block changes (%s in cmd is replaced by block hash)") + "\n" +
-        "  -upgradewallet         " + _("Upgrade wallet to latest format") + "\n" +
+        "  -upgradewallet         " + _("Upgrade vault to latest format") + "\n" +
         "  -keypool=<n>           " + _("Set key pool size to <n> (default: 100)") + "\n" +
-        "  -rescan                " + _("Rescan the block chain for missing wallet transactions") + "\n" +
+        "  -rescan                " + _("Rescan the block chain for missing vault transactions") + "\n" +
         "  -salvagewallet         " + _("Attempt to recover private keys from a corrupt wallet.dat") + "\n" +
         "  -checkblocks=<n>       " + _("How many blocks to check at startup (default: 2500, 0 = all)") + "\n" +
         "  -checklevel=<n>        " + _("How thorough the block verification is (0-6, default: 1)") + "\n" +

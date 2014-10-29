@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Coin Control</string>
+   <string>Bullion Control</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

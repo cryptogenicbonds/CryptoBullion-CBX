@@ -86,7 +86,7 @@ background: transparent;
 color: #FFFFFF;</string>
             </property>
             <property name="text">
-             <string>Coin Control Features</string>
+             <string>Bullion Control Features</string>
             </property>
            </widget>
           </item>

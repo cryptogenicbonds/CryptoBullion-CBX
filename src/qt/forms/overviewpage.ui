@@ -50,7 +50,7 @@
           <item>
            <widget class="QLabel" name="labelWalletStatus">
             <property name="toolTip">
-             <string>The displayed information may be out of date. Your wallet automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
+             <string>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel { color: #ea6900; }</string>
@@ -221,7 +221,7 @@
           <item row="4" column="1">
            <widget class="QLabel" name="labelNumTransactions">
             <property name="toolTip">
-             <string>Total number of transactions in wallet</string>
+             <string>Total number of transactions in vault</string>
             </property>
             <property name="text">
              <string notr="true">0</string>
@@ -392,7 +392,7 @@
           <item>
            <widget class="QLabel" name="labelTransactionsStatus">
             <property name="toolTip">
-             <string>The displayed information may be out of date. Your wallet automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
+             <string>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel { color: #ea6900; }</string>

@@ -229,8 +229,8 @@ void BitcoinGUI::createActions()
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
 
-    unlockToStakeAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Unlock Wallet"), this);
-    unlockToStakeAction->setToolTip(tr("Unlock Wallet for Staking"));
+    unlockToStakeAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Unlock Vault"), this);
+    unlockToStakeAction->setToolTip(tr("Unlock Vault for Staking"));
     unlockToStakeAction->setCheckable(true);
     unlockToStakeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
     tabGroup->addAction(unlockToStakeAction);
@@ -262,11 +262,11 @@ void BitcoinGUI::createActions()
     optionsAction->setToolTip(tr("Modify configuration options for CryptogenicBullion"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Show / Hide"), this);
-    encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
-    encryptWalletAction->setToolTip(tr("Encrypt or decrypt wallet"));
+    encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Vault..."), this);
+    encryptWalletAction->setToolTip(tr("Encrypt or decrypt vault"));
     encryptWalletAction->setCheckable(true);
-    backupWalletAction = new QAction(QIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
-    backupWalletAction->setToolTip(tr("Backup wallet to another location"));
+    backupWalletAction = new QAction(QIcon(":/icons/filesave"), tr("&Backup Vault..."), this);
+    backupWalletAction->setToolTip(tr("Backup vault to another location"));
     changePassphraseAction = new QAction(QIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setToolTip(tr("Change the passphrase used for wallet encryption"));
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
@@ -827,7 +827,7 @@ void BitcoinGUI::setEncryptionStatus(int status)
     case WalletModel::Unlocked:
         labelEncryptionIcon->show();
         labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-        labelEncryptionIcon->setToolTip(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b>"));
+        labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked</b>"));
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
         encryptWalletAction->setEnabled(false); // TODO: decrypt currently not supported
@@ -835,7 +835,7 @@ void BitcoinGUI::setEncryptionStatus(int status)
     case WalletModel::Locked:
         labelEncryptionIcon->show();
         labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_closed").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-        labelEncryptionIcon->setToolTip(tr("Wallet is <b>encrypted</b> and currently <b>locked</b>"));
+        labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>locked</b>"));
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
         encryptWalletAction->setEnabled(false); // TODO: decrypt currently not supported
@@ -860,7 +860,7 @@ void BitcoinGUI::encryptWallet(bool status)
 void BitcoinGUI::backupWallet()
 {
     QString saveDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    QString filename = QFileDialog::getSaveFileName(this, tr("Backup Wallet"), saveDir, tr("Wallet Data (*.dat)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Backup Vault"), saveDir, tr("Wallet Vault (*.dat)"));
     if(!filename.isEmpty()) {
         if(!walletModel->backupWallet(filename)) {
             QMessageBox::warning(this, tr("Backup Failed"), tr("There was an error trying to save the wallet data to the new location."));
@@ -934,16 +934,16 @@ void BitcoinGUI::toggleWalletLock()
         if (walletModel->getEncryptionStatus() == WalletModel::Unlocked)
         {
             unlockToStakeAction->setIcon(QIcon(":/icons/lock_open"));
-            unlockToStakeAction->setText(QString(tr("Lock Wallet")));
-            QString strMessage = tr("Wallet unlocked. Please click again or close the applicaton to re-lock the wallet.");
-            QMessageBox::information(this, tr("Wallet Unlocked"), strMessage);
+            unlockToStakeAction->setText(QString(tr("Lock Vault")));
+            QString strMessage = tr("Vault unlocked. Please click again or close the applicaton to re-lock the vault.");
+            QMessageBox::information(this, tr("Vault Unlocked"), strMessage);
         }
     }else{
         walletModel->setWalletLocked(true);
         if (walletModel->getEncryptionStatus() == WalletModel::Locked)
         {
             unlockToStakeAction->setIcon(QIcon(":/icons/lock_closed"));
-            unlockToStakeAction->setText(QString(tr("Unlock Wallet")));
+            unlockToStakeAction->setText(QString(tr("Unlock Vault")));
         }
     }
 }

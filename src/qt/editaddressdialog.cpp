@@ -98,7 +98,7 @@ void EditAddressDialog::accept()
             return;
         case AddressTableModel::WALLET_UNLOCK_FAILURE:
             QMessageBox::critical(this, windowTitle(),
-                tr("Could not unlock wallet."),
+                tr("Could not unlock vault."),
                 QMessageBox::Ok, QMessageBox::Ok);
             return;
         case AddressTableModel::KEY_GENERATION_FAILURE:

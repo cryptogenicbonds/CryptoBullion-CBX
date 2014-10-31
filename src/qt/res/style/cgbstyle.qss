@@ -329,7 +329,7 @@ QHeaderView::section
 
 QCheckBox:disabled
 {
-    color: #4040FF;
+    color: #999999;
 }
 
 QSizeGrip {

@@ -9,20 +9,36 @@ CONFIG += thread
 CONFIG += static
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
-#windows:LIBS += -lshlwapi
-#LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
-#LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
-#windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-#LIBS += -lboost_system-mgw48-mt-sd-1_55 -lboost_filesystem-mgw48-mt-sd-1_55 -lboost_program_options-mgw48-mt-sd-1_55 -lboost_thread-mgw48-mt-sd-1_55
-#BOOST_LIB_SUFFIX=-mgw48-mt-s-1_55
-#BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
-#BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
-#BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-#BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1g/include
-#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1g
-#MINIUPNPC_INCLUDE_PATH=C:/deps/
-#MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+windows:
+{
+        BOOST_INCLUDE_PATH += D:\_coinDev\deps\boost_1_55_0
+        BOOST_LIB_PATH=D:\_coinDev\deps\boost_1_55_0\stage\lib
+
+        BDB_INCLUDE_PATH=D:\_coinDev\deps\db-4.8.30.NC\build_unix
+        BDB_LIB_PATH=D:\_coinDev\deps\db-4.8.30.NC\build_unix
+
+        OPENSSL_INCLUDE_PATH += D:\_coinDev\deps\openssl-1.0.1j\include
+        OPENSSL_LIB_PATH=D:\_coinDev\deps\openssl-1.0.1j
+
+        QRENCODE_LIB_PATH=D:\_coinDev\deps\qrencode-3.4.4\.libs
+
+        #INCLUDEPATH += D:\_coinDev\Qt\5.3.2\include\QtWidgets
+
+        windows:LIBS += -lshlwapi
+        LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+        #LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+        #windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
+        #LIBS += -lboost_system-mgw48-mt-sd-1_55 -lboost_filesystem-mgw48-mt-sd-1_55 -lboost_program_options-mgw48-mt-sd-1_55 -lboost_thread-mgw48-mt-sd-1_55
+        BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
+        #BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
+        #BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
+        #BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
+        #BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
+        #OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1i/include
+        #OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1i
+        #MINIUPNPC_INCLUDE_PATH=C:/deps/
+        #MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+}
 
 # pass USE_MXE flag to cross compile Win32 wallet using MXE.
 contains(USE_MXE, 1) {
@@ -30,8 +46,6 @@ contains(USE_MXE, 1) {
 	OBJECTS_DIR = x86/build
 	MOC_DIR = x86/build
 	UI_DIR = x86/build
-	LIBS+=$$PWD/ex_lib/qrencode-3.4.1-1-mingw32-dev/lib/libqrencode.dll.a
-	INCLUDEPATH += $$PWD/ex_lib/qrencode-3.4.1-1-mingw32-dev/include/
 }else{
 	OBJECTS_DIR = build
 	MOC_DIR = build
@@ -66,9 +80,7 @@ win32:QMAKE_LFLAGS *= -Wl,--large-address-aware -static
 contains(USE_QRCODE, 1) {
     message(Building with QRCode support)
     DEFINES += USE_QRCODE
-	!contains(USE_MXE, 1) {
-		LIBS += -lqrencode
-	}   
+    LIBS += -lqrencode
 }
 
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
@@ -113,6 +125,7 @@ contains(USE_BDB, 1) {
 	INCLUDEPATH += src/leveldb/include src/leveldb/helpers
 	LIBS += $$PWD/src/leveldb/libleveldb.a $$PWD/src/leveldb/libmemenv.a
 	SOURCES += src/txdb-leveldb.cpp
+
 	!win32 {
 		# we use QMAKE_CXXFLAGS_RELEASE even without RELEASE=1 because we use RELEASE to indicate linking preferences not -O preferences
 		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
@@ -122,7 +135,7 @@ contains(USE_BDB, 1) {
 		QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
 		}
 		LIBS += -lshlwapi
-		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
+		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=NATIVE_WINDOWS $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
 	}
 	genleveldb.target = $$PWD/src/leveldb/libleveldb.a
 	genleveldb.depends = FORCE

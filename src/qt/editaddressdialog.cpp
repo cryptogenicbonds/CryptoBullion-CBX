@@ -12,7 +12,9 @@ EditAddressDialog::EditAddressDialog(Mode mode, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    GUIUtil::setupAddressWidget(ui->addressEdit, this);
+    GUIUtil::setupAddressWidget(ui->addressEdit, this);    
+    GUIUtil::SetEditGradient(ui->addressEdit);
+    GUIUtil::SetEditGradient(ui->labelEdit);
 
     switch(mode)
     {

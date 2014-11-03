@@ -1,6 +1,7 @@
 #include "sendcoinsentry.h"
 #include "ui_sendcoinsentry.h"
 #include "guiutil.h"
+#include "main.h"
 #include "bitcoinunits.h"
 #include "addressbookpage.h"
 #include "walletmodel.h"
@@ -113,8 +114,12 @@ bool SendCoinsEntry::validate()
     }
     else
     {
-        if(ui->payAmount->value() <= 0)
+        if(ui->payAmount->value() < MIN_TXOUT_AMOUNT)
         {
+            int unit = model->getOptionsModel()->getDisplayUnit();
+            QMessageBox::warning(this, tr("Amount too small"), tr("Amount must be at least %1").arg(BitcoinUnits::formatWithUnit(unit, MIN_TXOUT_AMOUNT)),
+                                  QMessageBox::Abort, QMessageBox::Abort);
+
             // Cannot send 0 coins or less
             ui->payAmount->setValid(false);
             retval = false;

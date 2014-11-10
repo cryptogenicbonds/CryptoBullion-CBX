@@ -37,11 +37,11 @@ const std::string CLIENT_NAME("Satoshi");
 #endif
 
 // git will put "#define GIT_ARCHIVE 1" on the next line inside archives.
-#define GIT_ARCHIVE 1
-#ifdef GIT_ARCHIVE
-#    define GIT_COMMIT_ID "df9d55a"
-#    define GIT_COMMIT_DATE "$Format:%cD"
-#endif
+//#define GIT_ARCHIVE 0
+//#ifdef GIT_ARCHIVE
+//#    define GIT_COMMIT_ID "df9d55a"
+//#    define GIT_COMMIT_DATE "$Format:%cD"
+//#endif
 
 #define BUILD_DESC_FROM_COMMIT(maj,min,rev,build,commit) \
     "v" DO_STRINGIZE(maj) "." DO_STRINGIZE(min) "." DO_STRINGIZE(rev) "." DO_STRINGIZE(build) "-g" commit

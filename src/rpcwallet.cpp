@@ -1405,7 +1405,10 @@ Value walletpassphrase(const Array& params, bool fHelp)
 
     if (strWalletPass.length() > 0)
     {
-        if (!pwalletMain->Unlock(strWalletPass))
+        if (pwalletMain->Unlock(strWalletPass))
+        {
+
+        }else
             throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect.");
     }
     else

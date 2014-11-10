@@ -424,7 +424,7 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
                 this, SLOT(incomingTransaction(QModelIndex,int,int)));
 
         // Ask for passphrase if needed
-        connect(walletModel, SIGNAL(requireUnlock()), this, SLOT(unlockWallet()));
+        connect(walletModel, SIGNAL(requireUnlock(bool)), this, SLOT(unlockWallet(bool)));
 
         handleUnlockButtonState();
     }
@@ -878,14 +878,14 @@ void BitcoinGUI::changePassphrase()
     dlg.exec();
 }
 
-void BitcoinGUI::unlockWallet()
+void BitcoinGUI::unlockWallet(bool showMintOption)
 {
     if(!walletModel)
         return;
     // Unlock wallet when requested by wallet model
     if(walletModel->getEncryptionStatus() == WalletModel::Locked)
     {
-        AskPassphraseDialog dlg(AskPassphraseDialog::Unlock, this);
+        AskPassphraseDialog dlg(showMintOption ? AskPassphraseDialog::UnlockFullOnly : AskPassphraseDialog::Unlock, this);
         dlg.setModel(walletModel);
         dlg.exec();
     }

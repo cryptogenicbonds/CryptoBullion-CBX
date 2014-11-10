@@ -22,7 +22,8 @@ public:
         Encrypt,    /**< Ask passphrase twice and encrypt */
         Unlock,     /**< Ask passphrase and unlock */
         ChangePass, /**< Ask old passphrase + new passphrase twice */
-        Decrypt     /**< Ask passphrase and decrypt wallet */
+        Decrypt,     /**< Ask passphrase and decrypt wallet */
+        UnlockFullOnly /**< Ask passphrase and unlock for staking/mining only */
     };
 
     explicit AskPassphraseDialog(Mode mode, QWidget *parent = 0);
@@ -39,11 +40,11 @@ private:
     bool fCapsLock;
     QPushButton* buttonCancel;
     QPushButton* buttonOk;
-    QPushButton* buttonUnlock;    
+    QPushButton* buttonUnlock;
     QPushButton* buttonUnlockStakingOnly;
 
 private slots:
-    void textChanged();    
+    void textChanged();
     bool event(QEvent *event);
     bool eventFilter(QObject *, QEvent *event);
 

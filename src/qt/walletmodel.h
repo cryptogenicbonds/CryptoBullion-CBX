@@ -117,7 +117,7 @@ public:
         void CopyFrom(const UnlockContext& rhs);
     };
 
-    UnlockContext requestUnlock();
+    UnlockContext requestUnlock(bool showMintOption = true);
 
     bool getPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const;
     void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
@@ -179,7 +179,7 @@ signals:
     // Signal emitted when wallet needs to be unlocked
     // It is valid behaviour for listeners to keep the wallet locked after this signal;
     // this means that the unlocking failed or was cancelled.
-    void requireUnlock();
+    void requireUnlock(bool showMintOption);
 
     // Asynchronous error notification
     void error(const QString &title, const QString &message, bool modal);

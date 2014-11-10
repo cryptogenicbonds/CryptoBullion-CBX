@@ -354,7 +354,7 @@ void WalletModel::unsubscribeFromCoreSignals()
 }
 
 // WalletModel::UnlockContext implementation
-WalletModel::UnlockContext WalletModel::requestUnlock()
+WalletModel::UnlockContext WalletModel::requestUnlock(bool showMintOption)
 {
     bool was_locked = getEncryptionStatus() == Locked;
     if ((!was_locked) && fWalletUnlockMintOnly)
@@ -365,7 +365,7 @@ WalletModel::UnlockContext WalletModel::requestUnlock()
     if(was_locked)
     {
         // Request UI to unlock wallet
-        emit requireUnlock();
+        emit requireUnlock(showMintOption);
     }
     // If wallet is still locked, unlock was failed or cancelled, mark context as invalid
     bool valid = getEncryptionStatus() != Locked;

@@ -476,8 +476,8 @@ bool CTransaction::CheckTransaction() const
             return DoS(100, error("CTransaction::CheckTransaction() : txout empty for user transaction"));
 
         // ppcoin: enforce minimum output amount
-        if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
-            return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue below minimum"));
+        //if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
+        //    return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue below minimum"));
 
         if (txout.nValue < 0)
             return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue is negative"));
@@ -489,6 +489,10 @@ bool CTransaction::CheckTransaction() const
         if (!MoneyRange(nValueOut))
             return DoS(100, error("CTransaction::CheckTransaction() : txout total out of range"));
     }
+
+    // check that combined output amount is greater than MIN_TXOUT_AMOUNT
+    if (nValueOut < MIN_TXOUT_AMOUNT)
+        return DoS(100, error("CTransaction::CheckTransaction() : total output below minimum"));
 
     // Check for duplicate inputs
     set<COutPoint> vInOutPoints;

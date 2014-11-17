@@ -11,18 +11,19 @@ CONFIG += static
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 windows:
 {
-        BOOST_INCLUDE_PATH += D:\_coinDev\deps\boost_1_55_0
-        BOOST_LIB_PATH=D:\_coinDev\deps\boost_1_55_0\stage\lib
+        BOOST_INCLUDE_PATH+="D:\_coinDev\deps\boost_1_55_0"
+        BOOST_LIB_PATH="D:\_coinDev\deps\boost_1_55_0\stage\lib"
 
-        BDB_INCLUDE_PATH=D:\_coinDev\deps\db-4.8.30.NC\build_unix
-        BDB_LIB_PATH=D:\_coinDev\deps\db-4.8.30.NC\build_unix
+        BDB_INCLUDE_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
+        BDB_LIB_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
 
-        OPENSSL_INCLUDE_PATH += D:\_coinDev\deps\openssl-1.0.1j\include
-        OPENSSL_LIB_PATH=D:\_coinDev\deps\openssl-1.0.1j
+        OPENSSL_INCLUDE_PATH+="D:\_coinDev\deps\openssl-1.0.1j\include"
+        OPENSSL_LIB_PATH="D:\_coinDev\deps\openssl-1.0.1j"
 
-        QRENCODE_LIB_PATH=D:\_coinDev\deps\qrencode-3.4.4\.libs
-
-        #INCLUDEPATH += D:\_coinDev\Qt\5.3.2\include\QtWidgets
+        QRENCODE_LIB_PATH="D:\_coinDev\deps\qrencode-3.4.4\.libs"
+		QRENCODE_INCLUDE_PATH="D:\_coinDev\deps\qrencode-3.4.4"
+		
+        #INCLUDEPATH+="D:\_coinDev\Qt\5.3.2\include\QtWidgets"
 
         windows:LIBS += -lshlwapi
         LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)

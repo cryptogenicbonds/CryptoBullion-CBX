@@ -649,7 +649,7 @@ public:
         // Quick answer in most cases
         if (!IsFinal())
             return false;
-        if (GetDepthInMainChain() >= 1)
+        if (GetDepthInMainChain() >=6)
             return true;
         if (!IsFromMe()) // using wtx's cached debit
             return false;

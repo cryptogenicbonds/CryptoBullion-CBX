@@ -287,6 +287,9 @@ void AddressBookPage::selectionChanged()
         ui->copyToClipboard->setEnabled(false);
         ui->signMessage->setEnabled(false);
         ui->verifyMessage->setEnabled(false);
+
+        ui->signMessage->setVisible(false);
+        ui->verifyMessage->setVisible(false);
     }
 }
 

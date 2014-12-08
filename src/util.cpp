@@ -1028,7 +1028,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "CryptogenicBullion";
+    const char* pszModule = "CryptoBullion";
 #endif
     if (pex)
         return strprintf(
@@ -1077,15 +1077,23 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\CryptogenicBullion
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\CryptogenicBullion
-    // Mac: ~/Library/Application Support/CryptogenicBullion
-    // Unix: ~/.CryptogenicBullion
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\CryptoBullion
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\CryptoBullion
+    // Mac: ~/Library/Application Support/CryptoBullion
+    // Unix: ~/.CryptoBullion
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "CryptogenicBullion";
+    boost::filesystem::path oldPath = GetSpecialFolderPath(CSIDL_APPDATA) / "CryptogenicBullion";
+    boost::filesystem::path newPath = GetSpecialFolderPath(CSIDL_APPDATA) / "CryptoBullion";
+    if (is_directory(oldPath))
+        rename(oldPath, newPath);
+
+    return newPath;
 #else
     fs::path pathRet;
+    fs::path oldPath;
+    fs::path newPath;
+
     char* pszHome = getenv("HOME");
     if (pszHome == NULL || strlen(pszHome) == 0)
         pathRet = fs::path("/");
@@ -1095,10 +1103,22 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "CryptogenicBullion";
+    oldPath = pathRet / "CryptogenicBullion";
+    newPath = pathRet / "CryptoBullion";
+
+    if (is_directory(oldPath))
+        rename(oldPath, newPath);
+
+    return newPath;
 #else
     // Unix
-    return pathRet / ".CryptogenicBullion";
+    oldPath = pathRet / ".CryptogenicBullion";
+    newPath = pathRet / ".CryptoBullion";
+
+    if (is_directory(oldPath))
+        rename(oldPath, newPath);
+
+    return newPath;
 #endif
 #endif
 }
@@ -1140,8 +1160,18 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "CryptogenicBullion.conf"));
-    if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
+    // handle renaming of old config file
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "CryptoBullion.conf"));
+    boost::filesystem::path pathConfigFileOld(GetArg("-conf", "CryptogenicBullion.conf"));
+    if (!pathConfigFile.is_complete())
+        pathConfigFile = GetDataDir(false) / pathConfigFile;
+
+    if (!pathConfigFileOld.is_complete())
+        pathConfigFileOld = GetDataDir(false) / pathConfigFileOld;
+
+    if (!exists(pathConfigFile) && exists(pathConfigFileOld))
+        rename(pathConfigFileOld, pathConfigFile);
+
     return pathConfigFile;
 }
 
@@ -1171,7 +1201,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "CryptogenicBulliond.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "CryptoBulliond.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1311,10 +1341,10 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong CryptogenicBullion will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong CryptoBullion will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("CryptogenicBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("CryptoBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
                 }
             }
         }

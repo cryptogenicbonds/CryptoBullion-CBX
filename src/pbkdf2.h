@@ -1,4 +1,4 @@
-// Copyright (c) 2013 CryptogenicBullion Developers
+// Copyright (c) 2014 CryptoBullion Developers
 
 #ifndef PBKDF2_H
 #define PBKDF2_H

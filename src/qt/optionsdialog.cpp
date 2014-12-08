@@ -169,8 +169,8 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
 {
     QVBoxLayout *layout = new QVBoxLayout();
 
-    bitcoin_at_startup = new QCheckBox(tr("&Start CGB on window system startup"));
-    bitcoin_at_startup->setToolTip(tr("Automatically start CGB after the computer is turned on"));
+    bitcoin_at_startup = new QCheckBox(tr("&Start CBX on window system startup"));
+    bitcoin_at_startup->setToolTip(tr("Automatically start CBX after the computer is turned on"));
     layout->addWidget(bitcoin_at_startup);
 
 #ifndef Q_WS_MAC
@@ -184,11 +184,11 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
 #endif
 
     map_port_upnp = new QCheckBox(tr("Map port using &UPnP"));
-    map_port_upnp->setToolTip(tr("Automatically open the CGB client port on the router. This only works when your router supports UPnP and it is enabled."));
+    map_port_upnp->setToolTip(tr("Automatically open the CBX client port on the router. This only works when your router supports UPnP and it is enabled."));
     layout->addWidget(map_port_upnp);
 
     connect_socks4 = new QCheckBox(tr("&Connect through SOCKS4 proxy:"));
-    connect_socks4->setToolTip(tr("Connect to the CGB network through a SOCKS4 proxy (e.g. when connecting through Tor)"));
+    connect_socks4->setToolTip(tr("Connect to the CBX network through a SOCKS4 proxy (e.g. when connecting through Tor)"));
     layout->addWidget(connect_socks4);
 
     QHBoxLayout *proxy_hbox = new QHBoxLayout();
@@ -214,7 +214,7 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     proxy_hbox->addStretch(1);
 
     layout->addLayout(proxy_hbox);
-    QLabel *fee_help = new QLabel(tr("Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.01 CGB fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment."));
+    QLabel *fee_help = new QLabel(tr("Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.01 CBX fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment."));
     fee_help->setWordWrap(true);
     layout->addWidget(fee_help);
 
@@ -284,7 +284,7 @@ DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):
     layout->addLayout(unit_hbox);
 
     display_addresses = new QCheckBox(tr("&Display addresses in transaction list"), this);
-    display_addresses->setToolTip(tr("Whether to show CGB addresses in the transaction list"));
+    display_addresses->setToolTip(tr("Whether to show CBX addresses in the transaction list"));
     layout->addWidget(display_addresses);
 
     coin_control_features = new QCheckBox(tr("Display bullion control features (experts only!)"), this);

@@ -34,7 +34,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
 
 #if QT_VERSION >= 0x040700
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
-    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a CGB address"));
+    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a CBX address"));
 #endif
 
     addEntry();
@@ -471,7 +471,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!addr.IsValid()) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid CGB address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid CBX address"));
         }
         else // Valid address
         {

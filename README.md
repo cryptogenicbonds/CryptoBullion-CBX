@@ -1,4 +1,4 @@
-Cryptogenic Bullion Cryptographic Commodity
+Crypto Bullion Cryptographic Commodity
 
 Proof of Work/Proof of Stake Hybrid
 
@@ -10,16 +10,16 @@ Transactions require 6 confirmations
 
 Block reward halves after every ~50000 blocks:
 
-Blocks 1-55000 = 10 CGB per; 
-Blocks 55001-95000 = 5 CGB per;
-Blocks 95001-145000 = 2.5 CGB per;
-Blocks 145001-195000 = 1.25 CGB per
+Blocks 1-55000 = 10 CBX per;
+Blocks 55001-95000 = 5 CBX per;
+Blocks 95001-145000 = 2.5 CBX per;
+Blocks 145001-195000 = 1.25 CBX per
 etc
 
 First year coin mint of ~1000000
 
 Aiming to be PoS-only blockchain once PoW block subsidy reaches baseline reward of 0.01.
-Much research will go into maintaining security of the blockchain if/when CGB goes PoS only.  Many possible schemes and solutions are being analyzed for potential implementation, including but not limited to:
+Much research will go into maintaining security of the blockchain if/when CBX goes PoS only.  Many possible schemes and solutions are being analyzed for potential implementation, including but not limited to:
 
 -CoinJoin revision for additional PoS overlay scheme
 
@@ -37,7 +37,7 @@ Default RPC Port: 8395
 
 Sample config file:
 
-create a file and name it CryptogenicBullion.conf
+create a file and name it CryptoBullion.conf
 
 And copy/paste the following contents:
 
@@ -93,8 +93,8 @@ replace username and password with your own username and password.  Do not use t
 
 Place the file in your data directory. (you need to run the Qt or daemon once before you do this)
 
-If using Linux, the data directory is located at /home/User/.CryptogenicBullion 
+If using Linux, the data directory is located at /home/User/.CryptoBullion
 where User is your login username for your system.
 
-If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\CryptogenicBullion where USERNAME is replaced with your Windows Username.
+If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\CryptoBullion where USERNAME is replaced with your Windows Username.
 

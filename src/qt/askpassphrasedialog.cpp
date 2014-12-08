@@ -163,7 +163,7 @@ void AskPassphraseDialog::accept(bool stakingOnly)
                 {
                     QMessageBox::warning(this, tr("Vault encrypted"),
                                          "<qt>" +
-                                         tr("CryptogenicBullion will close now to finish the encryption process. "
+                                         tr("CryptoBullion will close now to finish the encryption process. "
                                          "Remember that encrypting your vault cannot fully protect "
                                          "your coins from being stolen by malware infecting your computer.") +
                                          "<br><br><b>" +

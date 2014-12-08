@@ -20,7 +20,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>About CryptogenicBullion</string>
+   <string>About CryptoBullion</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6d6d70, stop: 1 #4f4f50);
@@ -68,7 +68,7 @@ QLabel { background: transparent; }</string>
           <string notr="true">QLabel { background: transparent; }</string>
          </property>
          <property name="text">
-          <string>&lt;b&gt;CryptogenicBullion&lt;/b&gt; version</string>
+          <string>&lt;b&gt;CryptoBullion&lt;/b&gt; version</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -115,7 +115,7 @@ QLabel { background: transparent; }</string>
         <string notr="true">QLabel { background: transparent; }</string>
        </property>
        <property name="text">
-        <string>Copyright © 2009-2012 The CryptogenicBullion Foundation</string>
+        <string>Copyright © 2009-2012 The CryptoBullion Foundation</string>
        </property>
        <property name="textInteractionFlags">
         <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>

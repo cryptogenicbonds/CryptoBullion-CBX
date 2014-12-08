@@ -338,7 +338,7 @@ background: transparent;</string>
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string>0.00 CGB</string>
+                  <string>0.00 CBX</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -424,7 +424,7 @@ background: transparent;</string>
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string>0.00 CGB</string>
+                  <string>0.00 CBX</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -510,7 +510,7 @@ background: transparent;</string>
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string>0.00 CGB</string>
+                  <string>0.00 CBX</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -542,7 +542,7 @@ background: transparent;</string>
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string>0.00 CGB</string>
+                  <string>0.00 CBX</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -653,7 +653,7 @@ color: #ffffff;</string>
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>139</height>
+        <height>170</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">

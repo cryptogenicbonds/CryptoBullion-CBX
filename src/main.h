@@ -36,7 +36,6 @@ static const int64 MAX_MONEY = 2000000 * COIN; //Max initial coins 1 million + 5
 static const int64 MAX_MINT_PROOF_OF_WORK = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
-
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int PROTOCOL_SWITCH_TIME = 1371686400; // 20 Jun 2013 00:00:00
 
@@ -939,7 +938,7 @@ public:
     // ppcoin: entropy bit for stake modifier if chosen by modifier
     unsigned int GetStakeEntropyBit(unsigned int nHeight) const
     {
-        // Protocol switch to support p2pool at CryptogenicBullion block #9689
+        // Protocol switch to support p2pool at CryptoBullion block #9689
         if (nHeight >= 9689 || fTestNet)
         {
             // Take last bit of block hash as entropy bit
@@ -948,7 +947,7 @@ public:
                 printf("GetStakeEntropyBit: nHeight=%u hashBlock=%s nEntropyBit=%u\n", nHeight, GetHash().ToString().c_str(), nEntropyBit);
             return nEntropyBit;
         }
-        // Before CryptogenicBullion block #9689 - old protocol
+        // Before CryptoBullion block #9689 - old protocol
         uint160 hashSig = Hash160(vchBlockSig);
         if (fDebug && GetBoolArg("-printstakemodifier"))
             printf("GetStakeEntropyBit: hashSig=%s", hashSig.ToString().c_str());

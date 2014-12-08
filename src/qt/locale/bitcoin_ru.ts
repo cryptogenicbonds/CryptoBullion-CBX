@@ -5,16 +5,16 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About BottleCaps</source>
-        <translation type="obsolete">О BottleCaps</translation>
+        <source>About CryptoBullion</source>
+        <translation type="obsolete">О CryptoBullion</translation>
     </message>
     <message>
-        <source>&lt;b&gt;BottleCaps&lt;/b&gt; version</source>
-        <translation type="obsolete">&lt;b&gt;BottleCaps&lt;/b&gt; версия</translation>
+        <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
+        <translation type="obsolete">&lt;b&gt;CryptoBullion&lt;/b&gt; версия</translation>
     </message>
     <message>
-        <source>Copyright © 2009-2012 The BottleCaps developers</source>
-        <translation type="obsolete">Все права защищены © 2009-2012 Разработчики BottleCaps</translation>
+        <source>Copyright © 2009-2014 The CryptoBullion developers</source>
+        <translation type="obsolete">Все права защищены © 2009-2014 Разработчики CryptoBullion</translation>
     </message>
     <message>
         <source>
@@ -32,17 +32,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+23"/>
-        <source>About CryptogenicBullion</source>
+        <source>About CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+48"/>
-        <source>&lt;b&gt;CryptogenicBullion&lt;/b&gt; version</source>
+        <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Copyright © 2009-2012 The CryptogenicBullion Foundation</source>
+        <source>Copyright © 2009-2014 The CryptoBullion Foundation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -60,7 +60,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+9"/>
-        <source>These are your CGB addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your CBX addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -80,7 +80,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+25"/>
-        <source>Sign a message to prove you own a CryptogenicBullion address</source>
+        <source>Sign a message to prove you own a CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -103,8 +103,8 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Показать &amp;QR код</translation>
     </message>
     <message>
-        <source>Sign a message to prove you own a BottleCaps address</source>
-        <translation type="obsolete">Подписать сообщение, чтобы доказать владение адресом BottleCaps</translation>
+        <source>Sign a message to prove you own a CryptoBullion address</source>
+        <translation type="obsolete">Подписать сообщение, чтобы доказать владение адресом CryptoBullion</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -113,7 +113,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Verify a message to ensure it was signed with a specified CryptogenicBullion address</source>
+        <source>Verify a message to ensure it was signed with a specified CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -122,8 +122,8 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Удалить выбранный адрес из списка</translation>
     </message>
     <message>
-        <source>Verify a message to ensure it was signed with a specified BottleCaps address</source>
-        <translation type="obsolete">Проверить сообщение, чтобы убедиться, что оно было подписано указанным адресом BottleCaps</translation>
+        <source>Verify a message to ensure it was signed with a specified CryptoBullion address</source>
+        <translation type="obsolete">Проверить сообщение, чтобы убедиться, что оно было подписано указанным адресом CryptoBullion</translation>
     </message>
     <message>
         <location line="-11"/>
@@ -302,7 +302,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <source>CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -432,8 +432,8 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Закрыть приложение</translation>
     </message>
     <message>
-        <source>Show information about BottleCaps</source>
-        <translation type="obsolete">Показать информацию о BottleCaps&apos;е</translation>
+        <source>Show information about CryptoBullion</source>
+        <translation type="obsolete">Показать информацию о CryptoBullion&apos;е</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -473,12 +473,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+107"/>
         <location line="+62"/>
-        <source>CryptogenicBullion client</source>
+        <source>CryptoBullion client</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location line="+69"/>
-        <source>%n active connection(s) to CryptogenicBullion network</source>
+        <source>%n active connection(s) to CryptoBullion network</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -505,12 +505,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;Экспорт...</translation>
     </message>
     <message>
-        <source>Send coins to a BottleCaps address</source>
-        <translation type="obsolete">Отправить монеты на указанный адрес BottleCaps</translation>
+        <source>Send coins to a CryptoBullion address</source>
+        <translation type="obsolete">Отправить монеты на указанный адрес CryptoBullion</translation>
     </message>
     <message>
-        <source>Modify configuration options for BottleCaps</source>
-        <translation type="obsolete">Изменить параметры конфигурации BottleCaps</translation>
+        <source>Modify configuration options for CryptoBullion</source>
+        <translation type="obsolete">Изменить параметры конфигурации CryptoBullion</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -524,7 +524,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-194"/>
-        <source>CGB</source>
+        <source>CBX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -539,7 +539,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+1"/>
-        <source>Send coins to a CryptogenicBullion address</source>
+        <source>Send coins to a CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -559,17 +559,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+22"/>
-        <source>&amp;About CryptogenicBullion</source>
+        <source>&amp;About CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Show information about CryptogenicBullion</source>
+        <source>Show information about CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Modify configuration options for CryptogenicBullion</source>
+        <source>Modify configuration options for CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -585,7 +585,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+137"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid CryptogenicBullion address or malformed URI parameters.</source>
+        <source>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -688,10 +688,10 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <source>BottleCaps client</source>
-        <translation type="obsolete">BottleCaps клиент</translation>
+        <translation type="obsolete">CryptoBullion клиент</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to BottleCaps network</source>
+        <source>%n active connection(s) to CryptoBullion network</source>
         <translation type="obsolete">
             <numerusform>%n активное соединение с сетью</numerusform>
             <numerusform>%n активных соединений с сетью</numerusform>
@@ -793,8 +793,8 @@ Address: %4
         <translation>Обработка URI</translation>
     </message>
     <message>
-        <source>URI can not be parsed! This can be caused by an invalid BottleCaps address or malformed URI parameters.</source>
-        <translation type="obsolete">Не удалось обработать URI! Это может быть связано с неверным адресом BottleCaps или неправильными параметрами URI.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</source>
+        <translation type="obsolete">Не удалось обработать URI! Это может быть связано с неверным адресом CryptoBullion или неправильными параметрами URI.</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -825,12 +825,12 @@ Address: %4
         <translation type="obsolete">При попытке сохранения данных бумажника в новое место произошла ошибка.</translation>
     </message>
     <message>
-        <source>A fatal error occurred. BottleCaps can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
         <translation type="obsolete">Произошла неисправимая ошибка. BottleCaps не может безопасно продолжать работу и будет закрыт.</translation>
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+111"/>
-        <source>A fatal error occurred. CryptogenicBullion can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1130,7 +1130,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Whether to show CGB addresses in the transaction list</source>
+        <source>Whether to show CBX addresses in the transaction list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1198,7 +1198,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+5"/>
-        <source>The entered address &quot;%1&quot; is not a valid CryptogenicBullion address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid CryptoBullion address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1219,7 +1219,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>GUIUtil::HelpMessageBox</name>
     <message>
-        <source>BottleCaps-Qt</source>
+        <source>CryptoBullion-Qt</source>
         <translation type="obsolete">BottleCaps-Qt</translation>
     </message>
     <message>
@@ -1230,7 +1230,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+0"/>
         <location line="+12"/>
-        <source>CryptogenicBullion-Qt</source>
+        <source>CryptoBullion-Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1268,12 +1268,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>MainOptionsPage</name>
     <message>
         <location filename="../optionsdialog.cpp" line="-119"/>
-        <source>&amp;Start CGB on window system startup</source>
+        <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Automatically start CGB after the computer is turned on</source>
+        <source>Automatically start CBX after the computer is turned on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1303,7 +1303,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Automatically open the CGB client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the CBX client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1313,7 +1313,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Connect to the CGB network through a SOCKS4 proxy (e.g. when connecting through Tor)</source>
+        <source>Connect to the CBX network through a SOCKS4 proxy (e.g. when connecting through Tor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1338,7 +1338,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+6"/>
-        <source>Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.01 CGB fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment.</source>
+        <source>Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.01 CBX fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1387,12 +1387,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Заплатить ко&amp;миссию</translation>
     </message>
     <message>
-        <source>Automatically start BottleCaps after logging in to the system.</source>
-        <translation type="obsolete">Автоматически запускать BottleCaps после входа в систему</translation>
+        <source>Automatically start CryptoBullion after logging in to the system.</source>
+        <translation type="obsolete">Автоматически запускать CryptoBullion после входа в систему</translation>
     </message>
     <message>
-        <source>&amp;Start BottleCaps on system login</source>
-        <translation type="obsolete">&amp;Запускать BottleCaps при входе в систему</translation>
+        <source>&amp;Start CryptoBullion on system login</source>
+        <translation type="obsolete">&amp;Запускать CryptoBullion при входе в систему</translation>
     </message>
     <message>
         <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The vault is always detached.</source>
@@ -1562,7 +1562,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+7"/>
         <location line="+342"/>
-        <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1698,12 +1698,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-10"/>
-        <source>CryptogenicBullion - Debug window</source>
+        <source>CryptoBullion - Debug window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>CGB Core</source>
+        <source>CBX Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1753,7 +1753,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+49"/>
-        <source>Open the CryptogenicBullion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the CryptoBullion debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1768,7 +1768,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the CryptogenicBullion-Qt help message to get a list with possible CryptogenicBullion command-line options.</source>
+        <source>Show the CryptoBullion-Qt help message to get a list with possible CryptoBullion command-line options.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1818,7 +1818,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the CryptogenicBullion RPC console.</source>
+        <source>Welcome to the CryptoBullion RPC console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1886,7 +1886,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 CGB</source>
+        <source>0.00 CBX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1971,7 +1971,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-170"/>
-        <source>Enter a CGB address</source>
+        <source>Enter a CBX address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2081,7 +2081,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+256"/>
-        <source>Warning: Invalid CGB address</source>
+        <source>Warning: Invalid CBX address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2163,7 +2163,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a valid CryptogenicBullion address</source>
+        <source>Enter a valid CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2234,12 +2234,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this CryptogenicBullion address</source>
+        <source>Sign the message to prove you own this CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+146"/>
-        <source>Verify the message to ensure it was signed with the specified CryptogenicBullion address</source>
+        <source>Verify the message to ensure it was signed with the specified CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2283,8 +2283,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Сбросить все поля проверки сообщения</translation>
     </message>
     <message>
-        <source>Enter a BottleCaps address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation type="obsolete">Введите адрес BottleCaps (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <source>Enter a CryptoBullion address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
+        <translation type="obsolete">Введите адрес CryptoBullion (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+28"/>
@@ -2322,12 +2322,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="-175"/>
         <location line="+3"/>
-        <source>Enter a valid CryptogenicBullion address</source>
+        <source>Enter a valid CryptoBullion address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Enter CryptogenicBullion signature</source>
+        <source>Enter CryptoBullion signature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2882,7 +2882,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>CGB version</source>
+        <source>CBX version</source>
         <translation type="obsolete">Версия</translation>
     </message>
     <message>
@@ -2990,7 +2990,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s.  CryptogenicBullion is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s.  CryptoBullion is probably already running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3020,12 +3020,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+8"/>
-        <source>Unable to bind to %s on this computer. CryptogenicBullion is probably already running.</source>
+        <source>Unable to bind to %s on this computer. CryptoBullion is probably already running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptogenicBullion will not work properly.</source>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptoBullion will not work properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3055,7 +3055,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of CryptogenicBullion</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3085,12 +3085,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+10"/>
-        <source>CryptogenicBullion version</source>
+        <source>CryptoBullion version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>CryptogenicBullion</source>
+        <source>CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3105,17 +3105,17 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Send command to -server or CryptogenicBulliond</source>
+        <source>Send command to -server or CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Specify configuration file (default: CryptogenicBullion.conf)</source>
+        <source>Specify configuration file (default: CryptoBullion.conf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Specify pid file (default: CryptogenicBulliond.pid)</source>
+        <source>Specify pid file (default: CryptoBullion.pid)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3163,8 +3163,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Внимание: отображаемые транзакции могут быть некорректны! Вам или другим узлам, возможно, следует обновиться.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong BottleCaps will not work properly.</source>
-        <translation type="obsolete">Внимание: убедитесь, что дата и время на Вашем компьютере выставлены верно. Если Ваши часы идут неправильно, BottleCaps будет работать некорректно.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptoBullion will not work properly.</source>
+        <translation type="obsolete">Внимание: убедитесь, что дата и время на Вашем компьютере выставлены верно. Если Ваши часы идут неправильно, CryptoBullion будет работать некорректно.</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -3302,7 +3302,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart CryptogenicBullion to complete</source>
+        <source>Wallet needed to be rewritten: restart CryptoBullion to complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3398,8 +3398,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Невозможно установить блокировку на рабочую директорию %s.  Возможно, бумажник уже запущен.</translation>
     </message>
     <message>
-        <source>BottleCaps</source>
-        <translation type="obsolete">BottleCaps</translation>
+        <source>CryptoBullion</source>
+        <translation type="obsolete">CryptoBullion</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3431,8 +3431,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Ошибка загрузки wallet.dat: Бумажник поврежден</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of CGB</source>
-        <translation type="obsolete">Ошибка загрузки wallet.dat: бумажник требует более новую версию CGB</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of CBX</source>
+        <translation type="obsolete">Ошибка загрузки wallet.dat: бумажник требует более новую версию CBX</translation>
     </message>
     <message>
         <source>Wallet needed to be rewritten: restart Vault to complete</source>
@@ -3504,8 +3504,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Добавить узел для подключения и пытаться поддерживать соединение открытым</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. BottleCaps is probably already running.</source>
-        <translation type="obsolete">Невозможно привязаться к %s на этом компьютере.  Возможно, BottleCaps уже работает.</translation>
+        <source>Unable to bind to %s on this computer. CryptoBullion is probably already running.</source>
+        <translation type="obsolete">Невозможно привязаться к %s на этом компьютере.  Возможно, CryptoBullion уже работает.</translation>
     </message>
     <message>
         <location line="+28"/>

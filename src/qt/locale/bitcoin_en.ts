@@ -6,17 +6,17 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+23"/>
-        <source>About CryptogenicBullion</source>
-        <translation>About CryptogenicBullion</translation>
+        <source>About CryptoBullion</source>
+        <translation>About CryptoBullion</translation>
     </message>
     <message>
         <location line="+48"/>
-        <source>&lt;b&gt;CryptogenicBullion&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;CryptogenicBullion&lt;/b&gt; version</translation>
+        <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;CryptoBullion&lt;/b&gt; version</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Copyright © 2009-2012 The CryptogenicBullion Foundation</source>
+        <source>Copyright © 2009-2014 The CryptoBullion Foundation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25,8 +25,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copyright © 2009-2012 The CryptogenicBullion developers</source>
-        <translation type="obsolete">Copyright © 2009-2012 The CryptogenicBullion developers</translation>
+        <source>Copyright © 2009-2012 The CryptoBullion developers</source>
+        <translation type="obsolete">Copyright © 2009-2014 The CryptoBullion developers</translation>
     </message>
     <message>
         <source>
@@ -52,7 +52,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+9"/>
-        <source>These are your CGB addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your CBX addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -76,8 +76,8 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;New Address</translation>
     </message>
     <message>
-        <source>These are your CryptogenicBullion addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation type="obsolete">These are your CryptogenicBullion addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</translation>
+        <source>These are your CryptoBullion addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation type="obsolete">These are your CryptoBullion addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -91,8 +91,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a CryptogenicBullion address</source>
-        <translation>Sign a message to prove you own a CryptogenicBullion address</translation>
+        <source>Sign a message to prove you own a CryptoBullion address</source>
+        <translation>Sign a message to prove you own a CryptoBullion address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -106,8 +106,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-14"/>
-        <source>Verify a message to ensure it was signed with a specified CryptogenicBullion address</source>
-        <translation>Verify a message to ensure it was signed with a specified CryptogenicBullion address</translation>
+        <source>Verify a message to ensure it was signed with a specified CryptoBullion address</source>
+        <translation>Verify a message to ensure it was signed with a specified CryptoBullion address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -307,8 +307,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-56"/>
-        <source>CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">CryptogenicBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
+        <source>CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation type="unfinished">CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -417,8 +417,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about CryptogenicBullion</source>
-        <translation>Show information about CryptogenicBullion</translation>
+        <source>Show information about CryptoBullion</source>
+        <translation>Show information about CryptoBullion</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -470,13 +470,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-66"/>
-        <source>Send coins to a CryptogenicBullion address</source>
-        <translation>Send coins to a CryptogenicBullion address</translation>
+        <source>Send coins to a CryptoBullion address</source>
+        <translation>Send coins to a CryptoBullion address</translation>
     </message>
     <message>
         <location line="+53"/>
-        <source>Modify configuration options for CryptogenicBullion</source>
-        <translation>Modify configuration options for CryptogenicBullion</translation>
+        <source>Modify configuration options for CryptoBullion</source>
+        <translation>Modify configuration options for CryptoBullion</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -513,8 +513,8 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;Verify message...</translation>
     </message>
     <message>
-        <source>CryptogenicBullion</source>
-        <translation type="obsolete">CryptogenicBullion</translation>
+        <source>CryptoBullion</source>
+        <translation type="obsolete">CryptoBullion</translation>
     </message>
     <message>
         <location line="-201"/>
@@ -523,7 +523,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+0"/>
-        <source>CGB</source>
+        <source>CBX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -553,8 +553,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+22"/>
-        <source>&amp;About CryptogenicBullion</source>
-        <translation>&amp;About CryptogenicBullion</translation>
+        <source>&amp;About CryptoBullion</source>
+        <translation>&amp;About CryptoBullion</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -600,15 +600,15 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+62"/>
-        <source>CryptogenicBullion client</source>
-        <translation>CryptogenicBullion client</translation>
+        <source>CryptoBullion client</source>
+        <translation>CryptoBullion client</translation>
     </message>
     <message numerus="yes">
         <location line="+69"/>
-        <source>%n active connection(s) to CryptogenicBullion network</source>
+        <source>%n active connection(s) to CryptoBullion network</source>
         <translation>
-            <numerusform>%n active connection to CryptogenicBullion network</numerusform>
-            <numerusform>%n active connections to CryptogenicBullion network</numerusform>
+            <numerusform>%n active connection to CryptoBullion network</numerusform>
+            <numerusform>%n active connections to CryptoBullion network</numerusform>
         </translation>
     </message>
     <message>
@@ -739,8 +739,8 @@ Address: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid CryptogenicBullion address or malformed URI parameters.</source>
-        <translation>URI can not be parsed! This can be caused by an invalid CryptogenicBullion address or malformed URI parameters.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</source>
+        <translation>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -772,8 +772,8 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+111"/>
-        <source>A fatal error occurred. CryptogenicBullion can no longer continue safely and will quit.</source>
-        <translation>A fatal error occurred. CryptogenicBullion can no longer continue safely and will quit.</translation>
+        <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
+        <translation>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</translation>
     </message>
 </context>
 <context>
@@ -1072,7 +1072,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Whether to show CGB addresses in the transaction list</source>
+        <source>Whether to show CBX addresses in the transaction list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1140,8 +1140,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+5"/>
-        <source>The entered address &quot;%1&quot; is not a valid CryptogenicBullion address.</source>
-        <translation>The entered address &quot;%1&quot; is not a valid CryptogenicBullion address.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid CryptoBullion address.</source>
+        <translation>The entered address &quot;%1&quot; is not a valid CryptoBullion address.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1159,8 +1159,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../guiutil.cpp" line="+459"/>
         <location line="+12"/>
-        <source>CryptogenicBullion-Qt</source>
-        <translation>CryptogenicBullion-Qt</translation>
+        <source>CryptoBullion-Qt</source>
+        <translation>CryptoBullion-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1202,12 +1202,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>MainOptionsPage</name>
     <message>
         <location filename="../optionsdialog.cpp" line="-119"/>
-        <source>&amp;Start CGB on window system startup</source>
+        <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Automatically start CGB after the computer is turned on</source>
+        <source>Automatically start CBX after the computer is turned on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1237,7 +1237,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Automatically open the CGB client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the CBX client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1247,7 +1247,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Connect to the CGB network through a SOCKS4 proxy (e.g. when connecting through Tor)</source>
+        <source>Connect to the CBX network through a SOCKS4 proxy (e.g. when connecting through Tor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1272,7 +1272,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+6"/>
-        <source>Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.01 CGB fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment.</source>
+        <source>Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.01 CBX fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1321,12 +1321,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Pay transaction &amp;fee</translation>
     </message>
     <message>
-        <source>Automatically start CryptogenicBullion after logging in to the system.</source>
-        <translation type="obsolete">Automatically start CryptogenicBullion after logging in to the system.</translation>
+        <source>Automatically start CryptoBullion after logging in to the system.</source>
+        <translation type="obsolete">Automatically start CryptoBullion after logging in to the system.</translation>
     </message>
     <message>
-        <source>&amp;Start CryptogenicBullion on system login</source>
-        <translation type="obsolete">&amp;Start CryptogenicBullion on system login</translation>
+        <source>&amp;Start CryptoBullion on system login</source>
+        <translation type="obsolete">&amp;Start CryptoBullion on system login</translation>
     </message>
     <message>
         <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The vault is always detached.</source>
@@ -1341,16 +1341,16 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">&amp;Network</translation>
     </message>
     <message>
-        <source>Automatically open the CryptogenicBullion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="obsolete">Automatically open the CryptogenicBullion client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
+        <source>Automatically open the CryptoBullion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation type="obsolete">Automatically open the CryptoBullion client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation type="obsolete">Map port using &amp;UPnP</translation>
     </message>
     <message>
-        <source>Connect to the CryptogenicBullion network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation type="obsolete">Connect to the CryptogenicBullion network through a SOCKS proxy (e.g. when connecting through Tor).</translation>
+        <source>Connect to the CryptoBullion network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation type="obsolete">Connect to the CryptoBullion network through a SOCKS proxy (e.g. when connecting through Tor).</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS proxy:</source>
@@ -1409,8 +1409,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">User Interface &amp;language:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting CryptogenicBullion.</source>
-        <translation type="obsolete">The user interface language can be set here. This setting will take effect after restarting CryptogenicBullion.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting CryptoBullion.</source>
+        <translation type="obsolete">The user interface language can be set here. This setting will take effect after restarting CryptoBullion.</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1421,8 +1421,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Choose the default subdivision unit to show in the interface and when sending coins.</translation>
     </message>
     <message>
-        <source>Whether to show CryptogenicBullion addresses in the transaction list or not.</source>
-        <translation type="obsolete">Whether to show CryptogenicBullion addresses in the transaction list or not.</translation>
+        <source>Whether to show CryptoBullion addresses in the transaction list or not.</source>
+        <translation type="obsolete">Whether to show CryptoBullion addresses in the transaction list or not.</translation>
     </message>
     <message>
         <source>&amp;Display addresses in transaction list</source>
@@ -1449,8 +1449,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Warning</translation>
     </message>
     <message>
-        <source>This setting will take effect after restarting CryptogenicBullion.</source>
-        <translation type="obsolete">This setting will take effect after restarting CryptogenicBullion.</translation>
+        <source>This setting will take effect after restarting CryptoBullion.</source>
+        <translation type="obsolete">This setting will take effect after restarting CryptoBullion.</translation>
     </message>
     <message>
         <source>The supplied proxy address is invalid.</source>
@@ -1467,8 +1467,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+39"/>
         <location line="+342"/>
-        <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</translation>
+        <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
+        <translation>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="-291"/>
@@ -1628,7 +1628,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+15"/>
-        <source>CGB Core</source>
+        <source>CBX Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1688,8 +1688,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the CryptogenicBullion-Qt help message to get a list with possible CryptogenicBullion command-line options.</source>
-        <translation>Show the CryptogenicBullion-Qt help message to get a list with possible CryptogenicBullion command-line options.</translation>
+        <source>Show the CryptoBullion-Qt help message to get a list with possible CryptoBullion command-line options.</source>
+        <translation>Show the CryptoBullion-Qt help message to get a list with possible CryptoBullion command-line options.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1708,12 +1708,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-104"/>
-        <source>CryptogenicBullion - Debug window</source>
-        <translation>CryptogenicBullion - Debug window</translation>
+        <source>CryptoBullion - Debug window</source>
+        <translation>CryptoBullion - Debug window</translation>
     </message>
     <message>
-        <source>CryptogenicBullion Core</source>
-        <translation type="obsolete">CryptogenicBullion Core</translation>
+        <source>CryptoBullion Core</source>
+        <translation type="obsolete">CryptoBullion Core</translation>
     </message>
     <message>
         <location line="+304"/>
@@ -1722,8 +1722,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the CryptogenicBullion debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Open the CryptogenicBullion debug log file from the current data directory. This can take a few seconds for large log files.</translation>
+        <source>Open the CryptoBullion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Open the CryptoBullion debug log file from the current data directory. This can take a few seconds for large log files.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1732,8 +1732,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the CryptogenicBullion RPC console.</source>
-        <translation>Welcome to the CryptogenicBullion RPC console.</translation>
+        <source>Welcome to the CryptoBullion RPC console.</source>
+        <translation>Welcome to the CryptoBullion RPC console.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1800,7 +1800,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 CGB</source>
+        <source>0.00 CBX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1885,7 +1885,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-170"/>
-        <source>Enter a CGB address</source>
+        <source>Enter a CBX address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1995,7 +1995,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+256"/>
-        <source>Warning: Invalid CGB address</source>
+        <source>Warning: Invalid CBX address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2073,8 +2073,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a valid CryptogenicBullion address</source>
-        <translation>Enter a valid CryptogenicBullion address </translation>
+        <source>Enter a valid CryptoBullion address</source>
+        <translation>Enter a valid CryptoBullion address </translation>
     </message>
     <message>
         <location line="+93"/>
@@ -2148,8 +2148,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this CryptogenicBullion address</source>
-        <translation>Sign the message to prove you own this CryptogenicBullion address</translation>
+        <source>Sign the message to prove you own this CryptoBullion address</source>
+        <translation>Sign the message to prove you own this CryptoBullion address</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2184,8 +2184,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified CryptogenicBullion address</source>
-        <translation>Verify the message to ensure it was signed with the specified CryptogenicBullion address</translation>
+        <source>Verify the message to ensure it was signed with the specified CryptoBullion address</source>
+        <translation>Verify the message to ensure it was signed with the specified CryptoBullion address</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2195,8 +2195,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a valid CryptogenicBullion address</source>
-        <translation>Enter a valid CryptogenicBullion address</translation>
+        <source>Enter a valid CryptoBullion address</source>
+        <translation>Enter a valid CryptoBullion address</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2205,8 +2205,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter CryptogenicBullion signature</source>
-        <translation>Enter CryptogenicBullion signature</translation>
+        <source>Enter CryptoBullion signature</source>
+        <translation>Enter CryptoBullion signature</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2780,8 +2780,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+126"/>
-        <source>CryptogenicBullion version</source>
-        <translation>CryptogenicBullion version</translation>
+        <source>CryptoBullion version</source>
+        <translation>CryptoBullion version</translation>
     </message>
     <message>
         <location line="+39"/>
@@ -2809,13 +2809,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+23"/>
-        <source>Specify configuration file (default: CryptogenicBullion.conf)</source>
-        <translation>Specify configuration file (default: CryptogenicBullion.conf)</translation>
+        <source>Specify configuration file (default: CryptoBullion.conf)</source>
+        <translation>Specify configuration file (default: CryptoBullion.conf)</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Specify pid file (default: CryptogenicBulliond.pid)</source>
-        <translation>Specify pid file (default: CryptogenicBulliond.pid)</translation>
+        <source>Specify pid file (default: CryptoBullion.pid)</source>
+        <translation>Specify pid file (default: CryptoBullion.pid)</translation>
     </message>
     <message>
         <location line="-50"/>
@@ -2976,8 +2976,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptogenicBullion will not work properly.</source>
-        <translation>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptogenicBullion will not work properly.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptoBullion will not work properly.</source>
+        <translation>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong CryptoBullion will not work properly.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3021,7 +3021,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of CryptogenicBullion</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of CryptoBullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3101,7 +3101,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or CryptogenicBulliond</source>
+        <source>Send command to -server or CryptoBulliond</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3172,7 +3172,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart CryptogenicBullion to complete</source>
+        <source>Wallet needed to be rewritten: restart CryptoBullion to complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3265,13 +3265,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-131"/>
-        <source>Cannot obtain a lock on data directory %s.  CryptogenicBullion is probably already running.</source>
-        <translation>Cannot obtain a lock on data directory %s.  CryptogenicBullion is probably already running.</translation>
+        <source>Cannot obtain a lock on data directory %s.  CryptoBullion is probably already running.</source>
+        <translation>Cannot obtain a lock on data directory %s.  CryptoBullion is probably already running.</translation>
     </message>
     <message>
         <location line="+101"/>
-        <source>CryptogenicBullion</source>
-        <translation>CryptogenicBullion</translation>
+        <source>CryptoBullion</source>
+        <translation>CryptoBullion</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -3303,12 +3303,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">Error loading wallet.dat: Vault corrupted</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Vault requires newer version of CryptogenicBullion</source>
-        <translation type="obsolete">Error loading wallet.dat: Vault requires newer version of CryptogenicBullion</translation>
+        <source>Error loading wallet.dat: Vault requires newer version of CryptoBullion</source>
+        <translation type="obsolete">Error loading wallet.dat: Vault requires newer version of CryptoBullion</translation>
     </message>
     <message>
-        <source>Vault needed to be rewritten: restart CryptogenicBullion to complete</source>
-        <translation type="obsolete">Vault needed to be rewritten: restart CryptogenicBullion to complete</translation>
+        <source>Vault needed to be rewritten: restart CryptoBullion to complete</source>
+        <translation type="obsolete">Vault needed to be rewritten: restart CryptoBullion to complete</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3377,8 +3377,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-22"/>
-        <source>Unable to bind to %s on this computer. CryptogenicBullion is probably already running.</source>
-        <translation>Unable to bind to %s on this computer. CryptogenicBullion is probably already running.</translation>
+        <source>Unable to bind to %s on this computer. CryptoBullion is probably already running.</source>
+        <translation>Unable to bind to %s on this computer. CryptoBullion is probably already running.</translation>
     </message>
     <message>
         <location line="+50"/>

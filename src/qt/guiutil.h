@@ -48,7 +48,7 @@ namespace GUIUtil
     void copyEntryData(QAbstractItemView *view, int column, int role=Qt::EditRole);
 
     /**
-     * @brief SetWidgetGradient Apply the CGB GUI gradient to a control.
+     * @brief SetWidgetGradient Apply the CBX GUI gradient to a control.
      * @param widget QWidget to apply the gradient to.
      */
     void SetWidgetGradient(QWidget* widget);

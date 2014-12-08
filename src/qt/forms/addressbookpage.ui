@@ -20,7 +20,7 @@
       <string notr="true">background: transparent;color:#FFFFFF;</string>
      </property>
      <property name="text">
-      <string>These are your CGB addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</string>
+      <string>These are your CBX addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</string>
      </property>
      <property name="textFormat">
       <enum>Qt::PlainText</enum>
@@ -102,7 +102,7 @@
      <item>
       <widget class="QPushButton" name="signMessage">
        <property name="toolTip">
-        <string>Sign a message to prove you own a CryptogenicBullion address</string>
+        <string>Sign a message to prove you own a CryptoBullion address</string>
        </property>
        <property name="text">
         <string>Sign &amp;Message</string>
@@ -116,7 +116,7 @@
      <item>
       <widget class="QPushButton" name="verifyMessage">
        <property name="toolTip">
-        <string>Verify a message to ensure it was signed with a specified CryptogenicBullion address</string>
+        <string>Verify a message to ensure it was signed with a specified CryptoBullion address</string>
        </property>
        <property name="text">
         <string>&amp;Verify Message</string>

@@ -68,7 +68,7 @@ QLabel { background: transparent; }</string>
           <string notr="true">QLabel { background: transparent; }</string>
          </property>
          <property name="text">
-          <string>&lt;b&gt;CryptoBullion&lt;/b&gt; version</string>
+          <string>&lt;b&gt;CryptoBullion&lt;/b&gt; v</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>

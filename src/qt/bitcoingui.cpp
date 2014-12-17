@@ -831,8 +831,14 @@ void BitcoinGUI::setEncryptionStatus(int status)
         break;
     case WalletModel::Unlocked:
         labelEncryptionIcon->show();
-        labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-        labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked</b>"));
+        if (fWalletUnlockMintOnly)
+        {
+            labelEncryptionIcon->setPixmap(QIcon(":/icons/lockStake_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+            labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked for staking only</b>"));
+        }else{
+            labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+            labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked</b>"));
+        }
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
         encryptWalletAction->setEnabled(false); // TODO: decrypt currently not supported
@@ -941,9 +947,18 @@ void BitcoinGUI::toggleWalletLock()
         unlockWallet();
         if (walletModel->getEncryptionStatus() == WalletModel::Unlocked)
         {
-            unlockToStakeAction->setIcon(QIcon(":/icons/lock_open"));
+            QString strMessage;
             unlockToStakeAction->setText(QString(tr("Lock Vault")));
-            QString strMessage = tr("Vault unlocked. Please click again or close the applicaton to re-lock the vault.");
+             unlockToStakeAction->setToolTip(QString(tr("Lock Vault")));
+            if (fWalletUnlockMintOnly)
+            {
+                unlockToStakeAction->setIcon(QIcon(":/icons/lock_openStake"));
+                strMessage = tr("Vault unlocked for staking. Please click again or close the applicaton to re-lock the vault.");
+            }else{
+                unlockToStakeAction->setIcon(QIcon(":/icons/lock_open"));
+                strMessage = tr("Vault unlocked. Please click again or close the applicaton to re-lock the vault.");
+            }
+
             QMessageBox::information(this, tr("Vault Unlocked"), strMessage);
         }
     }else if(walletModel->getEncryptionStatus() == WalletModel::Unlocked){
@@ -953,6 +968,7 @@ void BitcoinGUI::toggleWalletLock()
         {
             unlockToStakeAction->setIcon(QIcon(":/icons/lock_closed"));
             unlockToStakeAction->setText(QString(tr("Unlock Vault")));
+            unlockToStakeAction->setToolTip(QString(tr("Unlock Vault")));
         }
     }
 }

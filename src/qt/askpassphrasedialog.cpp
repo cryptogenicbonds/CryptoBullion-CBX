@@ -50,7 +50,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
             ui->passEdit2->hide();
             ui->passLabel3->hide();
             ui->passEdit3->hide();
-            setWindowTitle(tr("Unlock vault for staking"));
+            setWindowTitle(tr("Unlock vault"));
             break;
         case Unlock: // Ask passphrase
             addUnlockButton = true;

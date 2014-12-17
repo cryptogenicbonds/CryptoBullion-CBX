@@ -84,7 +84,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
         GUIUtil::SetupPushButton(buttonUnlock);
     }
 
-    if (addUnlockStakingOnlyButton){
+    if (addUnlockStakingOnlyButton && !fWalletUnlockMintOnly){
         buttonUnlockStakingOnly = new QPushButton(tr("U&nlock for Staking only"));
         buttonUnlockStakingOnly->setDefault(true);
         ui->buttonBox->addButton(buttonUnlockStakingOnly, QDialogButtonBox::ActionRole);

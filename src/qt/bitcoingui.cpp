@@ -57,6 +57,8 @@
 
 #include <iostream>
 
+extern bool fWalletUnlockMintOnly;
+
 BitcoinGUI::BitcoinGUI(QWidget *parent):
     QMainWindow(parent),
     clientModel(0),
@@ -883,8 +885,11 @@ void BitcoinGUI::unlockWallet(bool showMintOption)
     if(!walletModel)
         return;
     // Unlock wallet when requested by wallet model
-    if(walletModel->getEncryptionStatus() == WalletModel::Locked)
+    if(walletModel->getEncryptionStatus() == WalletModel::Locked  || fWalletUnlockMintOnly)
     {
+        if (fWalletUnlockMintOnly) // hide staking option if already unlockes for staking
+            showMintOption = false;
+
         AskPassphraseDialog dlg(showMintOption ? AskPassphraseDialog::UnlockFullOnly : AskPassphraseDialog::Unlock, this);
         dlg.setModel(walletModel);
         dlg.exec();
@@ -941,8 +946,9 @@ void BitcoinGUI::toggleWalletLock()
             QString strMessage = tr("Vault unlocked. Please click again or close the applicaton to re-lock the vault.");
             QMessageBox::information(this, tr("Vault Unlocked"), strMessage);
         }
-    }else{
+    }else if(walletModel->getEncryptionStatus() == WalletModel::Unlocked){
         walletModel->setWalletLocked(true);
+        fWalletUnlockMintOnly = false;
         if (walletModel->getEncryptionStatus() == WalletModel::Locked)
         {
             unlockToStakeAction->setIcon(QIcon(":/icons/lock_closed"));

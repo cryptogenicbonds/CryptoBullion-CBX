@@ -192,6 +192,7 @@ void AskPassphraseDialog::accept(bool stakingOnly)
             QDialog::reject(); // Cancelled
         }
         } break;
+    case UnlockFullOnly:
     case Unlock:
         if(!model->setWalletLocked(false, oldpass))
         {

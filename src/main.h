@@ -39,6 +39,9 @@ static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int PROTOCOL_SWITCH_TIME = 1371686400; // 20 Jun 2013 00:00:00
 
+/** The maximum size for transactions we're willing to relay/mine */
+static const unsigned int MAX_STANDARD_TX_SIZE = 100000;
+
 static const unsigned int REWARD_SWITCH_TIME = 1369432800; // 25 May 2013 00:00:00
 
 static const unsigned int ROUND_SWITCH_TIME = 1375747200; // 6 August 2013 00:00:00
@@ -388,6 +391,19 @@ public:
     bool IsEmpty() const
     {
         return (nValue == 0 && scriptPubKey.empty());
+    }
+
+    bool IsDust(int64_t nMinRelayTxFee) const
+    {
+        // "Dust" is defined in terms of MIN_TX_FEE
+        // which has units satoshis-per-kilobyte.
+        // If you'd pay more than 1/3 in fees
+        // to spend something, then we consider it dust.
+        // A typical txout is 34 bytes big, and will
+        // need a CTxIn of at least 148 bytes to spend,
+        // so dust is a txout less than 546 satoshis
+        // with default nMinRelayTxFee.
+        return ((nValue*1000)/(3*((int)GetSerializeSize(SER_DISK,0)+148)) < nMinRelayTxFee);
     }
 
     uint256 GetHash() const

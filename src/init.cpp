@@ -401,9 +401,8 @@ bool AppInit2()
         SoftSetBoolArg("-listen", false);
     }
 
-    if (!GetBoolArg("-listen", true)) {
-        // do not map ports or try to retrieve public IP when not listening (pointless)
-        SoftSetBoolArg("-upnp", false);
+    if (mapArgs.count("-externalip")) {
+        // if an explicit public IP is specified, do not try to find others
         SoftSetBoolArg("-discover", false);
     }
 
@@ -450,7 +449,7 @@ bool AppInit2()
 #if !defined(QT_GUI)
     fServer = true;
 #endif
-    fPrintToConsole = GetBoolArg("-printtoconsole");
+    fNoSpendZeroConfChangeForced = GetBoolArg("-nospendzeroconfchange", false);
     fPrintToDebugger = GetBoolArg("-printtodebugger");
     fLogTimestamps = GetBoolArg("-logtimestamps");
     fUseFastIndex = GetBoolArg("-fastindex", true);

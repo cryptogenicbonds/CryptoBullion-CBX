@@ -70,6 +70,8 @@ map<string, string> mapArgs;
 map<string, vector<string> > mapMultiArgs;
 bool fDebug = false;
 bool fDebugNet = false;
+bool fNoSpendZeroConfChangeForced = false; // forced from commandline
+bool fNoSpendZeroConfChange = false; // forced from commandline
 bool fPrintToConsole = false;
 bool fPrintToDebugger = false;
 bool fRequestShutdown = false;

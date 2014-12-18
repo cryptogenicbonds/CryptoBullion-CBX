@@ -20,6 +20,9 @@
 #include <QRegExpValidator>
 #include <QDialogButtonBox>
 
+extern bool fNoSpendZeroConfChange;
+extern bool fNoSpendZeroConfChangeForced;
+
 /* First page of options */
 class MainOptionsPage : public QWidget
 {
@@ -38,6 +41,7 @@ private:
     QCheckBox *minimize_on_close;
 #endif
     QCheckBox *connect_socks4;
+    QCheckBox *no_spend_unconfirmed_change;
     QCheckBox *detach_database;
     QLineEdit *proxy_ip;
     QLineEdit *proxy_port;
@@ -191,6 +195,10 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     connect_socks4->setToolTip(tr("Connect to the CBX network through a SOCKS4 proxy (e.g. when connecting through Tor)"));
     layout->addWidget(connect_socks4);
 
+    no_spend_unconfirmed_change = new QCheckBox(tr("&Disable spending unconfirmed change:"));
+    no_spend_unconfirmed_change->setToolTip(tr("If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed."));
+    layout->addWidget(no_spend_unconfirmed_change);
+
     QHBoxLayout *proxy_hbox = new QHBoxLayout();
     proxy_hbox->addSpacing(18);
     QLabel *proxy_ip_label = new QLabel(tr("Proxy &IP: "));
@@ -243,8 +251,14 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     connect(connect_socks4, SIGNAL(toggled(bool)), proxy_port, SLOT(setEnabled(bool)));
 
 #ifndef USE_UPNP
-    map_port_upnp->setDisabled(true);
+    map_port_upnp->setEnabled(true);
 #endif
+
+    if (fNoSpendZeroConfChangeForced)
+    {
+        no_spend_unconfirmed_change->setChecked(true);
+        no_spend_unconfirmed_change->setDisabled(true);
+    }
 }
 
 void MainOptionsPage::setMapper(MonitoredDataMapper *mapper)
@@ -255,6 +269,9 @@ void MainOptionsPage::setMapper(MonitoredDataMapper *mapper)
     mapper->addMapping(minimize_to_tray, OptionsModel::MinimizeToTray);
 #endif
     mapper->addMapping(map_port_upnp, OptionsModel::MapPortUPnP);
+    // do not map setting for no_spend_unconfirmed_change if that's been forced by commandline arg
+    if (!fNoSpendZeroConfChangeForced)
+        mapper->addMapping(no_spend_unconfirmed_change, OptionsModel::NoSpendUnconfirmedChange);
 #ifndef Q_WS_MAC
     mapper->addMapping(minimize_on_close, OptionsModel::MinimizeOnClose);
 #endif

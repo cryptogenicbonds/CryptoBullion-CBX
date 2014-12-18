@@ -147,6 +147,7 @@ extern bool fDebug;
 extern bool fDebugNet;
 extern bool fPrintToConsole;
 extern bool fPrintToDebugger;
+extern bool fNoSpendZeroConfChangeForced;
 extern bool fRequestShutdown;
 extern bool fShutdown;
 extern bool fDaemon;

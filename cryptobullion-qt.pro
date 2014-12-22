@@ -9,8 +9,7 @@ CONFIG += thread
 CONFIG += static
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
-windows:
-{
+win32 {
         BOOST_INCLUDE_PATH+="D:\_coinDev\deps\boost_1_55_0"
         BOOST_LIB_PATH="D:\_coinDev\deps\boost_1_55_0\stage\lib"
 
@@ -21,8 +20,8 @@ windows:
         OPENSSL_LIB_PATH="D:\_coinDev\deps\openssl-1.0.1j"
 
         QRENCODE_LIB_PATH="D:\_coinDev\deps\qrencode-3.4.4\.libs"
-		QRENCODE_INCLUDE_PATH="D:\_coinDev\deps\qrencode-3.4.4"
-		
+                QRENCODE_INCLUDE_PATH="D:\_coinDev\deps\qrencode-3.4.4"
+
         #INCLUDEPATH+="D:\_coinDev\Qt\5.3.2\include\QtWidgets"
 
         windows:LIBS += -lshlwapi
@@ -43,14 +42,14 @@ windows:
 
 # pass USE_MXE flag to cross compile Win32 wallet using MXE.
 contains(USE_MXE, 1) {
-	BOOST_THREAD_LIB_SUFFIX = _win32-mt
-	OBJECTS_DIR = x86/build
-	MOC_DIR = x86/build
-	UI_DIR = x86/build
+        BOOST_THREAD_LIB_SUFFIX = _win32-mt
+        OBJECTS_DIR = x86/build
+        MOC_DIR = x86/build
+        UI_DIR = x86/build
 }else{
-	OBJECTS_DIR = build
-	MOC_DIR = build
-	UI_DIR = build
+        OBJECTS_DIR = build
+        MOC_DIR = build
+        UI_DIR = build
 }
 
 # use: qmake "RELEASE=1"
@@ -123,27 +122,27 @@ contains(USE_BDB, 1) {
 } else {
     message(Building with LevelDB transaction index)
     DEFINES += USE_LEVELDB
-	INCLUDEPATH += src/leveldb/include src/leveldb/helpers
-	LIBS += $$PWD/src/leveldb/libleveldb.a $$PWD/src/leveldb/libmemenv.a
-	SOURCES += src/txdb-leveldb.cpp
+        INCLUDEPATH += src/leveldb/include src/leveldb/helpers
+        LIBS += $$PWD/src/leveldb/libleveldb.a $$PWD/src/leveldb/libmemenv.a
+        SOURCES += src/txdb-leveldb.cpp
 
-	!win32 {
-		# we use QMAKE_CXXFLAGS_RELEASE even without RELEASE=1 because we use RELEASE to indicate linking preferences not -O preferences
-		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
-	} else {
-		# make an educated guess about what the ranlib command is called
-		isEmpty(QMAKE_RANLIB) {
-		QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
-		}
-		LIBS += -lshlwapi
-		genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=NATIVE_WINDOWS $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
-	}
-	genleveldb.target = $$PWD/src/leveldb/libleveldb.a
-	genleveldb.depends = FORCE
-	PRE_TARGETDEPS += $$PWD/src/leveldb/libleveldb.a
-	QMAKE_EXTRA_TARGETS += genleveldb
-	# Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
-	QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
+        !win32 {
+                # we use QMAKE_CXXFLAGS_RELEASE even without RELEASE=1 because we use RELEASE to indicate linking preferences not -O preferences
+                genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
+        } else {
+                # make an educated guess about what the ranlib command is called
+                isEmpty(QMAKE_RANLIB) {
+                QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
+                }
+                LIBS += -lshlwapi
+                genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=NATIVE_WINDOWS $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
+        }
+        genleveldb.target = $$PWD/src/leveldb/libleveldb.a
+        genleveldb.depends = FORCE
+        PRE_TARGETDEPS += $$PWD/src/leveldb/libleveldb.a
+        QMAKE_EXTRA_TARGETS += genleveldb
+        # Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
+        QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
 }
 
 # regenerate src/build.h
@@ -239,7 +238,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/clientversion.h \
     src/coincontrol.h \
     src/qt/coincontroltreewidget.h \
-    src/qt/coincontroldialog.h 
+    src/qt/coincontroldialog.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -350,7 +349,7 @@ TRANSLATIONS = $$files(src/qt/locale/bitcoin_*.ts)
 
 isEmpty(QMAKE_LRELEASE) {
     #win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
-	win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease
+        win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease
     else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
 }
 isEmpty(QM_DIR):QM_DIR = $$PWD/src/qt/locale
@@ -365,14 +364,14 @@ QMAKE_EXTRA_COMPILERS += TSQM
 # "Other files" to show in Qt Creator
 OTHER_FILES += \
     doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc src/test/*.cpp src/test/*.h src/qt/test/*.cpp src/qt/test/*.h \
-	src/qt/locale/*.ts \
+        src/qt/locale/*.ts \
     src/qt/res/style/cgbstyle.qss
 
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
     #windows:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
-    windows:BOOST_LIB_SUFFIX = -mt    
+    windows:BOOST_LIB_SUFFIX = -mt
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {

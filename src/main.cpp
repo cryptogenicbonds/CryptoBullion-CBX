@@ -532,8 +532,8 @@ bool CTransaction::CheckTransaction() const
             return DoS(100, error("CTransaction::CheckTransaction() : txout empty for user transaction"));
 
         // ppcoin: enforce minimum output amount
-        //if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
-        //    return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue below minimum"));
+        if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
+            return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue below minimum"));
 
         if (txout.nValue < 0)
             return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue is negative"));
@@ -547,8 +547,8 @@ bool CTransaction::CheckTransaction() const
     }
 
     // check that combined output amount is greater than MIN_TXOUT_AMOUNT
-    if (nValueOut < MIN_TXOUT_AMOUNT)
-        return DoS(100, error("CTransaction::CheckTransaction() : total output below minimum"));
+   // if (nValueOut < MIN_TXOUT_AMOUNT)
+   //     return DoS(100, error("CTransaction::CheckTransaction() : total output below minimum"));
 
     // Check for duplicate inputs
     set<COutPoint> vInOutPoints;
@@ -2866,8 +2866,11 @@ bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress, in
 extern map<uint256, CAlert> mapAlerts;
 extern CCriticalSection cs_mapAlerts;
 
-static string strMintMessage = "Info: Minting suspended due to locked Vault.";
+static string strMintMessage = "Info: Staking suspended due to locked Vault.";
+static string strMintStakingMessage = "Info: Vault is unlocked for staking.";
 static string strMintWarning;
+
+extern bool fWalletUnlockMintOnly;
 
 string GetWarnings(string strFor)
 {
@@ -4459,7 +4462,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
 
         while (pwallet->IsLocked())
         {
-            strMintWarning = strMintMessage;
+            strMintWarning = fWalletUnlockMintOnly ? strMintStakingMessage : strMintMessage;
             Sleep(1000);
         }
         strMintWarning = "";
@@ -4482,7 +4485,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             {
                 if (!pblock->SignBlock(*pwalletMain))
                 {
-                    strMintWarning = strMintMessage;
+                    strMintWarning = fWalletUnlockMintOnly ? strMintStakingMessage : strMintMessage;
                     continue;
                 }
                 strMintWarning = "";

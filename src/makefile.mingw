@@ -4,26 +4,29 @@
 
 USE_UPNP:=0
 USE_IPV6:=1
+USE_LEVELDB:=1
+
+DEPSPATH=d:/_coindev/deps
 
 INCLUDEPATHS= \
- -I"C:\deps\boost_1_55_0" \
- -I"C:\deps\db-4.8.30.NC\build_unix" \
- -I"C:\deps\openssl-1.0.1g\include"
+ -I"$(DEPSPATH)/boost_1_55_0" \
+ -I"$(DEPSPATH)/db-4.8.30.NC/build_unix" \
+ -I"$(DEPSPATH)/openssl-1.0.1j/include"
 
 LIBPATHS= \
- -L"C:\deps\boost_1_55_0\stage\lib" \
- -L"C:\deps\db-4.8.30.NC\build_unix" \
- -L"C:\deps\openssl-1.0.1g"
+ -L"$(DEPSPATH)/boost_1_55_0/stage/lib" \
+ -L"$(DEPSPATH)/db-4.8.30.NC/build_unix" \
+ -L"$(DEPSPATH)/openssl-1.0.1j"
 
 LIBS= \
- -l boost_system-mgw48-mt-1_55 \
- -l boost_filesystem-mgw48-mt-1_55 \
- -l boost_program_options-mgw48-mt-1_55 \
- -l boost_thread-mgw48-mt-1_55 \
- -l boost_chrono-mgw48-mt-1_55 \
- -l db_cxx \
- -l ssl \
- -l crypto
+ -lboost_system-mgw48-mt-s-1_55 \
+ -lboost_filesystem-mgw48-mt-s-1_55 \
+ -lboost_program_options-mgw48-mt-s-1_55 \
+ -lboost_thread-mgw48-mt-s-1_55 \
+ -lboost_chrono-mgw49-mt-s-1_55 \
+ -ldb_cxx \
+ -lssl \
+ -lcrypto
 
 DEFS=-DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE
 DEBUGFLAGS=-g
@@ -37,8 +40,8 @@ ifndef USE_UPNP
 	override USE_UPNP = -
 endif
 ifneq (${USE_UPNP}, -)
- INCLUDEPATHS += -I"C:\deps"
- LIBPATHS += -L"C:\deps\miniupnpc"
+ INCLUDEPATHS += -I"$(CURDIR)/minupnpc/"
+ LIBPATHS += -L"$(CURDIR)/minupnpc/"
  LIBS += -l miniupnpc -l iphlpapi
  DEFS += -DSTATICLIB -DUSE_UPNP=$(USE_UPNP)
 endif
@@ -86,10 +89,27 @@ OBJS= \
     obj/scrypt-x86.o \
     obj/scrypt-x86_64.o
 
-all: cryptogenicbulliond.exe
+all: cryptobulliond.exe
 
-test check: test_CryptogenicBullion.exe FORCE
-	test_CryptogenicBullion.exe
+#
+# LevelDB support
+#
+ifdef USE_LEVELDB
+
+    leveldb/libleveldb.a:
+	cd leveldb; make libleveldb.a libmemenv.a; cd ..
+
+    LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
+    DEFS += $(addprefix -I,$(CURDIR)/leveldb/include) -DUSE_LEVELDB
+    DEFS += $(addprefix -I,$(CURDIR)/leveldb/helpers)
+    OBJS += obj/txdb-leveldb.o
+    obj/txdb-leveldb.o: leveldb/libleveldb.a
+else
+    OBJS += obj/txdb-bdb.o
+endif
+
+test check: test_CryptoBullion.exe FORCE
+	test_CryptoBullion.exe
 
 obj/%.o: %.cpp $(HEADERS)
 	g++ -c $(CFLAGS) -o $@ $<
@@ -100,7 +120,7 @@ obj/scrypt-x86.o: scrypt-x86.S
 obj/scrypt-x86_64.o: scrypt-x86_64.S
 	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
 
-cryptogenicbulliond.exe: $(OBJS:obj/%=obj/%)
+cryptobulliond.exe: $(OBJS:obj/%=obj/%)
 	g++ $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -112,7 +132,7 @@ test_bitcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	g++ $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework $(LIBS)
 
 clean:
-	-del /Q cryptogenicbulliond test_CryptogenicBullion
+	-del /Q cryptobulliond test_CryptoBullion
 	-del /Q obj\*
 	-del /Q obj-test\*
 

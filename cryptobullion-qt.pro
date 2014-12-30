@@ -90,18 +90,18 @@ contains(USE_QRCODE, 1) {
 #  or: qmake "USE_UPNP=0" (disabled by default)
 #  or: qmake "USE_UPNP=-" (not supported)
 # miniupnpc (http://miniupnp.free.fr/files/) must be installed for support
-contains(USE_UPNP, -) {
-    message(Building without UPNP support)
-    count(USE_UPNP, 0) {
-        USE_UPNP=1
-    }
-}else{
-    message(Building with UPNP support)
-    INCLUDEPATH += $$PWD/src/minupnpc/
-    DEFINES += USE_UPNP=$$USE_UPNP MINIUPNP_STATICLIB
-    LIBS += $$PWD/src/minupnpc/libminiupnpc.a
-    win32:LIBS += -liphlpapi
-}
+#contains(USE_UPNP, -) {
+#    message(Building without UPNP support)
+#    count(USE_UPNP, 0) {
+#        USE_UPNP=1
+#    }
+#}else{
+#    message(Building with UPNP support)
+#    INCLUDEPATH += $$PWD/src/minupnpc/
+#    DEFINES += USE_UPNP=$$USE_UPNP MINIUPNP_STATICLIB
+#    LIBS += $$PWD/src/minupnpc/libminiupnpc.a
+#    win32:LIBS += -liphlpapi
+#}
 
 # use: qmake "USE_DBUS=1"
 contains(USE_DBUS, 1) {

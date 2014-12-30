@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>744</width>
-    <height>304</height>
+    <height>309</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -115,7 +115,7 @@ QLabel { background: transparent; }</string>
         <string notr="true">QLabel { background: transparent; }</string>
        </property>
        <property name="text">
-        <string>Copyright © 2009-2012 The CryptoBullion Foundation</string>
+        <string>Copyright © 2009-2015s The CryptoBullion Foundation</string>
        </property>
        <property name="textInteractionFlags">
         <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>

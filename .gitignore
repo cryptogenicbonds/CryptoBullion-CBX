@@ -226,4 +226,8 @@ src/cryptogenicbulliond
 Makefile*
 object_script*
 
+# leveldb makefile
+!src/leveldb/Makefile
+
+
 

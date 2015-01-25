@@ -1087,7 +1087,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Windows
     boost::filesystem::path oldPath = GetSpecialFolderPath(CSIDL_APPDATA) / "CryptogenicBullion";
     boost::filesystem::path newPath = GetSpecialFolderPath(CSIDL_APPDATA) / "CryptoBullion";
-    if (is_directory(oldPath))
+    if (is_directory(oldPath) && !is_directory(newPath))
         rename(oldPath, newPath);
 
     return newPath;
@@ -1108,7 +1108,7 @@ boost::filesystem::path GetDefaultDataDir()
     oldPath = pathRet / "CryptogenicBullion";
     newPath = pathRet / "CryptoBullion";
 
-    if (is_directory(oldPath))
+    if (is_directory(oldPath) && !is_directory(newPath))
         rename(oldPath, newPath);
 
     return newPath;
@@ -1117,7 +1117,7 @@ boost::filesystem::path GetDefaultDataDir()
     oldPath = pathRet / ".CryptogenicBullion";
     newPath = pathRet / ".CryptoBullion";
 
-    if (is_directory(oldPath))
+    if (is_directory(oldPath) && !is_directory(newPath))
         rename(oldPath, newPath);
 
     return newPath;

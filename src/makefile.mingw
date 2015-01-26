@@ -19,10 +19,10 @@ LIBPATHS= \
  -L"$(DEPSPATH)/openssl-1.0.1j"
 
 LIBS= \
- -lboost_system-mgw48-mt-s-1_55 \
- -lboost_filesystem-mgw48-mt-s-1_55 \
- -lboost_program_options-mgw48-mt-s-1_55 \
- -lboost_thread-mgw48-mt-s-1_55 \
+ -lboost_system-mgw49-mt-s-1_55 \
+ -lboost_filesystem-mgw49-mt-s-1_55 \
+ -lboost_program_options-mgw49-mt-s-1_55 \
+ -lboost_thread-mgw49-mt-s-1_55 \
  -lboost_chrono-mgw49-mt-s-1_55 \
  -ldb_cxx \
  -lssl \
@@ -37,9 +37,9 @@ LDFLAGS=-Wl,--dynamicbase -Wl,--nxcompat -Wl,--large-address-aware -static
 TESTDEFS = -DTEST_DATA_DIR=$(abspath test/data)
 
 ifndef USE_UPNP
-	override USE_UPNP = -
+	override USE_UPNP = 0
 endif
-ifneq (${USE_UPNP}, -)
+ifneq (${USE_UPNP}, 0)
  INCLUDEPATHS += -I"$(CURDIR)/minupnpc/"
  LIBPATHS += -L"$(CURDIR)/minupnpc/"
  LIBS += -l miniupnpc -l iphlpapi
@@ -50,7 +50,6 @@ ifneq (${USE_IPV6}, -)
 	DEFS += -DUSE_IPV6=$(USE_IPV6)
 endif
 
-LIBS += -l kernel32 -l user32 -l gdi32 -l comdlg32 -l winspool -l winmm -l shell32 -l comctl32 -l ole32 -l oleaut32 -l uuid -l rpcrt4 -l advapi32 -l ws2_32 -l mswsock -l shlwapi
 
 # TODO: make the mingw builds smarter about dependencies, like the linux/osx builds are
 HEADERS = $(wildcard *.h)
@@ -97,7 +96,7 @@ all: cryptobulliond.exe
 ifdef USE_LEVELDB
 
     leveldb/libleveldb.a:
-	cd leveldb; make libleveldb.a libmemenv.a; cd ..
+	cd leveldb; TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a; cd ..
 
     LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
     DEFS += $(addprefix -I,$(CURDIR)/leveldb/include) -DUSE_LEVELDB
@@ -107,6 +106,8 @@ ifdef USE_LEVELDB
 else
     OBJS += obj/txdb-bdb.o
 endif
+
+LIBS += -l kernel32 -l user32 -l gdi32 -l comdlg32 -l winspool -l winmm -l shell32 -l comctl32 -l ole32 -l oleaut32 -l uuid -l rpcrt4 -l advapi32 -l ws2_32 -l mswsock -l shlwapi
 
 test check: test_CryptoBullion.exe FORCE
 	test_CryptoBullion.exe

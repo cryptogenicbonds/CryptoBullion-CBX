@@ -15,8 +15,8 @@ win32 {
         BDB_INCLUDE_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
         BDB_LIB_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
 
-        OPENSSL_INCLUDE_PATH+="D:\_coinDev\deps\openssl-1.0.1j\include"
-        OPENSSL_LIB_PATH="D:\_coinDev\deps\openssl-1.0.1j"
+        OPENSSL_INCLUDE_PATH+="D:\_coinDev\deps\openssl-1.0.1k\include"
+        OPENSSL_LIB_PATH="D:\_coinDev\deps\openssl-1.0.1k"
 
         QRENCODE_LIB_PATH="D:\_coinDev\deps\qrencode-3.4.4\.libs"
         QRENCODE_INCLUDE_PATH="D:\_coinDev\deps\qrencode-3.4.4"
@@ -446,13 +446,16 @@ macx:QMAKE_CXXFLAGS_THREAD += -pthread
 # Set libraries and includes at end, to use platform-defined defaults if not overridden
 INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
-#LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # force updated openssl?
-LIBS += /usr/local/ssl/lib/libssl.a /usr/local/ssl/lib/libcrypto.a -ldb_cxx$$BDB_LIB_SUFFIX
+#LIBS += /usr/local/ssl/lib/libssl.a /usr/local/ssl/lib/libcrypto.a -ldb_cxx$$BDB_LIB_SUFFIX
 
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX -ldl
+LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
+!windows:!macx {
+    LIBS += !-ldl
+}
 windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {

@@ -221,13 +221,11 @@ pip-log.txt
 
 *.autosave
 src/test
-src/cryptogenicbulliond
+src/cryptobulliond
+src/cryptobulliond.exe
 *.goutputstream*
 Makefile*
+!src/leveldb/Makefile*
 object_script*
-
-# leveldb makefile
-!src/leveldb/Makefile
-
 
 

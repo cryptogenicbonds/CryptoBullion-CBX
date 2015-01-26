@@ -10,11 +10,11 @@ SetCompressor /SOLID lzma
 !define URL http://
 
 # MUI Symbol Definitions
-!define MUI_ICON "../share/pixmaps/CryptoBullion.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
+!define MUI_ICON "D:\_coinDev\coins\cgb\CGB\share\pixmaps\CryptoBullion.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "D:\_coinDev\coins\cgb\CGB\share\pixmaps\nsis-wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
-!define MUI_HEADERIMAGE_BITMAP "../share/pixmaps/nsis-header.bmp"
+!define MUI_HEADERIMAGE_BITMAP "D:\_coinDev\coins\cgb\CGB\share\pixmaps\nsis-header.bmp"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
@@ -22,7 +22,7 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER CryptoBullion
 !define MUI_FINISHPAGE_RUN $INSTDIR\cryptobullion-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "D:\_coinDev\coins\cgb\CGB\share\pixmaps\nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 # Included files
@@ -66,11 +66,11 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File ../release/cryptobullion-qt.exe
-    File /oname=license.txt ../COPYING
-    File /oname=readme.txt ../doc/README_windows.txt
+    File D:\_coinDev\coins\cgb\CGB\release\CryptoBullion-qt.exe
+    File /oname=license.txt D:\_coinDev\coins\cgb\CGB\COPYING
+    File /oname=readme.txt D:\_coinDev\coins\cgb\CGB\doc\README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File ../src/cryptobulliond.exe
+    File D:\_coinDev\coins\cgb\CGB\release\cryptobulliond.exe
     SetOutPath $INSTDIR\src
     File /r /x *.exe /x *.o ../src\*.*
     SetOutPath $INSTDIR

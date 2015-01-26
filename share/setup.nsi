@@ -1,4 +1,4 @@
-Name CryptogenicBullion
+Name CryptoBullion
 
 RequestExecutionLevel highest
 SetCompressor /SOLID lzma
@@ -6,11 +6,11 @@ SetCompressor /SOLID lzma
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
 !define VERSION 0.3.0
-!define COMPANY "CryptogenicBullion project"
+!define COMPANY "CryptoBullion project"
 !define URL http://
 
 # MUI Symbol Definitions
-!define MUI_ICON "../share/pixmaps/CryptogenicBullion.ico"
+!define MUI_ICON "../share/pixmaps/CryptoBullion.ico"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
@@ -19,8 +19,8 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER CryptogenicBullion
-!define MUI_FINISHPAGE_RUN $INSTDIR\cryptogenicbullion-qt.exe
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER CryptoBullion
+!define MUI_FINISHPAGE_RUN $INSTDIR\cryptobullion-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
@@ -45,14 +45,14 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile cryptogenicbullion-0.3.0-win32-setup.exe
-InstallDir $PROGRAMFILES\CryptogenicBullion
+OutFile cryptobullion-1.2.0.4-win32-setup.exe
+InstallDir $PROGRAMFILES\CryptoBullion
 CRCCheck on
 XPStyle on
 BrandingText " "
 ShowInstDetails show
 VIProductVersion 0.3.0.0
-VIAddVersionKey ProductName CryptogenicBullion
+VIAddVersionKey ProductName CryptoBullion
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
 VIAddVersionKey CompanyWebsite "${URL}"
@@ -66,11 +66,11 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File ../release/cryptogenicbullion-qt.exe
+    File ../release/cryptobullion-qt.exe
     File /oname=license.txt ../COPYING
     File /oname=readme.txt ../doc/README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File ../src/cryptogenicbulliond.exe
+    File ../src/cryptobulliond.exe
     SetOutPath $INSTDIR\src
     File /r /x *.exe /x *.o ../src\*.*
     SetOutPath $INSTDIR
@@ -87,8 +87,8 @@ Section -post SEC0001
     WriteUninstaller $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\CryptogenicBullion.lnk" $INSTDIR\cryptogenicbullion-qt.exe
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall CryptogenicBullion.lnk" $INSTDIR\uninstall.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\CryptoBullion.lnk" $INSTDIR\cryptobullion-qt.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall CryptoBullion.lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
@@ -99,11 +99,11 @@ Section -post SEC0001
     WriteRegDWORD HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoModify 1
     WriteRegDWORD HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoRepair 1
 
-    # CryptogenicBullion: URI handling disabled for 0.6.0
-        WriteRegStr HKCR "CryptogenicBullion" "URL Protocol" ""
-        WriteRegStr HKCR "CryptogenicBullion" "" "URL:CryptogenicBullion"
-        WriteRegStr HKCR "CryptogenicBullion\DefaultIcon" "" $INSTDIR\cryptogenicbullion-qt.exe
-        WriteRegStr HKCR "CryptogenicBullion\shell\open\command" "" '"$INSTDIR\cryptogenicbullion-qt.exe" "$$1"'
+    # CryptoBullion: URI handling disabled for 0.6.0
+        WriteRegStr HKCR "CryptoBullion" "URL Protocol" ""
+        WriteRegStr HKCR "CryptoBullion" "" "URL:CryptoBullion"
+        WriteRegStr HKCR "CryptoBullion\DefaultIcon" "" $INSTDIR\cryptobullion-qt.exe
+        WriteRegStr HKCR "CryptoBullion\shell\open\command" "" '"$INSTDIR\cryptobullion-qt.exe" "$$1"'
 SectionEnd
 
 # Macro for selecting uninstaller sections
@@ -121,7 +121,7 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
-    Delete /REBOOTOK $INSTDIR\cryptogenicbullion-qt.exe
+    Delete /REBOOTOK $INSTDIR\cryptobullion-qt.exe
     Delete /REBOOTOK $INSTDIR\license.txt
     Delete /REBOOTOK $INSTDIR\readme.txt
     RMDir /r /REBOOTOK $INSTDIR\daemon
@@ -131,9 +131,9 @@ SectionEnd
 
 Section -un.post UNSEC0001
     DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall CryptogenicBullion.lnk"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\CryptogenicBullion.lnk"
-    Delete /REBOOTOK "$SMSTARTUP\CryptogenicBullion.lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall CryptoBullion.lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\CryptoBullion.lnk"
+    Delete /REBOOTOK "$SMSTARTUP\CryptoBullion.lnk"
     Delete /REBOOTOK $INSTDIR\uninstall.exe
     Delete /REBOOTOK $INSTDIR\debug.log
     Delete /REBOOTOK $INSTDIR\db.log
@@ -141,7 +141,7 @@ Section -un.post UNSEC0001
     DeleteRegValue HKCU "${REGKEY}" Path
     DeleteRegKey /IfEmpty HKCU "${REGKEY}\Components"
     DeleteRegKey /IfEmpty HKCU "${REGKEY}"
-    DeleteRegKey HKCR "CryptogenicBullion"
+    DeleteRegKey HKCR "CryptoBullion"
     RmDir /REBOOTOK $SMPROGRAMS\$StartMenuGroup
     RmDir /REBOOTOK $INSTDIR
     Push $R0

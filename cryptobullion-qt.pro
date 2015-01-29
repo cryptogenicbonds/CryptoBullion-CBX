@@ -139,7 +139,7 @@ contains(USE_BDB, 1) {
     message(Building with LevelDB transaction index)
     DEFINES += USE_LEVELDB
 
-    INCLUDEPATH += src/leveldb/include src/leveldb/helpers
+    INCLUDEPATH += src/leveldb/include src/leveldb/helpers src/leveldb/helpers/memenv
     LIBS += $$PWD/src/leveldb/libleveldb.a $$PWD/src/leveldb/libmemenv.a
     SOURCES += src/txdb-leveldb.cpp
     !win32 {
@@ -177,7 +177,8 @@ QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wform
 
 # Input
 DEPENDPATH += src src/json src/qt
-HEADERS += src/qt/bitcoingui.h \
+HEADERS += \
+    src/qt/bitcoingui.h \
     src/qt/transactiontablemodel.h \
     src/qt/addresstablemodel.h \
     src/qt/optionsdialog.h \
@@ -256,7 +257,9 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/coincontroltreewidget.h \
     src/qt/coincontroldialog.h
 
-SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
+SOURCES += \
+    src/qt/bitcoin.cpp \
+    src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \

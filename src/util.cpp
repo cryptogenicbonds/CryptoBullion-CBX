@@ -1239,6 +1239,23 @@ void FileCommit(FILE *fileout)
 #endif
 }
 
+
+// Ignores exceptions thrown by boost's create_directory if the requested directory exists.
+//   Specifically handles case where path p exists, but it wasn't possible for the user to write to the parent directory.
+bool TryCreateDirectory(const boost::filesystem::path& p)
+{
+    try
+    {
+        return boost::filesystem::create_directory(p);
+    } catch (boost::filesystem::filesystem_error) {
+        if (!boost::filesystem::exists(p) || !boost::filesystem::is_directory(p))
+            throw;
+    }
+
+    // create_directory didn't create the directory, it had to have existed already
+    return false;
+}
+
 int GetFilesize(FILE* file)
 {
     int nSavePos = ftell(file);

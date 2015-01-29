@@ -1004,14 +1004,14 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(unsigned int nHeight)
 {
-		int64 nSubsidy = 0 * COIN;
+        int64 nSubsidy = 0 * COIN;
 
 		if (nHeight < 55001)
 			nSubsidy = 10 * COIN; // 550,000 coins
 		else if (nHeight < 95001)
 			nSubsidy = 5 * COIN; // 200,000 coins
 		else if (nHeight < 145001)
-			nSubsidy = 2.5 * COIN; // 125000 coins
+            nSubsidy = 2.5 * COIN; // 125000 coins
 		else if (nHeight < 195001)
 			nSubsidy = 1.25 * COIN; // 62,500 coins
 		else if (nHeight < 245001)
@@ -2077,7 +2077,9 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
         if (!SetBestChain(txdb, pindexNew))
             return false;
 
-    txdb.Close();
+#ifndef USE_LEVELDB
+     txdb.Close();
+#endif
 
     if (pindexNew == pindexBest)
     {
@@ -2607,7 +2609,9 @@ bool LoadBlockIndex(bool fAllowNew)
     CTxDB txdb("cr");
     if (!txdb.LoadBlockIndex())
         return false;
+#ifndef USE_LEVELDB
     txdb.Close();
+#endif
 
     //
     // Init with genesis block
@@ -2696,7 +2700,9 @@ bool LoadBlockIndex(bool fAllowNew)
             if ((!fTestNet) && !Checkpoints::ResetSyncCheckpoint())
                 return error("LoadBlockIndex() : failed to reset sync-checkpoint");
         }
+#ifndef USE_LEVELDB
         txdb.Close();
+#endif
     }
 
     return true;

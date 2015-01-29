@@ -541,9 +541,11 @@ bool AppInit2()
 
     // ********************************************************* Step 4b: upgrade to leveldb
 
+#ifdef USE_LEVELDB
     LevelDBMigrationProgress progress;
     progress.connect(UpdateUIWithDBUpgradeProgress);
     LevelDBMigrationResult migrationResult = MaybeMigrateToLevelDB(progress);
+#endif
 
     // ********************************************************* Step 5: verify database integrity
 

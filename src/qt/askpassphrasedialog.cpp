@@ -33,6 +33,11 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
     bool addCancelButton = true;
     bool addOkButton = false;
 
+    buttonOk = NULL;
+    buttonCancel = NULL;
+    buttonUnlock = NULL;
+    buttonUnlockStakingOnly = NULL;
+
     switch(mode)
     {
         case Encrypt: // Ask passphrase x2
@@ -250,6 +255,7 @@ void AskPassphraseDialog::textChanged()
         acceptable = !ui->passEdit2->text().isEmpty() && !ui->passEdit3->text().isEmpty();
         break;
     case Unlock: // Old passphrase x1
+    case UnlockFullOnly: // Old passphrase x1
     case Decrypt:
         acceptable = !ui->passEdit1->text().isEmpty();
         break;
@@ -257,7 +263,15 @@ void AskPassphraseDialog::textChanged()
         acceptable = !ui->passEdit1->text().isEmpty() && !ui->passEdit2->text().isEmpty() && !ui->passEdit3->text().isEmpty();
         break;
     }
-    //ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(acceptable);
+
+    if (buttonOk)
+        buttonOk->setEnabled(acceptable);
+
+    if (buttonUnlock)
+        buttonUnlock->setEnabled(acceptable);
+
+    if (buttonUnlockStakingOnly)
+        buttonUnlockStakingOnly->setEnabled(acceptable);
 }
 
 bool AskPassphraseDialog::event(QEvent *event)

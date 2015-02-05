@@ -174,7 +174,7 @@ void SetEditGradient(QWidget* widget)
 
 void SetupPushButton(QWidget* widget)
 {
-    widget->setStyleSheet("color:#FFFFFF;\nbackground-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(164, 161, 161, 255), stop:0.0409091 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 255));");
+    //widget->setStyleSheet("color:#FFFFFF;\nbackground-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(164, 161, 161, 255), stop:0.0409091 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 255));");
 }
 
 void SetWidgetColor(QWidget* widget, char* color)

@@ -225,6 +225,7 @@ src/cryptobulliond
 src/cryptobulliond.exe
 *.goutputstream*
 Makefile*
+!src/libqrencode/Makefile*
 !src/leveldb/Makefile*
 object_script*
 

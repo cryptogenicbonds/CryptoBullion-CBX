@@ -224,9 +224,10 @@ src/test
 src/cryptobulliond
 src/cryptobulliond.exe
 *.goutputstream*
-Makefile*
+Makefile
 !src/libqrencode/Makefile*
 !src/leveldb/Makefile*
+!src/miniupnpc/Makefile*
 object_script*
 
 

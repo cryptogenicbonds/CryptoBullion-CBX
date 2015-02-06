@@ -6,6 +6,7 @@ INCLUDEPATH += src src/json src/qt
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd
 CONFIG += thread
+CONFIG += static
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 win32 {
@@ -57,7 +58,7 @@ contains(USE_MXE, 1) {
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
     # Mac: compile for maximum compatibility (10.5, 32-bit)
-    #macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
 
     !windows:!macx {
         # Linux: static link
@@ -94,18 +95,19 @@ contains(USE_QRCODE, 1) {
 #  or: qmake "USE_UPNP=0" (disabled by default)
 #  or: qmake "USE_UPNP=-" (not supported)
 # miniupnpc (http://miniupnp.free.fr/files/) must be installed for support
-#contains(USE_UPNP, -) {
-#    message(Building without UPNP support)
-#    count(USE_UPNP, 0) {
-#        USE_UPNP=1
-#    }
-#}else{
-#    message(Building with UPNP support)
-#    INCLUDEPATH += $$PWD/src/minupnpc/
-#    DEFINES += USE_UPNP=$$USE_UPNP MINIUPNP_STATICLIB
-#    LIBS += $$PWD/src/minupnpc/libminiupnpc.a
-#    win32:LIBS += -liphlpapi
-#}
+contains(USE_UPNP, -) {
+    message(Building without UPNP support)
+    DEFINES += USE_UPNP=$$USE_UPNP
+}else{
+    message(Building with UPNP support)
+    count(USE_UPNP, 0) {
+        USE_UPNP=1
+    }
+    INCLUDEPATH += $$PWD/src/miniupnpc/
+    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
+    LIBS += $$PWD/src/miniupnpc/libminiupnpc.a
+    win32:LIBS += -liphlpapi
+}
 
 # use: qmake "USE_DBUS=1"
 contains(USE_DBUS, 1) {
@@ -456,9 +458,6 @@ LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
 LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
-!windows:!macx {
-    LIBS += -ldl
-}
 windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {
@@ -466,6 +465,10 @@ contains(RELEASE, 1) {
         # Linux: turn dynamic linking back on for c/c++ runtime libraries
         LIBS += -Wl,-Bdynamic
     }
+}
+
+!windows:!macx {
+    LIBS += -ldl
 }
 
 system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)

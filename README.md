@@ -16,7 +16,7 @@ Blocks 95001-145000 = 2.5 CBX per;
 Blocks 145001-195000 = 1.25 CBX per
 etc
 
-First year coin mint of < 1000000
+Coin mint of < 1000000
 
 Default P2P Port: 7695
 

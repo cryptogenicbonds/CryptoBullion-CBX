@@ -8,7 +8,7 @@ Linear Difficulty Retarget (2 block retarget)
 
 Transactions require 6 confirmations
 
-Block reward halves after every ~50000 blocks:
+Block reward halves after every ~50000 blocks until baseline of 0.01 CBX (reached on July 13, 2014)
 
 Blocks 1-55000 = 10 CBX per;
 Blocks 55001-95000 = 5 CBX per;
@@ -16,18 +16,7 @@ Blocks 95001-145000 = 2.5 CBX per;
 Blocks 145001-195000 = 1.25 CBX per
 etc
 
-First year coin mint of ~1000000
-
-Aiming to be PoS-only blockchain once PoW block subsidy reaches baseline reward of 0.01.
-Much research will go into maintaining security of the blockchain if/when CBX goes PoS only.  Many possible schemes and solutions are being analyzed for potential implementation, including but not limited to:
-
--CoinJoin revision for additional PoS overlay scheme
-
--Increasing PoS rewards to slightly accelerate coin cap growth, to make it more difficult for 51% stake attack.
-
--Revision to current PoS trust score algorithm
-
--Additional randomized trust score scheme to increase scrutiny for randomly selected new PoS blocks
+Coin mint of < 1000000
 
 Default P2P Port: 7695
 
@@ -93,7 +82,8 @@ addnode=119.9.15.177
 
 
 
-replace username and password with your own username and password.  Do not use the same username/password that is the same as something sensitive, like a website.  
+Replace username and password with your own username and password.  Do not use the same username/password that is the same as 
+something sensitive, like a website.  
 
 Place the file in your data directory. (you need to run the Qt or daemon once before you do this)
 

@@ -63,6 +63,10 @@ listen=0
 
 maxconnections=100
 
+addnode=seed.cryptobullion.io
+
+addnode=blockexplorer.cryptobullion.io
+
 addnode=173.230.133.205
 
 addnode=72.78.100.7

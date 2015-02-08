@@ -1,4 +1,4 @@
-Cryptogenic Bullion Cryptographic Commodity
+Crypto Bullion Cryptographic Commodity
 
 Proof of Work/Proof of Stake Hybrid
 
@@ -6,9 +6,9 @@ Scrypt
 
 Linear Difficulty Retarget (2 block retarget)
 
-Transactions require 5 confirmations
+Transactions require 6 confirmations
 
-Block reward halves after every ~50000 blocks:
+Block reward halves after every ~50000 blocks until baseline reward of 0.01 CBX reached on July 13, 2014
 
 Blocks 1-55000 = 10 CGB per; 
 Blocks 55001-95000 = 5 CGB per;
@@ -16,34 +16,18 @@ Blocks 95001-145000 = 2.5 CGB per;
 Blocks 145001-195000 = 1.25 CGB per
 etc
 
-First year coin mint of ~1000000
+First year coin mint of < 1000000
 
-Released in late June 2013, CGB was designed primarily for the purpose of storing wealth. Cryptogenic Bullion is a second generation crypto-currency designed to emulate the properties and supply of gold. It’s the first crypto-currency to display all of the properties of money, while providing the bearer with interest for holding it.
-Unlike most other crypto-currencies, Cryptogenic Bullion has already completed its volatile monetary base expansion stage and has settled in to its maximum target of 2% expansion per year.
+Crypto Bullion (CBX) is a digital asset with all of the qualities of money. It is a descendant of Bitcoin, but employs an 
+advanced security model which is more efficient and more secure than Bitcoin. The problems of today’s debt based fiat 
+currencies find solutions in cutting-edge decentralized cryptographic currencies like Crypto Bullion. Designed to function as a
+store of wealth, Crypto Bullion’s fundamentals emulate the properties and supply of gold.
 
-To qualify for interest, an investor must keep their funds unspent in their wallets for a minimum of 30 days (for 1.2% annual interest), and up to a maximum of 90 days (1.5% annual interest).
-
-Now that the baseline mining reward has been reached after a year of fair distribution, the annual inflation target of 2% is locked in. There is no better time for the serious investor to get involved and claim a stake in this unique digital asset.
-
-New feature developments currently being assembled for client 2.0 release include but are not limited to:
-
-- Balance POS/POW block creation - POS time changes, POW time changes
-
-- Add stake visualization
-
-- Add unlock button to easily unlock wallet for staking
-
-- Client styling
-
-- Fully implement multisig, and make sure getrawtransaction RPC call is available - to support distributed exchange
-
-- Add Coin Control
-
-- Improve client start up time
-
-- Merged mining
-
-- Stealth addresses
+While Crypto Bullion shares many traits with Bitcoin such as fast global payments, decentralization, pseudo-anonymity, and 
+non-reversible transactions, there are many improvements which allow Crypto Bullion to more reliably store wealth. A critical 
+requirement for storing wealth is a low inflation rate. Crypto Bullion is a very rare exception in that it has completed its 
+volatile inflationary stage and settled into its maximum yearly inflation rate of 2%. It also allows prudent savers of Crypto 
+Bullion to earn up to 1.5% annual interest on funds left unspent in their wallets for at least 30 days.
 
 Default P2P Port: 7695
 
@@ -53,7 +37,7 @@ Default RPC Port: 8395
 
 Sample config file:
 
-create a file and name it CryptogenicBullion.conf
+create a file and name it CryptoBullion.conf
 
 And copy/paste the following contents:
 
@@ -105,12 +89,14 @@ addnode=119.9.15.177
 
 
 
-Replace username and password with your own username and password.  Do not use the same username/password that is the same as something sensitive, like a website.  
+Replace username and password with your own username and password.  Do not use the same username/password that is the same as 
+something sensitive, like a website.  
 
 Place the file in your data directory. (you need to run the Qt or daemon once before you do this)
 
-If using Linux, the data directory is located at /home/User/.CryptogenicBullion 
+If using Linux, the data directory is located at /home/User/.CryptoBullion 
 where User is your login username for your system.
 
-If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\CryptogenicBullion where USERNAME is replaced with your Windows Username.
+If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\CryptoBullion where USERNAME is replaced 
+with your Windows Username.
 

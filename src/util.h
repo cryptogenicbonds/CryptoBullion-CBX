@@ -35,6 +35,7 @@ typedef unsigned long long  uint64;
 static const int64 COIN = 1000000;
 static const int64 CENT = 10000;
 
+#define loop                for (;;)
 #define BEGIN(a)            ((char*)&(a))
 #define END(a)              ((char*)&((&(a))[1]))
 #define UBEGIN(a)           ((unsigned char*)&(a))
@@ -146,6 +147,7 @@ extern bool fDebug;
 extern bool fDebugNet;
 extern bool fPrintToConsole;
 extern bool fPrintToDebugger;
+extern bool fNoSpendZeroConfChangeForced;
 extern bool fRequestShutdown;
 extern bool fShutdown;
 extern bool fDaemon;
@@ -205,12 +207,17 @@ std::vector<unsigned char> DecodeBase32(const char* p, bool* pfInvalid = NULL);
 std::string DecodeBase32(const std::string& str);
 std::string EncodeBase32(const unsigned char* pch, size_t len);
 std::string EncodeBase32(const std::string& str);
+std::string EncodeDumpTime(int64 nTime);
+int64 DecodeDumpTime(const std::string& s);
+std::string EncodeDumpString(const std::string &str);
+std::string DecodeDumpString(const std::string &str);
 void ParseParameters(int argc, const char*const argv[]);
 bool WildcardMatch(const char* psz, const char* mask);
 bool WildcardMatch(const std::string& str, const std::string& mask);
 void FileCommit(FILE *fileout);
 int GetFilesize(FILE* file);
 bool RenameOver(boost::filesystem::path src, boost::filesystem::path dest);
+bool TryCreateDirectory(const boost::filesystem::path& p);
 boost::filesystem::path GetDefaultDataDir();
 const boost::filesystem::path &GetDataDir(bool fNetSpecific = true);
 boost::filesystem::path GetConfigFile();

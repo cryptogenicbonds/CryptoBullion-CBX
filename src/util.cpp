@@ -24,8 +24,11 @@ namespace boost {
 #include <boost/program_options/parsers.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/thread.hpp>
+
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
 #include <stdarg.h>
@@ -61,11 +64,14 @@ namespace boost {
 
 
 using namespace std;
+namespace bt = boost::posix_time;
 
 map<string, string> mapArgs;
 map<string, vector<string> > mapMultiArgs;
 bool fDebug = false;
 bool fDebugNet = false;
+bool fNoSpendZeroConfChangeForced = false; // forced from commandline
+bool fNoSpendZeroConfChange = false; // forced from commandline
 bool fPrintToConsole = false;
 bool fPrintToDebugger = false;
 bool fRequestShutdown = false;
@@ -79,6 +85,25 @@ bool fNoListen = false;
 bool fLogTimestamps = false;
 CMedianFilter<int64> vTimeOffsets(200,0);
 bool fReopenDebugLog = false;
+
+// Extended DecodeDumpTime implementation, see this page for details:
+// http://stackoverflow.com/questions/3786201/parsing-of-date-time-from-string-boost
+const std::locale formats[] = {
+    std::locale(std::locale::classic(),new bt::time_input_facet("%Y-%m-%dT%H:%M:%SZ")),
+    std::locale(std::locale::classic(),new bt::time_input_facet("%Y-%m-%d %H:%M:%S")),
+    std::locale(std::locale::classic(),new bt::time_input_facet("%Y/%m/%d %H:%M:%S")),
+    std::locale(std::locale::classic(),new bt::time_input_facet("%d.%m.%Y %H:%M:%S")),
+    std::locale(std::locale::classic(),new bt::time_input_facet("%Y-%m-%d"))
+};
+
+const size_t formats_n = sizeof(formats)/sizeof(formats[0]);
+
+std::time_t pt_to_time_t(const bt::ptime& pt)
+{
+    bt::ptime timet_start(boost::gregorian::date(1970,1,1));
+    bt::time_duration diff = pt - timet_start;
+    return diff.ticks()/bt::time_duration::rep_type::ticks_per_second;
+}
 
 // Init OpenSSL library multithreading support
 static CCriticalSection** ppmutexOpenSSL;
@@ -918,6 +943,51 @@ string DecodeBase32(const string& str)
 }
 
 
+int64 DecodeDumpTime(const std::string& s)
+{
+    bt::ptime pt;
+
+    for(size_t i=0; i<formats_n; ++i)
+    {
+        std::istringstream is(s);
+        is.imbue(formats[i]);
+        is >> pt;
+        if(pt != bt::ptime()) break;
+    }
+
+    return pt_to_time_t(pt);
+}
+
+std::string EncodeDumpTime(int64 nTime) {
+    return DateTimeStrFormat("%Y-%m-%dT%H:%M:%SZ", nTime);
+}
+
+std::string EncodeDumpString(const std::string &str) {
+    std::stringstream ret;
+    BOOST_FOREACH(unsigned char c, str) {
+        if (c <= 32 || c >= 128 || c == '%') {
+            ret << '%' << HexStr(&c, &c + 1);
+        } else {
+            ret << c;
+        }
+    }
+    return ret.str();
+}
+
+std::string DecodeDumpString(const std::string &str) {
+    std::stringstream ret;
+    for (unsigned int pos = 0; pos < str.length(); pos++) {
+        unsigned char c = str[pos];
+        if (c == '%' && pos+2 < str.length()) {
+            c = (((str[pos+1]>>6)*9+((str[pos+1]-'0')&15)) << 4) |
+                ((str[pos+2]>>6)*9+((str[pos+2]-'0')&15));
+            pos += 2;
+        }
+        ret << c;
+    }
+    return ret.str();
+}
+
 bool WildcardMatch(const char* psz, const char* mask)
 {
     while (true)
@@ -960,7 +1030,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "CryptogenicBullion";
+    const char* pszModule = "CryptoBullion";
 #endif
     if (pex)
         return strprintf(
@@ -1009,15 +1079,23 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\CryptogenicBullion
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\CryptogenicBullion
-    // Mac: ~/Library/Application Support/CryptogenicBullion
-    // Unix: ~/.CryptogenicBullion
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\CryptoBullion
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\CryptoBullion
+    // Mac: ~/Library/Application Support/CryptoBullion
+    // Unix: ~/.CryptoBullion
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "CryptogenicBullion";
+    boost::filesystem::path oldPath = GetSpecialFolderPath(CSIDL_APPDATA) / "CryptogenicBullion";
+    boost::filesystem::path newPath = GetSpecialFolderPath(CSIDL_APPDATA) / "CryptoBullion";
+    if (is_directory(oldPath) && !is_directory(newPath))
+        rename(oldPath, newPath);
+
+    return newPath;
 #else
     fs::path pathRet;
+    fs::path oldPath;
+    fs::path newPath;
+
     char* pszHome = getenv("HOME");
     if (pszHome == NULL || strlen(pszHome) == 0)
         pathRet = fs::path("/");
@@ -1027,10 +1105,22 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "CryptogenicBullion";
+    oldPath = pathRet / "CryptogenicBullion";
+    newPath = pathRet / "CryptoBullion";
+
+    if (is_directory(oldPath) && !is_directory(newPath))
+        rename(oldPath, newPath);
+
+    return newPath;
 #else
     // Unix
-    return pathRet / ".CryptogenicBullion";
+    oldPath = pathRet / ".CryptogenicBullion";
+    newPath = pathRet / ".CryptoBullion";
+
+    if (is_directory(oldPath) && !is_directory(newPath))
+        rename(oldPath, newPath);
+
+    return newPath;
 #endif
 #endif
 }
@@ -1062,7 +1152,7 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
         path = GetDefaultDataDir();
     }
     if (fNetSpecific && GetBoolArg("-testnet", false))
-        path /= "testnet2";
+        path /= "testnet3";
 
     fs::create_directory(path);
 
@@ -1072,8 +1162,18 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "CryptogenicBullion.conf"));
-    if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
+    // handle renaming of old config file
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "CryptoBullion.conf"));
+    boost::filesystem::path pathConfigFileOld(GetArg("-conf", "CryptogenicBullion.conf"));
+    if (!pathConfigFile.is_complete())
+        pathConfigFile = GetDataDir(false) / pathConfigFile;
+
+    if (!pathConfigFileOld.is_complete())
+        pathConfigFileOld = GetDataDir(false) / pathConfigFileOld;
+
+    if (!exists(pathConfigFile) && exists(pathConfigFileOld))
+        rename(pathConfigFileOld, pathConfigFile);
+
     return pathConfigFile;
 }
 
@@ -1103,7 +1203,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "CryptogenicBulliond.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "CryptoBulliond.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1137,6 +1237,23 @@ void FileCommit(FILE *fileout)
 #else
     fsync(fileno(fileout));
 #endif
+}
+
+
+// Ignores exceptions thrown by boost's create_directory if the requested directory exists.
+//   Specifically handles case where path p exists, but it wasn't possible for the user to write to the parent directory.
+bool TryCreateDirectory(const boost::filesystem::path& p)
+{
+    try
+    {
+        return boost::filesystem::create_directory(p);
+    } catch (boost::filesystem::filesystem_error) {
+        if (!boost::filesystem::exists(p) || !boost::filesystem::is_directory(p))
+            throw;
+    }
+
+    // create_directory didn't create the directory, it had to have existed already
+    return false;
 }
 
 int GetFilesize(FILE* file)
@@ -1243,10 +1360,10 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong CryptogenicBullion will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong CryptoBullion will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("CryptogenicBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("CryptoBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
                 }
             }
         }

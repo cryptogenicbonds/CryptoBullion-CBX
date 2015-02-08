@@ -28,7 +28,8 @@ extern unsigned int nWalletDBUpdated;
 
 void ThreadFlushWalletDB(void* parg);
 bool BackupWallet(const CWallet& wallet, const std::string& strDest);
-
+bool DumpWallet(CWallet* pwallet, const std::string& strDest);
+bool ImportWallet(CWallet* pwallet, const std::string& strLocation);
 
 class CDBEnv
 {
@@ -92,6 +93,7 @@ public:
 
 extern CDBEnv bitdb;
 
+typedef boost::signals2::signal<void (double progress)> BerkerleyDBUpgradeProgress;
 
 /** RAII class that provides access to a Berkeley database */
 class CDB
@@ -308,48 +310,8 @@ public:
         return Write(std::string("version"), nVersion);
     }
 
-    bool static Rewrite(const std::string& strFile, const char* pszSkip = NULL);
+    bool static Rewrite(const std::string& strFile, BerkerleyDBUpgradeProgress &progress, const char* pszSkip = NULL, int previousVer = CLIENT_VERSION, int currentVer = CLIENT_VERSION);
 };
-
-
-
-
-
-
-
-/** Access to the transaction database (blkindex.dat) */
-class CTxDB : public CDB
-{
-public:
-    CTxDB(const char* pszMode="r+") : CDB("blkindex.dat", pszMode) { }
-private:
-    CTxDB(const CTxDB&);
-    void operator=(const CTxDB&);
-public:
-    bool ReadTxIndex(uint256 hash, CTxIndex& txindex);
-    bool UpdateTxIndex(uint256 hash, const CTxIndex& txindex);
-    bool AddTxIndex(const CTransaction& tx, const CDiskTxPos& pos, int nHeight);
-    bool EraseTxIndex(const CTransaction& tx);
-    bool ContainsTx(uint256 hash);
-    bool ReadDiskTx(uint256 hash, CTransaction& tx, CTxIndex& txindex);
-    bool ReadDiskTx(uint256 hash, CTransaction& tx);
-    bool ReadDiskTx(COutPoint outpoint, CTransaction& tx, CTxIndex& txindex);
-    bool ReadDiskTx(COutPoint outpoint, CTransaction& tx);
-    bool WriteBlockIndex(const CDiskBlockIndex& blockindex);
-    bool ReadHashBestChain(uint256& hashBestChain);
-    bool WriteHashBestChain(uint256 hashBestChain);
-    bool ReadBestInvalidTrust(CBigNum& bnBestInvalidTrust);
-    bool WriteBestInvalidTrust(CBigNum bnBestInvalidTrust);
-    bool ReadSyncCheckpoint(uint256& hashCheckpoint);
-    bool WriteSyncCheckpoint(uint256 hashCheckpoint);
-    bool ReadCheckpointPubKey(std::string& strPubKey);
-    bool WriteCheckpointPubKey(const std::string& strPubKey);
-    bool LoadBlockIndex();
-private:
-    bool LoadBlockIndexGuts();
-};
-
-
 
 
 /** Access to the (IP) address database (peers.dat) */
@@ -362,5 +324,6 @@ public:
     bool Write(const CAddrMan& addr);
     bool Read(CAddrMan& addr);
 };
+
 
 #endif // BITCOIN_DB_H

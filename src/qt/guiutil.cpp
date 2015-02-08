@@ -162,6 +162,46 @@ void copyEntryData(QAbstractItemView *view, int column, int role)
     }
 }
 
+void SetWidgetGradient(QWidget* widget)
+{
+    widget->setStyleSheet("background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #484849, stop: 1 #2f2f30);");
+}
+
+void SetEditGradient(QWidget* widget)
+{
+    widget->setStyleSheet("background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #19191a, stop: 1 #262626);");
+}
+
+void SetupPushButton(QWidget* widget)
+{
+    //widget->setStyleSheet("color:#FFFFFF;\nbackground-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(164, 161, 161, 255), stop:0.0409091 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 255));");
+}
+
+void SetWidgetColor(QWidget* widget, char* color)
+{
+    widget->styleSheet().append("color:#");
+    widget->styleSheet().append(color);
+    //widget->setStyleSheet("color:#FFFFFF;\nbackground-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(164, 161, 161, 255), stop:0.0409091 rgba(80, 80, 80, 255), stop:1 rgba(120, 120, 120, 255));");
+
+}
+
+void ColorChildren(QWidget *widget, bool recursive)
+{
+    QList<QWidget*> list;
+
+    foreach(QObject* child, widget->children())
+    {
+        QString childType = child->metaObject()->className();
+        if (childType == "QPushButton")
+        {
+            SetupPushButton((QWidget*)child);
+        }else if (childType == "QLineEdit")
+        {
+            SetEditGradient((QLineEdit*)child);
+        }
+    }
+}
+
 QString getSaveFileName(QWidget *parent, const QString &caption,
                                  const QString &dir,
                                  const QString &filter,
@@ -272,7 +312,7 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "CryptogenicBullion.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "CryptoBullion.lnk";
 }
 
 bool GetStartOnSystemStartup()
@@ -354,7 +394,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "CryptogenicBullion.desktop";
+    return GetAutostartDir() / "CryptoBullion.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -395,7 +435,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         // Write a bitcoin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=CryptogenicBullion\n";
+        optionFile << "Name=CryptoBullion";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -416,10 +456,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("CryptogenicBullion-Qt") + " " + tr("version") + " " +
+    header = tr("CryptoBullion-Qt") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  CryptogenicBullion-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  CryptoBullion-qt [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -428,7 +468,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("CryptogenicBullion-Qt"));
+    setWindowTitle(tr("CryptoBullion-Qt"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in non-breaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = CryptogenicBullion-qt
-VERSION = 0.7.2
+TARGET = CryptoBullion-qt
+VERSION = 0.7.3
 INCLUDEPATH += src src/json src/qt
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
@@ -9,24 +9,51 @@ CONFIG += thread
 CONFIG += static
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
-#windows:LIBS += -lshlwapi
-#LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
-#LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
-#windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-#LIBS += -lboost_system-mgw48-mt-sd-1_55 -lboost_filesystem-mgw48-mt-sd-1_55 -lboost_program_options-mgw48-mt-sd-1_55 -lboost_thread-mgw48-mt-sd-1_55
-#BOOST_LIB_SUFFIX=-mgw48-mt-s-1_55
-#BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
-#BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
-#BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-#BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1g/include
-#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1g
-#MINIUPNPC_INCLUDE_PATH=C:/deps/
-#MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+win32 {
+        BOOST_INCLUDE_PATH+="D:\_coinDev\deps\boost_1_55_0"
+        BOOST_LIB_PATH="D:\_coinDev\deps\boost_1_55_0\stage\lib"
 
-OBJECTS_DIR = build
-MOC_DIR = build
-UI_DIR = build
+        BDB_INCLUDE_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
+        BDB_LIB_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
+
+        OPENSSL_INCLUDE_PATH+="D:\_coinDev\deps\openssl-1.0.1k\include"
+        OPENSSL_LIB_PATH="D:\_coinDev\deps\openssl-1.0.1k"
+
+        QRENCODE_LIB_PATH="D:\_coinDev\deps\qrencode-3.4.4\.libs"
+        QRENCODE_INCLUDE_PATH="D:\_coinDev\deps\qrencode-3.4.4"
+
+        MINIUPNPC_INCLUDE_PATH=D:\_coinDev\deps\miniupnpc
+        MINIUPNPC_LIB_PATH=D:\_coinDev\deps\miniupnpc
+
+        #INCLUDEPATH+="D:\_coinDev\Qt\5.3.2\include\QtWidgets"
+
+        windows:LIBS += -lshlwapi
+        LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+        #LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+        #windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
+        #LIBS += -lboost_system-mgw48-mt-sd-1_55 -lboost_filesystem-mgw48-mt-sd-1_55 -lboost_program_options-mgw48-mt-sd-1_55 -lboost_thread-mgw48-mt-sd-1_55
+        BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
+        #BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
+        #BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
+        #BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
+        #BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
+        #OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1i/include
+        #OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1i
+        #MINIUPNPC_INCLUDE_PATH=C:/deps/
+        #MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+}
+
+# pass USE_MXE flag to cross compile Win32 wallet using MXE.
+contains(USE_MXE, 1) {
+        BOOST_THREAD_LIB_SUFFIX = _win32-mt
+        OBJECTS_DIR = x86/build
+        MOC_DIR = x86/build
+        UI_DIR = x86/build
+}else{
+        OBJECTS_DIR = build
+        MOC_DIR = build
+        UI_DIR = build
+}
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
@@ -37,6 +64,11 @@ contains(RELEASE, 1) {
         # Linux: static link
         LIBS += -Wl,-Bstatic
     }
+}
+
+macx{
+QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
+QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
 }
 
 !win32 {
@@ -65,6 +97,16 @@ contains(USE_QRCODE, 1) {
 # miniupnpc (http://miniupnp.free.fr/files/) must be installed for support
 contains(USE_UPNP, -) {
     message(Building without UPNP support)
+    DEFINES += USE_UPNP=$$USE_UPNP
+}else{
+    message(Building with UPNP support)
+    count(USE_UPNP, 0) {
+        USE_UPNP=1
+    }
+    INCLUDEPATH += $$PWD/src/miniupnpc/
+    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
+    LIBS += $$PWD/src/miniupnpc/libminiupnpc.a
+    win32:LIBS += -liphlpapi
 }
 
 # use: qmake "USE_DBUS=1"
@@ -91,6 +133,35 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
+# ** LEVELDB (DEFAULT) **
+contains(USE_BDB, 1) {
+    message(Building with Berkeley DB transaction index)
+    SOURCES += src/txdb-bdb.cpp
+} else {
+    message(Building with LevelDB transaction index)
+    DEFINES += USE_LEVELDB
+
+    INCLUDEPATH += src/leveldb/include src/leveldb/helpers src/leveldb/helpers/memenv
+    LIBS += $$PWD/src/leveldb/libleveldb.a $$PWD/src/leveldb/libmemenv.a
+    SOURCES += src/txdb-leveldb.cpp
+    !win32 {
+        # we use QMAKE_CXXFLAGS_RELEASE even without RELEASE=1 because we use RELEASE to indicate linking preferences not -O preferences
+        genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
+    } else {
+        # make an educated guess about what the ranlib command is called
+        isEmpty(QMAKE_RANLIB) {
+            QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
+        }
+        LIBS += -lshlwapi
+        genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
+    }
+    genleveldb.target = $$PWD/src/leveldb/libleveldb.a
+    genleveldb.depends = FORCE
+    PRE_TARGETDEPS += $$PWD/src/leveldb/libleveldb.a
+    QMAKE_EXTRA_TARGETS += genleveldb
+    # Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
+    QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
+}
 
 # regenerate src/build.h
 !windows|contains(USE_BUILD_INFO, 1) {
@@ -108,7 +179,8 @@ QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wform
 
 # Input
 DEPENDPATH += src src/json src/qt
-HEADERS += src/qt/bitcoingui.h \
+HEADERS += \
+    src/qt/bitcoingui.h \
     src/qt/transactiontablemodel.h \
     src/qt/addresstablemodel.h \
     src/qt/optionsdialog.h \
@@ -136,6 +208,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/net.h \
     src/key.h \
     src/db.h \
+    src/txdb.h \
     src/walletdb.h \
     src/script.h \
     src/init.h \
@@ -181,9 +254,14 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/rpcconsole.h \
     src/version.h \
     src/netbase.h \
-    src/clientversion.h
+    src/clientversion.h \
+    src/coincontrol.h \
+    src/qt/coincontroltreewidget.h \
+    src/qt/coincontroldialog.h
 
-SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
+SOURCES += \
+    src/qt/bitcoin.cpp \
+    src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \
@@ -246,10 +324,14 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/scrypt-x86.S \
     src/scrypt-x86_64.S \
     src/scrypt_mine.cpp \
-    src/pbkdf2.cpp
+    src/pbkdf2.cpp \
+    src/qt/coincontroltreewidget.cpp \
+    src/qt/coincontroldialog.cpp
 
 RESOURCES += \
-    src/qt/bitcoin.qrc
+src/qt/bitcoin.qrc
+#    src/qt/qdarkstyle/style.qrc
+#    src/qt/bitcoin.qrc
 
 FORMS += \
     src/qt/forms/sendcoinsdialog.ui \
@@ -262,7 +344,7 @@ FORMS += \
     src/qt/forms/sendcoinsentry.ui \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
-    src/qt/forms/optionsdialog.ui
+    src/qt/forms/coincontroldialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h
@@ -276,7 +358,7 @@ SOURCES += src/qt/test/test_main.cpp \
 HEADERS += src/qt/test/uritests.h
 DEPENDPATH += src/qt/test
 QT += testlib
-TARGET = CryptogenicBullion-qt_test
+TARGET = CryptoBullion-qt_test
 DEFINES += BITCOIN_QT_TEST
 }
 
@@ -287,7 +369,8 @@ CODECFORTR = UTF-8
 TRANSLATIONS = $$files(src/qt/locale/bitcoin_*.ts)
 
 isEmpty(QMAKE_LRELEASE) {
-    win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
+    #win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
+        win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease
     else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
 }
 isEmpty(QM_DIR):QM_DIR = $$PWD/src/qt/locale
@@ -301,12 +384,15 @@ QMAKE_EXTRA_COMPILERS += TSQM
 
 # "Other files" to show in Qt Creator
 OTHER_FILES += \
-    doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc src/test/*.cpp src/test/*.h src/qt/test/*.cpp src/qt/test/*.h
+    doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc src/test/*.cpp src/test/*.h src/qt/test/*.cpp src/qt/test/*.h \
+        src/qt/locale/*.ts \
+    src/qt/res/style/cgbstyle.qss
 
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    windows:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
+    #windows:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
+    windows:BOOST_LIB_SUFFIX = -mt
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {
@@ -356,8 +442,8 @@ macx:HEADERS += src/qt/macdockiconhandler.h
 macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
-macx:ICON = src/qt/res/icons/bitcoin.icns
-macx:TARGET = "CryptogenicBullion-Qt"
+macx:ICON = src/qt/res/icons/Cryptobullion.icns
+macx:TARGET = "CryptoBullion-Qt"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread
@@ -366,6 +452,9 @@ macx:QMAKE_CXXFLAGS_THREAD += -pthread
 INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+# force updated openssl?
+#LIBS += /usr/local/ssl/lib/libssl.a /usr/local/ssl/lib/libcrypto.a -ldb_cxx$$BDB_LIB_SUFFIX
+
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
 LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
@@ -376,6 +465,10 @@ contains(RELEASE, 1) {
         # Linux: turn dynamic linking back on for c/c++ runtime libraries
         LIBS += -Wl,-Bdynamic
     }
+}
+
+!windows:!macx {
+    LIBS += -ldl
 }
 
 system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)

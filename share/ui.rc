@@ -1,4 +1,4 @@
-CryptogenicBullion               ICON    "pixmaps/CryptogenicBullion.ico"
+CryptoBullion               ICON    "pixmaps/CryptoBullion.ico"
 
 #include "wx/msw/wx.rc"
 

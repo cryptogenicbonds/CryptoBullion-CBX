@@ -36,9 +36,11 @@ static const int64 MAX_MONEY = 2000000 * COIN; //Max initial coins 1 million + 5
 static const int64 MAX_MINT_PROOF_OF_WORK = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
-
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int PROTOCOL_SWITCH_TIME = 1371686400; // 20 Jun 2013 00:00:00
+
+/** The maximum size for transactions we're willing to relay/mine */
+static const unsigned int MAX_STANDARD_TX_SIZE = 100000;
 
 static const unsigned int REWARD_SWITCH_TIME = 1369432800; // 25 May 2013 00:00:00
 
@@ -55,7 +57,7 @@ static const int fHaveUPnP = false;
 #endif
 
 static const uint256 hashGenesisBlockOfficial("0x000002655a721555160ea9bcb1072faf63ff0c8dffed173d60b1d3556a134dc1");
-static const uint256 hashGenesisBlockTestNet("0x");
+static const uint256 hashGenesisBlockTestNet("0x61d0019e85d49d536ede59e12c4390f11ef5380be5abb3e8698fcaf0519d3c52");
 
 static const int64 nMaxClockDrift = 20 * 60;        // 20 minutes
 static const int64 nOldMaxClockDrift = 2 * 60 * 60;        // 2 hours
@@ -90,6 +92,7 @@ extern std::map<uint256, CBlock*> mapOrphanBlocks;
 
 // Settings
 extern int64 nTransactionFee;
+extern bool fUseFastIndex; // cache scrypt hashes to disk
 
 // Minimum disk space required - used in CheckDiskSpace()
 static const uint64 nMinDiskSpace = 52428800;
@@ -111,7 +114,12 @@ void PrintBlockTree();
 CBlockIndex* FindBlockByHeight(int nHeight);
 bool ProcessMessages(CNode* pfrom);
 bool SendMessages(CNode* pto, bool fSendTrickle);
-bool LoadExternalBlockFile(FILE* fileIn);
+
+// Processes a blk*.dat file and fires the given signal to indicate how far
+// through the file the load has reached, if provided.
+typedef boost::signals2::signal<void (unsigned int bytesRead)> ExternalBlockFileProgress;
+bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress=NULL, int blockfileVersion = CLIENT_VERSION);
+
 void GenerateBitcoins(bool fGenerate, CWallet* pwallet);
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
@@ -144,6 +152,9 @@ bool GetWalletFile(CWallet* pwallet, std::string &strWalletFileOut);
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
+private:
+    uint256 blockHash;
+
 public:
     unsigned int nFile;
     unsigned int nBlockPos;
@@ -382,6 +393,19 @@ public:
         return (nValue == 0 && scriptPubKey.empty());
     }
 
+    bool IsDust(int64_t nMinRelayTxFee) const
+    {
+        // "Dust" is defined in terms of MIN_TX_FEE
+        // which has units satoshis-per-kilobyte.
+        // If you'd pay more than 1/3 in fees
+        // to spend something, then we consider it dust.
+        // A typical txout is 34 bytes big, and will
+        // need a CTxIn of at least 148 bytes to spend,
+        // so dust is a txout less than 546 satoshis
+        // with default nMinRelayTxFee.
+        return ((nValue*1000)/(3*((int)GetSerializeSize(SER_DISK,0)+148)) < nMinRelayTxFee);
+    }
+
     uint256 GetHash() const
     {
         return SerializeHash(*this);
@@ -596,7 +620,7 @@ public:
         return dPriority > COIN * 120 / 250;
     }
 
-    int64 GetMinFee(unsigned int nBlockSize=1, bool fAllowFree=false, enum GetMinFee_mode mode=GMF_BLOCK) const;
+    int64 GetMinFee(unsigned int nBlockSize=1, bool fAllowFree=false, enum GetMinFee_mode mode=GMF_BLOCK, unsigned int nBytes=0) const;
 
     bool ReadFromDisk(CDiskTxPos pos, FILE** pfileRet=NULL)
     {
@@ -930,7 +954,7 @@ public:
     // ppcoin: entropy bit for stake modifier if chosen by modifier
     unsigned int GetStakeEntropyBit(unsigned int nHeight) const
     {
-        // Protocol switch to support p2pool at CryptogenicBullion block #9689
+        // Protocol switch to support p2pool at CryptoBullion block #9689
         if (nHeight >= 9689 || fTestNet)
         {
             // Take last bit of block hash as entropy bit
@@ -939,7 +963,7 @@ public:
                 printf("GetStakeEntropyBit: nHeight=%u hashBlock=%s nEntropyBit=%u\n", nHeight, GetHash().ToString().c_str(), nEntropyBit);
             return nEntropyBit;
         }
-        // Before CryptogenicBullion block #9689 - old protocol
+        // Before CryptoBullion block #9689 - old protocol
         uint160 hashSig = Hash160(vchBlockSig);
         if (fDebug && GetBoolArg("-printstakemodifier"))
             printf("GetStakeEntropyBit: hashSig=%s", hashSig.ToString().c_str());
@@ -1106,7 +1130,7 @@ public:
     bool ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions=true);
     bool SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew);
     bool AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos);
-    bool CheckBlock(bool fCheckPOW=true, bool fCheckMerkleRoot=true) const;
+    bool CheckBlock(bool fCheckPOW=true, bool fCheckMerkleRoot=true, bool fCheckSig=true) const;
     bool AcceptBlock();
     bool GetCoinAge(uint64& nCoinAge) const; // ppcoin: calculate total coin age spent in block
     bool SignBlock(const CKeyStore& keystore);
@@ -1366,18 +1390,24 @@ public:
 /** Used to marshal pointers into hashes for db storage. */
 class CDiskBlockIndex : public CBlockIndex
 {
+private:
+    uint256 blockHash;
 public:
     uint256 hashPrev;
     uint256 hashNext;
+    unsigned int fileVersion;
 
-    CDiskBlockIndex()
+    CDiskBlockIndex(unsigned int version = CLIENT_VERSION)
     {
         hashPrev = 0;
         hashNext = 0;
+        blockHash = 0;
+        fileVersion = version;
     }
 
     explicit CDiskBlockIndex(CBlockIndex* pindex) : CBlockIndex(*pindex)
     {
+        fileVersion = CLIENT_VERSION;
         hashPrev = (pprev ? pprev->GetBlockHash() : 0);
         hashNext = (pnext ? pnext->GetBlockHash() : 0);
     }
@@ -1415,10 +1445,16 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+
+        if (fileVersion >= DB_MINVER_INCHASH)
+            READWRITE(blockHash);
     )
 
     uint256 GetBlockHash() const
     {
+        if (fUseFastIndex && (nTime < GetAdjustedTime() - 24 * 60 * 60) && blockHash != 0)
+            return blockHash;
+
         CBlock block;
         block.nVersion        = nVersion;
         block.hashPrevBlock   = hashPrev;
@@ -1426,7 +1462,10 @@ public:
         block.nTime           = nTime;
         block.nBits           = nBits;
         block.nNonce          = nNonce;
-        return block.GetHash();
+
+        const_cast<CDiskBlockIndex*>(this)->blockHash = block.GetHash();
+
+        return blockHash;
     }
 
 
@@ -1516,7 +1555,7 @@ public:
             if (vHave.size() > 10)
                 nStep *= 2;
         }
-        vHave.push_back((!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
+        vHave.push_back(hashGenesisBlock);
     }
 
     int GetDistanceBack()
@@ -1569,7 +1608,7 @@ public:
                     return hash;
             }
         }
-        return (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet);
+        return hashGenesisBlock;
     }
 
     int GetHeight()

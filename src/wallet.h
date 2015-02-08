@@ -19,10 +19,13 @@
 #include "walletdb.h"
 
 extern bool fWalletUnlockMintOnly;
+extern bool fNoSpendZeroConfChange;
+extern bool fNoSpendZeroConfChangeForced;
 class CAccountingEntry;
 class CWalletTx;
 class CReserveKey;
 class COutput;
+class CCoinControl;
 
 /** (client) version numbers for particular wallet features */
 enum WalletFeature
@@ -86,7 +89,7 @@ public:
     std::string strWalletFile;
 
     std::set<int64> setKeyPool;
-
+    std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
 
     typedef std::map<unsigned int, CMasterKey> MasterKeyMap;
     MasterKeyMap mapMasterKeys;
@@ -119,11 +122,12 @@ public:
     std::map<CTxDestination, std::string> mapAddressBook;
 
     CPubKey vchDefaultKey;
+    int64 nTimeFirstKey;
 
     // check whether we are allowed to upgrade (or already support) to the named feature
     bool CanSupportFeature(enum WalletFeature wf) { return nWalletMaxVersion >= wf; }
 
-    void AvailableCoins(std::vector<COutput>& vCoins, bool fOnlyConfirmed=true) const;
+    void AvailableCoins(std::vector<COutput>& vCoins, bool fOnlyConfirmed=true, const CCoinControl *coinControl=NULL) const;
     bool SelectCoinsMinConf(int64 nTargetValue, unsigned int nSpendTime, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64& nValueRet) const;
     // keystore implementation
     // Generate a new key
@@ -132,6 +136,8 @@ public:
     bool AddKey(const CKey& key);
     // Adds a key to the store, without saving it to disk (used by LoadWallet)
     bool LoadKey(const CKey& key) { return CCryptoKeyStore::AddKey(key); }
+    // Load metadata (used by LoadWallet)
+    bool LoadKeyMetadata(const CPubKey &pubkey, const CKeyMetadata &metadata);
 
     bool LoadMinVersion(int nVersion) { nWalletVersion = nVersion; nWalletMaxVersion = std::max(nWalletMaxVersion, nVersion); return true; }
 
@@ -142,9 +148,16 @@ public:
     bool AddCScript(const CScript& redeemScript);
     bool LoadCScript(const CScript& redeemScript) { return CCryptoKeyStore::AddCScript(redeemScript); }
 
+    // Adds a watch-only address to the store, and saves it to disk.
+    bool AddWatchOnly(const CScript &dest);
+    // Adds a watch-only address to the store, without saving it to disk (used by LoadWallet)
+    bool LoadWatchOnly(const CScript &dest);
+
     bool Unlock(const SecureString& strWalletPassphrase);
     bool ChangeWalletPassphrase(const SecureString& strOldWalletPassphrase, const SecureString& strNewWalletPassphrase);
     bool EncryptWallet(const SecureString& strWalletPassphrase);
+
+    void GetKeyBirthTimes(std::map<CKeyID, int64> &mapKeyBirth) const;
 
     /** Increment the next transaction order id
         @return next transaction order id
@@ -164,11 +177,15 @@ public:
     bool AddToWallet(const CWalletTx& wtxIn);
     bool AddToWalletIfInvolvingMe(const CTransaction& tx, const CBlock* pblock, bool fUpdate = false, bool fFindBlock = false);
     bool EraseFromWallet(uint256 hash);
+
+    void ClearOrphans();
+
     void WalletUpdateSpent(const CTransaction& prevout);
     int ScanForWalletTransactions(CBlockIndex* pindexStart, bool fUpdate = false);
     int ScanForWalletTransaction(const uint256& hashTx);
     void ReacceptWalletTransactions();
     void ResendWalletTransactions();
+    DBErrors ZapWalletTx();
     int64 GetBalance() const;
     int64 GetUnconfirmedBalance() const;
     int64 GetImmatureBalance() const;
@@ -634,7 +651,7 @@ public:
         // Quick answer in most cases
         if (!IsFinal())
             return false;
-        if (GetDepthInMainChain() >= 1)
+        if (GetDepthInMainChain() >=6)
             return true;
         if (!IsFromMe()) // using wtx's cached debit
             return false;

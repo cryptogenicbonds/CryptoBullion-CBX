@@ -1,4 +1,4 @@
-Copyright (c) 2013-2014 Cryptogenic Bullion Developers
+Copyright (c) 2013-2015 Cryptogenic Bullion Developers
 
 Copyright (c) 2013 NovaCoin Developers
 Copyright (c) 2011-2012 PPCoin Developers
@@ -11,12 +11,12 @@ cryptographic software written by Eric Young (eay@cryptsoft.com).
 
 Intro
 -----
-Cryptogenic Bullion is  a free open source project derived from Novacoin, with
+Crypto Bullion is  a free open source project derived from Novacoin, with
 the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
 Built on the foundation of Bitcoin and PPCoin, innovations such as proof-of-stake
 help further advance the field of crypto-currency.
 
-Moreover, modifications to the Cryptogenic Bullion protocol will support all new
+Moreover, modifications to the Crypto Bullion protocol will support all new
 facets of internet applications.  Please see http://MADEsparq.org for an example
 project in current development.
 -----
@@ -72,4 +72,4 @@ See the documentation at the bitcoin wiki:
   https://en.bitcoin.it/wiki/Main_Page
 for help and more information.
 
-Visit https://CryptogenicBullion.org for more info.
+Visit http://cryptobullion.io/ for more info.

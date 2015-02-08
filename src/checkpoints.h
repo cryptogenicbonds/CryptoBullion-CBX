@@ -19,6 +19,17 @@ class CSyncCheckpoint;
  */
 namespace Checkpoints
 {
+    /** Checkpointing mode */
+    enum CPMode
+    {
+        // Scrict checkpoints policy, perform conflicts verification and resolve conflicts
+        kStrict = 0,
+        // Advisory checkpoints policy, perform conflicts verification but don't try to resolve them
+        kAdvisory = 1,
+        // Permissive checkpoints policy, don't perform any checking
+        kPermissive = 2
+    };
+
     // Returns true if block passes checkpoint checks
     bool CheckHardened(int nHeight, const uint256& hash);
 
@@ -27,6 +38,9 @@ namespace Checkpoints
 
     // Returns last CBlockIndex* in mapBlockIndex that is a checkpoint
     CBlockIndex* GetLastCheckpoint(const std::map<uint256, CBlockIndex*>& mapBlockIndex);
+
+    // Returns last checkpoint timestamp
+    int GetLastCheckpointTime();
 
     extern uint256 hashSyncCheckpoint;
     extern CSyncCheckpoint checkpointMessage;

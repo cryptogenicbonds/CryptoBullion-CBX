@@ -7,7 +7,7 @@
 
 #include "base58.h"
 #include "bitcoinrpc.h"
-#include "db.h"
+#include "txdb.h"
 #include "init.h"
 #include "main.h"
 #include "net.h"
@@ -18,14 +18,16 @@ using namespace boost;
 using namespace boost::assign;
 using namespace json_spirit;
 
-void ScriptPubKeyToJSON(const CScript& scriptPubKey, Object& out)
+void ScriptPubKeyToJSON(const CScript& scriptPubKey, Object& out, bool fIncludeHex)
 {
     txnouttype type;
     vector<CTxDestination> addresses;
     int nRequired;
 
     out.push_back(Pair("asm", scriptPubKey.ToString()));
-    out.push_back(Pair("hex", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
+
+    if (fIncludeHex)
+        out.push_back(Pair("hex", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
 
     if (!ExtractDestinations(scriptPubKey, type, addresses, nRequired))
     {
@@ -75,7 +77,7 @@ void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry)
         out.push_back(Pair("value", ValueFromAmount(txout.nValue)));
         out.push_back(Pair("n", (boost::int64_t)i));
         Object o;
-        ScriptPubKeyToJSON(txout.scriptPubKey, o);
+        ScriptPubKeyToJSON(txout.scriptPubKey, o, false);
         out.push_back(Pair("scriptPubKey", o));
         vout.push_back(out);
     }
@@ -164,7 +166,7 @@ Value listunspent(const Array& params, bool fHelp)
         {
             CBitcoinAddress address(input.get_str());
             if (!address.IsValid())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptogenicBullion address: ")+input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptoBullion address: ")+input.get_str());
             if (setAddress.count(address))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+input.get_str());
            setAddress.insert(address);
@@ -249,7 +251,7 @@ Value createrawtransaction(const Array& params, bool fHelp)
     {
         CBitcoinAddress address(s.name_);
         if (!address.IsValid())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptogenicBullion address: ")+s.name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptoBullion address: ")+s.name_);
 
         if (setAddress.count(address))
             throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+s.name_);
@@ -291,6 +293,30 @@ Value decoderawtransaction(const Array& params, bool fHelp)
     TxToJSON(tx, 0, result);
 
     return result;
+}
+
+
+Value decodescript(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "decodescript <hex string>\n"
+            "Decode a hex-encoded script.");
+
+    RPCTypeCheck(params, list_of(str_type));
+
+    Object r;
+    CScript script;
+    if (params[0].get_str().size() > 0){
+        vector<unsigned char> scriptData(ParseHexV(params[0], "argument"));
+        script = CScript(scriptData.begin(), scriptData.end());
+    } else {
+        // Empty scripts are valid
+    }
+    ScriptPubKeyToJSON(script, r, false);
+
+    r.push_back(Pair("p2sh", CBitcoinAddress(script.GetID()).ToString()));
+    return r;
 }
 
 Value signrawtransaction(const Array& params, bool fHelp)
@@ -529,4 +555,80 @@ Value sendrawtransaction(const Array& params, bool fHelp)
     RelayMessage(CInv(MSG_TX, hashTx), tx);
 
     return hashTx.GetHex();
+}
+
+Value createmultisig(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() < 2 || params.size() > 3)
+    {
+        string msg = "createmultisig <nrequired> <'[\"key\",\"key\"]'>\n"
+            "\nCreates a multi-signature address with n signature of m keys required.\n"
+            "It returns a json object with the address and redeemScript.";
+        throw runtime_error(msg);
+    }
+
+    int nRequired = params[0].get_int();
+    const Array& keys = params[1].get_array();
+    string strAccount;
+
+    // Gather public keys
+    if (nRequired < 1)
+        throw runtime_error("a multisignature address must require at least one key to redeem");
+
+    if ((int)keys.size() < nRequired)
+        throw runtime_error(
+            strprintf("not enough keys supplied "
+                      "(got %"PRIszu" keys, but need at least %d to redeem)", keys.size(), nRequired));
+
+    std::vector<CKey> pubkeys;
+    pubkeys.resize(keys.size());
+    for (unsigned int i = 0; i < keys.size(); i++)
+    {
+        const std::string& ks = keys[i].get_str();
+
+        // Case 1: Bitcoin address and we have full public key:
+        CBitcoinAddress address(ks);
+        if (address.IsValid())
+        {
+            CKeyID keyID;
+
+            if (!address.GetKeyID(keyID))
+                throw runtime_error(
+                    strprintf("%s does not refer to a key", ks.c_str()));
+
+            CPubKey vchPubKey;
+
+            if (!pwalletMain->GetPubKey(keyID, vchPubKey))
+                throw runtime_error(
+                    strprintf("no full public key for address %s", ks.c_str()));
+
+            if (!vchPubKey.IsValid() || !pubkeys[i].SetPubKey(vchPubKey))
+                throw runtime_error(" Invalid public key: "+ks);
+        }
+
+        // Case 2: hex public key
+        else if (IsHex(ks))
+        {
+            CPubKey vchPubKey(ParseHex(ks));
+            if (!vchPubKey.IsValid() || !pubkeys[i].SetPubKey(vchPubKey))
+                throw runtime_error(" Invalid public key: "+ks);
+        }
+        else
+        {
+            throw runtime_error(" Invalid public key: "+ks);
+        }
+    }
+
+    // Construct using pay-to-script-hash:
+    CScript inner;
+    inner.SetMultisig(nRequired, pubkeys);
+
+    CScriptID innerID = inner.GetID();
+    CBitcoinAddress address(innerID);
+
+    Object result;
+    result.push_back(Pair("address", address.ToString()));
+    result.push_back(Pair("redeemScript", HexStr(inner.begin(), inner.end())));
+
+    return result;
 }

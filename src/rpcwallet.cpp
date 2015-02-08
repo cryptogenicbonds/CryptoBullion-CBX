@@ -126,7 +126,7 @@ Value getnewaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewaddress [account]\n"
-            "Returns a new CryptogenicBullion address for receiving payments.  "
+            "Returns a new CryptoBullion address for receiving payments.  "
             "If [account] is specified (recommended), it is added to the address book "
             "so payments received with the address will be credited to [account].");
 
@@ -193,7 +193,7 @@ Value getaccountaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaccountaddress <account>\n"
-            "Returns the current CryptogenicBullion address for receiving payments to this account.");
+            "Returns the current CryptoBullion address for receiving payments to this account.");
 
     // Parse the account first so we don't generate a key if there's an error
     string strAccount = AccountFromValue(params[0]);
@@ -211,12 +211,12 @@ Value setaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "setaccount <CryptogenicBullionaddress> <account>\n"
+            "setaccount <CryptoBullionaddress> <account>\n"
             "Sets the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptogenicBullion address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
 
 
     string strAccount;
@@ -241,12 +241,12 @@ Value getaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "getaccount <CryptogenicBullionaddress>\n"
+            "getaccount <CryptoBullion address>\n"
             "Returns the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptogenicBullion address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
 
     string strAccount;
     map<CTxDestination, string>::iterator mi = pwalletMain->mapAddressBook.find(address.Get());
@@ -281,13 +281,13 @@ Value sendtoaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 4)
         throw runtime_error(
-            "sendtoaddress <CryptogenicBullionaddress> <amount> [comment] [comment-to]\n"
+            "sendtoaddress <CryptoBullion address> <amount> [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001"
             + HelpRequiringPassphrase());
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptogenicBullion address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
 
     // Amount
     int64 nAmount = AmountFromValue(params[1]);
@@ -347,7 +347,7 @@ Value signmessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw runtime_error(
-            "signmessage <CryptogenicBullionaddress> <message>\n"
+            "signmessage <CryptoBullion address> <message>\n"
             "Sign a message with the private key of an address");
 
     EnsureWalletIsUnlocked();
@@ -382,7 +382,7 @@ Value verifymessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage <CryptogenicBullionaddress> <signature> <message>\n"
+            "verifymessage <CryptoBullion address> <signature> <message>\n"
             "Verify a signed message");
 
     string strAddress  = params[0].get_str();
@@ -419,14 +419,14 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "getreceivedbyaddress <CryptogenicBullionaddress> [minconf=1]\n"
-            "Returns the total amount received by <CryptogenicBullionaddress> in transactions with at least [minconf] confirmations.");
+            "getreceivedbyaddress <CryptoBullion address> [minconf=1]\n"
+            "Returns the total amount received by <CryptoBullion address> in transactions with at least [minconf] confirmations.");
 
     // Bitcoin address
     CBitcoinAddress address = CBitcoinAddress(params[0].get_str());
     CScript scriptPubKey;
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptogenicBullion address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
     scriptPubKey.SetDestination(address.Get());
     if (!IsMine(*pwalletMain,scriptPubKey))
         return (double)0.0;
@@ -558,7 +558,7 @@ Value getbalance(const Array& params, bool fHelp)
         for (map<uint256, CWalletTx>::iterator it = pwalletMain->mapWallet.begin(); it != pwalletMain->mapWallet.end(); ++it)
         {
             const CWalletTx& wtx = (*it).second;
-            if (!wtx.IsConfirmed())
+            if (!wtx.IsConfirmed() || wtx.GetBlocksToMaturity() > 0)
                 continue;
 
             int64 allGeneratedImmature, allGeneratedMature, allFee;
@@ -647,14 +647,14 @@ Value sendfrom(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 6)
         throw runtime_error(
-            "sendfrom <fromaccount> <toCryptogenicBullionaddress> <amount> [minconf=1] [comment] [comment-to]\n"
+            "sendfrom <fromaccount> <CryptoBullion address> <amount> [minconf=1] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001"
             + HelpRequiringPassphrase());
 
     string strAccount = AccountFromValue(params[0]);
     CBitcoinAddress address(params[1].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptogenicBullion address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
     int64 nAmount = AmountFromValue(params[2]);
 
     if (nAmount < MIN_TXOUT_AMOUNT)
@@ -761,7 +761,7 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     {
         string msg = "addmultisigaddress <nrequired> <'[\"key\",\"key\"]'> [account]\n"
             "Add a nrequired-to-sign multisignature address to the wallet\"\n"
-            "each key is a CryptogenicBullion address or hex-encoded public key\n"
+            "each key is a CryptoBullion address or hex-encoded public key\n"
             "If [account] is specified, assign address to [account].";
         throw runtime_error(msg);
     }
@@ -829,6 +829,8 @@ struct tallyitem
 {
     int64 nAmount;
     int nConf;
+    vector<uint256> txids;
+
     tallyitem()
     {
         nAmount = 0;
@@ -870,6 +872,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
             tallyitem& item = mapTally[address];
             item.nAmount += txout.nValue;
             item.nConf = min(item.nConf, nDepth);
+            item.txids.push_back(wtx.GetHash());
         }
     }
 
@@ -905,6 +908,15 @@ Value ListReceived(const Array& params, bool fByAccounts)
             obj.push_back(Pair("account",       strAccount));
             obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
             obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
+            Array transactions;
+            if (it != mapTally.end())
+            {
+                BOOST_FOREACH(const uint256& item, (*it).second.txids)
+                {
+                    transactions.push_back(item.GetHex());
+                }
+            }
+            obj.push_back(Pair("txids", transactions));
             ret.push_back(obj);
         }
     }
@@ -937,7 +949,8 @@ Value listreceivedbyaddress(const Array& params, bool fHelp)
             "  \"address\" : receiving address\n"
             "  \"account\" : the account of the receiving address\n"
             "  \"amount\" : total amount received by the address\n"
-            "  \"confirmations\" : number of confirmations of the most recent transaction included");
+            "  \"confirmations\" : number of confirmations of the most recent transaction included\n"
+            "  \"txids\" : list of transactions with outputs to the address\n");
 
     return ListReceived(params, false);
 }
@@ -955,6 +968,13 @@ Value listreceivedbyaccount(const Array& params, bool fHelp)
             "  \"confirmations\" : number of confirmations of the most recent transaction included");
 
     return ListReceived(params, true);
+}
+
+static void MaybePushAddress(Object & entry, const CTxDestination &dest)
+{
+    CBitcoinAddress addr;
+    if (addr.Set(dest))
+        entry.push_back(Pair("address", addr.ToString()));
 }
 
 void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDepth, bool fLong, Array& ret)
@@ -995,6 +1015,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
         {
             Object entry;
             entry.push_back(Pair("account", strSentAccount));
+            MaybePushAddress(entry, s.first);
             entry.push_back(Pair("address", CBitcoinAddress(s.first).ToString()));
             entry.push_back(Pair("category", "send"));
             entry.push_back(Pair("amount", ValueFromAmount(-s.second)));
@@ -1017,6 +1038,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
             {
                 Object entry;
                 entry.push_back(Pair("account", account));
+                MaybePushAddress(entry, r.first);
                 entry.push_back(Pair("address", CBitcoinAddress(r.first).ToString()));
                 if (wtx.IsCoinBase())
                 {
@@ -1029,6 +1051,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
                 }
                 else
                     entry.push_back(Pair("category", "receive"));
+
                 entry.push_back(Pair("amount", ValueFromAmount(r.second)));
                 if (fLong)
                     WalletTxToJSON(wtx, entry);
@@ -1137,6 +1160,11 @@ Value listaccounts(const Array& params, bool fHelp)
         string strSentAccount;
         list<pair<CTxDestination, int64> > listReceived;
         list<pair<CTxDestination, int64> > listSent;
+
+        int nDepth = wtx.GetDepthInMainChain();
+        if (wtx.GetBlocksToMaturity() > 0 || nDepth < 0)
+            continue;
+
         wtx.GetAmounts(nGeneratedImmature, nGeneratedMature, listReceived, listSent, nFee, strSentAccount);
         mapAccountBalances[strSentAccount] -= nFee;
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
@@ -1405,7 +1433,10 @@ Value walletpassphrase(const Array& params, bool fHelp)
 
     if (strWalletPass.length() > 0)
     {
-        if (!pwalletMain->Unlock(strWalletPass))
+        if (pwalletMain->Unlock(strWalletPass))
+        {
+
+        }else
             throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect.");
     }
     else
@@ -1512,7 +1543,7 @@ Value encryptwallet(const Array& params, bool fHelp)
     // slack space in .dat files; that is bad if the old data is
     // unencrypted private keys. So:
     StartShutdown();
-    return "wallet encrypted; CryptogenicBullion server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup.";
+    return "wallet encrypted; CryptoBullion server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup.";
 }
 
 class DescribeAddressVisitor : public boost::static_visitor<Object>
@@ -1554,8 +1585,8 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <CryptogenicBullionaddress>\n"
-            "Return information about <CryptogenicBullionaddress>.");
+            "validateaddress <CryptoBullion address>\n"
+            "Return information about <CryptoBullion address>.");
 
     CBitcoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();
@@ -1583,8 +1614,8 @@ Value validatepubkey(const Array& params, bool fHelp)
 {
     if (fHelp || !params.size() || params.size() > 2)
         throw runtime_error(
-            "validatepubkey <CryptogenicBullionpubkey>\n"
-            "Return information about <CryptogenicBullionpubkey>.");
+            "validatepubkey <CryptoBullion pubkey>\n"
+            "Return information about <CryptoBullion pubkey>.");
 
     std::vector<unsigned char> vchPubKey = ParseHex(params[0].get_str());
     CPubKey pubKey(vchPubKey);
@@ -1691,7 +1722,7 @@ Value repairwallet(const Array& params, bool fHelp)
 
     int nMismatchSpent;
     int64 nBalanceInQuestion;
-    pwalletMain->FixSpentCoins(nMismatchSpent, nBalanceInQuestion);
+    pwalletMain->FixSpentCoins(nMismatchSpent, nBalanceInQuestion, false);
     Object result;
     if (nMismatchSpent == 0)
         result.push_back(Pair("wallet check passed", true));
@@ -1703,7 +1734,7 @@ Value repairwallet(const Array& params, bool fHelp)
     return result;
 }
 
-// CryptogenicBullion: resend unconfirmed wallet transactions
+// CryptoBullion: resend unconfirmed wallet transactions
 Value resendtx(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)

@@ -1,0 +1,76 @@
+CryptoBullion version 1.2.0.4 released
+26 January 2015
+
+Download here: http://cryptobullion.io/storage-use/
+
+This release brings a number of new features and fixes. Upgrading to this release is recommended.
+
+Please report bugs using the issue tracker at github:
+
+https://github.com/cryptogenicbonds/CGB
+
+Upgrade Notes
+--------------
+CryptoBullion now uses LevelDB (as opposed to BerkeleyDB) for storing the blockchain database. When this version is first run it will attempt to rename the data directory (eg .CryptogenicBullion -> .CryptoBullion)and then perform an in-place upgrade of the blockchain database. During the conversion process, block hashes are calculated and cached to disk to improve startup time dramatically. It is highly recommended that you back-up you datafiles (including your wallet.dat) before running this release.
+
+How to Upgrade
+--------------
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/CryptoBullion-Qt (on Mac) or cryptobulliond/CryptoBullion-qt (on Linux).
+
+The first time you run 1.2.0.4 your blockchain database will be upgraded from BerkeleyDB to LevelDB. This process may take some time, but you should notice progress feedback on the splash screen.
+
+** Please ensure you backup your blockchain data and wallet (wallet.dat) before upgrading to this release. Once upgraded to LevelDB, your blockchain database cannot be downgraded. **
+
+1.2.0.4 Release notes
+---------------------
+
+RPC:
+----
+Add support for multisig addresses (addmultisigaddress, createmultisig).
+
+Wallet:
+-------
+Fix getbalance returning garbage values for non-existent accounts.
+Add coin control support.
+Implement '-zapwallettxes' commandline option. This will perform an advanced rescan and attempt to resolve any transaction issues within the local wallet.
+Fix 'unlocking for staking only' functionality.
+Enforce MIN_TXOUT_AMOUNT from QT Wallet. Catch prior to transaction being created and inform user.
+Fix account balance calculation.
+
+GUI:
+----
+Rebrand to CryptoBullion / CBX.
+Restyle overall wallet look.
+Update logo and graphics.
+Add 'Unlock Wallet' button.
+Update icons.
+Add QR code support.
+Restyle Options dialog.
+
+Miscellaneous:
+--------------
+Switch to LevelDB for blockchain database.
+Attempt in-place upgrade of BDB blockchain db to LevelDB.
+Cache scrypt hashes for much faster startup.
+Add TX_NULL_DATA switch cases for script.
+Auto-rename existing/old data directories.
+Add new checkpoints.
+Add TX_NULL_DATA switch cases for script.
+Fix for disable spending of unconfirmed change.
+Transaction malleability fixes as per Bitcoin v0.9.0
+CTransaction::CheckTransaction() : check txout.nValue is not negative (additional DDoS protection).
+Add timestamps to checkpoints.
+Switch to Testnet3.
+Upgrade to OpenSSL 1.0.1k.
+Consensus: Guard against openssl's new strict DER checks.
+Transaction malleability fix: add '-nospendzeroconfchange' commandline support (this prohibits spending change until it has been confirmed. This option is also available in the 'main' section of the QT wallet. Be mindful that unconfirmed change will show be included in your total balance until confirmed).
+
+
+Thanks to everyone who contributed to this release:
+
+Elambert
+Artiface
+FiniteRed
+The CBX Team
+RainbowDash
+Karl Williams

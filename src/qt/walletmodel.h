@@ -2,6 +2,8 @@
 #define WALLETMODEL_H
 
 #include <QObject>
+#include <vector>
+#include <map>
 
 #include "allocators.h" /* for SecureString */
 
@@ -9,6 +11,13 @@ class OptionsModel;
 class AddressTableModel;
 class TransactionTableModel;
 class CWallet;
+
+class CKeyID;
+class CPubKey;
+class COutput;
+class COutPoint;
+class uint256;
+class CCoinControl;
 
 QT_BEGIN_NAMESPACE
 class QTimer;
@@ -78,7 +87,7 @@ public:
     };
 
     // Send coins to a list of recipients
-    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients);
+    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients, const CCoinControl *coinControl=NULL);
 
     // Wallet encryption
     bool setWalletEncrypted(bool encrypted, const SecureString &passphrase);
@@ -108,7 +117,18 @@ public:
         void CopyFrom(const UnlockContext& rhs);
     };
 
-    UnlockContext requestUnlock();
+    UnlockContext requestUnlock(bool showMintOption = true);
+
+    bool getPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const;
+    void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
+    void listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const;
+
+    bool isLockedCoin(uint256 hash, unsigned int n) const;
+    void lockCoin(COutPoint& output);
+    void unlockCoin(COutPoint& output);
+    void listLockedCoins(std::vector<COutPoint>& vOutpts);
+
+    void clearOrphans();
 
 private:
     CWallet *wallet;
@@ -159,7 +179,7 @@ signals:
     // Signal emitted when wallet needs to be unlocked
     // It is valid behaviour for listeners to keep the wallet locked after this signal;
     // this means that the unlocking failed or was cancelled.
-    void requireUnlock();
+    void requireUnlock(bool showMintOption);
 
     // Asynchronous error notification
     void error(const QString &title, const QString &message, bool modal);

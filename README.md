@@ -10,18 +10,23 @@ Transactions require 6 confirmations
 
 Block reward halves after every ~50000 blocks until baseline reward of 0.01 CBX reached on July 13, 2014
 
-Blocks 1-55000 = 10 CGB per; 
-Blocks 55001-95000 = 5 CGB per;
-Blocks 95001-145000 = 2.5 CGB per;
-Blocks 145001-195000 = 1.25 CGB per
+Blocks 1-55000 = 10 CBX per;
+Blocks 55001-95000 = 5 CBX per;
+Blocks 95001-145000 = 2.5 CBX per;
+Blocks 145001-195000 = 1.25 CBX per
 etc
 
 First year coin mint of < 1000000
 
+<<<<<<< HEAD
 Crypto Bullion (CBX) is a digital asset with all of the qualities of money. It is a descendant of Bitcoin, but employs an 
 advanced security model which is more efficient and more secure than Bitcoin. The problems of today’s debt based fiat 
 currencies find solutions in cutting-edge decentralized cryptographic currencies like Crypto Bullion. Designed to function as a
 store of wealth, Crypto Bullion’s fundamentals emulate the properties and supply of gold.
+=======
+Aiming to be PoS-only blockchain once PoW block subsidy reaches baseline reward of 0.01.
+Much research will go into maintaining security of the blockchain if/when CBX goes PoS only.  Many possible schemes and solutions are being analyzed for potential implementation, including but not limited to:
+>>>>>>> raizor/master
 
 While Crypto Bullion shares many traits with Bitcoin such as fast global payments, decentralization, pseudo-anonymity, and 
 non-reversible transactions, there are many improvements which allow Crypto Bullion to more reliably store wealth. A critical 
@@ -94,9 +99,16 @@ something sensitive, like a website.
 
 Place the file in your data directory. (you need to run the Qt or daemon once before you do this)
 
+<<<<<<< HEAD
 If using Linux, the data directory is located at /home/User/.CryptoBullion 
 where User is your login username for your system.
 
 If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\CryptoBullion where USERNAME is replaced 
 with your Windows Username.
+=======
+If using Linux, the data directory is located at /home/User/.CryptoBullion
+where User is your login username for your system.
+
+If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\CryptoBullion where USERNAME is replaced with your Windows Username.
+>>>>>>> raizor/master
 

@@ -1,6 +1,7 @@
 #include "sendcoinsentry.h"
 #include "ui_sendcoinsentry.h"
 #include "guiutil.h"
+#include "main.h"
 #include "bitcoinunits.h"
 #include "addressbookpage.h"
 #include "walletmodel.h"
@@ -15,7 +16,7 @@ SendCoinsEntry::SendCoinsEntry(QWidget *parent) :
     ui(new Ui::SendCoinsEntry),
     model(0)
 {
-    ui->setupUi(this);
+    ui->setupUi(this); 
 
 #ifdef Q_OS_MAC
     ui->payToLayout->setSpacing(4);
@@ -23,12 +24,19 @@ SendCoinsEntry::SendCoinsEntry(QWidget *parent) :
 #if QT_VERSION >= 0x040700
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
     ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
-    ui->payTo->setPlaceholderText(tr("Enter a valid CryptogenicBullion address"));
+    ui->payTo->setPlaceholderText(tr("Enter a valid CryptoBullion address"));
+    // style editboxes
+    GUIUtil::SetEditGradient(ui->payTo);
+    GUIUtil::SetEditGradient(ui->addAsLabel);
+    GUIUtil::SetEditGradient(ui->payAmount);
 #endif
     setFocusPolicy(Qt::TabFocus);
     setFocusProxy(ui->payTo);
 
     GUIUtil::setupAddressWidget(ui->payTo, this);
+
+
+   // GUIUtil::SetWidgetGradient(ui->payTo);
 }
 
 SendCoinsEntry::~SendCoinsEntry()
@@ -106,8 +114,12 @@ bool SendCoinsEntry::validate()
     }
     else
     {
-        if(ui->payAmount->value() <= 0)
+        if(ui->payAmount->value() < MIN_TXOUT_AMOUNT)
         {
+            int unit = model->getOptionsModel()->getDisplayUnit();
+            QMessageBox::warning(this, tr("Amount too small"), tr("Amount must be at least %1").arg(BitcoinUnits::formatWithUnit(unit, MIN_TXOUT_AMOUNT)),
+                                  QMessageBox::Abort, QMessageBox::Abort);
+
             // Cannot send 0 coins or less
             ui->payAmount->setValid(false);
             retval = false;

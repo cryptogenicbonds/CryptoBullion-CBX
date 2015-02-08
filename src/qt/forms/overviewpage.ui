@@ -18,6 +18,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QFrame" name="frame">
+       <property name="styleSheet">
+        <string notr="true">QFrame { background: transparent; }</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -27,6 +30,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_5">
             <property name="font">
@@ -37,17 +43,17 @@
              </font>
             </property>
             <property name="text">
-             <string>Wallet</string>
+             <string>Vault</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="labelWalletStatus">
             <property name="toolTip">
-             <string>The displayed information may be out of date. Your wallet automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
+             <string>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">QLabel { color: red; }</string>
+             <string notr="true">QLabel { color: #ea6900; }</string>
             </property>
             <property name="text">
              <string notr="true">(out of sync)</string>
@@ -83,6 +89,15 @@
           <property name="verticalSpacing">
            <number>12</number>
           </property>
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
           <item row="0" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
@@ -105,7 +120,7 @@
              <string>Your current balance</string>
             </property>
             <property name="text">
-             <string notr="true">0 CGB</string>
+             <string notr="true">0 CBX</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -134,7 +149,7 @@
              <string>Total of coins that was staked, and do not yet count toward the current balance</string>
             </property>
             <property name="text">
-             <string notr="true">0 CGB</string>
+             <string notr="true">0 CBX</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -163,7 +178,7 @@
              <string>Total of transactions that have yet to be confirmed, and do not yet count toward the current balance</string>
             </property>
             <property name="text">
-             <string notr="true">0 CGB</string>
+             <string notr="true">0 CBX</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -189,7 +204,7 @@
              <string>Mined balance that has not yet matured</string>
             </property>
             <property name="text">
-             <string notr="true">0 CGB</string>
+             <string notr="true">0 CBX</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -206,7 +221,7 @@
           <item row="4" column="1">
            <widget class="QLabel" name="labelNumTransactions">
             <property name="toolTip">
-             <string>Total number of transactions in wallet</string>
+             <string>Total number of transactions in vault</string>
             </property>
             <property name="text">
              <string notr="true">0</string>
@@ -237,6 +252,127 @@
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QFrame" name="frame_2">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>76</red>
+             <green>76</green>
+             <blue>218</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>76</red>
+             <green>76</green>
+             <blue>218</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>76</red>
+             <green>76</green>
+             <blue>218</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="0">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QFrame { background: transparent; }</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -256,10 +392,10 @@
           <item>
            <widget class="QLabel" name="labelTransactionsStatus">
             <property name="toolTip">
-             <string>The displayed information may be out of date. Your wallet automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
+             <string>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">QLabel { color: red; }</string>
+             <string notr="true">QLabel { color: #ea6900; }</string>
             </property>
             <property name="text">
              <string notr="true">(out of sync)</string>
@@ -286,6 +422,124 @@
         </item>
         <item>
          <widget class="QListView" name="listTransactions">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Mid">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>159</red>
+                <green>159</green>
+                <blue>163</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Mid">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>159</red>
+                <green>159</green>
+                <blue>163</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Mid">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>159</red>
+                <green>159</green>
+                <blue>163</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </disabled>
+           </palette>
+          </property>
           <property name="styleSheet">
            <string notr="true">QListView { background: transparent; }</string>
           </property>

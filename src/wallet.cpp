@@ -3,11 +3,13 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include "txdb.h"
 #include "wallet.h"
 #include "walletdb.h"
 #include "crypter.h"
 #include "ui_interface.h"
 #include "base58.h"
+#include "coincontrol.h"
 #include "kernel.h"
 
 using namespace std;
@@ -47,12 +49,14 @@ CPubKey CWallet::GenerateNewKey()
 
 bool CWallet::AddKey(const CKey& key)
 {
+    CPubKey pubkey = key.GetPubKey();
+
     if (!CCryptoKeyStore::AddKey(key))
         return false;
     if (!fFileBacked)
         return true;
     if (!IsCrypted())
-        return CWalletDB(strWalletFile).WriteKey(key.GetPubKey(), key.GetPrivKey());
+        return CWalletDB(strWalletFile).WriteKey(pubkey, key.GetPrivKey(), mapKeyMetadata[pubkey.GetID()]);
     return true;
 }
 
@@ -65,11 +69,20 @@ bool CWallet::AddCryptedKey(const CPubKey &vchPubKey, const vector<unsigned char
     {
         LOCK(cs_wallet);
         if (pwalletdbEncryption)
-            return pwalletdbEncryption->WriteCryptedKey(vchPubKey, vchCryptedSecret);
+            return pwalletdbEncryption->WriteCryptedKey(vchPubKey, vchCryptedSecret, mapKeyMetadata[vchPubKey.GetID()]);
         else
-            return CWalletDB(strWalletFile).WriteCryptedKey(vchPubKey, vchCryptedSecret);
+            return CWalletDB(strWalletFile).WriteCryptedKey(vchPubKey, vchCryptedSecret, mapKeyMetadata[vchPubKey.GetID()]);
     }
     return false;
+}
+
+bool CWallet::LoadKeyMetadata(const CPubKey &pubkey, const CKeyMetadata &meta)
+{
+    if (meta.nCreateTime && (!nTimeFirstKey || meta.nCreateTime < nTimeFirstKey))
+        nTimeFirstKey = meta.nCreateTime;
+
+    mapKeyMetadata[pubkey.GetID()] = meta;
+    return true;
 }
 
 bool CWallet::AddCScript(const CScript& redeemScript)
@@ -79,6 +92,21 @@ bool CWallet::AddCScript(const CScript& redeemScript)
     if (!fFileBacked)
         return true;
     return CWalletDB(strWalletFile).WriteCScript(Hash160(redeemScript), redeemScript);
+}
+
+bool CWallet::AddWatchOnly(const CScript &dest)
+{
+    if (!CCryptoKeyStore::AddWatchOnly(dest))
+        return false;
+    nTimeFirstKey = 1; // No birthday information for watch-only keys.
+    if (!fFileBacked)
+        return true;
+    return CWalletDB(strWalletFile).WriteWatchOnly(dest);
+}
+
+bool CWallet::LoadWatchOnly(const CScript &dest)
+{
+    return CCryptoKeyStore::AddWatchOnly(dest);
 }
 
 // ppcoin: optional setting to unlock wallet for block minting only;
@@ -137,7 +165,7 @@ bool CWallet::ChangeWalletPassphrase(const SecureString& strOldWalletPassphrase,
                 if (pMasterKey.second.nDeriveIterations < 25000)
                     pMasterKey.second.nDeriveIterations = 25000;
 
-                printf("Wallet passphrase changed to an nDeriveIterations of %i\n", pMasterKey.second.nDeriveIterations);
+                printf("Vault passphrase changed to an nDeriveIterations of %i\n", pMasterKey.second.nDeriveIterations);
 
                 if (!crypter.SetKeyFromPassphrase(strNewWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
                     return false;
@@ -276,7 +304,7 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
         if (fFileBacked)
         {
             if (!pwalletdbEncryption->TxnCommit())
-                exit(1); //We now have keys encrypted in memory, but no on disk...die to avoid confusion and let the user reload their unencrypted wallet.
+                exit(1); //We now have keys encrypted in memory, but not on disk...die to avoid confusion and let the user reload their unencrypted wallet.
 
             delete pwalletdbEncryption;
             pwalletdbEncryption = NULL;
@@ -289,7 +317,8 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
 
         // Need to completely rewrite the wallet file; if we don't, bdb might keep
         // bits of the unencrypted private key in slack space in the database file.
-        CDB::Rewrite(strWalletFile);
+        BerkerleyDBUpgradeProgress prog;
+        CDB::Rewrite(strWalletFile, prog);
 
     }
     NotifyStatusChanged(this);
@@ -631,9 +660,9 @@ void CWalletTx::GetAmounts(int64& nGeneratedImmature, int64& nGeneratedMature, l
     if (IsCoinBase() || IsCoinStake())
     {
         if (GetBlocksToMaturity() > 0)
-            nGeneratedImmature = pwallet->GetCredit(*this);
+            nGeneratedImmature = pwallet->GetCredit(*this) - pwallet->GetDebit(*this);
         else
-            nGeneratedMature = GetCredit();
+            nGeneratedMature = GetCredit() - GetDebit();
         return;
     }
 
@@ -892,6 +921,30 @@ void CWalletTx::RelayWalletTransaction()
    RelayWalletTransaction(txdb);
 }
 
+DBErrors CWallet::ZapWalletTx()
+{
+    if (!fFileBacked)
+        return DB_LOAD_OK;
+    DBErrors nZapWalletTxRet = CWalletDB(strWalletFile,"cr+").ZapWalletTx(this);
+    if (nZapWalletTxRet == DB_NEED_REWRITE)
+    {
+        BerkerleyDBUpgradeProgress prog;
+        if (CDB::Rewrite(strWalletFile, prog, "\x04pool"))
+        {
+            LOCK(cs_wallet);
+            setKeyPool.clear();
+            // Note: can't top-up keypool here, because wallet is locked.
+            // User will be prompted to unlock wallet the next operation
+            // the requires a new key.
+        }
+    }
+
+    if (nZapWalletTxRet != DB_LOAD_OK)
+        return nZapWalletTxRet;
+
+    return DB_LOAD_OK;
+}
+
 void CWallet::ResendWalletTransactions()
 {
     // Do this infrequently and randomly to avoid giving away
@@ -994,7 +1047,7 @@ int64 CWallet::GetImmatureBalance() const
 }
 
 // populate vCoins with vector of spendable COutputs
-void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed) const
+void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const CCoinControl *coinControl) const
 {
     vCoins.clear();
 
@@ -1017,7 +1070,8 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed) const
                 continue;
 
             for (unsigned int i = 0; i < pcoin->vout.size(); i++)
-                if (!(pcoin->IsSpent(i)) && IsMine(pcoin->vout[i]) && pcoin->vout[i].nValue > 0)
+                if (!(pcoin->IsSpent(i)) && IsMine(pcoin->vout[i]) && pcoin->vout[i].nValue > 0 &&
+                (!coinControl || !coinControl->HasSelected() || coinControl->IsSelected((*it).first, i)))
                     vCoins.push_back(COutput(pcoin, i, pcoin->GetDepthInMainChain()));
         }
     }
@@ -1200,11 +1254,8 @@ bool CWallet::SelectCoins(int64 nTargetValue, unsigned int nSpendTime, set<pair<
 
     return (SelectCoinsMinConf(nTargetValue, nSpendTime, 1, 6, vCoins, setCoinsRet, nValueRet) ||
             SelectCoinsMinConf(nTargetValue, nSpendTime, 1, 1, vCoins, setCoinsRet, nValueRet) ||
-            SelectCoinsMinConf(nTargetValue, nSpendTime, 0, 1, vCoins, setCoinsRet, nValueRet));
+            ((!fNoSpendZeroConfChange && !fNoSpendZeroConfChangeForced) && SelectCoinsMinConf(nTargetValue, nSpendTime, 0, 1, vCoins, setCoinsRet, nValueRet)));
 }
-
-
-
 
 bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CWalletTx& wtxNew, CReserveKey& reservekey, int64& nFeeRet)
 {
@@ -1622,7 +1673,7 @@ string CWallet::SendMoney(CScript scriptPubKey, int64 nValue, CWalletTx& wtxNew,
         return "ABORTED";
 
     if (!CommitTransaction(wtxNew, reservekey))
-        return _("Error: The transaction was rejected.  This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.");
+        return _("Error: The transaction was rejected.  This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.");
 
     return "";
 }
@@ -1655,7 +1706,8 @@ DBErrors CWallet::LoadWallet(bool& fFirstRunRet)
     DBErrors nLoadWalletRet = CWalletDB(strWalletFile,"cr+").LoadWallet(this);
     if (nLoadWalletRet == DB_NEED_REWRITE)
     {
-        if (CDB::Rewrite(strWalletFile, "\x04pool"))
+        BerkerleyDBUpgradeProgress prog;
+        if (CDB::Rewrite(strWalletFile, prog, "\x04pool"))
         {
             setKeyPool.clear();
             // Note: can't top-up keypool here, because wallet is locked.
@@ -2032,17 +2084,21 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64& nBalanceInQuestion, bool
 
     LOCK(cs_wallet);
     vector<CWalletTx*> vCoins;
+    vector<CWalletTx*> vCoinsToRemove;
     vCoins.reserve(mapWallet.size());
+    vCoinsToRemove.reserve(mapWallet.size());
     for (map<uint256, CWalletTx>::iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
         vCoins.push_back(&(*it).second);
 
-    CTxDB txdb("r");
+    CTxDB txdb("r");    
     BOOST_FOREACH(CWalletTx* pcoin, vCoins)
     {
         // Find the corresponding transaction index
         CTxIndex txindex;
+
         if (!txdb.ReadTxIndex(pcoin->GetHash(), txindex))
             continue;
+
         for (unsigned int n=0; n < pcoin->vout.size(); n++)
         {
             if (IsMine(pcoin->vout[n]) && pcoin->IsSpent(n) && (txindex.vSpent.size() <= n || txindex.vSpent[n].IsNull()))
@@ -2158,4 +2214,74 @@ void CWallet::UpdatedTransaction(const uint256 &hashTx)
         if (mi != mapWallet.end())
             NotifyTransactionChanged(this, hashTx, CT_UPDATED);
     }
+}
+
+void CWallet::ClearOrphans()
+{
+    list<uint256> orphans;
+
+    LOCK(cs_wallet);
+    for(map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
+    {
+        const CWalletTx *wtx = &(*it).second;
+        if((wtx->IsCoinBase() || wtx->IsCoinStake()) && !wtx->IsInMainChain())
+        {
+          orphans.push_back(wtx->GetHash());
+        }
+    }
+
+    for(list<uint256>::const_iterator it = orphans.begin(); it != orphans.end(); ++it)
+        EraseFromWallet(*it);
+}
+
+
+void CWallet::GetKeyBirthTimes(std::map<CKeyID, int64> &mapKeyBirth) const {
+    mapKeyBirth.clear();
+
+    // get birth times for keys with metadata
+    for (std::map<CKeyID, CKeyMetadata>::const_iterator it = mapKeyMetadata.begin(); it != mapKeyMetadata.end(); it++)
+        if (it->second.nCreateTime)
+            mapKeyBirth[it->first] = it->second.nCreateTime;
+
+    // map in which we'll infer heights of other keys
+    CBlockIndex *pindexMax = FindBlockByHeight(std::max(0, nBestHeight - 144)); // the tip can be reorganised; use a 144-block safety margin
+    std::map<CKeyID, CBlockIndex*> mapKeyFirstBlock;
+    std::set<CKeyID> setKeys;
+    GetKeys(setKeys);
+    BOOST_FOREACH(const CKeyID &keyid, setKeys) {
+        if (mapKeyBirth.count(keyid) == 0)
+            mapKeyFirstBlock[keyid] = pindexMax;
+    }
+    setKeys.clear();
+
+    // if there are no such keys, we're done
+    if (mapKeyFirstBlock.empty())
+        return;
+
+    // find first block that affects those keys, if there are any left
+    std::vector<CKeyID> vAffected;
+    for (std::map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); it++) {
+        // iterate over all wallet transactions...
+        const CWalletTx &wtx = (*it).second;
+        std::map<uint256, CBlockIndex*>::const_iterator blit = mapBlockIndex.find(wtx.hashBlock);
+        if (blit != mapBlockIndex.end() && blit->second->IsInMainChain()) {
+            // ... which are already in a block
+            int nHeight = blit->second->nHeight;
+            BOOST_FOREACH(const CTxOut &txout, wtx.vout) {
+                // iterate over all their outputs
+                ::ExtractAffectedKeys(*this, txout.scriptPubKey, vAffected);
+                BOOST_FOREACH(const CKeyID &keyid, vAffected) {
+                    // ... and all their affected keys
+                    std::map<CKeyID, CBlockIndex*>::iterator rit = mapKeyFirstBlock.find(keyid);
+                    if (rit != mapKeyFirstBlock.end() && nHeight < rit->second->nHeight)
+                        rit->second = blit->second;
+                }
+                vAffected.clear();
+            }
+        }
+    }
+
+    // Extract block timestamps for those keys
+    for (std::map<CKeyID, CBlockIndex*>::const_iterator it = mapKeyFirstBlock.begin(); it != mapKeyFirstBlock.end(); it++)
+        mapKeyBirth[it->first] = it->second->nTime - 7200; // block times can be 2h off
 }

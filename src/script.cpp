@@ -102,6 +102,7 @@ const char* GetTxnOutputType(txnouttype t)
     case TX_PUBKEYHASH: return "pubkeyhash";
     case TX_SCRIPTHASH: return "scripthash";
     case TX_MULTISIG: return "multisig";
+    case TX_NULL_DATA: return "nulldata";
     }
     return NULL;
 }
@@ -248,6 +249,80 @@ const char* GetOpName(opcodetype opcode)
     default:
         return "OP_UNKNOWN";
     }
+}
+
+
+bool IsCanonicalPubKey(const valtype &vchPubKey, unsigned int flags) {
+    if (!(flags & SCRIPT_VERIFY_STRICTENC))
+        return true;
+
+    if (vchPubKey.size() < 33)
+        return error("Non-canonical public key: too short");
+    if (vchPubKey[0] == 0x04) {
+        if (vchPubKey.size() != 65)
+            return error("Non-canonical public key: invalid length for uncompressed key");
+    } else if (vchPubKey[0] == 0x02 || vchPubKey[0] == 0x03) {
+        if (vchPubKey.size() != 33)
+            return error("Non-canonical public key: invalid length for compressed key");
+    } else {
+        return error("Non-canonical public key: compressed nor uncompressed");
+    }
+    return true;
+}
+
+bool IsCanonicalSignature(const valtype &vchSig, unsigned int flags) {
+    if (!(flags & SCRIPT_VERIFY_STRICTENC))
+        return true;
+
+    // See https://bitcointalk.org/index.php?topic=8392.msg127623#msg127623
+    // A canonical signature exists of: <30> <total len> <02> <len R> <R> <02> <len S> <S> <hashtype>
+    // Where R and S are not negative (their first byte has its highest bit not set), and not
+    // excessively padded (do not start with a 0 byte, unless an otherwise negative number follows,
+    // in which case a single 0 byte is necessary and even required).
+    if (vchSig.size() < 9)
+        return error("Non-canonical signature: too short");
+    if (vchSig.size() > 73)
+        return error("Non-canonical signature: too long");
+    unsigned char nHashType = vchSig[vchSig.size() - 1] & (~(SIGHASH_ANYONECANPAY));
+    if (nHashType < SIGHASH_ALL || nHashType > SIGHASH_SINGLE)
+        return error("Non-canonical signature: unknown hashtype byte");
+    if (vchSig[0] != 0x30)
+        return error("Non-canonical signature: wrong type");
+    if (vchSig[1] != vchSig.size()-3)
+        return error("Non-canonical signature: wrong length marker");
+    unsigned int nLenR = vchSig[3];
+    if (5 + nLenR >= vchSig.size())
+        return error("Non-canonical signature: S length misplaced");
+    unsigned int nLenS = vchSig[5+nLenR];
+    if ((unsigned long)(nLenR+nLenS+7) != vchSig.size())
+        return error("Non-canonical signature: R+S length mismatch");
+
+    const unsigned char *R = &vchSig[4];
+    if (R[-2] != 0x02)
+        return error("Non-canonical signature: R value type mismatch");
+    if (nLenR == 0)
+        return error("Non-canonical signature: R length is zero");
+    if (R[0] & 0x80)
+        return error("Non-canonical signature: R value negative");
+    if (nLenR > 1 && (R[0] == 0x00) && !(R[1] & 0x80))
+        return error("Non-canonical signature: R value excessively padded");
+
+    const unsigned char *S = &vchSig[6+nLenR];
+    if (S[-2] != 0x02)
+        return error("Non-canonical signature: S value type mismatch");
+    if (nLenS == 0)
+        return error("Non-canonical signature: S length is zero");
+    if (S[0] & 0x80)
+        return error("Non-canonical signature: S value negative");
+    if (nLenS > 1 && (S[0] == 0x00) && !(S[1] & 0x80))
+        return error("Non-canonical signature: S value excessively padded");
+
+    if (flags & SCRIPT_VERIFY_LOW_S) {
+        if (!CKey::CheckSignatureElement(S, nLenS, true))
+            return error("Non-canonical signature: S value is unnecessarily high");
+    }
+
+    return true;
 }
 
 bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, const CTransaction& txTo, unsigned int nIn, int nHashType)
@@ -1378,6 +1453,7 @@ bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash
     switch (whichTypeRet)
     {
     case TX_NONSTANDARD:
+    case TX_NULL_DATA:
         return false;
     case TX_PUBKEY:
         keyID = CPubKey(vSolutions[0]).GetID();
@@ -1408,6 +1484,7 @@ int ScriptSigArgsExpected(txnouttype t, const std::vector<std::vector<unsigned c
     switch (t)
     {
     case TX_NONSTANDARD:
+    case TX_NULL_DATA:
         return -1;
     case TX_PUBKEY:
         return 1;
@@ -1423,10 +1500,9 @@ int ScriptSigArgsExpected(txnouttype t, const std::vector<std::vector<unsigned c
     return -1;
 }
 
-bool IsStandard(const CScript& scriptPubKey)
+bool IsStandard(const CScript& scriptPubKey, txnouttype& whichType)
 {
     vector<valtype> vSolutions;
-    txnouttype whichType;
     if (!Solver(scriptPubKey, whichType, vSolutions))
         return false;
 
@@ -1485,6 +1561,7 @@ bool IsMine(const CKeyStore &keystore, const CScript& scriptPubKey)
     switch (whichType)
     {
     case TX_NONSTANDARD:
+    case TX_NULL_DATA:
         return false;
     case TX_PUBKEY:
         keyID = CPubKey(vSolutions[0]).GetID();
@@ -1537,6 +1614,43 @@ bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)
     }
     // Multisig txns have more than one address...
     return false;
+}
+
+class CAffectedKeysVisitor : public boost::static_visitor<void> {
+private:
+    const CKeyStore &keystore;
+    std::vector<CKeyID> &vKeys;
+
+public:
+    CAffectedKeysVisitor(const CKeyStore &keystoreIn, std::vector<CKeyID> &vKeysIn) : keystore(keystoreIn), vKeys(vKeysIn) {}
+
+    void Process(const CScript &script) {
+        txnouttype type;
+        std::vector<CTxDestination> vDest;
+        int nRequired;
+        if (ExtractDestinations(script, type, vDest, nRequired)) {
+            BOOST_FOREACH(const CTxDestination &dest, vDest)
+                boost::apply_visitor(*this, dest);
+        }
+    }
+
+    void operator()(const CKeyID &keyId) {
+        if (keystore.HaveKey(keyId))
+            vKeys.push_back(keyId);
+    }
+
+    void operator()(const CScriptID &scriptId) {
+        CScript script;
+        if (keystore.GetCScript(scriptId, script))
+            Process(script);
+    }
+
+    void operator()(const CNoDestination &none) {}
+};
+
+
+void ExtractAffectedKeys(const CKeyStore &keystore, const CScript& scriptPubKey, std::vector<CKeyID> &vKeys) {
+    CAffectedKeysVisitor(keystore, vKeys).Process(scriptPubKey);
 }
 
 bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, vector<CTxDestination>& addressRet, int& nRequiredRet)
@@ -1735,6 +1849,7 @@ static CScript CombineSignatures(CScript scriptPubKey, const CTransaction& txTo,
     switch (txType)
     {
     case TX_NONSTANDARD:
+    case TX_NULL_DATA:
         // Don't know anything about this, assume bigger one is correct:
         if (sigs1.size() >= sigs2.size())
             return PushAll(sigs1);

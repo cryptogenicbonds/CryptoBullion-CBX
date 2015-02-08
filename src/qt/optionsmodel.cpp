@@ -45,7 +45,9 @@ void OptionsModel::Init()
     bDisplayAddresses = settings.value("bDisplayAddresses", false).toBool();
     fMinimizeToTray = settings.value("fMinimizeToTray", false).toBool();
     fMinimizeOnClose = settings.value("fMinimizeOnClose", false).toBool();
+    fNoSpendZeroConfChange = settings.value("fNoSpendZeroConfChange", false).toBool();
     nTransactionFee = settings.value("nTransactionFee").toLongLong();
+    fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
     language = settings.value("language", "").toString();
 
     // These are shared with core Bitcoin; we want
@@ -138,6 +140,8 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return QVariant(GUIUtil::GetStartOnSystemStartup());
         case MinimizeToTray:
             return QVariant(fMinimizeToTray);
+        case NoSpendUnconfirmedChange:
+            return settings.value("fNoSpendZeroConfChange", GetBoolArg("-nospendzeroconfchange", false));
         case MapPortUPnP:
             return settings.value("fUseUPnP", GetBoolArg("-upnp", true));
         case MinimizeOnClose:
@@ -168,6 +172,8 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return QVariant(bDisplayAddresses);
         case DetachDatabases:
             return QVariant(bitdb.GetDetach());
+        case CoinControlFeatures:
+            return QVariant(fCoinControlFeatures);
         case Language:
             return settings.value("language", "");
         default:
@@ -200,6 +206,10 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
         case MinimizeOnClose:
             fMinimizeOnClose = value.toBool();
             settings.setValue("fMinimizeOnClose", fMinimizeOnClose);
+            break;
+        case NoSpendUnconfirmedChange:
+            fNoSpendZeroConfChange = value.toBool();
+            settings.setValue("fNoSpendZeroConfChange", fNoSpendZeroConfChange);
             break;
         case ProxyUse:
             settings.setValue("fUseProxy", value.toBool());
@@ -239,6 +249,7 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
         case Fee:
             nTransactionFee = value.toLongLong();
             settings.setValue("nTransactionFee", nTransactionFee);
+            emit transactionFeeChanged(nTransactionFee);
             break;
         case DisplayUnit:
             nDisplayUnit = value.toInt();
@@ -253,6 +264,12 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             bool fDetachDB = value.toBool();
             bitdb.SetDetach(fDetachDB);
             settings.setValue("detachDB", fDetachDB);
+            }
+            break;
+        case CoinControlFeatures: {
+            fCoinControlFeatures = value.toBool();
+            settings.setValue("fCoinControlFeatures", fCoinControlFeatures);
+            emit coinControlFeaturesChanged(fCoinControlFeatures);
             }
             break;
         case Language:
@@ -275,6 +292,11 @@ qint64 OptionsModel::getTransactionFee()
 bool OptionsModel::getMinimizeToTray()
 {
     return fMinimizeToTray;
+}
+
+bool OptionsModel::getCoinControlFeatures()
+{
+    return fCoinControlFeatures;
 }
 
 bool OptionsModel::getMinimizeOnClose()

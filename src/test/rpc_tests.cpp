@@ -22,6 +22,8 @@ createArgs(int nRequired, const char* address1=NULL, const char* address2=NULL)
     return result;
 }
 
+// todo: raizor - add createmultisig test
+
 BOOST_AUTO_TEST_CASE(rpc_addmultisig)
 {
     rpcfn_type addmultisig = tableRPC["addmultisigaddress"]->actor;

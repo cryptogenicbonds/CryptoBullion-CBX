@@ -1,8 +1,9 @@
+
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#include "db.h"
+#include "txdb.h"
 #include "walletdb.h"
 #include "bitcoinrpc.h"
 #include "net.h"
@@ -26,6 +27,10 @@ using namespace boost;
 
 CWallet* pwalletMain;
 CClientUIInterface uiInterface;
+bool fUseFastIndex;
+//bool fUseFastStakeMiner;
+bool fUseMemoryLog;
+enum Checkpoints::CPMode CheckpointsMode;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -81,7 +86,7 @@ void Shutdown(void* parg)
         delete pwalletMain;
         NewThread(ExitTimeout, NULL);
         Sleep(50);
-        printf("CryptogenicBullion exited\n\n");
+        printf("CryptoBullion exited\n\n");
         fExit = true;
 #ifndef QT_GUI
         // ensure non-UI client gets exited here, but let Bitcoin-Qt reach 'return 0;' in bitcoin.cpp
@@ -136,12 +141,12 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to bitcoind / RPC client
-            std::string strUsage = _("CryptogenicBullion version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("CryptoBullion version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  CryptogenicBulliond [options]                     " + "\n" +
-                  "  CryptogenicBulliond [options] <command> [params]  " + _("Send command to -server or CryptogenicBulliond") + "\n" +
-                  "  CryptogenicBulliond [options] help                " + _("List commands") + "\n" +
-                  "  CryptogenicBulliond [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  CryptoBulliond [options]                     " + "\n" +
+                  "  CryptoBulliond [options] <command> [params]  " + _("Send command to -server or CryptoBulliond") + "\n" +
+                  "  CryptoBulliond [options] help                " + _("List commands") + "\n" +
+                  "  CryptoBulliond [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage();
 
@@ -151,7 +156,7 @@ bool AppInit(int argc, char* argv[])
 
         // Command-line RPC
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "CryptogenicBullion:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "CryptoBullion:"))
                 fCommandLine = true;
 
         if (fCommandLine)
@@ -191,13 +196,13 @@ int main(int argc, char* argv[])
 
 bool static InitError(const std::string &str)
 {
-    uiInterface.ThreadSafeMessageBox(str, _("CryptogenicBullion"), CClientUIInterface::OK | CClientUIInterface::MODAL);
+    uiInterface.ThreadSafeMessageBox(str, _("CryptoBullion"), CClientUIInterface::OK | CClientUIInterface::MODAL);
     return false;
 }
 
 bool static InitWarning(const std::string &str)
 {
-    uiInterface.ThreadSafeMessageBox(str, _("CryptogenicBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+    uiInterface.ThreadSafeMessageBox(str, _("CryptoBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
     return true;
 }
 
@@ -219,8 +224,8 @@ std::string HelpMessage()
 {
     string strUsage = _("Options:") + "\n" +
         "  -?                     " + _("This help message") + "\n" +
-        "  -conf=<file>           " + _("Specify configuration file (default: CryptogenicBullion.conf)") + "\n" +
-        "  -pid=<file>            " + _("Specify pid file (default: CryptogenicBulliond.pid)") + "\n" +
+        "  -conf=<file>           " + _("Specify configuration file (default: CryptoBullion.conf)") + "\n" +
+        "  -pid=<file>            " + _("Specify pid file (default: CryptoBulliond.pid)") + "\n" +
         "  -gen                   " + _("Generate coins") + "\n" +
         "  -gen=0                 " + _("Don't generate coins") + "\n" +
         "  -datadir=<dir>         " + _("Specify data directory") + "\n" +
@@ -278,9 +283,10 @@ std::string HelpMessage()
         "  -rpcallowip=<ip>       " + _("Allow JSON-RPC connections from specified IP address") + "\n" +
         "  -rpcconnect=<ip>       " + _("Send commands to node running on <ip> (default: 127.0.0.1)") + "\n" +
         "  -blocknotify=<cmd>     " + _("Execute command when the best block changes (%s in cmd is replaced by block hash)") + "\n" +
-        "  -upgradewallet         " + _("Upgrade wallet to latest format") + "\n" +
+        "  -upgradewallet         " + _("Upgrade vault to latest format") + "\n" +
         "  -keypool=<n>           " + _("Set key pool size to <n> (default: 100)") + "\n" +
-        "  -rescan                " + _("Rescan the block chain for missing wallet transactions") + "\n" +
+        "  -rescan                " + _("Rescan the block chain for missing vault transactions") + "\n" +
+        "  -zapwallettxes         " + _("Clear list of wallet transactions (diagnostic tool; implies -rescan)") + "\n" +
         "  -salvagewallet         " + _("Attempt to recover private keys from a corrupt wallet.dat") + "\n" +
         "  -checkblocks=<n>       " + _("How many blocks to check at startup (default: 2500, 0 = all)") + "\n" +
         "  -checklevel=<n>        " + _("How thorough the block verification is (0-6, default: 1)") + "\n" +
@@ -298,6 +304,30 @@ std::string HelpMessage()
         "  -rpcsslciphers=<ciphers>                 " + _("Acceptable ciphers (default: TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:@STRENGTH)") + "\n";
 
     return strUsage;
+}
+
+bool LoadBlockIndexFromDisk(std::ostringstream *errors) {
+    uiInterface.InitMessage(_("Loading block index..."));
+    printf("Loading block index...\n");
+    int64 nStart = GetTimeMillis();
+    if (!LoadBlockIndex())
+        *errors << _("Error loading block index database") << "\n";
+
+    // as LoadBlockIndex can take several minutes, it's possible the user
+    // requested to kill bitcoin-qt during the last operation. If so, exit.
+    // As the program has not fully started yet, Shutdown() is possibly overkill.
+    if (fRequestShutdown)
+    {
+        printf("Shutdown requested. Exiting.\n");
+        return false;
+    }
+    printf(" block index %15"PRI64d"ms\n", GetTimeMillis() - nStart);
+    return true;
+}
+
+void UpdateUIWithDBUpgradeProgress(double percent) {
+    uiInterface.InitMessage(
+        strprintf(_("Upgrade database\n%0.2f%% complete"), percent));
 }
 
 /** Initialize bitcoin.
@@ -371,9 +401,8 @@ bool AppInit2()
         SoftSetBoolArg("-listen", false);
     }
 
-    if (!GetBoolArg("-listen", true)) {
-        // do not map ports or try to retrieve public IP when not listening (pointless)
-        SoftSetBoolArg("-upnp", false);
+    if (mapArgs.count("-externalip")) {
+        // if an explicit public IP is specified, do not try to find others
         SoftSetBoolArg("-discover", false);
     }
 
@@ -385,6 +414,12 @@ bool AppInit2()
     if (GetBoolArg("-salvagewallet")) {
         // Rewrite just private keys: rescan to find transactions
         SoftSetBoolArg("-rescan", true);
+    }
+
+    // -zapwallettx implies a rescan
+    if (GetBoolArg("-zapwallettxes", false)) {
+        if (SoftSetBoolArg("-rescan", true))
+            printf("AppInit2 : parameter interaction: -zapwallettxes=1 -> setting -rescan=1\n");
     }
 
     // ********************************************************* Step 3: parameter-to-internal-flags
@@ -414,9 +449,23 @@ bool AppInit2()
 #if !defined(QT_GUI)
     fServer = true;
 #endif
-    fPrintToConsole = GetBoolArg("-printtoconsole");
+    fNoSpendZeroConfChangeForced = GetBoolArg("-nospendzeroconfchange", false);
     fPrintToDebugger = GetBoolArg("-printtodebugger");
     fLogTimestamps = GetBoolArg("-logtimestamps");
+    fUseFastIndex = GetBoolArg("-fastindex", true);
+    fUseMemoryLog = GetBoolArg("-memorylog", true);
+
+    CheckpointsMode = Checkpoints::kStrict;
+    std::string strCpMode = GetArg("-cppolicy", "strict");
+
+    if(strCpMode == "strict")
+        CheckpointsMode = Checkpoints::kStrict;
+
+    if(strCpMode == "advisory")
+        CheckpointsMode = Checkpoints::kAdvisory;
+
+    if(strCpMode == "permissive")
+        CheckpointsMode = Checkpoints::kPermissive;
 
     if (mapArgs.count("-timeout"))
     {
@@ -450,7 +499,7 @@ bool AppInit2()
     if (file) fclose(file);
     static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
     if (!lock.try_lock())
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s.  CryptogenicBullion is probably already running."), strDataDir.c_str()));
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s.  CryptoBullion is probably already running."), strDataDir.c_str()));
 
 #if !defined(WIN32) && !defined(QT_GUI)
     if (fDaemon)
@@ -477,7 +526,7 @@ bool AppInit2()
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("CryptogenicBullion version %s (%s)\n", FormatFullVersion().c_str(), CLIENT_DATE.c_str());
+    printf("CryptoBullion version %s (%s)\n", FormatFullVersion().c_str(), CLIENT_DATE.c_str());
     printf("Using OpenSSL version %s\n", SSLeay_version(SSLEAY_VERSION));
     if (!fLogTimestamps)
         printf("Startup time: %s\n", DateTimeStrFormat("%x %H:%M:%S", GetTime()).c_str());
@@ -486,9 +535,17 @@ bool AppInit2()
     std::ostringstream strErrors;
 
     if (fDaemon)
-        fprintf(stdout, "CryptogenicBullion server starting\n");
+        fprintf(stdout, "CryptoBullion server starting\n");
 
     int64 nStart;
+
+    // ********************************************************* Step 4b: upgrade to leveldb
+
+#ifdef USE_LEVELDB
+    LevelDBMigrationProgress progress;
+    progress.connect(UpdateUIWithDBUpgradeProgress);
+    LevelDBMigrationResult migrationResult = MaybeMigrateToLevelDB(progress);
+#endif
 
     // ********************************************************* Step 5: verify database integrity
 
@@ -518,7 +575,7 @@ bool AppInit2()
                                      " Original wallet.dat saved as wallet.{timestamp}.bak in %s; if"
                                      " your balance or transactions are incorrect you should"
                                      " restore from a backup."), strDataDir.c_str());
-            uiInterface.ThreadSafeMessageBox(msg, _("CryptogenicBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+            uiInterface.ThreadSafeMessageBox(msg, _("CryptoBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         }
         if (r == CDBEnv::RECOVER_FAIL)
             return InitError(_("wallet.dat corrupt, salvage failed"));
@@ -659,6 +716,12 @@ bool AppInit2()
         return InitError(msg);
     }
 
+    // As we now store the block hashes in the transaction DB, we should attempt to perform an in-place
+    // upgrade of the Berkeley transaction DB.
+
+    //BerkerleyDBUpgradeProgress prog;
+    //BerkeleyDBUpgradeResult migrationResult = UpgradeBerkeleyDB(prog);
+
     if (GetBoolArg("-loadblockindextest"))
     {
         CTxDB txdb("r");
@@ -666,12 +729,40 @@ bool AppInit2()
         PrintBlockTree();
         return false;
     }
+/*
+    // check if TX DB needs upgrading
+    uiInterface.InitMessage(_("Inspecting TX database..."));
+    printf("Inspecting TX database...\n");
+    CTxDB txdb("cr");
+    int ver;
+    txdb.ReadVersion(ver);
+    txdb.Close();
+    bitdb.CloseDb("blkindex.dat");
+
+    if (ver < DB_MINVER_INCHASH && true)
+    {
+        // update berkeley tx db to include block hashes.
+        // TOOD: revisit this when we switch to level-db.
+
+        uiInterface.InitMessage(_("Upgrading TX database to include block hashes..."));
+        printf("Rewriting transaction database to include block hashes...\n");
+
+        BerkerleyDBUpgradeProgress progress;
+        progress.connect(UpdateUIWithDBUpgradeProgress);
+        //BerkeleyDBUpgradeResult migrationResult = UpgradeBerkeleyDB(prog);
+
+        //bool rewriteOk = CDB::Rewrite("blkindex.dat", progress, NULL, ver, CLIENT_VERSION);
+    }
+*/
 
     uiInterface.InitMessage(_("Loading block index..."));
     printf("Loading block index...\n");
     nStart = GetTimeMillis();
-    if (!LoadBlockIndex())
-        return InitError(_("Error loading blkindex.dat"));
+
+    // Load as normal.
+    if (!LoadBlockIndexFromDisk(&strErrors)) {
+        return false;
+    }
 
     // as LoadBlockIndex can take several minutes, it's possible the user
     // requested to kill bitcoin-qt during the last operation. If so, exit.
@@ -713,6 +804,19 @@ bool AppInit2()
     }
 
     // ********************************************************* Step 8: load wallet
+    if (GetBoolArg("-zapwallettxes", false))
+    {
+        uiInterface.InitMessage(_("Zapping all transactions from wallet..."));
+        pwalletMain = new CWallet("wallet.dat");
+        DBErrors nZapWalletRet = pwalletMain->ZapWalletTx();
+        if (nZapWalletRet != DB_LOAD_OK)
+        {
+            uiInterface.InitMessage(_("Error loading wallet.dat: Wallet corrupted"));
+            return false;
+        }
+        delete pwalletMain;
+        pwalletMain = NULL;
+    }
 
     uiInterface.InitMessage(_("Loading wallet..."));
     printf("Loading wallet...\n");
@@ -728,13 +832,13 @@ bool AppInit2()
         {
             string msg(_("Warning: error reading wallet.dat! All keys read correctly, but transaction data"
                          " or address book entries might be missing or incorrect."));
-            uiInterface.ThreadSafeMessageBox(msg, _("CryptogenicBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+            uiInterface.ThreadSafeMessageBox(msg, _("CryptoBullion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         }
         else if (nLoadWalletRet == DB_TOO_NEW)
-            strErrors << _("Error loading wallet.dat: Wallet requires newer version of CryptogenicBullion") << "\n";
+            strErrors << _("Error loading wallet.dat: Wallet requires newer version of CryptoBullion") << "\n";
         else if (nLoadWalletRet == DB_NEED_REWRITE)
         {
-            strErrors << _("Wallet needed to be rewritten: restart CryptogenicBullion to complete") << "\n";
+            strErrors << _("Wallet needed to be rewritten: restart CryptoBullion to complete") << "\n";
             printf("%s", strErrors.str().c_str());
             return InitError(strErrors.str());
         }

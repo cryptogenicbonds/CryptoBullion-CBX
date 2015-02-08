@@ -1,3 +1,4 @@
+/src/cryptobulliond
 #################
 ## Eclipse
 #################
@@ -218,7 +219,15 @@ pip-log.txt
 ## cgb/bitcoin
 #############
 
+*.autosave
 src/test
-src/cryptogenicbulliond
+src/cryptobulliond
+src/cryptobulliond.exe
 *.goutputstream*
+Makefile
+!src/libqrencode/Makefile*
+!src/leveldb/Makefile*
+!src/miniupnpc/Makefile*
+object_script*
+
 

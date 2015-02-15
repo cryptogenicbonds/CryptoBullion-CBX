@@ -225,6 +225,8 @@ src/cryptobulliond
 src/cryptobulliond.exe
 *.goutputstream*
 Makefile
+Makefile.Debug
+Makefile.Release
 !src/libqrencode/Makefile*
 !src/leveldb/Makefile*
 !src/miniupnpc/Makefile*

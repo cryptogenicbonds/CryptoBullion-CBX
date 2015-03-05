@@ -225,9 +225,15 @@ src/cryptobulliond
 src/cryptobulliond.exe
 *.goutputstream*
 Makefile
+Makefile.Debug
+Makefile.Release
 !src/libqrencode/Makefile*
 !src/leveldb/Makefile*
 !src/miniupnpc/Makefile*
+src/miniupnpc/*.lib
+src/miniupnpc/*.exe
+src/miniupnpc/init
+src/miniupnpc/*.def
 object_script*
 
 

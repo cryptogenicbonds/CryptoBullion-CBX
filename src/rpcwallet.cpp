@@ -3,6 +3,7 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include "txdb.h"
 #include "wallet.h"
 #include "walletdb.h"
 #include "bitcoinrpc.h"
@@ -1323,6 +1324,107 @@ Value gettransaction(const Array& params, bool fHelp)
     return entry;
 }
 
+/*
+Value showtransaction(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "showtransaction <txid>\n"
+            "Get detailed input/output information about <txid>");
+
+    uint256 hash;
+    hash.SetHex(params[0].get_str());
+
+    Object entry;
+
+    CTransaction txo;
+    uint256 hashBlock = 0;
+    if (GetTransaction(hash, txo, hashBlock))
+    {
+        CWalletTx tx(pwalletMain, txo);
+        entry.push_back(Pair("txid", hash.GetHex()));
+        //TxToJSON(tx, 0, entry);
+        if (hashBlock == 0)
+            entry.push_back(Pair("confirmations", 0));
+        else
+        {
+            entry.push_back(Pair("blockhash", hashBlock.GetHex()));
+            map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(hashBlock);
+            if (mi != mapBlockIndex.end() && (*mi).second)
+            {
+                CBlockIndex* pindex = (*mi).second;
+                if (pindex->IsInMainChain())
+                {
+                    entry.push_back(Pair("confirmations", 1 + nBestHeight - pindex->nHeight));
+                    entry.push_back(Pair("txntime", (boost::int64_t)tx.nTime));
+                    entry.push_back(Pair("time", (boost::int64_t)pindex->nTime));
+
+                    // Connecting shouldn't fail due to dependency on other memory pool transactions
+                    // because we're already processing them in order of dependency
+                    map<uint256, CTxIndex> mapUnused;
+                    MapPrevTx mapInputs;
+                    bool fInvalid;
+                    CTxDB txdb("r");
+                    if (tx.FetchInputs(txdb, mapUnused, false, true, mapInputs, fInvalid))
+                    {
+                        CTxDestination address;
+
+                        boost::int64_t valIn = 0;//(boost::int64_t)tx.GetValueIn(mapInputs);
+                        char inVal[255];
+                        for (unsigned int i = 0; i < tx.vin.size(); i++)
+                        {
+                            boost::int64_t val= tx.GetOutputFor(tx.vin[i], mapInputs).nValue;
+
+                            ExtractDestination(tx.vout[tx.vin[i].prevout.n].scriptPubKey, address);
+
+                            if (pwalletMain->GetDebit(tx.vin[i]))
+                                sprintf(inVal, "input %d (!)%s", i, CBitcoinAddress(address).ToString().c_str());
+                            else
+                                sprintf(inVal, "input %d %s", i, CBitcoinAddress(address).ToString().c_str());
+
+                            entry.push_back(Pair(inVal, FormatMoney(val).c_str()));
+                            valIn+=val;
+                        }
+
+                        boost::int64_t valOut = 0;//(boost::int64_t)tx.GetValueOut();
+                        for (unsigned int i = 0; i < tx.vout.size(); i++)
+                        {
+                            boost::int64_t val= tx.vout[i].nValue;
+
+                            ExtractDestination(tx.vout[i].scriptPubKey, address);
+
+                            if (pwalletMain->GetCredit(tx.vout[i]))
+                                sprintf(inVal, "output %d (!)%s", i, CBitcoinAddress(address).ToString().c_str());
+                            else
+                                sprintf(inVal, "output %d %s", i, CBitcoinAddress(address).ToString().c_str());
+
+                            entry.push_back(Pair(inVal, FormatMoney(val).c_str()));
+                            valOut+=val;
+                        }
+
+                        char totalIn[255];
+                        char totalOut[255];
+                        sprintf(totalIn, "total in [%d]", tx.vin.size());
+                        sprintf(totalOut, "total out [%d]", tx.vout.size());
+                        entry.push_back(Pair(totalIn, FormatMoney(valIn).c_str()));
+                        entry.push_back(Pair(totalOut, FormatMoney(valOut).c_str()));
+                        entry.push_back(Pair("fee", FormatMoney(valIn-valOut).c_str()));
+
+                        // add outputs
+                        // add addresses (in/out)
+                    }
+                }
+                else
+                    entry.push_back(Pair("confirmations", 0));
+            }
+        }
+    }
+    else
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "No information available about transaction");
+
+    return entry;
+}
+*/
 
 Value backupwallet(const Array& params, bool fHelp)
 {

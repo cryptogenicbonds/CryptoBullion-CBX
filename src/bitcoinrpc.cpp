@@ -310,6 +310,7 @@ static const CRPCCommand vRPCCommands[] =
     { "importaddress",          &importaddress,          false,  true  },
     { "createmultisig",         &createmultisig,         false,  false },
     { "getcheckpoint",          &getcheckpoint,          true,   false },
+//    { "showtransaction",         &showtransaction,         false,  false },
 };
 
 CRPCTable::CRPCTable()

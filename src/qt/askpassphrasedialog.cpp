@@ -76,6 +76,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
             setWindowTitle(tr("Decrypt Vault"));
             break;
         case ChangePass: // Ask old passphrase + new passphrase x2
+            addOkButton = true;
             setWindowTitle(tr("Change passphrase"));
             ui->warningLabel->setText(tr("Enter the old and new passphrase to the vault."));
             break;

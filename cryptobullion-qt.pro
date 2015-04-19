@@ -62,8 +62,11 @@ contains(RELEASE, 1) {
 
     !windows:!macx {
         # Linux: static link
+        message(Static linking for RELEASE.)
         LIBS += -Wl,-Bstatic
     }
+}else{
+    message(Dynamic linking.)
 }
 
 macx{

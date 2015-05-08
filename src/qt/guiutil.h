@@ -1,6 +1,11 @@
 #ifndef GUIUTIL_H
 #define GUIUTIL_H
 
+#include <QtGlobal>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    #include <QtWidgets>
+#endif
+
 #include <QString>
 #include <QObject>
 #include <QMessageBox>

@@ -9,6 +9,7 @@ class ClientModel;
 class WalletModel;
 class TransactionView;
 class OverviewPage;
+class ChatWindow;
 class AddressBookPage;
 class SendCoinsDialog;
 class DebugDialog;
@@ -53,6 +54,7 @@ protected:
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+    void resizeEvent(QResizeEvent *);
 
 private:
     ClientModel *clientModel;
@@ -61,6 +63,7 @@ private:
     QStackedWidget *centralWidget;
 
     OverviewPage *overviewPage;
+    ChatWindow* chatPage;
     QWidget *transactionsPage;
     AddressBookPage *addressBookPage;
     AddressBookPage *receiveCoinsPage;
@@ -93,6 +96,7 @@ private:
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *unlockToStakeAction;
+    QAction *chatAction;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -181,6 +185,8 @@ private slots:
     void handleUnlockButtonState();
     /** unlock (for staking) or lock the wallet */
     void toggleWalletLock();
+
+    void goChat();
 };
 
 #endif

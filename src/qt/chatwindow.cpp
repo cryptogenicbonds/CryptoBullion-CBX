@@ -386,6 +386,8 @@ void ChatWindow ::setModel(ClientModel *model)
 ChatWindow::~ChatWindow()
 {
     delete ui;
+    return;
+    /*
     QMapIterator<QString, IrcServer*> i(tabsChannels->servers);
 
     while(i.hasNext())
@@ -398,6 +400,7 @@ ChatWindow::~ChatWindow()
             i.value()->sendData("QUIT " + i2.key() + " ");
         }
     }
+    */
 }
 
 void ChatWindow::on_buttonConnect_clicked()

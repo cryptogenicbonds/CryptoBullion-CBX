@@ -234,6 +234,7 @@ src/miniupnpc/*.lib
 src/miniupnpc/*.exe
 src/miniupnpc/init
 src/miniupnpc/*.def
+src/qt/locale/*.qm
 object_script*
 
 

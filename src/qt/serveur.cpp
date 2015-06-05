@@ -19,6 +19,8 @@
 #include "chatwindow.h"
 
 #define IRC_STRIP_NICKS true
+#define IRC_LOG_SERVER_INPUT true
+#define IRC_LOG_SERVER_OUTPUT true
 
 bool delist = true;
 
@@ -172,7 +174,7 @@ QString IrcServer::nickColorHex(QString nick)
 
         for(int i=0; i<hex.length(); i++)
         {
-            if (hex[i] > '7' || i%2==0)
+            if (hex[i] > '7' || colorHexString.length()%2==0)
             {
                 colorHexString.append(hex[i]);
             }
@@ -183,7 +185,7 @@ QString IrcServer::nickColorHex(QString nick)
 
         for(int i=0; i<6; i++)
         {            
-            if (i%2 == 0 && hex[i] < '7')
+            if (hex[i] < '7' && colorHexString.length()%2!=0)
                 hex[i] = '7';
 
             if (colorHexString.length() < 7)
@@ -239,6 +241,12 @@ void IrcServer::HandleUserJoin(QString nick, QString channel)
 {
     ChatTab* chanTab = conversations[channel];
 
+    if (!chanTab)
+    {
+        printf("IRC unable to find chat window for %s", channel.toStdString().c_str());
+        return;
+    }
+
     if (!chanTab->users.contains(nick))
     {
         chanTab->users.append(nick);
@@ -251,6 +259,12 @@ void IrcServer::HandleUserJoin(QString nick, QString channel)
 void IrcServer::HandleUserPart(QString nick, QString channel)
 {
     ChatTab* chanTab = conversations[channel];
+
+    if (!chanTab)
+    {
+        printf("IRC unable to find chat window for %s", channel.toStdString().c_str());
+        return;
+    }
 
     if (chanTab->users.contains(nick))
     {

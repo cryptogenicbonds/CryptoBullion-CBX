@@ -44,7 +44,7 @@ class ChatTabHolder : public QTabWidget
         ChatTabHolder(QString nickname, QWidget *parent = 0);
         ~ChatTabHolder();
 
-        ChatTab* ChannelTab(QString channelName);
+        ChatTab* ChannelTab(QString channelName); // #channelname
 
         QMap<QString, IrcServer *> servers;
         QString nick;
@@ -60,6 +60,7 @@ class ChatTab : public QWidget
         ~ChatTab();
 
         void UpdateUserList();
+        QString FormatNick(QString nick);
 
         QListView *userView;
         QLineEdit* lineEdit;
@@ -67,7 +68,7 @@ class ChatTab : public QWidget
         IrcServer* ircServer;
         ChatTabHolder* holder;
         QStringList users;
-        QStringListModel* modelUsers;
+        QStandardItemModel* modelUsers;
         QString tabName;
         bool updateUsers;
         bool isServer;
@@ -86,33 +87,31 @@ public:
     ~ChatWindow();
     void setModel(ClientModel *model);
     void addNewServerTab();
-    IrcServer * currentTab();
+    IrcServer * getServer();
     ChatTabHolder* tabsChannels;
     QLineEdit* editPseudo;
 
-	signals:
-		void changeTab();
+signals:
+    void changeTab();
 
-	public slots:        
-        void connectToServer();
-        void showConnectOptions();
-		void closeTab();
-
-		void tabChanged(int index);
-
-		void tabJoined();
-		void tabJoining();
-        void disconnectFromServer();
-        void tabClosing(int index);
+public slots:
+    void connectToServer();
+    void showConnectOptions();
+    void closeTab();
+    void tabChanged(int index);
+    void tabJoined();
+    void tabJoining();
+    void disconnectFromServer();
+    void tabClosing(int index);
 
 private slots:
-        void on_buttonConnect_clicked();
+    void on_buttonConnect_clicked();
 
 private:
-	Ui::ChatWindowClass *ui;
-    ClientModel *model;    
-	bool joining;
-	void closeEvent(QCloseEvent *event);
+    Ui::ChatWindowClass *ui;
+    ClientModel *model;
+    bool joining;
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // CHATWINDOW_H

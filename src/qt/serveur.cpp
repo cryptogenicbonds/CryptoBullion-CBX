@@ -15,6 +15,7 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA*/
 
 #include "serveur.h"
+#include "util.h"
 #include "chatwindow.h"
 
 #define IRC_STRIP_NICKS true
@@ -30,33 +31,33 @@ IrcServer::IrcServer()
 
 void IrcServer::errorSocket(QAbstractSocket::SocketError error)
 {
-	switch(error)
-	{
-		case QAbstractSocket::HostNotFoundError:
-            editor->append(tr("<em>ERROR : can't find freenode server.</em>"));
-			break;
-		case QAbstractSocket::ConnectionRefusedError:
-            editor->append(tr("<em>ERROR : server refused connection</em>"));
-			break;
-		case QAbstractSocket::RemoteHostClosedError:
-            editor->append(tr("<em>ERROR : server cut connection</em>"));
-			break;
-		default:
-            editor->append(tr("<em>ERROR : ") + this->errorString() + tr("</em>"));
-	}
+    switch(error)
+    {
+    case QAbstractSocket::HostNotFoundError:
+        editor->append(tr("<em>ERROR : can't find freenode server.</em>"));
+        break;
+    case QAbstractSocket::ConnectionRefusedError:
+        editor->append(tr("<em>ERROR : server refused connection</em>"));
+        break;
+    case QAbstractSocket::RemoteHostClosedError:
+        editor->append(tr("<em>ERROR : server cut connection</em>"));
+        break;
+    default:
+        editor->append(tr("<em>ERROR : ") + this->errorString() + tr("</em>"));
+    }
 }
 
 void IrcServer::connected()
 {
     editor->append("Connecting...");
-	sendData("USER "+pseudo+" localhost "+serverName+" :"+pseudo);
+    sendData("USER "+pseudo+" localhost "+serverName+" :"+pseudo);
     sendData("NICK "+pseudo);
     editor->append("Connected to freenode.");
 }
 
 void IrcServer::joins()
 {
-    join("#cryptobullion");
+    join("#cryptobullion3");
 }
 
 void IrcServer::readServeur()
@@ -154,6 +155,45 @@ void IrcServer::readServeur()
 
         //}
         */
+}
+
+QString IrcServer::nickColorHex(QString nick)
+{
+    if (nick.startsWith('@') || nick.startsWith("+"))
+        nick = nick.remove(0, 1);
+
+    if (!nickColors.contains(nick))
+    {
+        std::string s = nick.toStdString();
+        uint256 hashName = Hash(s.begin(), s.end());
+        std::string hex = hashName.GetHex();
+
+        QString colorHexString = "#";
+
+        for(int i=0; i<hex.length(); i++)
+        {
+            if (hex[i] > '7' || i%2==0)
+            {
+                colorHexString.append(hex[i]);
+            }
+
+            if (colorHexString.length() == 7)
+                break;
+        }
+
+        for(int i=0; i<6; i++)
+        {            
+            if (i%2 == 0 && hex[i] < '7')
+                hex[i] = '7';
+
+            if (colorHexString.length() < 7)
+                colorHexString.append(hex[i]);
+        }
+
+        nickColors[nick] = colorHexString;
+    }
+    return nickColors[nick];
+
 }
 
 QString IrcServer::resolveTarget(const QString& sender, const QString& receiver) const
@@ -359,9 +399,8 @@ void IrcServer::HandleServerMessage(QString msg)
                             chanTab->users.append(names[i]);
                     }
 
-                    chanTab->users.sort();
-                    delete chanTab->modelUsers;
-                    chanTab->modelUsers = new QStringListModel(chanTab->users);
+                    chanTab->UpdateUserList();
+
                     if (chanTab->userView)
                     {
                         chanTab->userView->setModel(chanTab->modelUsers);
@@ -578,10 +617,16 @@ void IrcServer::HandleServerMessage(QString msg)
                 else
                 {
                     QString receiver = params.value(0);
-                   //QString target = resolveTarget(prefix, receiver);
-                   //Buffer* buffer = createBuffer(target);
-                   //emit buffer->messageReceived(prefix, message, flags);
-                    writeToTab(receiver+" "+prefix+" "+message);
+                    QString target = resolveTarget(prefix, receiver);
+                    //Buffer* buffer = createBuffer(target);
+                    //emit buffer->messageReceived(prefix, message, flags);
+
+                    QString nick = nickFromTarget(prefix);
+
+                    if (conversations.contains(receiver))
+                        nick = conversations[receiver]->FormatNick(nick);
+
+                    writeToTab(receiver+" <b><span style='color: "+this->nickColorHex(nick)+";'>&lt;"+nick+"&gt;</span></b> "+message);
                 }
             }
             else if (command == QLatin1String("NOTICE"))

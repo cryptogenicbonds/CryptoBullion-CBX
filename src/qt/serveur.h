@@ -39,6 +39,7 @@ class IrcServer : public QTcpSocket
 		int port;
         ChatTabHolder *tab;
         QMap<QString, ChatTab*> conversations;
+        QMap<QString, QString> nickColors;
 		QSystemTrayIcon *tray;
 
         QString parseCommande(QString comm,bool serverName=false);
@@ -69,6 +70,7 @@ class IrcServer : public QTcpSocket
         void HandleUserQuit(QString nick, QString reason);
         void HandleServerMessage(QString msg);
         QString resolveTarget(const QString& sender, const QString& receiver) const;
+        QString nickColorHex(QString nick);
 
 		//void tabChanged(int index);
 };

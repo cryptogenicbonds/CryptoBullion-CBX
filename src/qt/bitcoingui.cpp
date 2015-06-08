@@ -60,7 +60,7 @@
 
 extern bool fWalletUnlockMintOnly;
 
-BitcoinGUI::BitcoinGUI(QWidget *parent):
+BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent):
     QMainWindow(parent),
     clientModel(0),
     walletModel(0),
@@ -71,6 +71,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     notificator(0),
     rpcConsole(0)
 {
+    guiLoaded = false;
     resize(850, 550);
     setWindowTitle(tr("Crypto Bullion") + " - " + tr("Vault"));
 #ifndef Q_OS_MAC
@@ -202,11 +203,13 @@ BitcoinGUI::~BitcoinGUI()
 
 void BitcoinGUI::resizeEvent(QResizeEvent *)
 {
+    /*
     QPixmap bkgnd(":/images/background");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+    */
 }
 
 void BitcoinGUI::createActions()
@@ -924,6 +927,9 @@ void BitcoinGUI::unlockWallet(bool showMintOption)
 
 void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
 {
+    if (!guiLoaded)
+        return;
+
     // activateWindow() (sometimes) helps with keyboard focus on Windows
     if (isHidden())
     {

@@ -36,12 +36,14 @@ enum ChatWindowTabType
 
 class IrcServer;
 class ChatTab;
+class QHBoxLayout;
+class ChatWindow;
 
 class ChatTabHolder : public QTabWidget
 {
     Q_OBJECT
     public:
-        ChatTabHolder(QString nickname, QWidget *parent = 0);
+        ChatTabHolder(QString nickname, ChatWindow* win = 0, QWidget *parent = 0);
         ~ChatTabHolder();
 
         ChatTab* ChannelTab(QString channelName); // #channelname
@@ -49,6 +51,10 @@ class ChatTabHolder : public QTabWidget
         QMap<QString, IrcServer *> servers;
         QString nick;
         QString serverName;
+        ChatWindow* parentWindow;
+
+    public slots:
+        void CloseTab(int index);
 
 };
 
@@ -90,6 +96,7 @@ public:
     IrcServer * getServer();
     ChatTabHolder* tabsChannels;
     QLineEdit* editPseudo;
+    QWidget* connectOptionsLayout;
 
 signals:
     void changeTab();

@@ -25,11 +25,25 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-ChatTabHolder::ChatTabHolder(QString nickname, QWidget *parent)
-    : QTabWidget(parent)
+ChatTabHolder::ChatTabHolder(QString nickname, ChatWindow* win, QWidget *parent) : QTabWidget(parent)
 {
     nick = nickname;
     serverName = "chat.freenode.net";
+    this->setTabsClosable(true);
+    parentWindow = win;
+    connect(this, SIGNAL(tabCloseRequested(int)), this, SLOT(CloseTab(int)));
+}
+
+void ChatTabHolder::CloseTab(int index)
+{
+    ChatTab* chatTab = (ChatTab*)this->widget(index);
+    //chatTab->ChannelTabClosed();
+    servers[serverName]->sendData(servers[serverName]->parseCommande("/part "+chatTab->tabName, true) );
+    if (chatTab->isServer)
+    {
+        parentWindow->disconnectFromServer();
+    }
+    this->removeTab(index);
 }
 
 void ChatTab::UpdateUserList()
@@ -56,7 +70,6 @@ void ChatTab::UpdateUserList()
             //QModelIndex vIndex = chanTab->modelUsers->index(i, 0);
             //chanTab->modelUsers->setData(vIndex, QBrush(Qt::red), Qt::ForegroundRole);
         }
-
         userView->setModel(this->modelUsers);
         userView->update();
     }
@@ -181,11 +194,14 @@ ChatWindow::ChatWindow(QWidget *parent)
 {
     ui->setupUi(this);
     tabsChannels = 0;
+    connectOptionsLayout = 0;
     showConnectOptions();
 }
 
 void ChatWindow::showConnectOptions()
 {
+    this->connectOptionsLayout = new QWidget();
+
     // main label
     QLabel* label_2 = new QLabel();
     label_2->setObjectName(QLatin1String("label_2"));
@@ -245,7 +261,9 @@ void ChatWindow::showConnectOptions()
     rightSpacer->setSizePolicy(spLeft);
     hlayout->addWidget(rightSpacer);
 
-    ui->verticalLayout->addLayout(hlayout);
+
+    connectOptionsLayout->setLayout(hlayout);
+    ui->verticalLayout->addWidget(connectOptionsLayout);
 
     connect(buttonConnect, SIGNAL(clicked()),this, SLOT(on_buttonConnect_clicked()));
 }
@@ -291,6 +309,12 @@ void ChatWindow::disconnectFromServer()
             i.value()->sendData("QUIT " + i2.key() + " ");
         }
     }
+
+    // remove the tab holder
+    ui->verticalLayout->removeWidget(tabsChannels);
+
+    // recreate connection options
+    showConnectOptions();
 
     //ui->splitter->hide();
     //ui->hide3->show();
@@ -345,11 +369,21 @@ void ChatWindow::connectToServer()
 {
     if (!this->tabsChannels)
     {
-        this->tabsChannels = new ChatTabHolder(editPseudo->text());
+        this->tabsChannels = new ChatTabHolder(editPseudo->text(), this);
     }
 
-    if (QWidget* widget = ui->verticalLayout->takeAt(0)->widget())
-        delete widget;
+    // remove connections options
+    if (connectOptionsLayout)
+    {
+        /*
+        QLayoutItem *item;
+        while ((item = ui->verticalLayout->takeAt(0)) != 0)
+            delete item;
+
+        delete connectOptionsLayout;
+        */
+        connectOptionsLayout->hide();
+    }
 
     ui->verticalLayout->addWidget(tabsChannels);
 

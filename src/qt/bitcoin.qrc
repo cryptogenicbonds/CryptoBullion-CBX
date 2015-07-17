@@ -80,8 +80,9 @@
         <file alias="update_spinner">res/movies/update_spinner.mng</file>
     </qresource>
     <qresource prefix="/translations">
-        <file alias="en">locale/bitcoin_en.ts</file>
-        <file alias="ru">locale/bitcoin_ru.ts</file>
+        <file alias="en">locale/bitcoin_en.qm</file>
+        <file alias="ru">locale/bitcoin_ru.qm</file>
+        <file alias="zh">locale/bitcoin_zh.qm</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="cgbstyle.qss">res/style/cgbstyle.qss</file>

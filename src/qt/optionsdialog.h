@@ -36,12 +36,16 @@ private slots:
     void enableApply();
     void disableApply();
 
+    void showRestartWarning_Proxy();
+
 private:
     QListWidget *contents_widget;
     QStackedWidget *pages_widget;
     OptionsModel *model;
     MonitoredDataMapper *mapper;
     QPushButton *apply_button;
+
+    bool fRestartWarningDisplayed_Proxy;
 
     // Pages
     MainOptionsPage *main_page;

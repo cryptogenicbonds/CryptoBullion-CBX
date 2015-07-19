@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en">
-<defaultcodec>UTF-8</defaultcodec>
+<TS version="2.1" language="en">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -11,13 +10,17 @@
     </message>
     <message>
         <location line="+48"/>
-        <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;CryptoBullion&lt;/b&gt; version</translation>
+        <source>&lt;b&gt;CryptoBullion&lt;/b&gt; v</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Copyright © 2009-2014 The CryptoBullion Foundation</source>
+        <source>Copyright © 2009-2015s The CryptoBullion Foundation</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
+        <translation type="vanished">&lt;b&gt;CryptoBullion&lt;/b&gt; version</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -100,12 +103,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+28"/>
         <source>Delete the currently selected address from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-17"/>
         <source>Verify a message to ensure it was signed with a specified CryptoBullion address</source>
         <translation>Verify a message to ensure it was signed with a specified CryptoBullion address</translation>
     </message>
@@ -115,7 +118,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;Verify Message</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+17"/>
         <source>&amp;Delete</source>
         <translation>&amp;Delete</translation>
     </message>
@@ -130,7 +133,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+261"/>
         <source>Export Address Book Data</source>
         <translation>Export Address Book Data</translation>
     </message>
@@ -191,7 +194,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Repeat new passphrase</translation>
     </message>
     <message>
-        <location filename="../askpassphrasedialog.cpp" line="+40"/>
+        <location filename="../askpassphrasedialog.cpp" line="+47"/>
         <source>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
         <translation>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</translation>
     </message>
@@ -206,17 +209,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+5"/>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>This operation needs your vault passphrase to unlock the vault.</source>
         <translation>This operation needs your vault passphrase to unlock the vault.</translation>
     </message>
     <message>
-        <location line="-4"/>
-        <source>Unlock vault for staking</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="-5"/>
+        <location line="+10"/>
         <source>Unlock vault</source>
         <translation>Unlock vault</translation>
     </message>
@@ -231,7 +230,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>&amp;Unlock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -251,11 +250,6 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished">&amp;Cancel</translation>
     </message>
     <message>
-        <location line="+118"/>
-        <source>Wallet passphrase was successfully changed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This operation needs your vault passphrase to enter the vault.</source>
         <translation type="obsolete">This operation needs your vault passphrase to enter the vault.</translation>
     </message>
@@ -264,7 +258,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">Decrypt vault</translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-30"/>
         <source>Change passphrase</source>
         <translation>Change passphrase</translation>
     </message>
@@ -274,7 +268,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Enter the old and new passphrase to the vault.</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+79"/>
         <source>Confirm vault encryption</source>
         <translation type="unfinished">Confirm vault encryption</translation>
     </message>
@@ -294,49 +288,49 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished">IMPORTANT: Any previous backups you have made of your vault file should be replaced with the newly generated, encrypted vault file. For security reasons, previous backups of the unencrypted vault file will become useless as soon as you start using the new, encrypted vault.</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+111"/>
         <location line="+24"/>
         <source>Warning: The Caps Lock key is on!</source>
         <translation>Warning: The Caps Lock key is on!</translation>
     </message>
     <message>
-        <location line="-130"/>
-        <location line="+58"/>
+        <location line="-141"/>
+        <location line="+60"/>
         <source>Vault encrypted</source>
         <translation type="unfinished">Vault encrypted</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-58"/>
         <source>CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
         <translation type="unfinished">CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
     </message>
     <message>
         <location line="+13"/>
         <location line="+7"/>
-        <location line="+42"/>
+        <location line="+44"/>
         <location line="+6"/>
         <source>Vault encryption failed</source>
         <translation type="unfinished">Vault encryption failed</translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-56"/>
         <source>Vault encryption failed due to an internal error. Your vault was not encrypted.</source>
         <translation type="unfinished">Vault encryption failed due to an internal error. Your vault was not encrypted.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+48"/>
+        <location line="+50"/>
         <source>The supplied passphrases do not match.</source>
         <translation>The supplied passphrases do not match.</translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-38"/>
         <source>Vault unlock failed</source>
         <translation type="unfinished">Vault unlock failed</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+11"/>
+        <location line="+12"/>
         <location line="+19"/>
         <source>The passphrase entered for the vault decryption was incorrect.</source>
         <translation type="unfinished">The passphrase entered for the vault decryption was incorrect.</translation>
@@ -347,24 +341,25 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished">Vault decryption failed</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Vault passphrase was successfully changed.</source>
-        <translation type="obsolete">Vault passphrase was successfully changed.</translation>
+        <translation type="unfinished">Vault passphrase was successfully changed.</translation>
     </message>
 </context>
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+272"/>
+        <location filename="../bitcoingui.cpp" line="+293"/>
         <source>Sign &amp;message...</source>
         <translation>Sign &amp;message...</translation>
     </message>
     <message>
-        <location line="+261"/>
+        <location line="+262"/>
         <source>Synchronizing with network...</source>
         <translation>Synchronizing with network...</translation>
     </message>
     <message>
-        <location line="-331"/>
+        <location line="-339"/>
         <source>&amp;Overview</source>
         <translation>&amp;Overview</translation>
     </message>
@@ -406,7 +401,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">&amp;Send coins</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+43"/>
         <source>E&amp;xit</source>
         <translation>E&amp;xit</translation>
     </message>
@@ -451,7 +446,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;Change Passphrase...</translation>
     </message>
     <message numerus="yes">
-        <location line="+265"/>
+        <location line="+266"/>
         <source>~%n block(s) remaining</source>
         <translation>
             <numerusform>~%n block remaining</numerusform>
@@ -464,17 +459,22 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Downloaded %1 of %2 blocks of transaction history (%3% done).</translation>
     </message>
     <message>
-        <location line="-266"/>
+        <location line="-267"/>
         <source>&amp;Export...</source>
         <translation>&amp;Export...</translation>
     </message>
     <message>
-        <location line="-66"/>
+        <location line="-221"/>
+        <source>Crypto Bullion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+148"/>
         <source>Send coins to a CryptoBullion address</source>
         <translation>Send coins to a CryptoBullion address</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+60"/>
         <source>Modify configuration options for CryptoBullion</source>
         <translation>Modify configuration options for CryptoBullion</translation>
     </message>
@@ -517,17 +517,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">CryptoBullion</translation>
     </message>
     <message>
-        <location line="-201"/>
+        <location line="-219"/>
         <source>Vault</source>
         <translation>Vault</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>CBX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+131"/>
+        <location line="+142"/>
         <source>Show general overview of wallet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -552,7 +547,17 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+5"/>
+        <source>&amp;CBX Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CBX IRC Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>&amp;About CryptoBullion</source>
         <translation>&amp;About CryptoBullion</translation>
     </message>
@@ -587,7 +592,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Tabs toolbar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Actions toolbar</source>
         <translation>Actions toolbar</translation>
     </message>
@@ -669,7 +674,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+201"/>
+        <location line="+170"/>
+        <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked for staking only&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
         <source>Wallet Vault (*.dat)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -679,22 +689,29 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+84"/>
+        <location line="+1"/>
         <source>Lock Vault</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
+        <source>Vault unlocked for staking. Please click again or close the applicaton to re-lock the vault.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Vault unlocked. Please click again or close the applicaton to re-lock the vault.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Vault Unlocked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
+        <location line="+1"/>
         <source>Unlock Vault</source>
         <translation type="unfinished"></translation>
     </message>
@@ -703,7 +720,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">This transaction is over the size limit.  You can still send it for a fee of %1, which goes to the nodes that process your transaction and helps to support the network.  Do you want to pay the fee?</translation>
     </message>
     <message>
-        <location line="-292"/>
+        <location line="-308"/>
         <source>Confirm transaction fee</source>
         <translation>Confirm transaction fee</translation>
     </message>
@@ -743,12 +760,12 @@ Address: %4
         <translation>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+21"/>
         <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
     </message>
@@ -774,6 +791,81 @@ Address: %4
         <location filename="../bitcoin.cpp" line="+111"/>
         <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
         <translation>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWindowClass</name>
+    <message>
+        <location filename="../forms/chatwindow.ui" line="+20"/>
+        <source>Quitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Fermer l&apos;onglet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatWindowOldClass</name>
+    <message>
+        <location filename="../forms/chatwindowOLD.ui" line="+54"/>
+        <source>Tab 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Tab 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <location filename="../chatwindow.cpp" line="+193"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A few IRC commands :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Join a channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK nickname &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Change nickname&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Send PM &lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If userlist gets buggy, switch tabs to fix&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../chatwindow.cpp" line="+12"/>
+        <source>Nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../chatwindow.cpp" line="+6"/>
+        <source>Connect to IRC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../chatwindow.cpp" line="+5"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Connect to IRC :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Quitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Fermer l&apos;onglet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1056,13 +1148,28 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>DisplayOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="+275"/>
+        <location filename="../optionsdialog.cpp" line="+305"/>
         <source>&amp;Unit to show amounts in: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Choose the default subdivision unit to show in the interface, and when sending coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>&amp;Interface Language: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>default</source>
+        <translation type="unfinished">default</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Choose the interface language.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1083,6 +1190,16 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+1"/>
         <source>Whether to show bullion control features or not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Warning</source>
+        <translation type="unfinished">Warning</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>This setting will take effect after restarting CloakCoin.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1199,9 +1316,37 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
 </context>
 <context>
+    <name>IrcServer</name>
+    <message>
+        <location filename="../serveur.cpp" line="+39"/>
+        <source>&lt;em&gt;ERROR : can&apos;t find freenode server.&lt;/em&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;em&gt;ERROR : server refused connection&lt;/em&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;em&gt;ERROR : server cut connection&lt;/em&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;em&gt;ERROR : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>&lt;/em&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="-119"/>
+        <location filename="../optionsdialog.cpp" line="-193"/>
         <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1251,6 +1396,16 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+3"/>
+        <source>&amp;Disable spending unconfirmed change:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+5"/>
         <source>Proxy &amp;IP: </source>
         <translation type="unfinished"></translation>
@@ -1294,7 +1449,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location line="-154"/>
+        <location line="-167"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1307,6 +1462,11 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+20"/>
         <source>Options</source>
         <translation>Options</translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>This setting will take effect after restarting CloakCoin.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Main</source>
@@ -1445,8 +1605,9 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">default</translation>
     </message>
     <message>
+        <location line="+0"/>
         <source>Warning</source>
-        <translation type="obsolete">Warning</translation>
+        <translation type="unfinished">Warning</translation>
     </message>
     <message>
         <source>This setting will take effect after restarting CryptoBullion.</source>
@@ -1465,13 +1626,11 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Form</translation>
     </message>
     <message>
-        <location line="+39"/>
-        <location line="+342"/>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</translation>
+        <translation type="vanished">The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="+90"/>
         <source>Balance:</source>
         <translation>Balance:</translation>
     </message>
@@ -1496,7 +1655,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Vault</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+7"/>
+        <location line="+342"/>
+        <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-204"/>
         <source>Immature:</source>
         <translation>Immature:</translation>
     </message>
@@ -2096,12 +2261,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+13"/>
-        <location line="+124"/>
+        <location line="+133"/>
         <source>&amp;Sign Message</source>
         <translation>&amp;Sign Message</translation>
     </message>
     <message>
-        <location line="-118"/>
+        <location line="-127"/>
         <source>You can sign messages with your addresses to prove you own them. Be careful not to sign anything vague, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
         <translation>You can sign messages with your addresses to prove you own them. Be careful not to sign anything vague, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</translation>
     </message>
@@ -2110,7 +2275,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">The address to sign the message with </translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+27"/>
         <source>The address to sign the message with (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2771,7 +2936,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+207"/>
+        <location filename="../walletmodel.cpp" line="+209"/>
         <source>Sending...</source>
         <translation>Sending...</translation>
     </message>
@@ -2813,12 +2978,11 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Specify configuration file (default: CryptoBullion.conf)</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Specify pid file (default: CryptoBullion.pid)</source>
-        <translation>Specify pid file (default: CryptoBullion.pid)</translation>
+        <translation type="vanished">Specify pid file (default: CryptoBullion.pid)</translation>
     </message>
     <message>
-        <location line="-50"/>
+        <location line="-47"/>
         <source>Generate coins</source>
         <translation>Generate coins</translation>
     </message>
@@ -3135,7 +3299,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Specify connection timeout in milliseconds (default: 5000)</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+2"/>
+        <source>Specify pid file (default: CryptoBulliond.pid)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Unable to sign checkpoint, wrong checkpointkey?
 </source>
         <translation type="unfinished"></translation>

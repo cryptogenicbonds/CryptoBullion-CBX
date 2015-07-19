@@ -36,7 +36,7 @@ class BitcoinGUI : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit BitcoinGUI(QWidget *parent = 0);
+    explicit BitcoinGUI(bool fIsTestnet = false, QWidget *parent = 0);
     ~BitcoinGUI();
 
     /** Set the client model.
@@ -48,6 +48,8 @@ public:
         functionality.
     */
     void setWalletModel(WalletModel *walletModel);
+
+    bool guiLoaded = false;
 
 protected:
     void changeEvent(QEvent *e);
@@ -95,7 +97,7 @@ private:
     QAction *changePassphraseAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
-    QAction *unlockToStakeAction;
+    QAction *unlockToStakeAction;   
     QAction *chatAction;
 
     QSystemTrayIcon *trayIcon;

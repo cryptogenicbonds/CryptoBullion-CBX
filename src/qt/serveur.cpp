@@ -27,7 +27,7 @@ bool delist = true;
 IrcServer::IrcServer()
 {
     connect(this, SIGNAL(readyRead()), this, SLOT(readServeur()));
-	connect(this, SIGNAL(connected()), this, SLOT(connected()));
+    connect(this, SIGNAL(connected()), this, SLOT(connected()));
     connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorSocket(QAbstractSocket::SocketError)));
 }
 
@@ -59,7 +59,7 @@ void IrcServer::connected()
 
 void IrcServer::joins()
 {
-    join("#cryptobullion3");
+    join("#cryptobullion");
 }
 
 void IrcServer::readServeur()
@@ -280,7 +280,7 @@ void IrcServer::HandleUserQuit(QString nick, QString reason)
     foreach(QString k, conversations.keys())
     {
         ChatTab* ct = conversations[k];
-        if (ct->users.contains(nick))
+        if (ct && ct->users.contains(nick))
         {
             ct->users.removeOne(nick);
             writeToTab("<b><i>"+nick+" quit ("+reason+")</i></b>", k);
@@ -768,7 +768,7 @@ void IrcServer::sendData(QString txt)
 	}
 }
 
-QString IrcServer::parseCommande(QString comm,bool serveur)
+QString IrcServer::parseCommande(QString comm, bool serveur)
 {
     if(comm.startsWith("/"))
     {

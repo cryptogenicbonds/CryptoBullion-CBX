@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = CryptoBullion-qt
 VERSION = 0.7.3
-INCLUDEPATH += src src/json src/qt
+INCLUDEPATH += src src/json src/qt $$PWD
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd
@@ -267,7 +267,11 @@ HEADERS += \
     src/qt/coincontroltreewidget.h \
     src/qt/coincontroldialog.h \
     src/qt/chatwindow.h \
-    src/qt/serveur.h
+    src/qt/serveur.h \
+    src/qt/splashscreen.h \
+    src/bitcoin.h \
+    src/qt/utilitydialog.h \
+    src/qt/winshutdownmonitor.h
 
 SOURCES += \
     src/qt/bitcoin.cpp \
@@ -338,7 +342,10 @@ SOURCES += \
     src/qt/coincontroltreewidget.cpp \
     src/qt/coincontroldialog.cpp \
     src/qt/chatwindow.cpp \
-    src/qt/serveur.cpp
+    src/qt/serveur.cpp \
+    src/qt/splashscreen.cpp \
+    src/qt/utilitydialog.cpp \
+    src/qt/winshutdownmonitor.cpp
 
 RESOURCES += \
 src/qt/bitcoin.qrc
@@ -358,7 +365,8 @@ FORMS += \
     src/qt/forms/rpcconsole.ui \
     src/qt/forms/coincontroldialog.ui \
     src/qt/forms/chatwindowOLD.ui \
-    src/qt/forms/chatwindow.ui
+    src/qt/forms/chatwindow.ui \
+    src/qt/forms/helpmessagedialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h

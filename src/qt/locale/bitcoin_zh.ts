@@ -6,17 +6,17 @@
     <message>
         <location filename="../forms/aboutdialog.ui" line="+23"/>
         <source>About CryptoBullion</source>
-        <translation type="unfinished">关于 金银币</translation>
+        <translation>关于 金银币</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; v</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;金银币&lt;/b&gt;v</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Copyright © 2009-2015s The CryptoBullion Foundation</source>
-        <translation type="unfinished"></translation>
+        <translation>版权所有 © 2009-2014 金银币基金会</translation>
     </message>
     <message>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
@@ -29,7 +29,7 @@
     <message>
         <location line="+16"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is experimental software. If you don&apos;t treat it as such, you&apos;re likely to put an eye out!&lt;/p&gt;&lt;p&gt;Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.&lt;/p&gt;&lt;p&gt;This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是一个实验性质的软件。如果你没注意到这一点，这将是你的问题。&lt;/p&gt;&lt;p&gt;基于MIT/X11软件许可，请查看相关文件或 http://www.opensource.org/licenses/mit-license.php.&lt;/p&gt;&lt;p&gt;此产品包含 OpenSSL 项目的 OpenSSL Toolkit (http://www.openssl.org/) 以及Eric Young (eay@cryptsoft.com)的cryptographic软件，以及Thomas Bernard的UPnP软件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是一个实验性质的软件。如果你没注意到这一点，这将是你的问题。&lt;/p&gt;&lt;p&gt;基于MIT/X11软件许可，请查看相关文件或 http://www.opensource.org/licenses/mit-license.php.&lt;/p&gt;&lt;p&gt;此产品包含 OpenSSL 项目的 OpenSSL Toolkit (http://www.openssl.org/) 以及Eric Young (eay@cryptsoft.com)的cryptographic软件，以及Thomas Bernard的UPnP软件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Copyright © 2009-2012 The CryptoBullion developers</source>
@@ -55,32 +55,32 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../forms/addressbookpage.ui" line="+14"/>
         <source>Address Book</source>
-        <translation type="unfinished">地址薄</translation>
+        <translation>地址薄</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>These are your CBX addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation type="unfinished">这是你接收付款的CBX地址。你可以为每个支付的人提供一个不同的地址，这样可以追踪是谁向你付款。</translation>
+        <translation>这是你接收付款的CBX地址。你可以为每个支付的人提供一个不同的地址，这样可以追踪是谁向你付款。</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Double-click to edit address or label</source>
-        <translation type="unfinished">双击以编辑地址或标签</translation>
+        <translation>双击以编辑地址或标签</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Create a new address</source>
-        <translation type="unfinished">创建一个新的地址</translation>
+        <translation>创建一个新的地址</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation type="unfinished">复制当前选中的地址到系统剪贴板</translation>
+        <translation>复制当前选中的地址到系统剪贴板</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>&amp;New Address</source>
-        <translation type="unfinished">&amp;新地址</translation>
+        <translation>&amp;新地址</translation>
     </message>
     <message>
         <source>These are your CryptoBullion addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
@@ -89,72 +89,72 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+14"/>
         <source>&amp;Copy Address</source>
-        <translation type="unfinished">&amp;复制地址</translation>
+        <translation>&amp;复制地址</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Show &amp;QR Code</source>
-        <translation type="unfinished">显示 &amp;QR 码</translation>
+        <translation>显示 &amp;QR 码</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Sign a message to prove you own a CryptoBullion address</source>
-        <translation type="unfinished">签名一个信息以证明你拥有此金银币地址</translation>
+        <translation>签名一个信息以证明你拥有此金银币地址</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Sign &amp;Message</source>
-        <translation type="unfinished">签名 &amp;信息</translation>
+        <translation>签名 &amp;信息</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Delete the currently selected address from the list</source>
-        <translation type="unfinished">从列表中删除当前选中的地址</translation>
+        <translation>从列表中删除当前选中的地址</translation>
     </message>
     <message>
         <location line="-17"/>
         <source>Verify a message to ensure it was signed with a specified CryptoBullion address</source>
-        <translation type="unfinished">验证一个信息以确认它是由一个专门的金银币地址签名过</translation>
+        <translation>验证一个信息以确认它是由一个专门的金银币地址签名过</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Verify Message</source>
-        <translation type="unfinished">&amp;验证信息</translation>
+        <translation>&amp;验证信息</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;删除</translation>
+        <translation>&amp;删除</translation>
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="+65"/>
         <source>Copy &amp;Label</source>
-        <translation type="unfinished">复制 &amp;标签</translation>
+        <translation>复制 &amp;标签</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;编辑</translation>
+        <translation>&amp;编辑</translation>
     </message>
     <message>
         <location line="+261"/>
         <source>Export Address Book Data</source>
-        <translation type="unfinished">导出地址薄数据</translation>
+        <translation>导出地址薄数据</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Comma separated file (*.csv)</source>
-        <translation type="unfinished">逗号分隔的文件(*.csv)</translation>
+        <translation>逗号分隔的文件(*.csv)</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Error exporting</source>
-        <translation type="unfinished">导出错误</translation>
+        <translation>导出错误</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Could not write to file %1.</source>
-        <translation type="unfinished">不能写到文件中 %1.</translation>
+        <translation>不能写到文件中 %1.</translation>
     </message>
 </context>
 <context>
@@ -162,17 +162,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../addresstablemodel.cpp" line="+142"/>
         <source>Label</source>
-        <translation type="unfinished">标签</translation>
+        <translation>标签</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Address</source>
-        <translation type="unfinished">地址</translation>
+        <translation>地址</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>(no label)</source>
-        <translation type="unfinished">(没有标签)</translation>
+        <translation>(没有标签)</translation>
     </message>
 </context>
 <context>
@@ -180,27 +180,27 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../forms/askpassphrasedialog.ui" line="+26"/>
         <source>Passphrase Dialog</source>
-        <translation type="unfinished">密码对话窗口</translation>
+        <translation>密码对话窗口</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Enter passphrase</source>
-        <translation type="unfinished">输入密码</translation>
+        <translation>输入密码</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>New passphrase</source>
-        <translation type="unfinished">新密码</translation>
+        <translation>新密码</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Repeat new passphrase</source>
-        <translation type="unfinished">再次输入新密码</translation>
+        <translation>再次输入新密码</translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="+47"/>
         <source>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">输入新密码&lt;br/&gt;请将密码设为&lt;b&gt;10个或以上随机字符&lt;/b&gt;,或 &lt;b&gt;8个或以上的单词&lt;/b&gt;.</translation>
+        <translation>输入新密码&lt;br/&gt;请将密码设为&lt;b&gt;10个或以上随机字符&lt;/b&gt;,或 &lt;b&gt;8个或以上的单词&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>Encrypt vault</source>
@@ -209,13 +209,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Encrypt Vault</source>
-        <translation type="unfinished">加密金库</translation>
+        <translation>加密金库</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+10"/>
         <source>This operation needs your vault passphrase to unlock the vault.</source>
-        <translation type="unfinished">此操作需要你的密码去解锁金库</translation>
+        <translation>此操作需要你的密码去解锁金库</translation>
     </message>
     <message>
         <source>Unlock vault for staking</source>
@@ -225,37 +225,37 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="-5"/>
         <location line="+10"/>
         <source>Unlock vault</source>
-        <translation type="unfinished">解锁金库</translation>
+        <translation>解锁金库</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>This operation needs your vault passphrase to decrypt the vault.</source>
-        <translation type="unfinished">此操作需要你的密码去解密金库</translation>
+        <translation>此操作需要你的密码去解密金库</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Decrypt Vault</source>
-        <translation type="unfinished">解密金库</translation>
+        <translation>解密金库</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Unlock</source>
-        <translation type="unfinished">&amp;解锁</translation>
+        <translation>&amp;解锁</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>U&amp;nlock for Staking only</source>
-        <translation type="unfinished">&amp;解锁 仅针对资金</translation>
+        <translation>&amp;解锁 仅针对资金</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Ok</source>
-        <translation type="unfinished">&amp;确认</translation>
+        <translation>&amp;确认</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;取消</translation>
+        <translation>&amp;取消</translation>
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -272,49 +272,49 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-30"/>
         <source>Change passphrase</source>
-        <translation type="unfinished">更改密码</translation>
+        <translation>更改密码</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Enter the old and new passphrase to the vault.</source>
-        <translation type="unfinished">输入旧的与新的密码</translation>
+        <translation>输入旧的与新的密码</translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Confirm vault encryption</source>
-        <translation type="unfinished">确认对金库加密</translation>
+        <translation>确认对金库加密</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Warning: If you encrypt your vault and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation type="unfinished">警告: 如果你加密了金库并丢失了密码，你将&lt;b&gt;丢失所有的币&lt;/b&gt;!</translation>
+        <translation>警告: 如果你加密了金库并丢失了密码，你将&lt;b&gt;丢失所有的币&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Are you sure you wish to encrypt your vault?</source>
-        <translation type="unfinished">你确认要加密金库?</translation>
+        <translation>你确认要加密金库?</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>IMPORTANT: Any previous backups you have made of your vault file should be replaced with the newly generated, encrypted vault file. For security reasons, previous backups of the unencrypted vault file will become useless as soon as you start using the new, encrypted vault.</source>
-        <translation type="unfinished">重要: 任何先前备份的金库文件都应被新生成的、加密的金库文件替代。出于安全原因，一旦你开始使用新的、加密的金库文件，先前未加密的备份文件就没有用了。</translation>
+        <translation>重要: 任何先前备份的金库文件都应被新生成的、加密的金库文件替代。出于安全原因，一旦你开始使用新的、加密的金库文件，先前未加密的备份文件就没有用了。</translation>
     </message>
     <message>
         <location line="+111"/>
         <location line="+24"/>
         <source>Warning: The Caps Lock key is on!</source>
-        <translation type="unfinished">警告:大写键是开的!</translation>
+        <translation>警告:大写键是开的!</translation>
     </message>
     <message>
         <location line="-141"/>
         <location line="+60"/>
         <source>Vault encrypted</source>
-        <translation type="unfinished">金库已加密</translation>
+        <translation>金库已加密</translation>
     </message>
     <message>
         <location line="-58"/>
         <source>CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">金银币软件现在要关闭以完成加密过程。记住，对金库的加密不能完全保护恶意软件感染你的电脑并偷走你的币。</translation>
+        <translation>金银币软件现在要关闭以完成加密过程。记住，对金库的加密不能完全保护恶意软件感染你的电脑并偷走你的币。</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -322,46 +322,46 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+44"/>
         <location line="+6"/>
         <source>Vault encryption failed</source>
-        <translation type="unfinished">金库加密失败</translation>
+        <translation>金库加密失败</translation>
     </message>
     <message>
         <location line="-56"/>
         <source>Vault encryption failed due to an internal error. Your vault was not encrypted.</source>
-        <translation type="unfinished">由于网络错误，金库加密失败。你的金库未被加密。</translation>
+        <translation>由于网络错误，金库加密失败。你的金库未被加密。</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+50"/>
         <source>The supplied passphrases do not match.</source>
-        <translation type="unfinished">输入的密码不正确</translation>
+        <translation>输入的密码不正确</translation>
     </message>
     <message>
         <location line="-38"/>
         <source>Vault unlock failed</source>
-        <translation type="unfinished">金库解锁失败</translation>
+        <translation>金库解锁失败</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+12"/>
         <location line="+19"/>
         <source>The passphrase entered for the vault decryption was incorrect.</source>
-        <translation type="unfinished">用于解密金库的密码输入不正确</translation>
+        <translation>用于解密金库的密码输入不正确</translation>
     </message>
     <message>
         <location line="-20"/>
         <source>Vault decryption failed</source>
-        <translation type="unfinished">金库解密失败</translation>
+        <translation>金库解密失败</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Vault passphrase was successfully changed.</source>
-        <translation type="unfinished">Vault passphrase was successfully changed.</translation>
+        <translation>金库密码变更成功. </translation>
     </message>
 </context>
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+293"/>
+        <location filename="../bitcoingui.cpp" line="+296"/>
         <source>Sign &amp;message...</source>
         <translation type="unfinished">签名 &amp;信息...</translation>
     </message>
@@ -475,12 +475,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished">&amp;导出...</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-223"/>
         <source>Crypto Bullion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金银币</translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Send coins to a CryptoBullion address</source>
         <translation type="unfinished">发送币到一个金银币地址</translation>
     </message>
@@ -528,7 +528,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">CryptoBullion</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-221"/>
         <source>Vault</source>
         <translation type="unfinished">金库</translation>
     </message>
@@ -537,7 +537,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">CBX</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+144"/>
         <source>Show general overview of wallet</source>
         <translation type="unfinished">显示钱包概况</translation>
     </message>
@@ -564,12 +564,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+5"/>
         <source>&amp;CBX Chat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金银币聊天</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>CBX IRC Chat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金银币聊天</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -633,7 +633,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+40"/>
         <source>Downloaded %1 blocks of transaction history.</source>
-        <translation type="unfinished">已下载 %1 区块的历史交易</translation>
+        <translation>已下载 %1 区块的历史交易</translation>
     </message>
     <message numerus="yes">
         <location line="+22"/>
@@ -696,10 +696,10 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+3"/>
         <source>There was an error trying to save the wallet data to the new location.</source>
-        <translation type="unfinished">将钱包数据保存到另一个地址时产生一个错误</translation>
+        <translation>将钱包数据保存到另一个地址时产生一个错误</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+87"/>
         <location line="+1"/>
         <source>Lock Vault</source>
         <translation type="unfinished">加密金库</translation>
@@ -730,7 +730,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">This transaction is over the size limit.  You can still send it for a fee of %1, which goes to the nodes that process your transaction and helps to support the network.  Do you want to pay the fee?</translation>
     </message>
     <message>
-        <location line="-308"/>
+        <location line="-311"/>
         <source>Confirm transaction fee</source>
         <translation type="unfinished">确认交易费用</translation>
     </message>
@@ -798,8 +798,12 @@ Address: %4
         <translation type="obsolete">There was an error trying to save the vault data to the new location.</translation>
     </message>
     <message>
-        <location filename="../bitcoin.cpp" line="+111"/>
         <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
+        <translation type="obsolete">发生了一个致命错误。 金银币软件不能继续安全的运行并且将要退出。</translation>
+    </message>
+    <message>
+        <location filename="../bitcoin.cpp" line="+343"/>
+        <source>A fatal error occurred. CBX Vault can no longer continue safely and will quit.</source>
         <translation type="unfinished">发生了一个致命错误。 金银币软件不能继续安全的运行并且将要退出。</translation>
     </message>
 </context>
@@ -808,7 +812,7 @@ Address: %4
     <message>
         <location filename="../forms/chatwindow.ui" line="+20"/>
         <source>Quitter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">退出</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -836,11 +840,11 @@ Address: %4
     <message>
         <location line="+55"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">断开联接</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../chatwindow.cpp" line="+193"/>
+        <location filename="../chatwindow.cpp" line="+209"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A few IRC commands :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Join a channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK nickname &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Change nickname&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Send PM &lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If userlist gets buggy, switch tabs to fix&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -848,13 +852,13 @@ Address: %4
         <location line="+29"/>
         <location filename="../chatwindow.cpp" line="+12"/>
         <source>Nickname</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">别名 </translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../chatwindow.cpp" line="+6"/>
         <source>Connect to IRC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">联接到IRC </translation>
     </message>
     <message>
         <location line="+13"/>
@@ -865,7 +869,7 @@ Address: %4
     <message>
         <location line="+9"/>
         <source>Quitter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">退出</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1184,7 +1188,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+11"/>
         <source>&amp;Interface Language: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">界面语言</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1194,7 +1198,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+29"/>
         <source>Choose the interface language.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">界面语言</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1219,12 +1223,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+12"/>
         <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
+        <translation type="unfinished">警告</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>This setting will take effect after restarting CloakCoin.</source>
-        <translation type="unfinished"></translation>
+        <source>This setting will take effect after restarting CBX Vault.</source>
+        <translation type="unfinished">重新启动CBX金库后设置才能生效.</translation>
     </message>
 </context>
 <context>
@@ -1298,7 +1302,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>GUIUtil::HelpMessageBox</name>
     <message>
-        <location filename="../guiutil.cpp" line="+459"/>
+        <location filename="../guiutil.cpp" line="+460"/>
         <location line="+12"/>
         <source>CryptoBullion-Qt</source>
         <translation type="unfinished">金银币钱包</translation>
@@ -1332,6 +1336,64 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+1"/>
         <source>Start minimized</source>
         <translation type="unfinished">开始最小化</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show splash screen on startup (default: 1)</source>
+        <translation type="unfinished">启动时显示启动画面(默认:1)</translation>
+    </message>
+</context>
+<context>
+    <name>HelpMessageDialog</name>
+    <message>
+        <location filename="../forms/helpmessagedialog.ui" line="+19"/>
+        <source>Dash Core - Command-line options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utilitydialog.cpp" line="+31"/>
+        <source>CBX Core</source>
+        <translation type="unfinished">CBX核心</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>version</source>
+        <translation type="unfinished">版本</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Usage:</source>
+        <translation type="unfinished">使用:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>command-line options</source>
+        <translation type="unfinished">命令行选项</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>UI options</source>
+        <translation type="unfinished">UI选项</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Choose data directory on startup (default: 0)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set language, for example &quot;de_DE&quot; (default: system locale)</source>
+        <translation type="unfinished">设置语言, 例如 &quot;de_DE&quot; (默认: 系统语言)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Start minimized</source>
+        <translation type="unfinished">开始最小化</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set SSL root certificates for payment request (default: -system-)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1489,8 +1551,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+49"/>
-        <source>This setting will take effect after restarting CloakCoin.</source>
-        <translation type="unfinished"></translation>
+        <source>This setting will take effect after restarting CBX Vault.</source>
+        <translation type="unfinished">重新启动CBX金库后设置才能生效.</translation>
     </message>
     <message>
         <source>&amp;Main</source>
@@ -1631,7 +1693,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+0"/>
         <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
+        <translation type="unfinished">警告</translation>
     </message>
     <message>
         <source>This setting will take effect after restarting CryptoBullion.</source>
@@ -1682,7 +1744,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+7"/>
         <location line="+342"/>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示的信息可能过期。建立网络联接后你的金库将自动与金银币网络同步，但这一过程还未完成。</translation>
     </message>
     <message>
         <location line="-204"/>
@@ -1727,61 +1789,69 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../bitcoin.cpp" line="+136"/>
+        <source>CryptoBullion Core didn&apos;t yet exit safely...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QRCodeDialog</name>
     <message>
         <location filename="../forms/qrcodedialog.ui" line="+14"/>
         <source>QR Code Dialog</source>
-        <translation type="unfinished">QR码对话框</translation>
+        <translation>QR码对话框</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Request Payment</source>
-        <translation type="unfinished">请求支付</translation>
+        <translation>请求支付</translation>
     </message>
     <message>
         <location line="+56"/>
         <source>Amount:</source>
-        <translation type="unfinished">总数:</translation>
+        <translation>总数:</translation>
     </message>
     <message>
         <location line="-44"/>
         <source>Label:</source>
-        <translation type="unfinished">标签:</translation>
+        <translation>标签:</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Message:</source>
-        <translation type="unfinished">信息:</translation>
+        <translation>信息:</translation>
     </message>
     <message>
         <location line="+71"/>
         <source>&amp;Save As...</source>
-        <translation type="unfinished">&amp;保存为...</translation>
+        <translation>&amp;保存为...</translation>
     </message>
     <message>
         <location filename="../qrcodedialog.cpp" line="+62"/>
         <source>Error encoding URI into QR Code.</source>
-        <translation type="unfinished">将URI编码到QR码的错误</translation>
+        <translation>将URI编码到QR码的错误</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>The entered amount is invalid, please check.</source>
-        <translation type="unfinished">输入的数额无效，请检查。</translation>
+        <translation>输入的数额无效，请检查。</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Resulting URI too long, try to reduce the text for label / message.</source>
-        <translation type="unfinished">导致URI太长，请减短标签/信息的文本。</translation>
+        <translation>导致URI太长，请减短标签/信息的文本。</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Save QR Code</source>
-        <translation type="unfinished">保存QR码</translation>
+        <translation>保存QR码</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>PNG Images (*.png)</source>
-        <translation type="unfinished">PNG图像 (*.png)</translation>
+        <translation>PNG图像 (*.png)</translation>
     </message>
 </context>
 <context>
@@ -1848,7 +1918,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+23"/>
         <source>Block chain</source>
-        <translation type="unfinished">区块链</translation>
+        <translation>区块链</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2277,6 +2347,19 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
 </context>
 <context>
+    <name>ShutdownWindow</name>
+    <message>
+        <location filename="../utilitydialog.cpp" line="+48"/>
+        <source>Cryptobullion Core is finalzing and shutting down...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not shut down the computer until this window disappears.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SignVerifyMessageDialog</name>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="+14"/>
@@ -2466,6 +2549,34 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+5"/>
         <source>Message verified.</source>
         <translation type="unfinished">信息验证。</translation>
+    </message>
+</context>
+<context>
+    <name>SplashScreen</name>
+    <message>
+        <location filename="../splashscreen.cpp" line="+34"/>
+        <source>CBX VAULT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Bitcoin Core developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Team CBX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>[testnet]</source>
+        <translation type="unfinished">[试验网]</translation>
     </message>
 </context>
 <context>
@@ -3320,7 +3431,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+2"/>
         <source>Specify pid file (default: CryptoBulliond.pid)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定 pid 文件 (默认: CryptoBullion.pid)</translation>
     </message>
     <message>
         <location line="+6"/>

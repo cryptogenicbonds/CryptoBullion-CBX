@@ -349,7 +349,7 @@ This product includes software developed by the OpenSSL Project for use in the O
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+293"/>
+        <location filename="../bitcoingui.cpp" line="+296"/>
         <source>Sign &amp;message...</source>
         <translation>&amp;Подписать сообщение</translation>
     </message>
@@ -485,12 +485,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>&amp;Экспорт...</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-223"/>
         <source>Crypto Bullion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Send coins to a CryptoBullion address</source>
         <translation type="unfinished">Отправить монеты на указанный адрес CryptoBullion</translation>
     </message>
@@ -581,7 +581,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+87"/>
         <location line="+1"/>
         <source>Lock Vault</source>
         <translation type="unfinished"></translation>
@@ -612,7 +612,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">Изменить пароль шифрования бумажника</translation>
     </message>
     <message>
-        <location line="-703"/>
+        <location line="-706"/>
         <source>&amp;Debug window</source>
         <translation>&amp;Окно отладки</translation>
     </message>
@@ -631,7 +631,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">BottleCaps</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-221"/>
         <source>Vault</source>
         <translation>Бумажник</translation>
     </message>
@@ -640,7 +640,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">&amp;О BottleCaps</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+212"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Показать / Скрыть</translation>
     </message>
@@ -802,9 +802,13 @@ Address: %4
         <translation type="obsolete">При попытке сохранения данных бумажника в новое место произошла ошибка.</translation>
     </message>
     <message>
-        <location filename="../bitcoin.cpp" line="+111"/>
         <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Произошла неисправимая ошибка. BottleCaps не может безопасно продолжать работу и будет закрыт.</translation>
+        <translation type="obsolete">Произошла неисправимая ошибка. BottleCaps не может безопасно продолжать работу и будет закрыт.</translation>
+    </message>
+    <message>
+        <location filename="../bitcoin.cpp" line="+343"/>
+        <source>A fatal error occurred. CBX Vault can no longer continue safely and will quit.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -844,7 +848,7 @@ Address: %4
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../chatwindow.cpp" line="+193"/>
+        <location filename="../chatwindow.cpp" line="+209"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A few IRC commands :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Join a channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK nickname &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Change nickname&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Send PM &lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If userlist gets buggy, switch tabs to fix&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1213,7 +1217,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+0"/>
-        <source>This setting will take effect after restarting CloakCoin.</source>
+        <source>This setting will take effect after restarting CBX Vault.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1292,7 +1296,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>GUIUtil::HelpMessageBox</name>
     <message>
-        <location filename="../guiutil.cpp" line="+459"/>
+        <location filename="../guiutil.cpp" line="+460"/>
         <location line="+12"/>
         <source>CryptoBullion-Qt</source>
         <translation type="unfinished">BottleCaps-Qt</translation>
@@ -1331,6 +1335,64 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+1"/>
         <source>Show splash screen on startup (default: 1)</source>
         <translation>Показывать сплэш при запуске (по умолчанию: 1)</translation>
+    </message>
+</context>
+<context>
+    <name>HelpMessageDialog</name>
+    <message>
+        <location filename="../forms/helpmessagedialog.ui" line="+19"/>
+        <source>Dash Core - Command-line options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utilitydialog.cpp" line="+31"/>
+        <source>CBX Core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>version</source>
+        <translation type="unfinished">версия</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Usage:</source>
+        <translation type="unfinished">Использование:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>command-line options</source>
+        <translation type="unfinished">параметры командной строки</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>UI options</source>
+        <translation type="unfinished">Опции интерфейса</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Choose data directory on startup (default: 0)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set language, for example &quot;de_DE&quot; (default: system locale)</source>
+        <translation type="unfinished">Выберите язык, например &quot;de_DE&quot; (по умолчанию: как в системе)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Start minimized</source>
+        <translation type="unfinished">Запускать свёрнутым</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set SSL root certificates for payment request (default: -system-)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show splash screen on startup (default: 1)</source>
+        <translation type="unfinished">Показывать сплэш при запуске (по умолчанию: 1)</translation>
     </message>
 </context>
 <context>
@@ -1483,7 +1545,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+49"/>
-        <source>This setting will take effect after restarting CloakCoin.</source>
+        <source>This setting will take effect after restarting CBX Vault.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1718,6 +1780,14 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+1"/>
         <source>out of sync</source>
         <translation>не синхронизировано</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../bitcoin.cpp" line="+136"/>
+        <source>CryptoBullion Core didn&apos;t yet exit safely...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2291,6 +2361,19 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
 </context>
 <context>
+    <name>ShutdownWindow</name>
+    <message>
+        <location filename="../utilitydialog.cpp" line="+48"/>
+        <source>Cryptobullion Core is finalzing and shutting down...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not shut down the computer until this window disappears.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SignVerifyMessageDialog</name>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="+14"/>
@@ -2488,6 +2571,34 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+5"/>
         <source>Message verified.</source>
         <translation>Сообщение проверено.</translation>
+    </message>
+</context>
+<context>
+    <name>SplashScreen</name>
+    <message>
+        <location filename="../splashscreen.cpp" line="+34"/>
+        <source>CBX VAULT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Bitcoin Core developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Team CBX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>[testnet]</source>
+        <translation type="unfinished">[тестовая сеть]</translation>
     </message>
 </context>
 <context>

@@ -431,13 +431,16 @@ int main(int argc, char *argv[])
     if (langSaved.length())
         lang_territory = lang = langSaved;
 
+    bool installedBase = false;
+    bool installedLocale = false;
+
     // Load e.g. bitcoin_de.qm (shortcut "de" needs to be defined in bitcoin.qrc)
     if (translatorBase.load(lang, ":/translations/"))
-        app.installTranslator(&translatorBase);
+        installedBase = app.installTranslator(&translatorBase);
 
     // Load e.g. bitcoin_de_DE.qm (shortcut "de_DE" needs to be defined in bitcoin.qrc)
     if (translator.load(lang_territory, ":/translations/"))
-        app.installTranslator(&translator);
+        installedLocale = app.installTranslator(&translator);
 
     // Subscribe to global signals from core
     uiInterface.ThreadSafeMessageBox.connect(ThreadSafeMessageBox);

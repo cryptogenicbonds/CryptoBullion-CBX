@@ -58,12 +58,14 @@ class DisplayOptionsPage : public QWidget
     Q_OBJECT
 public:
     explicit DisplayOptionsPage(QWidget *parent=0);
-
+    void showRestartWarning_Lang();
     void setMapper(MonitoredDataMapper *mapper);
+    bool fRestartWarningDisplayed_Lang;
 private:
     QValueComboBox *unit;
     QCheckBox *display_addresses;
     QCheckBox *coin_control_features;
+    QValueComboBox *comboTranslationLang;
 signals:
 
 public slots:
@@ -74,7 +76,8 @@ public slots:
 
 OptionsDialog::OptionsDialog(QWidget *parent):
     QDialog(parent), contents_widget(0), pages_widget(0),
-    model(0), main_page(0), display_page(0)
+    model(0), main_page(0), display_page(0),
+    fRestartWarningDisplayed_Proxy(false)
 {
     contents_widget = new QListWidget();
     contents_widget->setMaximumWidth(128);
@@ -150,6 +153,15 @@ void OptionsDialog::okClicked()
 void OptionsDialog::cancelClicked()
 {
     reject();
+}
+
+void OptionsDialog::showRestartWarning_Proxy()
+{
+    if(!fRestartWarningDisplayed_Proxy)
+    {
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting CBX Vault."), QMessageBox::Ok);
+        fRestartWarningDisplayed_Proxy = true;
+    }
 }
 
 void OptionsDialog::applyClicked()
@@ -283,7 +295,8 @@ void MainOptionsPage::setMapper(MonitoredDataMapper *mapper)
 }
 
 DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):
-        QWidget(parent)
+        QWidget(parent),
+        fRestartWarningDisplayed_Lang(false)
 {
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -300,6 +313,54 @@ DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):
 
     layout->addLayout(unit_hbox);
 
+    // translation
+    QHBoxLayout *trans_hbox = new QHBoxLayout();
+    trans_hbox->addSpacing(18);
+
+    QLabel *trans_label = new QLabel(tr("&Interface Language: "));
+    trans_hbox->addWidget(trans_label);
+    comboTranslationLang = new QValueComboBox(this);
+    /* warn only when language selection changes by user action (placed here so init via mapper doesn't trigger this) */
+    connect(comboTranslationLang, SIGNAL(valueChanged()), this, SLOT(showRestartWarning_Lang()));
+    //comboTranslationLang->setModel(new BitcoinUnits(this));
+
+    QDir translations(":translations");
+    comboTranslationLang->addItem(QString("(") + tr("default") + QString(")"), QVariant(""));
+
+    foreach(const QString &langStr, translations.entryList())
+    {
+        QLocale locale(langStr);
+
+        // check if the locale name consists of 2 parts (language_country)
+        if(langStr.contains("_"))
+        {
+#if QT_VERSION >= 0x040800
+            // display language strings as "native language - native country (locale name)", e.g. "Deutsch - Deutschland (de)"
+            comboTranslationLang->addItem(locale.nativeLanguageName() + QString(" - ") + locale.nativeCountryName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
+#else
+            // display language strings as "language - country (locale name)", e.g. "German - Germany (de)"
+            comboTranslationLang->addItem(QLocale::languageToString(locale.language()) + QString(" - ") + QLocale::countryToString(locale.country()) + QString(" (") + langStr + QString(")"), QVariant(langStr));
+#endif
+        }
+        else
+        {
+#if QT_VERSION >= 0x040800
+            // display language strings as "native language (locale name)", e.g. "Deutsch (de)"
+            comboTranslationLang->addItem(locale.nativeLanguageName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
+#else
+            // display language strings as "language (locale name)", e.g. "German (de)"
+            comboTranslationLang->addItem(QLocale::languageToString(locale.language()) + QString(" (") + langStr + QString(")"), QVariant(langStr));
+#endif
+        }
+    }
+
+    comboTranslationLang->setToolTip(tr("Choose the interface language."));
+
+    trans_label->setBuddy(comboTranslationLang);
+    trans_hbox->addWidget(comboTranslationLang);
+
+    layout->addLayout(trans_hbox);
+
     display_addresses = new QCheckBox(tr("&Display addresses in transaction list"), this);
     display_addresses->setToolTip(tr("Whether to show CBX addresses in the transaction list"));
     layout->addWidget(display_addresses);
@@ -313,9 +374,19 @@ DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):
     setLayout(layout);
 }
 
+void DisplayOptionsPage::showRestartWarning_Lang()
+{
+    if(!fRestartWarningDisplayed_Lang)
+    {
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting CBX Vault."), QMessageBox::Ok);
+        fRestartWarningDisplayed_Lang = true;
+    }
+}
+
 void DisplayOptionsPage::setMapper(MonitoredDataMapper *mapper)
 {
     mapper->addMapping(unit, OptionsModel::DisplayUnit);
     mapper->addMapping(display_addresses, OptionsModel::DisplayAddresses);
     mapper->addMapping(coin_control_features, OptionsModel::CoinControlFeatures);
+    mapper->addMapping(comboTranslationLang, OptionsModel::Language);
 }

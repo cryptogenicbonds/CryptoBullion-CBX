@@ -45,13 +45,13 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile cryptobullion-1.2.0.4-win32-setup.exe
+OutFile cryptobullion-1.2.0.6-win32-setup.exe
 InstallDir $PROGRAMFILES\CryptoBullion
 CRCCheck on
 XPStyle on
 BrandingText " "
 ShowInstDetails show
-VIProductVersion 0.3.0.0
+VIProductVersion 1.2.0.6
 VIAddVersionKey ProductName CryptoBullion
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
@@ -66,11 +66,11 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File D:\_coinDev\coins\cgb\CGB\release\CryptoBullion-qt.exe
-    File /oname=license.txt D:\_coinDev\coins\cgb\CGB\COPYING
-    File /oname=readme.txt D:\_coinDev\coins\cgb\CGB\doc\README_windows.txt
+    File D:\_coinDev\coins\cgb\release\CryptoBullion-qt.exe
+    File /oname=license.txt D:\_coinDev\coins\cgb\cbx\COPYING
+    File /oname=readme.txt D:\_coinDev\coins\cgb\cbx\doc\README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File D:\_coinDev\coins\cgb\CGB\release\cryptobulliond.exe
+    File D:\_coinDev\coins\cgb\release\cryptobulliond.exe
     SetOutPath $INSTDIR\src
     File /r /x *.exe /x *.o ../src\*.*
     SetOutPath $INSTDIR

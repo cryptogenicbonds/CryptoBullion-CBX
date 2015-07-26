@@ -1829,7 +1829,7 @@ void static Discover()
         NewThread(ThreadGetMyExternalIP, NULL);
 }
 
-void StartNode(boost::thread_group& threadGroup)
+void StartNode(void* parg)
 {
     // Make this thread recognisable as the startup thread
     RenameThread("bitcoin-start");
@@ -1852,8 +1852,9 @@ void StartNode(boost::thread_group& threadGroup)
 
     if (!GetBoolArg("-dnsseed", true))
         printf("DNS seeding disabled\n");
-    //else
-       // threadGroup.create_thread(boost::bind(&TraceThread<boost::function<void()> >, "dnsseed", &ThreadDNSAddressSeed));
+    else
+        if (!NewThread(ThreadDNSAddressSeed, NULL))
+            printf("Error: NewThread(ThreadDNSAddressSeed) failed\n");
 
     /*
     if (!GetBoolArg("-dnsseed", false))

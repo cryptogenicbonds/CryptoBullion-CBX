@@ -1,17 +1,12 @@
 TEMPLATE = app
 TARGET = CryptoBullion-qt
 VERSION = 0.7.3
-INCLUDEPATH += src src/json src/qt $$PWD
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
+INCLUDEPATH += src src/json src/qt
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
-QT += network
-
-greaterThan(QT_MAJOR_VERSION, 4) {
-    DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
-}
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 win32 {
@@ -166,9 +161,9 @@ contains(USE_BDB, 1) {
     genleveldb.target = $$PWD/src/leveldb/libleveldb.a
     genleveldb.depends = FORCE
     PRE_TARGETDEPS += $$PWD/src/leveldb/libleveldb.a
-    #QMAKE_EXTRA_TARGETS += genleveldb
+    QMAKE_EXTRA_TARGETS += genleveldb
     # Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
-    #QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
+    QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
 }
 
 # regenerate src/build.h
@@ -265,13 +260,7 @@ HEADERS += \
     src/clientversion.h \
     src/coincontrol.h \
     src/qt/coincontroltreewidget.h \
-    src/qt/coincontroldialog.h \
-    src/qt/chatwindow.h \
-    src/qt/serveur.h \
-    src/qt/splashscreen.h \
-    src/bitcoin.h \
-    src/qt/utilitydialog.h \
-    src/qt/winshutdownmonitor.h
+    src/qt/coincontroldialog.h
 
 SOURCES += \
     src/qt/bitcoin.cpp \
@@ -340,12 +329,7 @@ SOURCES += \
     src/scrypt_mine.cpp \
     src/pbkdf2.cpp \
     src/qt/coincontroltreewidget.cpp \
-    src/qt/coincontroldialog.cpp \
-    src/qt/chatwindow.cpp \
-    src/qt/serveur.cpp \
-    src/qt/splashscreen.cpp \
-    src/qt/utilitydialog.cpp \
-    src/qt/winshutdownmonitor.cpp
+    src/qt/coincontroldialog.cpp
 
 RESOURCES += \
 src/qt/bitcoin.qrc
@@ -363,10 +347,7 @@ FORMS += \
     src/qt/forms/sendcoinsentry.ui \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
-    src/qt/forms/coincontroldialog.ui \
-    src/qt/forms/chatwindowOLD.ui \
-    src/qt/forms/chatwindow.ui \
-    src/qt/forms/helpmessagedialog.ui
+    src/qt/forms/coincontroldialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h

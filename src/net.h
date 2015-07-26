@@ -39,7 +39,7 @@ CNode* ConnectNode(CAddress addrConnect, const char *strDest = NULL, int64 nTime
 void MapPort();
 unsigned short GetListenPort();
 bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::string()));
-void StartNode(boost::thread_group& threadGroup);
+void StartNode(void* parg);
 bool StopNode();
 
 enum

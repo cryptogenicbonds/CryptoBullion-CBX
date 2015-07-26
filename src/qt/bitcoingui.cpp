@@ -19,7 +19,6 @@
 #include "addresstablemodel.h"
 #include "transactionview.h"
 #include "overviewpage.h"
-#include "chatwindow.h"
 #include "bitcoinunits.h"
 #include "guiconstants.h"
 #include "askpassphrasedialog.h"
@@ -60,7 +59,7 @@
 
 extern bool fWalletUnlockMintOnly;
 
-BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent):
+BitcoinGUI::BitcoinGUI(QWidget *parent):
     QMainWindow(parent),
     clientModel(0),
     walletModel(0),
@@ -71,7 +70,6 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent):
     notificator(0),
     rpcConsole(0)
 {
-    guiLoaded = false;
     resize(850, 550);
     setWindowTitle(tr("Crypto Bullion") + " - " + tr("Vault"));
 #ifndef Q_OS_MAC
@@ -99,7 +97,6 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent):
 
     // Create tabs
     overviewPage = new OverviewPage();
-    chatPage = new ChatWindow();
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -121,11 +118,10 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent):
     centralWidget->addWidget(addressBookPage);
     centralWidget->addWidget(receiveCoinsPage);
     centralWidget->addWidget(sendCoinsPage);
-    centralWidget->addWidget(chatPage);
     setCentralWidget(centralWidget);
 
     // set gradient background
-    //GUIUtil::SetWidgetGradient(centralWidget);
+    GUIUtil::SetWidgetGradient(centralWidget);
 
     //QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #78879b, stop: 1 #78879b);
     //qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:0.772727 rgba(132, 132, 132, 255))QListView { background: transparent; }
@@ -201,17 +197,6 @@ BitcoinGUI::~BitcoinGUI()
 #endif
 }
 
-void BitcoinGUI::resizeEvent(QResizeEvent *)
-{
-    /*
-    QPixmap bkgnd(":/images/background");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
-    */
-}
-
 void BitcoinGUI::createActions()
 {
     QActionGroup *tabGroup = new QActionGroup(this);
@@ -252,12 +237,6 @@ void BitcoinGUI::createActions()
     unlockToStakeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
     tabGroup->addAction(unlockToStakeAction);
 
-    chatAction = new QAction(QIcon(":/icons/chat"), tr("&CBX Chat"), this);
-    chatAction->setToolTip(tr("CBX IRC Chat"));
-    chatAction->setCheckable(true);
-    chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
-    tabGroup->addAction(chatAction);
-
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -270,7 +249,6 @@ void BitcoinGUI::createActions()
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
     connect(unlockToStakeAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(unlockToStakeAction, SIGNAL(triggered()), this, SLOT(toggleWalletLock()));
-    connect(chatAction, SIGNAL(triggered()), this, SLOT(goChat()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
@@ -350,12 +328,11 @@ void BitcoinGUI::createToolBars()
     QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->addAction(overviewAction);
-    toolbar->addAction(chatAction);
     toolbar->addAction(sendCoinsAction);
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
-    toolbar->addAction(unlockToStakeAction);    
+    toolbar->addAction(unlockToStakeAction);
 
     QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
     toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -927,9 +904,6 @@ void BitcoinGUI::unlockWallet(bool showMintOption)
 
 void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
 {
-    if (!guiLoaded)
-        return;
-
     // activateWindow() (sometimes) helps with keyboard focus on Windows
     if (isHidden())
     {
@@ -961,16 +935,6 @@ void BitcoinGUI::handleUnlockButtonState()
         unlockToStakeAction->setDisabled(true);
     else
         unlockToStakeAction->setEnabled(true);
-}
-
-
-void BitcoinGUI::goChat()
-{
-    chatAction->setChecked(true);
-    centralWidget->setCurrentWidget(chatPage);
-
-    exportAction->setEnabled(false);
-    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }
 
 void BitcoinGUI::toggleWalletLock()

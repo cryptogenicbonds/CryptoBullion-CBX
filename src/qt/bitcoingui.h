@@ -9,7 +9,6 @@ class ClientModel;
 class WalletModel;
 class TransactionView;
 class OverviewPage;
-class ChatWindow;
 class AddressBookPage;
 class SendCoinsDialog;
 class DebugDialog;
@@ -36,7 +35,7 @@ class BitcoinGUI : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit BitcoinGUI(bool fIsTestnet = false, QWidget *parent = 0);
+    explicit BitcoinGUI(QWidget *parent = 0);
     ~BitcoinGUI();
 
     /** Set the client model.
@@ -49,14 +48,11 @@ public:
     */
     void setWalletModel(WalletModel *walletModel);
 
-    bool guiLoaded = false;
-
 protected:
     void changeEvent(QEvent *e);
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
-    void resizeEvent(QResizeEvent *);
 
 private:
     ClientModel *clientModel;
@@ -65,7 +61,6 @@ private:
     QStackedWidget *centralWidget;
 
     OverviewPage *overviewPage;
-    ChatWindow* chatPage;
     QWidget *transactionsPage;
     AddressBookPage *addressBookPage;
     AddressBookPage *receiveCoinsPage;
@@ -97,8 +92,7 @@ private:
     QAction *changePassphraseAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
-    QAction *unlockToStakeAction;   
-    QAction *chatAction;
+    QAction *unlockToStakeAction;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -187,8 +181,6 @@ private slots:
     void handleUnlockButtonState();
     /** unlock (for staking) or lock the wallet */
     void toggleWalletLock();
-
-    void goChat();
 };
 
 #endif

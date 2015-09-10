@@ -83,6 +83,7 @@
         <file alias="ru">locale/bitcoin_ru.qm</file>
         <file alias="zh">locale/bitcoin_zh.qm</file>
         <file alias="fr">locale/bitcoin_fr.qm</file>
+        <file alias="es">locale/bitcoin_es.qm</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="cgbstyle.qss">res/style/cgbstyle.qss</file>

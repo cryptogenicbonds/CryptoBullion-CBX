@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr">
+<TS version="2.1" language="fr">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -16,7 +16,7 @@
     <message>
         <location line="+47"/>
         <source>Copyright © 2009-2015s The CryptoBullion Foundation</source>
-        <translation type="unfinished">Copyright © 2009-2015 La Fondation CryptoBullion</translation>
+        <translation type="unfinished">Copyright © 2009-2015 La Fondation Cryptobullion</translation>
     </message>
     <message>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
@@ -56,7 +56,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+9"/>
         <source>These are your CBX addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation type="unfinished">Voici vos adresses CBX pour recevoir des paiements. Il est possible de donner une adresse différente pour chaque paiement, pour vous aider à suivre efficacement qui a payé quoi...</translation>
+        <translation type="unfinished">Voici vos adresses CBX pour recevoir des paiements. Il est possible de donner une adresse différente pour chaque paiement, pour vous aider à comptabiliser efficacement qui a payé quoi...</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -238,7 +238,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+8"/>
         <source>U&amp;nlock for Staking only</source>
-        <translation type="unfinished">Ne déverrouiller que pour recevoir des intérêts de participation (Staking)</translation>
+        <translation type="unfinished">Ne déverrouiller que pour recevoir des intérêts de participation</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -248,7 +248,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+8"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Annuler</translation>
+        <translation type="unfinished">&amp;Anuller</translation>
     </message>
     <message>
         <source>This operation needs your vault passphrase to enter the vault.</source>
@@ -292,7 +292,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+111"/>
         <location line="+24"/>
         <source>Warning: The Caps Lock key is on!</source>
-        <translation type="unfinished">Attention : la touche Caps Lock est engagée!</translation>
+        <translation type="unfinished">Attention : la touche Caps Lock est engagée</translation>
     </message>
     <message>
         <location line="-141"/>
@@ -322,7 +322,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+7"/>
         <location line="+50"/>
         <source>The supplied passphrases do not match.</source>
-        <translation type="unfinished">Ces mots de passe ne sont pas identiques.</translation>
+        <translation type="unfinished">Ces mots de passes ne sont pas identiques.</translation>
     </message>
     <message>
         <location line="-38"/>
@@ -339,7 +339,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-20"/>
         <source>Vault decryption failed</source>
-        <translation type="unfinished">Le décryptage de la voûte a échoué</translation>
+        <translation type="unfinished">Le cryptage de la voûte a échoué</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -429,7 +429,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+2"/>
         <source>&amp;Options...</source>
-        <translation type="unfinished">&amp;Options...</translation>
+        <translation>&amp;Options...</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -590,12 +590,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+9"/>
         <source>Tabs toolbar</source>
-        <translation type="unfinished">Onglets des outils</translation>
+        <translation>Tabs toolbar</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Actions toolbar</source>
-        <translation type="unfinished">Barre d&apos;outils</translation>
+        <translation>Actions toolbar</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -607,7 +607,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+0"/>
         <location line="+62"/>
         <source>CryptoBullion client</source>
-        <translation type="unfinished">Client Crypto Bullion</translation>
+        <translation type="unfinished">client Crypto Bullion</translation>
     </message>
     <message numerus="yes">
         <location line="+69"/>
@@ -662,7 +662,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+7"/>
         <source>Catching up...</source>
-        <translation type="unfinished">En train de ratrapper le retard...</translation>
+        <translation type="unfinished">Ratrappant le retard...</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -723,17 +723,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-311"/>
         <source>Confirm transaction fee</source>
-        <translation type="unfinished">Confirmez les frais de transaction</translation>
+        <translation>Confirm transaction fee</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Sent transaction</source>
-        <translation type="unfinished">Transaction envoyée</translation>
+        <translation>Sent transaction</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Incoming transaction</source>
-        <translation type="unfinished">Transaction entrante</translation>
+        <translation>Incoming transaction</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -742,23 +742,23 @@ Amount: %2
 Type: %3
 Address: %4
 </source>
-        <translation type="unfinished">Date: %1
-Montant: %2
+        <translation>Date: %1
+Amount: %2
 Type: %3
-Adresse: %4
+Address: %4
 </translation>
     </message>
     <message>
         <location line="+102"/>
         <location line="+15"/>
         <source>URI handling</source>
-        <translation type="unfinished">Gestion du URI</translation>
+        <translation>URI handling</translation>
     </message>
     <message>
         <location line="-15"/>
         <location line="+15"/>
         <source>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</source>
-        <translation type="unfinished">Le URI ne peut pas être analysé. Ceci peut être dû à une adresse Crypto Bullion non valide ou des paramètres URI mal entrés.</translation>
+        <translation>URI can not be parsed! This can be caused by an invalid CryptoBullion address or malformed URI parameters.</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -795,7 +795,7 @@ Adresse: %4
     <message>
         <location filename="../bitcoin.cpp" line="+343"/>
         <source>A fatal error occurred. CBX Vault can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Une erreur fatale s&apos;est rpoduite.  La voûte CBX ne peut pas continuer et va se fermer.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -803,7 +803,7 @@ Adresse: %4
     <message>
         <location filename="../forms/chatwindow.ui" line="+20"/>
         <source>Quitter</source>
-        <translation type="unfinished">Quitter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -813,7 +813,7 @@ Adresse: %4
     <message>
         <location line="+5"/>
         <source>Fermer l&apos;onglet</source>
-        <translation type="unfinished">Fermer l&apos;onglet</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -821,56 +821,56 @@ Adresse: %4
     <message>
         <location filename="../forms/chatwindowOLD.ui" line="+54"/>
         <source>Tab 1</source>
-        <translation type="unfinished">Tab 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Tab 2</source>
-        <translation type="unfinished">Tab 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+55"/>
         <source>Disconnect</source>
-        <translation type="unfinished">Déconnecter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+41"/>
         <location filename="../chatwindow.cpp" line="+209"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A few IRC commands :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Join a channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK nickname &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Change nickname&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Send PM &lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If userlist gets buggy, switch tabs to fix&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quelques  commandes IRC :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Se joindre à un channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK nickname &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Changer de surnom&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Envoyer un message privé&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Si la liste des usagers n&apos;est plus à jour, passer à un autre tab et revenir&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+29"/>
         <location filename="../chatwindow.cpp" line="+12"/>
         <source>Nickname</source>
-        <translation type="unfinished">Surnom</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../chatwindow.cpp" line="+6"/>
         <source>Connect to IRC</source>
-        <translation type="unfinished">Se connecter au IRC</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../chatwindow.cpp" line="+5"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Connect to IRC :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Se connecter au IRC :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Quitter</source>
-        <translation type="unfinished">Quitter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Fermer l&apos;onglet</source>
-        <translation type="unfinished">Fermer l&apos;onglet</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -878,7 +878,7 @@ Adresse: %4
     <message>
         <location filename="../clientmodel.cpp" line="+87"/>
         <source>Network Alert</source>
-        <translation>Alerte de réseau</translation>
+        <translation type="unfinished">Alerte de réseau</translation>
     </message>
 </context>
 <context>
@@ -930,7 +930,7 @@ Adresse: %4
     <message>
         <location line="+35"/>
         <source>Low Output:</source>
-        <translation type="unfinished">Production basse : </translation>
+        <translation type="unfinished">Sortie basse : </translation>
     </message>
     <message>
         <location line="+22"/>
@@ -941,7 +941,7 @@ Adresse: %4
     <message>
         <location line="+29"/>
         <source>After Fee:</source>
-        <translation type="unfinished">Frais soustraits : </translation>
+        <translation type="unfinished">Sans les frais : </translation>
     </message>
     <message>
         <location line="+35"/>
@@ -1042,7 +1042,7 @@ Adresse: %4
     <message>
         <location line="+1"/>
         <source>Copy priority</source>
-        <translation type="unfinished">Priorité de copiage</translation>
+        <translation type="unfinished">Copier priorité</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1156,7 +1156,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="-9"/>
         <source>change from %1 (%2)</source>
-        <translation type="unfinished">changer de %1 (%2)</translation>
+        <translation type="unfinished">chager de %1 (%2)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1199,7 +1199,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+1"/>
         <source>Whether to show CBX addresses in the transaction list</source>
-        <translation type="unfinished">Afficher les adresses CBX ou non, dans la liste des transactions </translation>
+        <translation type="unfinished">Afficher les adresses CBX ou non dans la liste des transactions </translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1241,27 +1241,27 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+10"/>
         <source>The label associated with this address book entry</source>
-        <translation type="unfinished">Étiquette associée à cette entrée du carnet d&apos;adresses</translation>
+        <translation>The label associated with this address book entry</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Address</source>
-        <translation type="unfinished">Adresse</translation>
+        <translation>&amp;Address</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>The address associated with this address book entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">L&apos;adresse associée à cette entrée du carnet d&apos;adresses. Ceci ne peut seulement être modifié pour les adresses d&apos;envoi.</translation>
+        <translation>The address associated with this address book entry. This can only be modified for sending addresses.</translation>
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="+22"/>
         <source>New receiving address</source>
-        <translation type="unfinished">Nouvelle adresse de réception</translation>
+        <translation>New receiving address</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>New sending address</source>
-        <translation type="unfinished">Nouvelle adresse d&apos;envoi</translation>
+        <translation>New sending address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1276,22 +1276,22 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+60"/>
         <source>The entered address &quot;%1&quot; is already in the address book.</source>
-        <translation type="unfinished">L&apos;adresse &quot;%1&quot; est déjà dans le cornet d&apos;adresses.</translation>
+        <translation>The entered address &quot;%1&quot; is already in the address book.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The entered address &quot;%1&quot; is not a valid CryptoBullion address.</source>
-        <translation type="unfinished">Cette adresse &quot;%1&quot;n&apos;est pas une adresse CryptoBullion valide.</translation>
+        <translation>The entered address &quot;%1&quot; is not a valid CryptoBullion address.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Could not unlock vault.</source>
-        <translation type="unfinished">Impossible de déverrouiller la voûte.</translation>
+        <translation>Could not unlock vault.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>New key generation failed.</source>
-        <translation type="unfinished">La création d&apos;une nouvelle clé a échoué.</translation>
+        <translation>New key generation failed.</translation>
     </message>
 </context>
 <context>
@@ -1343,7 +1343,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location filename="../forms/helpmessagedialog.ui" line="+19"/>
         <source>Dash Core - Command-line options</source>
-        <translation type="unfinished">Dash Core -Commandes de ligne</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../utilitydialog.cpp" line="+31"/>
@@ -1358,7 +1358,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+2"/>
         <source>Usage:</source>
-        <translation type="unfinished">Utilisation:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1373,7 +1373,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+1"/>
         <source>Choose data directory on startup (default: 0)</source>
-        <translation type="unfinished">Définir le répertoire de données au démarrage (par défaut: 0)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1388,7 +1388,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+1"/>
         <source>Set SSL root certificates for payment request (default: -system-)</source>
-        <translation type="unfinished">Régler les certificats de base SSL pour la requête de paiement (par défaut: system-)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1708,83 +1708,83 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location filename="../forms/overviewpage.ui" line="+14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">L&apos;information affichée est peut-être désuète. Votre voûte se synchonisera automatiquement au réseau Crypto Bullion après qu&apos;une connection soit établie, mais ce processus n&apos;est pas terminé.</translation>
+        <translation type="vanished">The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="+90"/>
         <source>Balance:</source>
-        <translation type="unfinished">Solde:</translation>
+        <translation>Balance:</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Stake:</source>
-        <translation type="unfinished">Minage de participation:</translation>
+        <translation>Stake:</translation>
     </message>
     <message>
         <location line="+84"/>
         <source>Number of transactions:</source>
-        <translation type="unfinished">Quantité de transactions:</translation>
+        <translation>Number of transactions:</translation>
     </message>
     <message>
         <location line="-55"/>
         <source>Unconfirmed:</source>
-        <translation type="unfinished">Non-confirmé:</translation>
+        <translation>Unconfirmed:</translation>
     </message>
     <message>
         <location line="-116"/>
         <source>Vault</source>
-        <translation type="unfinished">Voûte</translation>
+        <translation>Vault</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+342"/>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">L&apos;information affichée est peut-être désuète. Votre voûte se synchonisera automatiquement au réseau Crypto Bullion après qu&apos;une connection soit établie, mais ce processus n&apos;est pas terminé.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-204"/>
         <source>Immature:</source>
-        <translation type="unfinished">Non mature:</translation>
+        <translation>Immature:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Mined balance that has not yet matured</source>
-        <translation type="unfinished">Solde miné mais pas encore à maturité</translation>
+        <translation>Mined balance that has not yet matured</translation>
     </message>
     <message>
         <location line="+184"/>
         <source>&lt;b&gt;Recent transactions&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Transactions récentes&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Recent transactions&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="-268"/>
         <source>Your current balance</source>
-        <translation type="unfinished">Votre solde actuel</translation>
+        <translation>Your current balance</translation>
     </message>
     <message>
         <location line="+58"/>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the current balance</source>
-        <translation type="unfinished">Total des transactions qui doivent encore être confirmées, et qui ne comptent pas dans le solde actuel</translation>
+        <translation>Total of transactions that have yet to be confirmed, and do not yet count toward the current balance</translation>
     </message>
     <message>
         <location line="-29"/>
         <source>Total of coins that was staked, and do not yet count toward the current balance</source>
-        <translation type="unfinished">Nombre total de coins qui ont été générés par participation, et qui ne comptent pas dans le solde</translation>
+        <translation>Total of coins that was staked, and do not yet count toward the current balance</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>Total number of transactions in vault</source>
-        <translation type="unfinished">Nombre total de transactions dans la voûte</translation>
+        <translation>Total number of transactions in vault</translation>
     </message>
     <message>
         <location filename="../overviewpage.cpp" line="+113"/>
         <location line="+1"/>
         <source>out of sync</source>
-        <translation type="unfinished">pas encore synchronisé</translation>
+        <translation>out of sync</translation>
     </message>
 </context>
 <context>
@@ -1792,7 +1792,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location filename="../bitcoin.cpp" line="+136"/>
         <source>CryptoBullion Core didn&apos;t yet exit safely...</source>
-        <translation type="unfinished">Crypto Bullion n&apos;a pas encore quitté sécuritairement.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2010,27 +2010,27 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
         <location filename="../forms/sendcoinsdialog.ui" line="+14"/>
         <location filename="../sendcoinsdialog.cpp" line="+207"/>
         <source>Send Coins</source>
-        <translation type="unfinished">Envoyer des Coins</translation>
+        <translation>Send Coins</translation>
     </message>
     <message>
         <location line="+75"/>
         <source>Bullion Control Features</source>
-        <translation type="unfinished">Fonctions de contrôle de Bullion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Inputs...</source>
-        <translation type="unfinished">Entrées...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
         <source>automatically selected</source>
-        <translation type="unfinished">sélectionné automatiquement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Insufficient funds!</source>
-        <translation type="unfinished">Fonds insuffisants!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+86"/>
@@ -2041,7 +2041,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
         <location line="+22"/>
         <location line="+35"/>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-19"/>
@@ -2051,7 +2051,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+51"/>
         <source>Amount:</source>
-        <translation type="unfinished">Montant:</translation>
+        <translation type="unfinished">Amount:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -2059,7 +2059,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
         <location line="+86"/>
         <location line="+32"/>
         <source>0.00 CBX</source>
-        <translation type="unfinished">0.00 CBX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-191"/>
@@ -2079,7 +2079,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+35"/>
         <source>Low Output:</source>
-        <translation type="unfinished">Production basse : </translation>
+        <translation type="unfinished">Sortie basse : </translation>
     </message>
     <message>
         <location line="+19"/>
@@ -2094,7 +2094,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+35"/>
         <source>Change</source>
-        <translation type="unfinished">Modifier</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+54"/>
@@ -2104,27 +2104,27 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+121"/>
         <source>Send to multiple recipients at once</source>
-        <translation type="unfinished">Envoyer à plusieurs destinataires en une fois</translation>
+        <translation>Send to multiple recipients at once</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Add &amp;Recipient</source>
-        <translation type="unfinished">Ajouter un destinataire</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Remove all transaction fields</source>
-        <translation type="unfinished">Retirer tous les champs de transactions</translation>
+        <translation>Remove all transaction fields</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Clear &amp;All</source>
-        <translation type="unfinished">Tout effacer</translation>
+        <translation>Clear &amp;All</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Balance:</source>
-        <translation type="unfinished">Solde:</translation>
+        <translation>Balance:</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -2134,17 +2134,17 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+31"/>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Confirmer l&apos;action d&apos;envoi</translation>
+        <translation>Confirm the send action</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>S&amp;end</source>
-        <translation type="unfinished">Envoyer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-170"/>
         <source>Enter a CBX address</source>
-        <translation type="unfinished">Entrez une adresse CBX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
@@ -2154,7 +2154,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+1"/>
         <source>Copy amount</source>
-        <translation type="unfinished">Copier le montant</translation>
+        <translation type="unfinished">Copy amount</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2189,22 +2189,22 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+95"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to %2 (%3)</source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; à %2 (%3)</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; to %2 (%3)</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Confirm send coins</source>
-        <translation type="unfinished">Confirmer l&apos;envoi de coins</translation>
+        <translation>Confirm send coins</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to send %1?</source>
-        <translation type="unfinished">Êtes-vous certain de vouloir envoyer %1?</translation>
+        <translation>Are you sure you want to send %1?</translation>
     </message>
     <message>
         <location line="+0"/>
         <source> and </source>
-        <translation type="unfinished"> et </translation>
+        <translation> and </translation>
     </message>
     <message>
         <location line="+26"/>
@@ -2214,57 +2214,57 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
         <location line="+11"/>
         <location line="+5"/>
         <source>Send Bullion</source>
-        <translation type="unfinished">Envoyer des CBX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-30"/>
         <source>The recipient address is not valid, please recheck.</source>
-        <translation type="unfinished">Destinataire non valide. Revérifiez s&apos;il vous plaît.</translation>
+        <translation>The recipient address is not valid, please recheck.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The amount to pay must be larger than 0.</source>
-        <translation type="unfinished">Le montant du paiement doit être supérieur à 0.</translation>
+        <translation>The amount to pay must be larger than 0.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The amount exceeds your balance.</source>
-        <translation type="unfinished">Ce montant dépasse votre solde.</translation>
+        <translation>The amount exceeds your balance.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The total exceeds your balance when the %1 transaction fee is included.</source>
-        <translation type="unfinished">Ce montant excède votre solde, lorsque les frais de %1 sont appliqués.</translation>
+        <translation>The total exceeds your balance when the %1 transaction fee is included.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Duplicate address found, can only send to each address once per send operation.</source>
-        <translation type="unfinished">Une autre copie de l&apos;adresse a été trouvée; vous ne pouvez envoyer à chaque adresse qu&apos;une seule fois par opération.</translation>
+        <translation>Duplicate address found, can only send to each address once per send operation.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Error: Transaction creation failed.</source>
-        <translation type="unfinished">Erreur: Création de la transaction a échoué</translation>
+        <translation>Error: Transaction creation failed.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Error: The transaction was rejected. This might happen if some of the bullion in your wallet were already spent, such as if you used a copy of wallet.dat and bullion was spent in the copy but not marked as spent here.</source>
-        <translation type="unfinished">Erreur: la transaction a été rejetée. Ceci peut se produire si des CBX de votre Voûte ont déjà été dépensés, comme par exemple si vous utilisez une copie du fichier wallet.dat et que ces CBX ont été dépensés à partir de la copie mans non tenus en compte ici.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+256"/>
         <source>Warning: Invalid CBX address</source>
-        <translation type="unfinished">Attention: Adresse CBX invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Warning: Unknown change address</source>
-        <translation type="unfinished">Attention: Changement d&apos;adresse inconnu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
         <source>(no label)</source>
-        <translation type="unfinished">(sans étiquette)</translation>
+        <translation type="unfinished">(no label)</translation>
     </message>
     <message>
         <source>Error: The transaction was rejected. This might happen if some of the coins in your vault were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
@@ -2350,12 +2350,12 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location filename="../utilitydialog.cpp" line="+48"/>
         <source>Cryptobullion Core is finalzing and shutting down...</source>
-        <translation type="unfinished">CryptoBullion finalise et se fermera sous peu...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do not shut down the computer until this window disappears.</source>
-        <translation type="unfinished">Ne pas éteindre votre ordinateur jusqu&apos;à ce que cette fenêtre disparaisse.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2555,22 +2555,22 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location filename="../splashscreen.cpp" line="+34"/>
         <source>CBX VAULT</source>
-        <translation type="unfinished">Voûte CBX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Version %1</source>
-        <translation type="unfinished">Version %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The Bitcoin Core developers</source>
-        <translation type="unfinished">Les développeurs de Bitcoin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Team CBX</source>
-        <translation type="unfinished">L&apos;équipe CBX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3246,7 +3246,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+8"/>
         <source>Error initializing database environment %s! To recover, BACKUP THAT DIRECTORY, then remove everything from it except for wallet.dat.</source>
-        <translation type="unfinished">Erreur lors de l&apos;initialisation de la base de données %s! pour régler ce problème, faire une copie de sécurité de ce répertoire, puis tout effacer SAUF wallet.dat.</translation>
+        <translation type="unfinished">Error initializing database environment %s! To recover, BACKUP THAT DIRECTORY, then remove everything from it except for wallet.dat.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3594,7 +3594,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+43"/>
         <source>Loading addresses...</source>
-        <translation type="unfinished">Chargement des adresses...</translation>
+        <translation type="unfinished">Chargeant les adresses...</translation>
     </message>
     <message>
         <location line="-27"/>
@@ -3656,7 +3656,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+43"/>
         <source>Sending...</source>
-        <translation type="unfinished">En train d&apos;envoyer...</translation>
+        <translation type="unfinished">En train d&apos;envoyer</translation>
     </message>
     <message>
         <location line="-26"/>

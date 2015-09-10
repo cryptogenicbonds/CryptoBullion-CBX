@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh">
+<TS version="2.0" language="zh">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -472,7 +472,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-267"/>
         <source>&amp;Export...</source>
-        <translation type="unfinished">&amp;导出...</translation>
+        <translation type="unfinished">&amp;导出......</translation>
     </message>
     <message>
         <location line="-223"/>
@@ -686,7 +686,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+170"/>
         <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked for staking only&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金库已 &lt;b&gt;加密&lt;/b&gt; 并且当前 &lt;b&gt;只对股份解锁&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -702,12 +702,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+87"/>
         <location line="+1"/>
         <source>Lock Vault</source>
-        <translation type="unfinished">加密金库</translation>
+        <translation type="unfinished">锁定金库</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Vault unlocked for staking. Please click again or close the applicaton to re-lock the vault.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金库股份解锁。请重新点击或关闭程序以重新锁定金库。</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -812,12 +812,12 @@ Address: %4
     <message>
         <location filename="../forms/chatwindow.ui" line="+20"/>
         <source>Quitter</source>
-        <translation type="unfinished">退出</translation>
+        <translation type="unfinished">懒人</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1193,7 +1193,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+8"/>
         <source>default</source>
-        <translation type="unfinished">default</translation>
+        <translation type="unfinished">默认</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1348,7 +1348,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../forms/helpmessagedialog.ui" line="+19"/>
         <source>Dash Core - Command-line options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dash 核心 - 命令行选项</translation>
     </message>
     <message>
         <location filename="../utilitydialog.cpp" line="+31"/>
@@ -1378,7 +1378,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+1"/>
         <source>Choose data directory on startup (default: 0)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">启动时选择数据路径 (默认: 0)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1393,7 +1393,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+1"/>
         <source>Set SSL root certificates for payment request (default: -system-)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">为支付请求设置 SSL 根证书 (默认: -system-)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1406,27 +1406,27 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../serveur.cpp" line="+39"/>
         <source>&lt;em&gt;ERROR : can&apos;t find freenode server.&lt;/em&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;em&gt;错误 : 找不到自由节点服务器&lt;/em&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&lt;em&gt;ERROR : server refused connection&lt;/em&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;em&gt;错误 : 服务器拒决联接&lt;/em&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&lt;em&gt;ERROR : server cut connection&lt;/em&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;em&gt;错误 : 服务器切断联接&lt;/em&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&lt;em&gt;ERROR : </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;em&gt;错误：</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&lt;/em&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;/em&gt;</translation>
     </message>
 </context>
 <context>
@@ -1484,12 +1484,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+3"/>
         <source>&amp;Disable spending unconfirmed change:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;不能花费未确认的找零：</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">如果你不能使用未确认的找零，是因为一个交易的找零在交易得到至少一个确认之前是不能用的。这也会影响你可用余额的计算。</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1793,7 +1793,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../bitcoin.cpp" line="+136"/>
         <source>CryptoBullion Core didn&apos;t yet exit safely...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金银币核心没有安全退出...</translation>
     </message>
 </context>
 <context>
@@ -2351,12 +2351,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../utilitydialog.cpp" line="+48"/>
         <source>Cryptobullion Core is finalzing and shutting down...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">金银币核心正在结束并关闭...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do not shut down the computer until this window disappears.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">这个窗口消失前请不要关闭电脑。</translation>
     </message>
 </context>
 <context>
@@ -2556,22 +2556,22 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../splashscreen.cpp" line="+34"/>
         <source>CBX VAULT</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CBX金库</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">版本 %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The Bitcoin Core developers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">比特币核心开发人员</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Team CBX</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CBX团队</translation>
     </message>
     <message>
         <location line="+1"/>

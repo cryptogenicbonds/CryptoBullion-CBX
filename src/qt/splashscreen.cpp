@@ -27,14 +27,13 @@ SplashScreen::SplashScreen(const QPixmap &pixmap, Qt::WindowFlags f, bool isTest
     int paddingTop              = 460;
     int titleVersionVSpace      = 17;
     int titleCopyrightVSpace    = 32;
-
     float fontFactor            = 1.0;
 
     // define text to place
     QString titleText       = tr("CBX VAULT");
     QString versionText     = QString(tr("Version %1")).arg(QString::fromStdString(FormatFullVersion()));
     QString copyrightTextBtc   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
-    QString copyrightTextCbx   = QChar(0xA9)+QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Team CBX"));
+    QString copyrightTextCbx   = QChar(0xA9)+QString(" 2013-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Team CBX"));
     QString testnetAddText  = QString(tr("[testnet]")); // define text to place as single text object
 
     QString splashName = ":/images/splash2";

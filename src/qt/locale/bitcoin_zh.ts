@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh">
+<TS version="2.1" language="zh">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -808,6 +808,13 @@ Address: %4
     </message>
 </context>
 <context>
+    <name>BitcoinUnits</name>
+    <message>
+        <source>CBX</source>
+        <translation type="obsolete">CBX</translation>
+    </message>
+</context>
+<context>
     <name>ChatWindowClass</name>
     <message>
         <location filename="../forms/chatwindow.ui" line="+20"/>
@@ -874,7 +881,7 @@ Address: %4
     <message>
         <location line="+3"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1176,7 +1183,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>DisplayOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="+305"/>
+        <location filename="../optionsdialog.cpp" line="+323"/>
         <source>&amp;Unit to show amounts in: </source>
         <translation type="unfinished">&amp;显示总额所用的单位:</translation>
     </message>
@@ -1432,7 +1439,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>MainOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="-193"/>
+        <location filename="../optionsdialog.cpp" line="-196"/>
         <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished">&amp;window系统启动时启动CBX</translation>
     </message>
@@ -1535,7 +1542,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location line="-167"/>
+        <location line="-181"/>
         <source>Main</source>
         <translation type="unfinished">主要的</translation>
     </message>
@@ -1550,7 +1557,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="unfinished">选项</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+54"/>
+        <location line="+9"/>
         <source>This setting will take effect after restarting CBX Vault.</source>
         <translation type="unfinished">重新启动CBX金库后设置才能生效.</translation>
     </message>
@@ -1691,7 +1699,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">default</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-9"/>
+        <location line="+9"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
@@ -2554,7 +2563,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>SplashScreen</name>
     <message>
-        <location filename="../splashscreen.cpp" line="+34"/>
+        <location filename="../splashscreen.cpp" line="+33"/>
         <source>CBX VAULT</source>
         <translation type="unfinished">CBX金库</translation>
     </message>

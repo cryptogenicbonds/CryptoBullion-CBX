@@ -37,6 +37,7 @@ private slots:
     void disableApply();
 
     void showRestartWarning_Proxy();
+    void showRestartWarning_Lang();
 
 private:
     QListWidget *contents_widget;
@@ -46,6 +47,7 @@ private:
     QPushButton *apply_button;
 
     bool fRestartWarningDisplayed_Proxy;
+    bool fRestartWarningDisplayed_Lang;
 
     // Pages
     MainOptionsPage *main_page;

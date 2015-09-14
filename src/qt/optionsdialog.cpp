@@ -29,8 +29,8 @@ class MainOptionsPage : public QWidget
     Q_OBJECT
 public:
     explicit MainOptionsPage(QWidget *parent=0);
-
     void setMapper(MonitoredDataMapper *mapper);
+    QCheckBox *connect_socks4;
 private:
     QCheckBox *bitcoin_at_startup;
 #ifndef Q_WS_MAC
@@ -39,8 +39,7 @@ private:
     QCheckBox *map_port_upnp;
 #ifndef Q_WS_MAC
     QCheckBox *minimize_on_close;
-#endif
-    QCheckBox *connect_socks4;
+#endif    
     QCheckBox *no_spend_unconfirmed_change;
     QCheckBox *detach_database;
     QLineEdit *proxy_ip;
@@ -61,11 +60,12 @@ public:
     void showRestartWarning_Lang();
     void setMapper(MonitoredDataMapper *mapper);
     bool fRestartWarningDisplayed_Lang;
+    QValueComboBox *comboTranslationLang;
 private:
     QValueComboBox *unit;
     QCheckBox *display_addresses;
     QCheckBox *coin_control_features;
-    QValueComboBox *comboTranslationLang;
+
 signals:
 
 public slots:
@@ -77,7 +77,8 @@ public slots:
 OptionsDialog::OptionsDialog(QWidget *parent):
     QDialog(parent), contents_widget(0), pages_widget(0),
     model(0), main_page(0), display_page(0),
-    fRestartWarningDisplayed_Proxy(false)
+    fRestartWarningDisplayed_Proxy(false),
+    fRestartWarningDisplayed_Lang(false)
 {
     contents_widget = new QListWidget();
     contents_widget->setMaximumWidth(128);
@@ -137,6 +138,11 @@ void OptionsDialog::setModel(OptionsModel *model)
     display_page->setMapper(mapper);
 
     mapper->toFirst();
+
+    /* warn only when language selection changes by user action (placed here so init via mapper doesn't trigger this) */
+    connect(display_page->comboTranslationLang, SIGNAL(valueChanged()), this, SLOT(showRestartWarning_Lang()));
+    //connect(main_page->connect_socks4, SIGNAL(valueChanged()), this, SLOT(showRestartWarning_Proxy()));
+    connect(main_page->connect_socks4, SIGNAL(toggled(bool)), this, SLOT(showRestartWarning_Proxy()));
 }
 
 void OptionsDialog::changePage(int index)
@@ -161,6 +167,15 @@ void OptionsDialog::showRestartWarning_Proxy()
     {
         QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting CBX Vault."), QMessageBox::Ok);
         fRestartWarningDisplayed_Proxy = true;
+    }
+}
+
+void OptionsDialog::showRestartWarning_Lang()
+{
+    if(!fRestartWarningDisplayed_Lang)
+    {
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting CBX Vault."), QMessageBox::Ok);
+        fRestartWarningDisplayed_Lang = true;
     }
 }
 
@@ -260,7 +275,7 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     setLayout(layout);
 
     connect(connect_socks4, SIGNAL(toggled(bool)), proxy_ip, SLOT(setEnabled(bool)));
-    connect(connect_socks4, SIGNAL(toggled(bool)), proxy_port, SLOT(setEnabled(bool)));
+    connect(connect_socks4, SIGNAL(toggled(bool)), proxy_port, SLOT(setEnabled(bool)));    
 
 #ifndef USE_UPNP
     map_port_upnp->setEnabled(true);
@@ -292,6 +307,9 @@ void MainOptionsPage::setMapper(MonitoredDataMapper *mapper)
     mapper->addMapping(proxy_port, OptionsModel::ProxyPort);
     mapper->addMapping(fee_edit, OptionsModel::Fee);
     mapper->addMapping(detach_database, OptionsModel::DetachDatabases);
+
+    // warning handler for proxy setting change
+    connect(connect_socks4, SIGNAL(clicked(bool)), this, SLOT(showRestartWarning_Proxy()));
 }
 
 DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):

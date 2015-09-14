@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr">
+<TS version="2.1" language="fr">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -808,7 +808,7 @@ Adresse: %4
     <message>
         <location line="+3"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -897,7 +897,7 @@ Adresse: %4
         <location line="+19"/>
         <location line="+32"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">0</translation>
     </message>
     <message>
         <location line="-19"/>
@@ -1167,7 +1167,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
 <context>
     <name>DisplayOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="+305"/>
+        <location filename="../optionsdialog.cpp" line="+323"/>
         <source>&amp;Unit to show amounts in: </source>
         <translation type="unfinished">Unités pour afficher les montants : </translation>
     </message>
@@ -1427,7 +1427,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
 <context>
     <name>MainOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="-193"/>
+        <location filename="../optionsdialog.cpp" line="-196"/>
         <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished">Lancer l&apos;application CBX lors du démarrage</translation>
     </message>
@@ -1530,7 +1530,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location line="-167"/>
+        <location line="-181"/>
         <source>Main</source>
         <translation type="unfinished">Principal</translation>
     </message>
@@ -1545,7 +1545,8 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
         <translation>Options</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+54"/>
+        <location line="+9"/>
         <source>This setting will take effect after restarting CBX Vault.</source>
         <translation type="unfinished">Ce réglage nécessitera un redémarrage de cette application.</translation>
     </message>
@@ -1690,7 +1691,8 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
         <translation type="obsolete">default</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-9"/>
+        <location line="+9"/>
         <source>Warning</source>
         <translation type="unfinished">Warning</translation>
     </message>
@@ -1712,7 +1714,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     </message>
     <message>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">L&apos;information affichée est peut-être désuète. Votre voûte se synchonisera automatiquement au réseau Crypto Bullion après qu&apos;une connection soit établie, mais ce processus n&apos;est pas terminé.</translation>
+        <translation type="obsolete">L&apos;information affichée est peut-être désuète. Votre voûte se synchonisera automatiquement au réseau Crypto Bullion après qu&apos;une connection soit établie, mais ce processus n&apos;est pas terminé.</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -2553,7 +2555,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <location filename="../splashscreen.cpp" line="+34"/>
+        <location filename="../splashscreen.cpp" line="+33"/>
         <source>CBX VAULT</source>
         <translation type="unfinished">Voûte CBX</translation>
     </message>

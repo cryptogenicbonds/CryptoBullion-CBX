@@ -1166,7 +1166,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>DisplayOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="+305"/>
+        <location filename="../optionsdialog.cpp" line="+323"/>
         <source>&amp;Unit to show amounts in: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1426,7 +1426,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>MainOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="-193"/>
+        <location filename="../optionsdialog.cpp" line="-196"/>
         <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1529,7 +1529,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location line="-167"/>
+        <location line="-181"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1544,7 +1544,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation>Опции</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+54"/>
+        <location line="+9"/>
         <source>This setting will take effect after restarting CBX Vault.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1685,7 +1686,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <translation type="obsolete">по умолчанию</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-9"/>
+        <location line="+9"/>
         <source>Warning</source>
         <translation type="unfinished">Внимание</translation>
     </message>
@@ -2576,7 +2578,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
 <context>
     <name>SplashScreen</name>
     <message>
-        <location filename="../splashscreen.cpp" line="+34"/>
+        <location filename="../splashscreen.cpp" line="+33"/>
         <source>CBX VAULT</source>
         <translation type="unfinished"></translation>
     </message>

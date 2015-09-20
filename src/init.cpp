@@ -123,6 +123,7 @@ void HandleSIGHUP(int)
 #if !defined(QT_GUI)
 bool AppInit(int argc, char* argv[])
 {
+    boost::thread_group threadGroup;
     bool fRet = false;
     try
     {
@@ -148,7 +149,7 @@ bool AppInit(int argc, char* argv[])
                   "  CryptoBulliond [options] help                " + _("List commands") + "\n" +
                   "  CryptoBulliond [options] help <command>      " + _("Get help for a command") + "\n";
 
-            strUsage += "\n" + HelpMessage();
+            strUsage += "\n" + HelpMessage(HMM_BITCOIND);
 
             fprintf(stdout, "%s", strUsage.c_str());
             return false;
@@ -165,7 +166,7 @@ bool AppInit(int argc, char* argv[])
             exit(ret);
         }
 
-        fRet = AppInit2();
+        fRet = AppInit2(threadGroup);
     }
     catch (std::exception& e) {
         PrintException(&e, "AppInit()");

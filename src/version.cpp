@@ -14,7 +14,7 @@ const std::string CLIENT_NAME("Satoshi");
 
 // Client version number
 // Refer to version.h for current version number
-#define CLIENT_VERSION_SUFFIX   "-cbx test build 4"
+#define CLIENT_VERSION_SUFFIX   "-cbx test build 5"
 
 
 // The following part of the code determines the CLIENT_BUILD variable.

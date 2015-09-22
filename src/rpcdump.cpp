@@ -144,15 +144,15 @@ Value dumpprivkey(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "dumpprivkey <novacoinaddress>\n"
-            "Reveals the private key corresponding to <novacoinaddress>.");
+            "dumpprivkey <cbxaddress>\n"
+            "Reveals the private key corresponding to <cbxaddress>.");
 
     EnsureWalletIsUnlocked();
 
     string strAddress = params[0].get_str();
     CBitcoinAddress address;
     if (!address.SetString(strAddress))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid NovaCoin address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
     if (fWalletUnlockMintOnly) // ppcoin: no dumpprivkey in mint-only mode
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Wallet is unlocked for minting only.");
     CKeyID keyID;

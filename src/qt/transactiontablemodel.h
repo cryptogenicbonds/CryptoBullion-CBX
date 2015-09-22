@@ -1,6 +1,7 @@
 #ifndef TRANSACTIONTABLEMODEL_H
 #define TRANSACTIONTABLEMODEL_H
 
+#include <QEvent>
 #include <QAbstractTableModel>
 #include <QStringList>
 

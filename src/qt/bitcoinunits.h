@@ -18,6 +18,7 @@ public:
     enum Unit
     {
         BTC,
+        cBULLS,
         mBTC,
         uBTC
     };

@@ -123,6 +123,7 @@ void HandleSIGHUP(int)
 #if !defined(QT_GUI)
 bool AppInit(int argc, char* argv[])
 {
+    boost::thread_group threadGroup;
     bool fRet = false;
     try
     {
@@ -148,7 +149,7 @@ bool AppInit(int argc, char* argv[])
                   "  CryptoBulliond [options] help                " + _("List commands") + "\n" +
                   "  CryptoBulliond [options] help <command>      " + _("Get help for a command") + "\n";
 
-            strUsage += "\n" + HelpMessage();
+            strUsage += "\n" + HelpMessage(HMM_BITCOIND);
 
             fprintf(stdout, "%s", strUsage.c_str());
             return false;
@@ -165,7 +166,7 @@ bool AppInit(int argc, char* argv[])
             exit(ret);
         }
 
-        fRet = AppInit2();
+        fRet = AppInit2(threadGroup);
     }
     catch (std::exception& e) {
         PrintException(&e, "AppInit()");
@@ -220,7 +221,7 @@ bool static Bind(const CService &addr, bool fError = true) {
 }
 
 // Core-specific options shared between UI and daemon
-std::string HelpMessage()
+std::string HelpMessage(HelpMessageMode hmm)
 {
     string strUsage = _("Options:") + "\n" +
         "  -?                     " + _("This help message") + "\n" +
@@ -333,7 +334,7 @@ void UpdateUIWithDBUpgradeProgress(double percent) {
 /** Initialize bitcoin.
  *  @pre Parameters should be parsed and config file should be read.
  */
-bool AppInit2()
+bool AppInit2(boost::thread_group& threadGroup)
 {
     // ********************************************************* Step 1: setup
 #ifdef _MSC_VER
@@ -954,8 +955,9 @@ bool AppInit2()
     printf("mapWallet.size() = %"PRIszu"\n",       pwalletMain->mapWallet.size());
     printf("mapAddressBook.size() = %"PRIszu"\n",  pwalletMain->mapAddressBook.size());
 
-    if (!NewThread(StartNode, NULL))
-        InitError(_("Error: could not start node"));
+    //if (!NewThread(StartNode, NULL))
+      //  InitError(_("Error: could not start node"));
+    StartNode(threadGroup);
 
     if (fServer)
         NewThread(ThreadRPCServer, NULL);

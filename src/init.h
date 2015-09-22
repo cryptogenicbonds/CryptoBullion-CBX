@@ -7,11 +7,18 @@
 
 #include "wallet.h"
 
+/* The help message mode determines what help message to show */
+enum HelpMessageMode
+{
+    HMM_BITCOIND,
+    HMM_BITCOIN_QT
+};
+
 extern CWallet* pwalletMain;
 
 void StartShutdown();
 void Shutdown(void* parg);
-bool AppInit2();
-std::string HelpMessage();
+bool AppInit2(boost::thread_group& threadGroup);
+std::string HelpMessage(HelpMessageMode hmm);
 
 #endif

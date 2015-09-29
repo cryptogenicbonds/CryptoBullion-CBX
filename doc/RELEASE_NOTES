@@ -1,5 +1,5 @@
-CryptoBullion version 1.2.0.6 released
-20 April 2015
+CryptoBullion version 1.2.0.7 released
+29 September 2015
 
 Download here: http://cryptobullion.io/storage-use/
 
@@ -11,15 +11,17 @@ https://github.com/cryptogenicbonds/CGB
 
 Upgrade Notes
 --------------
-CryptoBullion now uses LevelDB (as opposed to BerkeleyDB) for storing the blockchain database. When this version is first run it will attempt to rename the data directory (eg .CryptogenicBullion -> .CryptoBullion)and then perform an in-place upgrade of the blockchain database. During the conversion process, block hashes are calculated and cached to disk to improve startup time dramatically. It is highly recommended that you back-up you datafiles (including your wallet.dat) before running this release.
+Release includes added translation sets for non-English users, IRC chat functionality inside the Vault and new designation for 1/100th CBX - 'Bulls'. It is highly recommended that you back-up you datafiles (including your wallet.dat) before running this release.
 
 How to Upgrade
 --------------
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/CryptoBullion-Qt (on Mac) or cryptobulliond/CryptoBullion-qt (on Linux).
-
-The first time you run 1.2.0.6 your blockchain database will be upgraded from BerkeleyDB to LevelDB. This process may take some time, but you should notice progress feedback on the splash screen.
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then copy over /Appications/CryptoBullion-Qt (on Windows) or /Applications/CryptoBullion-Qt (on Mac) or cryptobulliond/CryptoBullion-qt (on Linux).
 
 ** Please ensure you backup your blockchain data and wallet (wallet.dat) before upgrading to this release. Once upgraded to LevelDB, your blockchain database cannot be downgraded. **
+
+1.2.0.6 Release notes
+---------------------
+CryptoBullion now uses LevelDB (as opposed to BerkeleyDB) for storing the blockchain database. When this version is first run it will attempt to rename the data directory (eg .CryptogenicBullion -> .CryptoBullion)and then perform an in-place upgrade of the blockchain database. During the conversion process, block hashes are calculated and cached to disk to improve startup time dramatically. It is highly recommended that you back-up you datafiles (including your wallet.dat) before running this release.
 
 1.2.0.5 Release notes
 ---------------------

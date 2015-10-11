@@ -1,9 +1,9 @@
-Building Cryptogenic Bullion
+Building Crypto Bullion
 
-See doc/readme-qt.rst for instructions on building Cryptogenic Bullion QT,
+See doc/readme-qt.rst for instructions on building Crypto Bullion QT,
 the intended-for-end-users, nice-graphical-interface, reference
-implementation of Cryptogenic Bullion.
+implementation of Crypto Bullion.
 
-See doc/build-*.txt for instructions on building cryptogenicbulliond,
+See doc/build-*.txt for instructions on building cryptobulliond,
 the intended-for-services, no-graphical-interface, reference
-implementation of Cryptogenic Bullion.
+implementation of Crypto Bullion.

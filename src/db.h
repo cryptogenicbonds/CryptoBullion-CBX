@@ -2,8 +2,8 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef BITCOIN_DB_H
-#define BITCOIN_DB_H
+#ifndef CRYPTOBULLION_DB_H
+#define CRYPTOBULLION_DB_H
 
 #include "main.h"
 
@@ -326,4 +326,4 @@ public:
 };
 
 
-#endif // BITCOIN_DB_H
+#endif // CRYPTOBULLION_DB_H

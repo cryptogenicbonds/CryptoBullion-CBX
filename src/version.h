@@ -1,8 +1,8 @@
 // Copyright (c) 2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef BITCOIN_VERSION_H
-#define BITCOIN_VERSION_H
+#ifndef CRYPTOBULLION_VERSION_H
+#define CRYPTOBULLION_VERSION_H
 
 #include "clientversion.h"
 #include <string>
@@ -54,8 +54,8 @@ static const int BIP0031_VERSION = 60000;
 static const int MEMPOOL_GD_VERSION = 60002;
 
 #define DISPLAY_VERSION_MAJOR       1
-#define DISPLAY_VERSION_MINOR       2
+#define DISPLAY_VERSION_MINOR       3
 #define DISPLAY_VERSION_REVISION    0
-#define DISPLAY_VERSION_BUILD       7
+#define DISPLAY_VERSION_BUILD       0
 
 #endif

@@ -4,7 +4,7 @@
 
 #include "init.h" // for pwalletMain
 #include "db.h"
-#include "bitcoinrpc.h"
+#include "cryptobullionrpc.h"
 #include "ui_interface.h"
 #include "base58.h"
 
@@ -44,7 +44,7 @@ Value importprivkey(const Array& params, bool fHelp)
     string strLabel = "";
     if (params.size() > 1)
         strLabel = params[1].get_str();
-    CBitcoinSecret vchSecret;
+    CCryptobullionSecret vchSecret;
     bool fGood = vchSecret.SetString(strSecret);
 
     if (!fGood) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid private key");
@@ -80,7 +80,7 @@ Value importaddress(const Array& params, bool fHelp)
             "Adds an address or script (in hex) that can be watched as if it were in your wallet but cannot be used to spend.");
 
     CScript script;
-    CBitcoinAddress address(params[0].get_str());
+    CCryptobullionAddress address(params[0].get_str());
     if (address.IsValid()) {
         script.SetDestination(address.Get());
     } else if (IsHex(params[0].get_str())) {
@@ -150,7 +150,7 @@ Value dumpprivkey(const Array& params, bool fHelp)
     EnsureWalletIsUnlocked();
 
     string strAddress = params[0].get_str();
-    CBitcoinAddress address;
+    CCryptobullionAddress address;
     if (!address.SetString(strAddress))
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
     if (fWalletUnlockMintOnly) // ppcoin: no dumpprivkey in mint-only mode
@@ -162,7 +162,7 @@ Value dumpprivkey(const Array& params, bool fHelp)
     bool fCompressed;
     if (!pwalletMain->GetSecret(keyID, vchSecret, fCompressed))
         throw JSONRPCError(RPC_WALLET_ERROR, "Private key for address " + strAddress + " is not known");
-    return CBitcoinSecret(vchSecret, fCompressed).ToString();
+    return CCryptobullionSecret(vchSecret, fCompressed).ToString();
 }
 
 Value dumpwallet(const Array& params, bool fHelp)

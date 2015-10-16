@@ -2,7 +2,7 @@
 #include "ui_sendcoinsentry.h"
 #include "guiutil.h"
 #include "main.h"
-#include "bitcoinunits.h"
+#include "cryptobullionunits.h"
 #include "addressbookpage.h"
 #include "walletmodel.h"
 #include "optionsmodel.h"
@@ -117,7 +117,7 @@ bool SendCoinsEntry::validate()
         if(ui->payAmount->value() < MIN_TXOUT_AMOUNT)
         {
             int unit = model->getOptionsModel()->getDisplayUnit();
-            QMessageBox::warning(this, tr("Amount too small"), tr("Amount must be at least %1").arg(BitcoinUnits::formatWithUnit(unit, MIN_TXOUT_AMOUNT)),
+            QMessageBox::warning(this, tr("Amount too small"), tr("Amount must be at least %1").arg(CryptobullionUnits::formatWithUnit(unit, MIN_TXOUT_AMOUNT)),
                                   QMessageBox::Abort, QMessageBox::Abort);
 
             // Cannot send 0 coins or less

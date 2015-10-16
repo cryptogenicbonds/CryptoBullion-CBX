@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = CryptoBullion-qt
-VERSION = 0.7.3
+VERSION = 1.3.0.0
 INCLUDEPATH += src src/json src/qt $$PWD
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
@@ -8,6 +8,7 @@ CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
 QT += network
+QMAKE_MAC_SDK=macosx10.10
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
@@ -15,37 +16,8 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 win32 {
-        BOOST_INCLUDE_PATH+="D:\_coinDev\deps\boost_1_55_0"
-        BOOST_LIB_PATH="D:\_coinDev\deps\boost_1_55_0\stage\lib"
-
-        BDB_INCLUDE_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
-        BDB_LIB_PATH="D:\_coinDev\deps\db-4.8.30.NC\build_unix"
-
-        OPENSSL_INCLUDE_PATH+="D:\_coinDev\deps\openssl-1.0.1k\include"
-        OPENSSL_LIB_PATH="D:\_coinDev\deps\openssl-1.0.1k"
-
-        QRENCODE_LIB_PATH="D:\_coinDev\deps\qrencode-3.4.4\.libs"
-        QRENCODE_INCLUDE_PATH="D:\_coinDev\deps\qrencode-3.4.4"
-
-        MINIUPNPC_INCLUDE_PATH=D:\_coinDev\deps\miniupnpc
-        MINIUPNPC_LIB_PATH=D:\_coinDev\deps\miniupnpc
-
-        #INCLUDEPATH+="D:\_coinDev\Qt\5.3.2\include\QtWidgets"
-
-        windows:LIBS += -lshlwapi
-        LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
-        #LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
-        #windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-        #LIBS += -lboost_system-mgw48-mt-sd-1_55 -lboost_filesystem-mgw48-mt-sd-1_55 -lboost_program_options-mgw48-mt-sd-1_55 -lboost_thread-mgw48-mt-sd-1_55
-        BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
-        #BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
-        #BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
-        #BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-        #BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-        #OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1i/include
-        #OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1i
-        #MINIUPNPC_INCLUDE_PATH=C:/deps/
-        #MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+    windows:LIBS += -lshlwapi
+    LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 }
 
 # pass USE_MXE flag to cross compile Win32 wallet using MXE.
@@ -59,11 +31,11 @@ contains(USE_MXE, 1) {
         MOC_DIR = build
         UI_DIR = build
 }
-
+RELEASE=1
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
-    # Mac: compile for maximum compatibility (10.5, 32-bit)
-    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+    
+    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.10 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
 
     !windows:!macx {
         # Linux: static link
@@ -75,8 +47,10 @@ contains(RELEASE, 1) {
 }
 
 macx{
-QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
-QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
+	QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.9
+	QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
+	OPENSSL_INCLUDE_PATH=/usr/local/Cellar/openssl/1.0.2d_1/include
+	OPENSSL_LIB_PATH=/usr/local/Cellar/openssl/1.0.2d_1/lib
 }
 
 !win32 {
@@ -99,6 +73,7 @@ contains(USE_QRCODE, 1) {
     LIBS += -lqrencode
 }
 
+#macx:USE_UPNPN=-
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
 #  or: qmake "USE_UPNP=0" (disabled by default)
 #  or: qmake "USE_UPNP=-" (not supported)
@@ -111,9 +86,17 @@ contains(USE_UPNP, -) {
     count(USE_UPNP, 0) {
         USE_UPNP=1
     }
-    INCLUDEPATH += $$PWD/src/miniupnpc/
-    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
-    LIBS += $$PWD/src/miniupnpc/libminiupnpc.a
+    
+    macx{
+        INCLUDEPATH += /usr/local/Cellar/miniupnpc/1.9.20150609/include
+        DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
+        LIBS += /usr/local/Cellar/miniupnpc/1.9.20150609/lib/libminiupnpc.a
+    }else{
+        INCLUDEPATH += $$PWD/src/miniupnpc/
+        DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
+        LIBS += $$PWD/src/miniupnpc/libminiupnpc.a
+    }
+    
     win32:LIBS += -liphlpapi
 }
 
@@ -136,8 +119,8 @@ contains(USE_IPV6, -) {
     DEFINES += USE_IPV6=$$USE_IPV6
 }
 
-contains(BITCOIN_NEED_QT_PLUGINS, 1) {
-    DEFINES += BITCOIN_NEED_QT_PLUGINS
+contains(CRYPTOBULLION_NEED_QT_PLUGINS, 1) {
+    DEFINES += CRYPTOBULLION_NEED_QT_PLUGINS
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
@@ -145,6 +128,7 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
 contains(USE_BDB, 1) {
     message(Building with Berkeley DB transaction index)
     SOURCES += src/txdb-bdb.cpp
+    #LIBS += -ldb_cxx$$BDB_LIB_SUFFIX
 } else {
     message(Building with LevelDB transaction index)
     DEFINES += USE_LEVELDB
@@ -160,7 +144,7 @@ contains(USE_BDB, 1) {
         isEmpty(QMAKE_RANLIB) {
             QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
         }
-        LIBS += -lshlwapi
+        LIBS += -lshlwapi -Lsrc/leveldb/
         genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
     }
     genleveldb.target = $$PWD/src/leveldb/libleveldb.a
@@ -171,16 +155,6 @@ contains(USE_BDB, 1) {
     #QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
 }
 
-# regenerate src/build.h
-!windows|contains(USE_BUILD_INFO, 1) {
-    genbuild.depends = FORCE
-    genbuild.commands = cd $$PWD; /bin/sh share/genbuild.sh $$OUT_PWD/build/build.h
-    genbuild.target = $$OUT_PWD/build/build.h
-    PRE_TARGETDEPS += $$OUT_PWD/build/build.h
-    QMAKE_EXTRA_TARGETS += genbuild
-    DEFINES += HAVE_BUILD_INFO
-}
-
 QMAKE_CXXFLAGS += -msse2
 QMAKE_CFLAGS += -msse2
 QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
@@ -188,7 +162,7 @@ QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wform
 # Input
 DEPENDPATH += src src/json src/qt
 HEADERS += \
-    src/qt/bitcoingui.h \
+    src/qt/cryptobulliongui.h \
     src/qt/transactiontablemodel.h \
     src/qt/addresstablemodel.h \
     src/qt/optionsdialog.h \
@@ -197,7 +171,7 @@ HEADERS += \
     src/qt/signverifymessagedialog.h \
     src/qt/aboutdialog.h \
     src/qt/editaddressdialog.h \
-    src/qt/bitcoinaddressvalidator.h \
+    src/qt/cryptobullionaddressvalidator.h \
     src/alert.h \
     src/addrman.h \
     src/base58.h \
@@ -239,19 +213,19 @@ HEADERS += \
     src/qt/monitoreddatamapper.h \
     src/qt/transactiondesc.h \
     src/qt/transactiondescdialog.h \
-    src/qt/bitcoinamountfield.h \
+    src/qt/cryptobullionamountfield.h \
     src/wallet.h \
     src/keystore.h \
     src/qt/transactionfilterproxy.h \
     src/qt/transactionview.h \
     src/qt/walletmodel.h \
-    src/bitcoinrpc.h \
+    src/cryptobullionrpc.h \
     src/qt/overviewpage.h \
     src/qt/csvmodelwriter.h \
     src/crypter.h \
     src/qt/sendcoinsentry.h \
     src/qt/qvalidatedlineedit.h \
-    src/qt/bitcoinunits.h \
+    src/qt/cryptobullionunits.h \
     src/qt/qvaluecombobox.h \
     src/qt/askpassphrasedialog.h \
     src/protocol.h \
@@ -269,13 +243,13 @@ HEADERS += \
     src/qt/chatwindow.h \
     src/qt/serveur.h \
     src/qt/splashscreen.h \
-    src/bitcoin.h \
+    src/cryptobullion.h \
     src/qt/utilitydialog.h \
     src/qt/winshutdownmonitor.h
 
 SOURCES += \
-    src/qt/bitcoin.cpp \
-    src/qt/bitcoingui.cpp \
+    src/qt/cryptobullion.cpp \
+    src/qt/cryptobulliongui.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \
@@ -284,7 +258,7 @@ SOURCES += \
     src/qt/signverifymessagedialog.cpp \
     src/qt/aboutdialog.cpp \
     src/qt/editaddressdialog.cpp \
-    src/qt/bitcoinaddressvalidator.cpp \
+    src/qt/cryptobullionaddressvalidator.cpp \
     src/alert.cpp \
     src/version.cpp \
     src/sync.cpp \
@@ -307,14 +281,14 @@ SOURCES += \
     src/qt/monitoreddatamapper.cpp \
     src/qt/transactiondesc.cpp \
     src/qt/transactiondescdialog.cpp \
-    src/qt/bitcoinstrings.cpp \
-    src/qt/bitcoinamountfield.cpp \
+    src/qt/cryptobullionstrings.cpp \
+    src/qt/cryptobullionamountfield.cpp \
     src/wallet.cpp \
     src/keystore.cpp \
     src/qt/transactionfilterproxy.cpp \
     src/qt/transactionview.cpp \
     src/qt/walletmodel.cpp \
-    src/bitcoinrpc.cpp \
+    src/cryptobullionrpc.cpp \
     src/rpcdump.cpp \
     src/rpcnet.cpp \
     src/rpcmining.cpp \
@@ -326,7 +300,7 @@ SOURCES += \
     src/crypter.cpp \
     src/qt/sendcoinsentry.cpp \
     src/qt/qvalidatedlineedit.cpp \
-    src/qt/bitcoinunits.cpp \
+    src/qt/cryptobullionunits.cpp \
     src/qt/qvaluecombobox.cpp \
     src/qt/askpassphrasedialog.cpp \
     src/protocol.cpp \
@@ -348,9 +322,9 @@ SOURCES += \
     src/qt/winshutdownmonitor.cpp
 
 RESOURCES += \
-src/qt/bitcoin.qrc
+src/qt/cryptobullion.qrc
 #    src/qt/qdarkstyle/style.qrc
-#    src/qt/bitcoin.qrc
+#    src/qt/cryptobullion.qrc
 
 FORMS += \
     src/qt/forms/sendcoinsdialog.ui \
@@ -374,21 +348,21 @@ SOURCES += src/qt/qrcodedialog.cpp
 FORMS += src/qt/forms/qrcodedialog.ui
 }
 
-contains(BITCOIN_QT_TEST, 1) {
+contains(CRYPTOBULLION_QT_TEST, 1) {
 SOURCES += src/qt/test/test_main.cpp \
     src/qt/test/uritests.cpp
 HEADERS += src/qt/test/uritests.h
 DEPENDPATH += src/qt/test
 QT += testlib
 TARGET = CryptoBullion-qt_test
-DEFINES += BITCOIN_QT_TEST
+DEFINES += CRYPTOBULLION_QT_TEST
 }
 
 CODECFORTR = UTF-8
 
 # for lrelease/lupdate
-# also add new translations to src/qt/bitcoin.qrc under translations/
-TRANSLATIONS = $$files(src/qt/locale/bitcoin_*.ts)
+# also add new translations to src/qt/cryptobullion.qrc under translations/
+TRANSLATIONS = $$files(src/qt/locale/cryptobullion_*.ts)
 
 isEmpty(QMAKE_LRELEASE) {
     #win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
@@ -406,7 +380,7 @@ QMAKE_EXTRA_COMPILERS += TSQM
 
 # "Other files" to show in Qt Creator
 OTHER_FILES += \
-    doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc src/test/*.cpp src/test/*.h src/qt/test/*.cpp src/qt/test/*.h \
+    doc/*.rst doc/*.txt doc/README README.md res/cryptobullion-qt.rc src/test/*.cpp src/test/*.h src/qt/test/*.cpp src/qt/test/*.h \
         src/qt/locale/*.ts \
     src/qt/res/style/cgbstyle.qss
 
@@ -422,7 +396,7 @@ isEmpty(BOOST_THREAD_LIB_SUFFIX) {
 }
 
 isEmpty(BDB_LIB_PATH) {
-    macx:BDB_LIB_PATH = /opt/local/lib/db48
+    macx:BDB_LIB_PATH = /usr/local/Cellar/berkeley-db4/4.8.30/lib
 }
 
 isEmpty(BDB_LIB_SUFFIX) {
@@ -430,19 +404,19 @@ isEmpty(BDB_LIB_SUFFIX) {
 }
 
 isEmpty(BDB_INCLUDE_PATH) {
-    macx:BDB_INCLUDE_PATH = /opt/local/include/db48
+    macx:BDB_INCLUDE_PATH = /usr/local/Cellar/berkeley-db4/4.8.30/include
 }
 
 isEmpty(BOOST_LIB_PATH) {
-    macx:BOOST_LIB_PATH = /opt/local/lib
+    macx:BOOST_LIB_PATH = /usr/local/Cellar/boost/1.58.0/lib
 }
 
 isEmpty(BOOST_INCLUDE_PATH) {
-    macx:BOOST_INCLUDE_PATH = /opt/local/include
+    macx:BOOST_INCLUDE_PATH = /usr/local/Cellar/boost/1.58.0/include
 }
 
 windows:DEFINES += WIN32
-windows:RC_FILE = src/qt/res/bitcoin-qt.rc
+windows:RC_FILE = src/qt/res/cryptobullion-qt.rc
 
 windows:!contains(MINGW_THREAD_BUGFIX, 0) {
     # At least qmake's win32-g++-cross profile is missing the -lmingwthrd
@@ -466,7 +440,7 @@ macx:LIBS += -framework Foundation -framework ApplicationServices -framework App
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
 macx:ICON = src/qt/res/icons/Cryptobullion.icns
 macx:TARGET = "CryptoBullion-Qt"
-macx:QMAKE_CFLAGS_THREAD += -pthread
+macx:QMAKE_CFLAGS_THREAD += -pthread -no-integrated-as
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread
 

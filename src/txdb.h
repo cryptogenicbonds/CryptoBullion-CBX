@@ -3,8 +3,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_TXDB_H
-#define BITCOIN_TXDB_H
+#ifndef CRYPTOBULLION_TXDB_H
+#define CRYPTOBULLION_TXDB_H
 
 // Allow switching between LevelDB and BerkelyDB here in case we need to temporarily
 // go back to BDB for any reason. Once we're confident enough with LevelDB to stick
@@ -17,4 +17,4 @@
 #include "txdb-bdb.h"
 #endif
 
-#endif  // BITCOIN_TXDB_H
+#endif  // CRYPTOBULLION_TXDB_H

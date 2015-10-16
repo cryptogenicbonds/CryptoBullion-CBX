@@ -45,7 +45,7 @@ QLabel { background: transparent; }</string>
       </sizepolicy>
      </property>
      <property name="pixmap">
-      <pixmap resource="../bitcoin.qrc">:/images/about</pixmap>
+      <pixmap resource="../cryptobullion.qrc">:/images/about</pixmap>
      </property>
     </widget>
    </item>
@@ -156,7 +156,7 @@ QLabel { background: transparent; }</string>
   </layout>
  </widget>
  <resources>
-  <include location="../bitcoin.qrc"/>
+  <include location="../cryptobullion.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -5,7 +5,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #include "txdb.h"
 #include "walletdb.h"
-#include "bitcoinrpc.h"
+#include "cryptobullionrpc.h"
 #include "net.h"
 #include "init.h"
 #include "util.h"
@@ -48,7 +48,7 @@ void ExitTimeout(void* parg)
 void StartShutdown()
 {
 #ifdef QT_GUI
-    // ensure we leave the Qt main loop for a clean GUI exit (Shutdown() is called in bitcoin.cpp afterwards)
+    // ensure we leave the Qt main loop for a clean GUI exit (Shutdown() is called in cryptobullion.cpp afterwards)
     uiInterface.QueueShutdown();
 #else
     // Without UI, Shutdown() can simply be started in a new thread
@@ -62,7 +62,7 @@ void Shutdown(void* parg)
     static bool fTaken;
 
     // Make this thread recognisable as the shutdown thread
-    RenameThread("bitcoin-shutoff");
+    RenameThread("cryptobullion-shutoff");
 
     bool fFirstThread = false;
     {
@@ -89,7 +89,7 @@ void Shutdown(void* parg)
         printf("CryptoBullion exited\n\n");
         fExit = true;
 #ifndef QT_GUI
-        // ensure non-UI client gets exited here, but let Bitcoin-Qt reach 'return 0;' in bitcoin.cpp
+        // ensure non-UI client gets exited here, but let Cryptobullion-Qt reach 'return 0;' in cryptobullion.cpp
         exit(0);
 #endif
     }
@@ -130,7 +130,7 @@ bool AppInit(int argc, char* argv[])
         //
         // Parameters
         //
-        // If Qt is used, parameters/bitcoin.conf are parsed in qt/bitcoin.cpp's main()
+        // If Qt is used, parameters/cryptobullion.conf are parsed in qt/cryptobullion.cpp's main()
         ParseParameters(argc, argv);
         if (!boost::filesystem::is_directory(GetDataDir(false)))
         {
@@ -141,7 +141,7 @@ bool AppInit(int argc, char* argv[])
 
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
-            // First part of help message is specific to bitcoind / RPC client
+            // First part of help message is specific to cryptobulliond / RPC client
             std::string strUsage = _("CryptoBullion version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
                   "  CryptoBulliond [options]                     " + "\n" +
@@ -149,7 +149,7 @@ bool AppInit(int argc, char* argv[])
                   "  CryptoBulliond [options] help                " + _("List commands") + "\n" +
                   "  CryptoBulliond [options] help <command>      " + _("Get help for a command") + "\n";
 
-            strUsage += "\n" + HelpMessage(HMM_BITCOIND);
+            strUsage += "\n" + HelpMessage(HMM_CRYPTOBULLIOND);
 
             fprintf(stdout, "%s", strUsage.c_str());
             return false;
@@ -183,7 +183,7 @@ int main(int argc, char* argv[])
 {
     bool fRet = false;
 
-    // Connect bitcoind signal handlers
+    // Connect cryptobulliond signal handlers
     noui_connect();
 
     fRet = AppInit(argc, argv);
@@ -298,7 +298,7 @@ std::string HelpMessage(HelpMessageMode hmm)
         "  -blockmaxsize=<n>      "   + _("Set maximum block size in bytes (default: 250000)") + "\n" +
         "  -blockprioritysize=<n> "   + _("Set maximum size of high-priority/low-fee transactions in bytes (default: 27000)") + "\n" +
 
-        "\n" + _("SSL options: (see the Bitcoin Wiki for SSL setup instructions)") + "\n" +
+        "\n" + _("SSL options: (see the Cryptobullion Wiki for SSL setup instructions)") + "\n" +
         "  -rpcssl                                  " + _("Use OpenSSL (https) for JSON-RPC connections") + "\n" +
         "  -rpcsslcertificatechainfile=<file.cert>  " + _("Server certificate file (default: server.cert)") + "\n" +
         "  -rpcsslprivatekeyfile=<file.pem>         " + _("Server private key (default: server.pem)") + "\n" +
@@ -315,7 +315,7 @@ bool LoadBlockIndexFromDisk(std::ostringstream *errors) {
         *errors << _("Error loading block index database") << "\n";
 
     // as LoadBlockIndex can take several minutes, it's possible the user
-    // requested to kill bitcoin-qt during the last operation. If so, exit.
+    // requested to kill cryptobullion-qt during the last operation. If so, exit.
     // As the program has not fully started yet, Shutdown() is possibly overkill.
     if (fRequestShutdown)
     {
@@ -331,7 +331,7 @@ void UpdateUIWithDBUpgradeProgress(double percent) {
         strprintf(_("Upgrade database\n%0.2f%% complete"), percent));
 }
 
-/** Initialize bitcoin.
+/** Initialize cryptobullion.
  *  @pre Parameters should be parsed and config file should be read.
  */
 bool AppInit2(boost::thread_group& threadGroup)
@@ -494,7 +494,7 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     std::string strDataDir = GetDataDir().string();
 
-    // Make sure only a single Bitcoin process is using the data directory.
+    // Make sure only a single Cryptobullion process is using the data directory.
     boost::filesystem::path pathLockFile = GetDataDir() / ".lock";
     FILE* file = fopen(pathLockFile.string().c_str(), "a"); // empty lock file; created if it doesn't exist.
     if (file) fclose(file);
@@ -766,7 +766,7 @@ bool AppInit2(boost::thread_group& threadGroup)
     }
 
     // as LoadBlockIndex can take several minutes, it's possible the user
-    // requested to kill bitcoin-qt during the last operation. If so, exit.
+    // requested to kill cryptobullion-qt during the last operation. If so, exit.
     // As the program has not fully started yet, Shutdown() is possibly overkill.
     if (fRequestShutdown)
     {

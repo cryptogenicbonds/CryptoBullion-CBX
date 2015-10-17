@@ -1,7 +1,7 @@
 #include "guiutil.h"
-#include "bitcoinaddressvalidator.h"
+#include "cryptobullionaddressvalidator.h"
 #include "walletmodel.h"
-#include "bitcoinunits.h"
+#include "cryptobullionunits.h"
 #include "util.h"
 #include "init.h"
 
@@ -53,7 +53,7 @@ QString dateTimeStr(qint64 nTime)
     return dateTimeStr(QDateTime::fromTime_t((qint32)nTime));
 }
 
-QFont bitcoinAddressFont()
+QFont cryptobullionAddressFont()
 {
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
@@ -62,9 +62,9 @@ QFont bitcoinAddressFont()
 
 void setupAddressWidget(QLineEdit *widget, QWidget *parent)
 {
-    widget->setMaxLength(BitcoinAddressValidator::MaxAddressLength);
-    widget->setValidator(new BitcoinAddressValidator(parent));
-    widget->setFont(bitcoinAddressFont());
+    widget->setMaxLength(CryptobullionAddressValidator::MaxAddressLength);
+    widget->setValidator(new CryptobullionAddressValidator(parent));
+    widget->setFont(cryptobullionAddressFont());
 }
 
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)
@@ -76,9 +76,9 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
     widget->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 }
 
-bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
+bool parseCryptobullionURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    if(uri.scheme() != QString("bitcoin"))
+    if(uri.scheme() != QString("cryptobullion"))
         return false;
 
     SendCoinsRecipient rv;
@@ -103,7 +103,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::BTC, i->second, &rv.amount))
+                if(!CryptobullionUnits::parse(CryptobullionUnits::BTC, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -121,18 +121,18 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
     return true;
 }
 
-bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
+bool parseCryptobullionURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert bitcoin:// to bitcoin:
+    // Convert cryptobullion:// to cryptobullion:
     //
-    //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because cryptobullion:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("bitcoin://"))
+    if(uri.startsWith("cryptobullion://"))
     {
-        uri.replace(0, 10, "bitcoin:");
+        uri.replace(0, 10, "cryptobullion:");
     }
     QUrl uriInstance(uri);
-    return parseBitcoinURI(uriInstance, out);
+    return parseCryptobullionURI(uriInstance, out);
 }
 
 QString HtmlEscape(const QString& str, bool fMultiLine)
@@ -318,7 +318,7 @@ boost::filesystem::path static StartupShortcutPath()
 
 bool GetStartOnSystemStartup()
 {
-    // check for Bitcoin.lnk
+    // check for Cryptobullion.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -433,7 +433,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         boost::filesystem::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out|std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a bitcoin.desktop file to the autostart directory:
+        // Write a cryptobullion.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         optionFile << "Name=CryptoBullion";
@@ -462,7 +462,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         tr("Usage:") + "\n" +
         "  CryptoBullion-qt [" + tr("command-line options") + "]                     " + "\n";
 
-    coreOptions = QString::fromStdString(HelpMessage(HMM_BITCOIN_QT));
+    coreOptions = QString::fromStdString(HelpMessage(HMM_CRYPTOBULLION_QT));
 
     uiOptions = tr("UI options") + ":\n" +
         "  -lang=<lang>           " + tr("Set language, for example \"de_DE\" (default: system locale)") + "\n" +

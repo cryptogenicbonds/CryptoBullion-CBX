@@ -68,7 +68,7 @@ bool CBasicKeyStore::AddWatchOnly(const CScript &dest)
     CTxDestination address;
     if (ExtractDestination(dest, address)) {
         CKeyID keyID;
-        CBitcoinAddress(address).GetKeyID(keyID);
+        CCryptobullionAddress(address).GetKeyID(keyID);
         if (HaveKey(keyID))
             return false;
     }

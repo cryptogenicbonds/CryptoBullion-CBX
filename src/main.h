@@ -2,8 +2,8 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef BITCOIN_MAIN_H
-#define BITCOIN_MAIN_H
+#ifndef CRYPTOBULLION_MAIN_H
+#define CRYPTOBULLION_MAIN_H
 
 #include "bignum.h"
 #include "sync.h"
@@ -120,7 +120,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle);
 typedef boost::signals2::signal<void (unsigned int bytesRead)> ExternalBlockFileProgress;
 bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress=NULL, int blockfileVersion = CLIENT_VERSION);
 
-void GenerateBitcoins(bool fGenerate, CWallet* pwallet);
+void GenerateCryptobullions(bool fGenerate, CWallet* pwallet);
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash1);
@@ -135,7 +135,7 @@ std::string GetWarnings(std::string strFor);
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock);
 uint256 WantedByOrphan(const CBlock* pblockOrphan);
 const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake);
-void BitcoinMiner(CWallet *pwallet, bool fProofOfStake);
+void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake);
 void ResendWalletTransactions();
 
 
@@ -588,7 +588,7 @@ public:
      */
     unsigned int GetP2SHSigOpCount(const MapPrevTx& mapInputs) const;
 
-    /** Amount of bitcoins spent by this transaction.
+    /** Amount of cryptobullions spent by this transaction.
         @return sum of all outputs (note: does not include fees)
      */
     int64 GetValueOut() const
@@ -603,7 +603,7 @@ public:
         return nValueOut;
     }
 
-    /** Amount of bitcoins coming in to this transaction
+    /** Amount of cryptobullions coming in to this transaction
         Note that lightweight clients may not know anything besides the hash of previous transactions,
         so may not be able to calculate this.
 

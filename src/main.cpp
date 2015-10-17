@@ -1400,7 +1400,7 @@ bool CTransaction::ConnectInputs(CTxDB& txdb, MapPrevTx inputs,
 {
     // Take over previous transactions' spent pointers
     // fBlock is true when this is called from AcceptBlock when a new best-block is added to the blockchain
-    // fMiner is true when called from the internal bitcoin miner
+    // fMiner is true when called from the internal cryptobullion miner
     // ... both are false when called from CTransaction::AcceptToMemoryPool
     if (!IsCoinBase())
     {
@@ -1677,7 +1677,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     if (!txdb.WriteBlockIndex(CDiskBlockIndex(pindex)))
         return error("Connect() : WriteBlockIndex for pindex failed");
 
-    // ppcoin: fees are not collected by miners as in bitcoin
+    // ppcoin: fees are not collected by miners as in cryptobullion
     // ppcoin: fees are destroyed to compensate the entire network
     if (fDebug && GetBoolArg("-printcreation"))
         printf("ConnectBlock() : destroy=%s nFees=%"PRI64d"\n", FormatMoney(nFees).c_str(), nFees);
@@ -3953,7 +3953,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// BitcoinMiner
+// CryptobullionMiner
 //
 
 int static FormatHashBlocks(void* pbuffer, unsigned int len)
@@ -4402,10 +4402,10 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
     if (hash > hashTarget && pblock->IsProofOfWork())
-        return error("BitcoinMiner : proof-of-work not meeting target");
+        return error("CryptobullionMiner : proof-of-work not meeting target");
 
     //// debug print
-    printf("BitcoinMiner:\n");
+    printf("CryptobullionMiner:\n");
     printf("new block found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
     printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
@@ -4414,7 +4414,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error("BitcoinMiner : generated block is stale");
+            return error("CryptobullionMiner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4427,19 +4427,19 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 
         // Process this block the same as if we had received it from another node
         if (!ProcessBlock(NULL, pblock))
-            return error("BitcoinMiner : ProcessBlock, block not accepted");
+            return error("CryptobullionMiner : ProcessBlock, block not accepted");
     }
 
     return true;
 }
 
-void static ThreadBitcoinMiner(void* parg);
+void static ThreadCryptobullionMiner(void* parg);
 
-static bool fGenerateBitcoins = false;
+static bool fGenerateCryptobullions = false;
 static bool fLimitProcessors = false;
 static int nLimitProcessors = -1;
 
-void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
+void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
     void *scratchbuf = scrypt_buffer_alloc();
 
@@ -4447,13 +4447,13 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
-    RenameThread("bitcoin-miner");
+    RenameThread("cryptobullion-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
 
-    while (fGenerateBitcoins || fProofOfStake)
+    while (fGenerateCryptobullions || fProofOfStake)
     {
         if (fShutdown)
             return;
@@ -4462,7 +4462,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             Sleep(1000);
             if (fShutdown)
                 return;
-            if ((!fGenerateBitcoins) && !fProofOfStake)
+            if ((!fGenerateCryptobullions) && !fProofOfStake)
                 return;
         }
 
@@ -4504,7 +4504,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             continue;
         }
 
-        printf("Running BitcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        printf("Running CryptobullionMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
@@ -4598,7 +4598,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             // Check for stop or if block needs to be rebuilt
             if (fShutdown)
                 return;
-            if (!fGenerateBitcoins)
+            if (!fGenerateCryptobullions)
                 return;
             if (fLimitProcessors && vnThreadsRunning[THREAD_MINER] > nLimitProcessors)
                 return;
@@ -4625,35 +4625,35 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     scrypt_buffer_free(scratchbuf);
 }
 
-void static ThreadBitcoinMiner(void* parg)
+void static ThreadCryptobullionMiner(void* parg)
 {
     CWallet* pwallet = (CWallet*)parg;
     try
     {
         vnThreadsRunning[THREAD_MINER]++;
-        BitcoinMiner(pwallet, false);
+        CryptobullionMiner(pwallet, false);
         vnThreadsRunning[THREAD_MINER]--;
     }
     catch (std::exception& e) {
         vnThreadsRunning[THREAD_MINER]--;
-        PrintException(&e, "ThreadBitcoinMiner()");
+        PrintException(&e, "ThreadCryptobullionMiner()");
     } catch (...) {
         vnThreadsRunning[THREAD_MINER]--;
-        PrintException(NULL, "ThreadBitcoinMiner()");
+        PrintException(NULL, "ThreadCryptobullionMiner()");
     }
     nHPSTimerStart = 0;
     if (vnThreadsRunning[THREAD_MINER] == 0)
         dHashesPerSec = 0;
-    printf("ThreadBitcoinMiner exiting, %d threads remaining\n", vnThreadsRunning[THREAD_MINER]);
+    printf("ThreadCryptobullionMiner exiting, %d threads remaining\n", vnThreadsRunning[THREAD_MINER]);
 }
 
 
-void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
+void GenerateCryptobullions(bool fGenerate, CWallet* pwallet)
 {
-    fGenerateBitcoins = fGenerate;
+    fGenerateCryptobullions = fGenerate;
     nLimitProcessors = GetArg("-genproclimit", -1);
     if (nLimitProcessors == 0)
-        fGenerateBitcoins = false;
+        fGenerateCryptobullions = false;
     fLimitProcessors = (nLimitProcessors != -1);
 
     if (fGenerate)
@@ -4665,11 +4665,11 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
         if (fLimitProcessors && nProcessors > nLimitProcessors)
             nProcessors = nLimitProcessors;
         int nAddThreads = nProcessors - vnThreadsRunning[THREAD_MINER];
-        printf("Starting %d BitcoinMiner threads\n", nAddThreads);
+        printf("Starting %d CryptobullionMiner threads\n", nAddThreads);
         for (int i = 0; i < nAddThreads; i++)
         {
-            if (!NewThread(ThreadBitcoinMiner, pwallet))
-                printf("Error: NewThread(ThreadBitcoinMiner) failed\n");
+            if (!NewThread(ThreadCryptobullionMiner, pwallet))
+                printf("Error: NewThread(ThreadCryptobullionMiner) failed\n");
             Sleep(10);
         }
     }

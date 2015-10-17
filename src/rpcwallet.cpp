@@ -6,7 +6,7 @@
 #include "txdb.h"
 #include "wallet.h"
 #include "walletdb.h"
-#include "bitcoinrpc.h"
+#include "cryptobullionrpc.h"
 #include "init.h"
 #include "base58.h"
 
@@ -147,11 +147,11 @@ Value getnewaddress(const Array& params, bool fHelp)
 
     pwalletMain->SetAddressBookName(keyID, strAccount);
 
-    return CBitcoinAddress(keyID).ToString();
+    return CCryptobullionAddress(keyID).ToString();
 }
 
 
-CBitcoinAddress GetAccountAddress(string strAccount, bool bForceNew=false)
+CCryptobullionAddress GetAccountAddress(string strAccount, bool bForceNew=false)
 {
     CWalletDB walletdb(pwalletMain->strWalletFile);
 
@@ -186,7 +186,7 @@ CBitcoinAddress GetAccountAddress(string strAccount, bool bForceNew=false)
         walletdb.WriteAccount(strAccount, account);
     }
 
-    return CBitcoinAddress(account.vchPubKey.GetID());
+    return CCryptobullionAddress(account.vchPubKey.GetID());
 }
 
 Value getaccountaddress(const Array& params, bool fHelp)
@@ -215,7 +215,7 @@ Value setaccount(const Array& params, bool fHelp)
             "setaccount <CryptoBullionaddress> <account>\n"
             "Sets the account associated with the given address.");
 
-    CBitcoinAddress address(params[0].get_str());
+    CCryptobullionAddress address(params[0].get_str());
     if (!address.IsValid())
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
 
@@ -245,7 +245,7 @@ Value getaccount(const Array& params, bool fHelp)
             "getaccount <CryptoBullion address>\n"
             "Returns the account associated with the given address.");
 
-    CBitcoinAddress address(params[0].get_str());
+    CCryptobullionAddress address(params[0].get_str());
     if (!address.IsValid())
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
 
@@ -268,9 +268,9 @@ Value getaddressesbyaccount(const Array& params, bool fHelp)
 
     // Find all addresses that have the given account
     Array ret;
-    BOOST_FOREACH(const PAIRTYPE(CBitcoinAddress, string)& item, pwalletMain->mapAddressBook)
+    BOOST_FOREACH(const PAIRTYPE(CCryptobullionAddress, string)& item, pwalletMain->mapAddressBook)
     {
-        const CBitcoinAddress& address = item.first;
+        const CCryptobullionAddress& address = item.first;
         const string& strName = item.second;
         if (strName == strAccount)
             ret.push_back(address.ToString());
@@ -286,7 +286,7 @@ Value sendtoaddress(const Array& params, bool fHelp)
             "<amount> is a real and is rounded to the nearest 0.000001"
             + HelpRequiringPassphrase());
 
-    CBitcoinAddress address(params[0].get_str());
+    CCryptobullionAddress address(params[0].get_str());
     if (!address.IsValid())
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
 
@@ -330,12 +330,12 @@ Value listaddressgroupings(const Array& params, bool fHelp)
         BOOST_FOREACH(CTxDestination address, grouping)
         {
             Array addressInfo;
-            addressInfo.push_back(CBitcoinAddress(address).ToString());
+            addressInfo.push_back(CCryptobullionAddress(address).ToString());
             addressInfo.push_back(ValueFromAmount(balances[address]));
             {
                 LOCK(pwalletMain->cs_wallet);
-                if (pwalletMain->mapAddressBook.find(CBitcoinAddress(address).Get()) != pwalletMain->mapAddressBook.end())
-                    addressInfo.push_back(pwalletMain->mapAddressBook.find(CBitcoinAddress(address).Get())->second);
+                if (pwalletMain->mapAddressBook.find(CCryptobullionAddress(address).Get()) != pwalletMain->mapAddressBook.end())
+                    addressInfo.push_back(pwalletMain->mapAddressBook.find(CCryptobullionAddress(address).Get())->second);
             }
             jsonGrouping.push_back(addressInfo);
         }
@@ -356,7 +356,7 @@ Value signmessage(const Array& params, bool fHelp)
     string strAddress = params[0].get_str();
     string strMessage = params[1].get_str();
 
-    CBitcoinAddress addr(strAddress);
+    CCryptobullionAddress addr(strAddress);
     if (!addr.IsValid())
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid address");
 
@@ -390,7 +390,7 @@ Value verifymessage(const Array& params, bool fHelp)
     string strSign     = params[1].get_str();
     string strMessage  = params[2].get_str();
 
-    CBitcoinAddress addr(strAddress);
+    CCryptobullionAddress addr(strAddress);
     if (!addr.IsValid())
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid address");
 
@@ -423,8 +423,8 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
             "getreceivedbyaddress <CryptoBullion address> [minconf=1]\n"
             "Returns the total amount received by <CryptoBullion address> in transactions with at least [minconf] confirmations.");
 
-    // Bitcoin address
-    CBitcoinAddress address = CBitcoinAddress(params[0].get_str());
+    // Cryptobullion address
+    CCryptobullionAddress address = CCryptobullionAddress(params[0].get_str());
     CScript scriptPubKey;
     if (!address.IsValid())
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
@@ -653,7 +653,7 @@ Value sendfrom(const Array& params, bool fHelp)
             + HelpRequiringPassphrase());
 
     string strAccount = AccountFromValue(params[0]);
-    CBitcoinAddress address(params[1].get_str());
+    CCryptobullionAddress address(params[1].get_str());
     if (!address.IsValid())
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid CryptoBullion address");
     int64 nAmount = AmountFromValue(params[2]);
@@ -707,13 +707,13 @@ Value sendmany(const Array& params, bool fHelp)
     if (params.size() > 3 && params[3].type() != null_type && !params[3].get_str().empty())
         wtx.mapValue["comment"] = params[3].get_str();
 
-    set<CBitcoinAddress> setAddress;
+    set<CCryptobullionAddress> setAddress;
     vector<pair<CScript, int64> > vecSend;
 
     int64 totalAmount = 0;
     BOOST_FOREACH(const Pair& s, sendTo)
     {
-        CBitcoinAddress address(s.name_);
+        CCryptobullionAddress address(s.name_);
         if (!address.IsValid())
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptogenicBullion address: ")+s.name_);
 
@@ -786,8 +786,8 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     {
         const std::string& ks = keys[i].get_str();
 
-        // Case 1: Bitcoin address and we have full public key:
-        CBitcoinAddress address(ks);
+        // Case 1: Cryptobullion address and we have full public key:
+        CCryptobullionAddress address(ks);
         if (address.IsValid())
         {
             CKeyID keyID;
@@ -822,7 +822,7 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     pwalletMain->AddCScript(inner);
 
     pwalletMain->SetAddressBookName(innerID, strAccount);
-    return CBitcoinAddress(innerID).ToString();
+    return CCryptobullionAddress(innerID).ToString();
 }
 
 
@@ -852,7 +852,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
         fIncludeEmpty = params[1].get_bool();
 
     // Tally
-    map<CBitcoinAddress, tallyitem> mapTally;
+    map<CCryptobullionAddress, tallyitem> mapTally;
     for (map<uint256, CWalletTx>::iterator it = pwalletMain->mapWallet.begin(); it != pwalletMain->mapWallet.end(); ++it)
     {
         const CWalletTx& wtx = (*it).second;
@@ -880,11 +880,11 @@ Value ListReceived(const Array& params, bool fByAccounts)
     // Reply
     Array ret;
     map<string, tallyitem> mapAccountTally;
-    BOOST_FOREACH(const PAIRTYPE(CBitcoinAddress, string)& item, pwalletMain->mapAddressBook)
+    BOOST_FOREACH(const PAIRTYPE(CCryptobullionAddress, string)& item, pwalletMain->mapAddressBook)
     {
-        const CBitcoinAddress& address = item.first;
+        const CCryptobullionAddress& address = item.first;
         const string& strAccount = item.second;
-        map<CBitcoinAddress, tallyitem>::iterator it = mapTally.find(address);
+        map<CCryptobullionAddress, tallyitem>::iterator it = mapTally.find(address);
         if (it == mapTally.end() && !fIncludeEmpty)
             continue;
 
@@ -973,7 +973,7 @@ Value listreceivedbyaccount(const Array& params, bool fHelp)
 
 static void MaybePushAddress(Object & entry, const CTxDestination &dest)
 {
-    CBitcoinAddress addr;
+    CCryptobullionAddress addr;
     if (addr.Set(dest))
         entry.push_back(Pair("address", addr.ToString()));
 }
@@ -1017,7 +1017,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
             Object entry;
             entry.push_back(Pair("account", strSentAccount));
             MaybePushAddress(entry, s.first);
-            entry.push_back(Pair("address", CBitcoinAddress(s.first).ToString()));
+            entry.push_back(Pair("address", CCryptobullionAddress(s.first).ToString()));
             entry.push_back(Pair("category", "send"));
             entry.push_back(Pair("amount", ValueFromAmount(-s.second)));
             entry.push_back(Pair("fee", ValueFromAmount(-nFee)));
@@ -1040,7 +1040,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
                 Object entry;
                 entry.push_back(Pair("account", account));
                 MaybePushAddress(entry, r.first);
-                entry.push_back(Pair("address", CBitcoinAddress(r.first).ToString()));
+                entry.push_back(Pair("address", CCryptobullionAddress(r.first).ToString()));
                 if (wtx.IsCoinBase())
                 {
                     if (wtx.GetDepthInMainChain() < 1)
@@ -1378,9 +1378,9 @@ Value showtransaction(const Array& params, bool fHelp)
                             ExtractDestination(tx.vout[tx.vin[i].prevout.n].scriptPubKey, address);
 
                             if (pwalletMain->GetDebit(tx.vin[i]))
-                                sprintf(inVal, "input %d (!)%s", i, CBitcoinAddress(address).ToString().c_str());
+                                sprintf(inVal, "input %d (!)%s", i, CCryptobullionAddress(address).ToString().c_str());
                             else
-                                sprintf(inVal, "input %d %s", i, CBitcoinAddress(address).ToString().c_str());
+                                sprintf(inVal, "input %d %s", i, CCryptobullionAddress(address).ToString().c_str());
 
                             entry.push_back(Pair(inVal, FormatMoney(val).c_str()));
                             valIn+=val;
@@ -1394,9 +1394,9 @@ Value showtransaction(const Array& params, bool fHelp)
                             ExtractDestination(tx.vout[i].scriptPubKey, address);
 
                             if (pwalletMain->GetCredit(tx.vout[i]))
-                                sprintf(inVal, "output %d (!)%s", i, CBitcoinAddress(address).ToString().c_str());
+                                sprintf(inVal, "output %d (!)%s", i, CCryptobullionAddress(address).ToString().c_str());
                             else
-                                sprintf(inVal, "output %d %s", i, CBitcoinAddress(address).ToString().c_str());
+                                sprintf(inVal, "output %d %s", i, CCryptobullionAddress(address).ToString().c_str());
 
                             entry.push_back(Pair(inVal, FormatMoney(val).c_str()));
                             valOut+=val;
@@ -1463,7 +1463,7 @@ Value keypoolrefill(const Array& params, bool fHelp)
 void ThreadTopUpKeyPool(void* parg)
 {
     // Make this thread recognisable as the key-topping-up thread
-    RenameThread("bitcoin-key-top");
+    RenameThread("cryptobullion-key-top");
 
     pwalletMain->TopUpKeyPool();
 }
@@ -1471,7 +1471,7 @@ void ThreadTopUpKeyPool(void* parg)
 void ThreadCleanWalletPassphrase(void* parg)
 {
     // Make this thread recognisable as the wallet relocking thread
-    RenameThread("bitcoin-lock-wa");
+    RenameThread("cryptobullion-lock-wa");
 
     int64 nMyWakeTime = GetTimeMillis() + *((int64*)parg) * 1000;
 
@@ -1675,7 +1675,7 @@ public:
         obj.push_back(Pair("script", GetTxnOutputType(whichType)));
         Array a;
         BOOST_FOREACH(const CTxDestination& addr, addresses)
-            a.push_back(CBitcoinAddress(addr).ToString());
+            a.push_back(CCryptobullionAddress(addr).ToString());
         obj.push_back(Pair("addresses", a));
         if (whichType == TX_MULTISIG)
             obj.push_back(Pair("sigsrequired", nRequired));
@@ -1690,7 +1690,7 @@ Value validateaddress(const Array& params, bool fHelp)
             "validateaddress <CryptoBullion address>\n"
             "Return information about <CryptoBullion address>.");
 
-    CBitcoinAddress address(params[0].get_str());
+    CCryptobullionAddress address(params[0].get_str());
     bool isValid = address.IsValid();
 
     Object ret;
@@ -1726,7 +1726,7 @@ Value validatepubkey(const Array& params, bool fHelp)
     bool isCompressed = pubKey.IsCompressed();
     CKeyID keyID = pubKey.GetID();
 
-    CBitcoinAddress address;
+    CCryptobullionAddress address;
     address.Set(keyID);
 
     Object ret;

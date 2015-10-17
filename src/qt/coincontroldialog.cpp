@@ -2,7 +2,7 @@
 #include "ui_coincontroldialog.h"
 
 #include "init.h"
-#include "bitcoinunits.h"
+#include "cryptobullionunits.h"
 #include "walletmodel.h"
 #include "addresstablemodel.h"
 #include "optionsmodel.h"
@@ -484,7 +484,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
             QString address = payee.first;
             qint64 amount = payee.second;
             CScript scriptPubKey;
-            scriptPubKey.SetDestination(CBitcoinAddress(address.toStdString()).Get());
+            scriptPubKey.SetDestination(CCryptobullionAddress(address.toStdString()).Get());
             CTxOut txout(amount, scriptPubKey);
             txDummy.vout.push_back(txout);
         }
@@ -545,7 +545,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     }
 
     // actually update labels
-    int nDisplayUnit = BitcoinUnits::BTC;
+    int nDisplayUnit = CryptobullionUnits::BTC;
     if (model && model->getOptionsModel())
         nDisplayUnit = model->getOptionsModel()->getDisplayUnit();
             
@@ -566,13 +566,13 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     
     // stats
     l1->setText(QString::number(nQuantity));                                 // Quantity        
-    l2->setText(BitcoinUnits::formatWithUnit(nDisplayUnit, nAmount));        // Amount
-    l3->setText(BitcoinUnits::formatWithUnit(nDisplayUnit, nPayFee));        // Fee
-    l4->setText(BitcoinUnits::formatWithUnit(nDisplayUnit, nAfterFee));      // After Fee
+    l2->setText(CryptobullionUnits::formatWithUnit(nDisplayUnit, nAmount));        // Amount
+    l3->setText(CryptobullionUnits::formatWithUnit(nDisplayUnit, nPayFee));        // Fee
+    l4->setText(CryptobullionUnits::formatWithUnit(nDisplayUnit, nAfterFee));      // After Fee
     l5->setText(((nBytes > 0) ? "~" : "") + QString::number(nBytes));                                    // Bytes
     l6->setText(sPriorityLabel);                                             // Priority
     l7->setText((fLowOutput ? (fDust ? tr("DUST") : tr("yes")) : tr("no"))); // Low Output / Dust
-    l8->setText(BitcoinUnits::formatWithUnit(nDisplayUnit, nChange));        // Change
+    l8->setText(CryptobullionUnits::formatWithUnit(nDisplayUnit, nChange));        // Change
     
     // turn labels "red"
     l5->setStyleSheet((nBytes >= 10000) ? "color:red;" : "");               // Bytes >= 10000
@@ -581,10 +581,10 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     l8->setStyleSheet((nChange > 0 && nChange < CENT) ? "color:red;" : ""); // Change < 0.01BTC
         
     // tool tips
-    l5->setToolTip(tr("This label turns red, if the transaction size is bigger than 10000 bytes.\n\n This means a fee of at least %1 per kb is required.\n\n Can vary +/- 1 Byte per input.").arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)));
-    l6->setToolTip(tr("Transactions with higher priority get more likely into a block.\n\nThis label turns red, if the priority is smaller than \"medium\".\n\n This means a fee of at least %1 per kb is required.").arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)));
-    l7->setToolTip(tr("This label turns red, if any recipient receives an amount smaller than %1.\n\n This means a fee of at least %2 is required. \n\n Amounts below 0.546 times the minimum relay fee are shown as DUST.").arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)).arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)));
-    l8->setToolTip(tr("This label turns red, if the change is smaller than %1.\n\n This means a fee of at least %2 is required.").arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)).arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)));
+    l5->setToolTip(tr("This label turns red, if the transaction size is bigger than 10000 bytes.\n\n This means a fee of at least %1 per kb is required.\n\n Can vary +/- 1 Byte per input.").arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)));
+    l6->setToolTip(tr("Transactions with higher priority get more likely into a block.\n\nThis label turns red, if the priority is smaller than \"medium\".\n\n This means a fee of at least %1 per kb is required.").arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)));
+    l7->setToolTip(tr("This label turns red, if any recipient receives an amount smaller than %1.\n\n This means a fee of at least %2 is required. \n\n Amounts below 0.546 times the minimum relay fee are shown as DUST.").arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)).arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)));
+    l8->setToolTip(tr("This label turns red, if the change is smaller than %1.\n\n This means a fee of at least %2 is required.").arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)).arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)));
     dialog->findChild<QLabel *>("labelCoinControlBytesText")    ->setToolTip(l5->toolTip());
     dialog->findChild<QLabel *>("labelCoinControlPriorityText") ->setToolTip(l6->toolTip());
     dialog->findChild<QLabel *>("labelCoinControlLowOutputText")->setToolTip(l7->toolTip());
@@ -606,7 +606,7 @@ void CoinControlDialog::updateView()
     QFlags<Qt::ItemFlag> flgCheckbox=Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
     QFlags<Qt::ItemFlag> flgTristate=Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable | Qt::ItemIsTristate;    
     
-    int nDisplayUnit = BitcoinUnits::BTC;
+    int nDisplayUnit = CryptobullionUnits::BTC;
     if (model && model->getOptionsModel())
         nDisplayUnit = model->getOptionsModel()->getDisplayUnit();
         
@@ -665,9 +665,9 @@ void CoinControlDialog::updateView()
             QString sAddress = "";
             if(ExtractDestination(out.tx->vout[out.i].scriptPubKey, outputAddress))
             {
-                sAddress = CBitcoinAddress(outputAddress).ToString().c_str();
+                sAddress = CCryptobullionAddress(outputAddress).ToString().c_str();
                 
-                // if listMode or change => show bitcoin address. In tree mode, address is not shown again for direct wallet address outputs
+                // if listMode or change => show cryptobullion address. In tree mode, address is not shown again for direct wallet address outputs
                 if (!treeMode || (!(sAddress == sWalletAddress)))
                     itemOutput->setText(COLUMN_ADDRESS, sAddress);
                     
@@ -695,7 +695,7 @@ void CoinControlDialog::updateView()
             }
 
             // amount
-            itemOutput->setText(COLUMN_AMOUNT, BitcoinUnits::format(nDisplayUnit, out.tx->vout[out.i].nValue));
+            itemOutput->setText(COLUMN_AMOUNT, CryptobullionUnits::format(nDisplayUnit, out.tx->vout[out.i].nValue));
             itemOutput->setText(COLUMN_AMOUNT_INT64, strPad(QString::number(out.tx->vout[out.i].nValue), 15, " ")); // padding so that sorting works correctly
 
             // date
@@ -748,7 +748,7 @@ void CoinControlDialog::updateView()
         {
             dPrioritySum = dPrioritySum / (nInputSum + 78);
             itemWalletAddress->setText(COLUMN_CHECKBOX, "(" + QString::number(nChildren) + ")");
-            itemWalletAddress->setText(COLUMN_AMOUNT, BitcoinUnits::format(nDisplayUnit, nSum));
+            itemWalletAddress->setText(COLUMN_AMOUNT, CryptobullionUnits::format(nDisplayUnit, nSum));
             itemWalletAddress->setText(COLUMN_AMOUNT_INT64, strPad(QString::number(nSum), 15, " "));
             itemWalletAddress->setText(COLUMN_PRIORITY, CoinControlDialog::getPriorityLabel(dPrioritySum));
             itemWalletAddress->setText(COLUMN_PRIORITY_INT64, strPad(QString::number((int64)dPrioritySum), 20, " "));

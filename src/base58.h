@@ -12,8 +12,8 @@
 // - E-mail usually won't line-break if there's no punctuation to break at.
 // - Double-clicking selects the whole number as one word if it's all alphanumeric.
 //
-#ifndef BITCOIN_BASE58_H
-#define BITCOIN_BASE58_H
+#ifndef CRYPTOBULLION_BASE58_H
+#define CRYPTOBULLION_BASE58_H
 
 #include <string>
 #include <vector>
@@ -253,25 +253,25 @@ public:
     bool operator> (const CBase58Data& b58) const { return CompareTo(b58) >  0; }
 };
 
-/** base58-encoded Bitcoin addresses.
+/** base58-encoded Cryptobullion addresses.
  * Public-key-hash-addresses have version 0 (or 111 testnet).
  * The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
  * Script-hash-addresses have version 5 (or 196 testnet).
  * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
  */
-class CBitcoinAddress;
-class CBitcoinAddressVisitor : public boost::static_visitor<bool>
+class CCryptobullionAddress;
+class CCryptobullionAddressVisitor : public boost::static_visitor<bool>
 {
 private:
-    CBitcoinAddress *addr;
+    CCryptobullionAddress *addr;
 public:
-    CBitcoinAddressVisitor(CBitcoinAddress *addrIn) : addr(addrIn) { }
+    CCryptobullionAddressVisitor(CCryptobullionAddress *addrIn) : addr(addrIn) { }
     bool operator()(const CKeyID &id) const;
     bool operator()(const CScriptID &id) const;
     bool operator()(const CNoDestination &no) const;
 };
 
-class CBitcoinAddress : public CBase58Data
+class CCryptobullionAddress : public CBase58Data
 {
 public:
     enum
@@ -294,7 +294,7 @@ public:
 
     bool Set(const CTxDestination &dest)
     {
-        return boost::apply_visitor(CBitcoinAddressVisitor(this), dest);
+        return boost::apply_visitor(CCryptobullionAddressVisitor(this), dest);
     }
 
     bool IsValid() const
@@ -327,21 +327,21 @@ public:
         return fExpectTestNet == fTestNet && vchData.size() == nExpectedSize;
     }
 
-    CBitcoinAddress()
+    CCryptobullionAddress()
     {
     }
 
-    CBitcoinAddress(const CTxDestination &dest)
+    CCryptobullionAddress(const CTxDestination &dest)
     {
         Set(dest);
     }
 
-    CBitcoinAddress(const std::string& strAddress)
+    CCryptobullionAddress(const std::string& strAddress)
     {
         SetString(strAddress);
     }
 
-    CBitcoinAddress(const char* pszAddress)
+    CCryptobullionAddress(const char* pszAddress)
     {
         SetString(pszAddress);
     }
@@ -394,18 +394,18 @@ public:
     }
 };
 
-bool inline CBitcoinAddressVisitor::operator()(const CKeyID &id) const         { return addr->Set(id); }
-bool inline CBitcoinAddressVisitor::operator()(const CScriptID &id) const      { return addr->Set(id); }
-bool inline CBitcoinAddressVisitor::operator()(const CNoDestination &id) const { return false; }
+bool inline CCryptobullionAddressVisitor::operator()(const CKeyID &id) const         { return addr->Set(id); }
+bool inline CCryptobullionAddressVisitor::operator()(const CScriptID &id) const      { return addr->Set(id); }
+bool inline CCryptobullionAddressVisitor::operator()(const CNoDestination &id) const { return false; }
 
 /** A base58-encoded secret key */
-class CBitcoinSecret : public CBase58Data
+class CCryptobullionSecret : public CBase58Data
 {
 public:
     void SetSecret(const CSecret& vchSecret, bool fCompressed)
     {
         assert(vchSecret.size() == 32);
-        SetData(128 + (fTestNet ? CBitcoinAddress::PUBKEY_ADDRESS_TEST : CBitcoinAddress::PUBKEY_ADDRESS), &vchSecret[0], vchSecret.size());
+        SetData(128 + (fTestNet ? CCryptobullionAddress::PUBKEY_ADDRESS_TEST : CCryptobullionAddress::PUBKEY_ADDRESS), &vchSecret[0], vchSecret.size());
         if (fCompressed)
             vchData.push_back(1);
     }
@@ -424,10 +424,10 @@ public:
         bool fExpectTestNet = false;
         switch(nVersion)
         {
-            case (128 + CBitcoinAddress::PUBKEY_ADDRESS):
+            case (128 + CCryptobullionAddress::PUBKEY_ADDRESS):
                 break;
 
-            case (128 + CBitcoinAddress::PUBKEY_ADDRESS_TEST):
+            case (128 + CCryptobullionAddress::PUBKEY_ADDRESS_TEST):
                 fExpectTestNet = true;
                 break;
 
@@ -447,12 +447,12 @@ public:
         return SetString(strSecret.c_str());
     }
 
-    CBitcoinSecret(const CSecret& vchSecret, bool fCompressed)
+    CCryptobullionSecret(const CSecret& vchSecret, bool fCompressed)
     {
         SetSecret(vchSecret, fCompressed);
     }
 
-    CBitcoinSecret()
+    CCryptobullionSecret()
     {
     }
 };

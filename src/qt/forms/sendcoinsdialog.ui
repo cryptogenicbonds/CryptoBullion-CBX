@@ -109,7 +109,7 @@ color: #FFFFFF;</string>
              <string>Inputs...</string>
             </property>
             <property name="icon">
-             <iconset resource="../bitcoin.qrc">
+             <iconset resource="../cryptobullion.qrc">
               <normaloff>:/icons/inputs</normaloff>:/icons/inputs</iconset>
             </property>
            </widget>
@@ -707,7 +707,7 @@ color: #ffffff;</string>
         <string>Add &amp;Recipient</string>
        </property>
        <property name="icon">
-        <iconset resource="../bitcoin.qrc">
+        <iconset resource="../cryptobullion.qrc">
          <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
        </property>
        <property name="autoDefault">
@@ -730,7 +730,7 @@ color: #ffffff;</string>
         <string>Clear &amp;All</string>
        </property>
        <property name="icon">
-        <iconset resource="../bitcoin.qrc">
+        <iconset resource="../cryptobullion.qrc">
          <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
        </property>
        <property name="autoRepeatDelay">
@@ -808,7 +808,7 @@ color: #ffffff;</string>
         <string>S&amp;end</string>
        </property>
        <property name="icon">
-        <iconset resource="../bitcoin.qrc">
+        <iconset resource="../cryptobullion.qrc">
          <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
        </property>
        <property name="default">
@@ -821,7 +821,7 @@ color: #ffffff;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../bitcoin.qrc"/>
+  <include location="../cryptobullion.qrc"/>
  </resources>
  <connections/>
 </ui>

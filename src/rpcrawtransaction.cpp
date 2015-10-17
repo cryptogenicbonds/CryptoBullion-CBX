@@ -6,7 +6,7 @@
 #include <boost/assign/list_of.hpp>
 
 #include "base58.h"
-#include "bitcoinrpc.h"
+#include "cryptobullionrpc.h"
 #include "txdb.h"
 #include "init.h"
 #include "main.h"
@@ -40,7 +40,7 @@ void ScriptPubKeyToJSON(const CScript& scriptPubKey, Object& out, bool fIncludeH
 
     Array a;
     BOOST_FOREACH(const CTxDestination& addr, addresses)
-        a.push_back(CBitcoinAddress(addr).ToString());
+        a.push_back(CCryptobullionAddress(addr).ToString());
     out.push_back(Pair("addresses", a));
 }
 
@@ -158,13 +158,13 @@ Value listunspent(const Array& params, bool fHelp)
     if (params.size() > 1)
         nMaxDepth = params[1].get_int();
 
-    set<CBitcoinAddress> setAddress;
+    set<CCryptobullionAddress> setAddress;
     if (params.size() > 2)
     {
         Array inputs = params[2].get_array();
         BOOST_FOREACH(Value& input, inputs)
         {
-            CBitcoinAddress address(input.get_str());
+            CCryptobullionAddress address(input.get_str());
             if (!address.IsValid())
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptoBullion address: ")+input.get_str());
             if (setAddress.count(address))
@@ -246,10 +246,10 @@ Value createrawtransaction(const Array& params, bool fHelp)
         rawTx.vin.push_back(in);
     }
 
-    set<CBitcoinAddress> setAddress;
+    set<CCryptobullionAddress> setAddress;
     BOOST_FOREACH(const Pair& s, sendTo)
     {
-        CBitcoinAddress address(s.name_);
+        CCryptobullionAddress address(s.name_);
         if (!address.IsValid())
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CryptoBullion address: ")+s.name_);
 
@@ -315,7 +315,7 @@ Value decodescript(const Array& params, bool fHelp)
     }
     ScriptPubKeyToJSON(script, r, false);
 
-    r.push_back(Pair("p2sh", CBitcoinAddress(script.GetID()).ToString()));
+    r.push_back(Pair("p2sh", CCryptobullionAddress(script.GetID()).ToString()));
     return r;
 }
 
@@ -438,7 +438,7 @@ Value signrawtransaction(const Array& params, bool fHelp)
         Array keys = params[2].get_array();
         BOOST_FOREACH(Value k, keys)
         {
-            CBitcoinSecret vchSecret;
+            CCryptobullionSecret vchSecret;
             bool fGood = vchSecret.SetString(k.get_str());
             if (!fGood)
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY,"Invalid private key");
@@ -586,8 +586,8 @@ Value createmultisig(const Array& params, bool fHelp)
     {
         const std::string& ks = keys[i].get_str();
 
-        // Case 1: Bitcoin address and we have full public key:
-        CBitcoinAddress address(ks);
+        // Case 1: Cryptobullion address and we have full public key:
+        CCryptobullionAddress address(ks);
         if (address.IsValid())
         {
             CKeyID keyID;
@@ -624,7 +624,7 @@ Value createmultisig(const Array& params, bool fHelp)
     inner.SetMultisig(nRequired, pubkeys);
 
     CScriptID innerID = inner.GetID();
-    CBitcoinAddress address(innerID);
+    CCryptobullionAddress address(innerID);
 
     Object result;
     result.push_back(Pair("address", address.ToString()));

@@ -1,70 +1,93 @@
-Bitcoin-qt: Qt4 GUI for Bitcoin
-===============================
+CryptoBullion-qt: Qt5 GUI for CryptoBullion
+===========================================
 
 Build instructions
 ===================
 
-Debian
--------
+Debian, Ubuntu, Linux Mint and other varients
+---------------------------------------------
 
 First, make sure that the required packages for Qt4 development of your
 distribution are installed, for Debian and Ubuntu these are:
 
-::
+	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev
 
-    apt-get install qt4-qmake libqt4-dev build-essential libboost-dev libboost-system-dev \
-        libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev \
-        libssl-dev libdb4.8++-dev
+If you are on Ubuntu you have to add a new repository in order to instad BDB 4.8, if you are on an other distribution you should compile it from source or get it through an old packet.
+You can try to build it with latest BDB version, but at your own risk !
 
-then execute the following:
+	sudo add-apt-repository ppa:bitcoin/bitcoin
+	sudo apt-get update
+	sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
-::
+Now you have to install Qt depedencies:
+	sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default
 
-    qmake
-    make
+Once it's done, you are ready for compiling, use the following command to compile:
+	cd src/leveldb/ && chmod 755 build_detect_platform && make libleveldb.a libmemenv.a && cd ../..
+	cd src/miniupnpc && make && cd ../..
+	qmake
+	make
 
-Alternatively, install Qt Creator and open the `bitcoin-qt.pro` file.
-
-An executable named `bitcoin-qt` will be built.
+An executable named `cryptobillion-qt` will be built.
 
 
 Windows
 --------
 
+We highly recommend to build Windows on a Linux envrinoment using a cross-compiler explained in 'build-windows_onunix.md'.
+
 Windows build instructions:
 
-- Download the `QT Windows SDK`_ and install it. You don't need the Symbian stuff, just the desktop Qt.
+- Download the Qt Windows SDK with MinGW32 and install it.
 
-- Download and extract the `dependencies archive`_  [#]_, or compile openssl, boost and dbcxx yourself.
+Download and build dependencies:
+	- OpenSSL      1.0.1b
+	- Berkeley DB  4.8.30.NC
+	- Boost        1.47.0
 
-- Copy the contents of the folder "deps" to "X:\\QtSDK\\mingw", replace X:\\ with the location where you installed the Qt SDK. Make sure that the contents of "deps\\include" end up in the current "include" directory.
+Build dependencies in sub src/ folder:
+	- src/leveldb (libleveldb.a and libmemenv.a)
+	- src/miniupnpc
 
-- Open the .pro file in QT creator and build as normal (ctrl-B)
-
-.. _`QT Windows SDK`: http://qt.nokia.com/downloads/sdk-windows-cpp
-.. _`dependencies archive`: https://download.visucore.com/bitcoin/qtgui_deps_1.zip
-.. [#] PGP signature: https://download.visucore.com/bitcoin/qtgui_deps_1.zip.sig (signed with RSA key ID `610945D0`_)
-.. _`610945D0`: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x610945D0
+Use the following command in MSYS terminal:
+	qmake \
+		BOOST_LIB_SUFFIX=-mt \
+		BOOST_THREAD_LIB_SUFFIX=_win32-mt \
+		BOOST_INCLUDE_PATH=PATH_TO_YOUR_DEPS/boost \
+		BOOST_LIB_PATH=$MXE_LIB_PATH \
+		OPENSSL_INCLUDE_PATH=PATH_TO_YOUR_DEPS/openssl \
+		OPENSSL_LIB_PATH=$MXE_LIB_PATH \
+		BDB_INCLUDE_PATH=PATH_TO_YOUR_DEPS \
+		BDB_LIB_PATH=$MXE_LIB_PATH \
+		MINIUPNPC_INCLUDE_PATH=src/miniupnpc \
+		MINIUPNPC_LIB_PATH=src/miniupnpc \
+		USE_LEVELDB=1 \
+		USE_BDB=0 \
+		RELEASE=1 \
+		QMAKE_LRELEASE=PATH_TO_QMAKE cryptobullion-qt.pro
 
 
 Mac OS X
 --------
 
-- Download and install the `Qt Mac OS X SDK`_. It is recommended to also install Apple's Xcode with UNIX tools.
+- Download and install XCode, run it atleast the first time before continuing
 
-- Download and install `MacPorts`_.
+- Download and install the `Qt Mac OS X SDK`_.
+
+- Download and install `Home Brew`_.
 
 - Execute the following commands in a terminal to get the dependencies:
 
 ::
+	brew install boost berkeley-db4 miniupnpc openssl
 
-	sudo port selfupdate
-	sudo port install boost db48 miniupnpc
+- Open the terminal and go in cd src/leveldb
+
+- Type the following command:
+	chmod 755 build_detect_platform
+	make -f makefile.osx
 
 - Open the .pro file in Qt Creator and build as normal (cmd-B)
-
-.. _`Qt Mac OS X SDK`: http://qt.nokia.com/downloads/sdk-mac-os-cpp
-.. _`MacPorts`: http://www.macports.org/install.php
 
 
 Build configuration options
@@ -73,7 +96,7 @@ Build configuration options
 UPNnP port forwarding
 ---------------------
 
-To use UPnP for port forwarding behind a NAT router (recommended, as more connections overall allow for a faster and more stable bitcoin experience), pass the following argument to qmake:
+To use UPnP for port forwarding behind a NAT router (recommended, as more connections overall allow for a faster and more stable cryptobullion experience), pass the following argument to qmake:
 
 ::
 
@@ -121,9 +144,9 @@ flag to qmake to control this:
 Berkely DB version warning
 ==========================
 
-A warning for people using the *static binary* version of Bitcoin on a Linux/UNIX-ish system (tl;dr: **Berkely DB databases are not forward compatible**).
+A warning for people using the *static binary* version of Cryptobullion on a Linux/UNIX-ish system (tl;dr: **Berkely DB databases are not forward compatible**).
 
-The static binary version of Bitcoin is linked against libdb4.8 (see also `this Debian issue`_).
+The static binary version of Cryptobullion is linked against libdb4.8 (see also `this Debian issue`_).
 
 Now the nasty thing is that databases from 5.X are not compatible with 4.X.
 
@@ -138,7 +161,7 @@ Ubuntu 11.10 warning
 ====================
 
 Ubuntu 11.10 has a package called 'qt-at-spi' installed by default.  At the time of writing, having that package
-installed causes bitcoin-qt to crash intermittently.  The issue has been reported as `launchpad bug 857790`_, but
+installed causes cryptobullion-qt to crash intermittently.  The issue has been reported as `launchpad bug 857790`_, but
 isn't yet fixed.
 
 Until the bug is fixed, you can remove the qt-at-spi package to work around the problem, though this will presumably

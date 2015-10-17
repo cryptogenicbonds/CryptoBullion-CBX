@@ -8,7 +8,7 @@
 #include <QDialog>
 #include <QObject>
 
-class BitcoinGUI;
+class CryptobullionGUI;
 class ClientModel;
 
 namespace Ui {
@@ -45,7 +45,7 @@ class ShutdownWindow : public QObject
     Q_OBJECT
 
 public:
-    static void showShutdownWindow(BitcoinGUI *window);
+    static void showShutdownWindow(CryptobullionGUI *window);
 };
 
 #endif // UTILITYDIALOG_H

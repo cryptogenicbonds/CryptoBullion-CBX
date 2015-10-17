@@ -3,8 +3,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_TXDB_BDB_H
-#define BITCOIN_TXDB_BDB_H
+#ifndef CRYPTOBULLION_TXDB_BDB_H
+#define CRYPTOBULLION_TXDB_BDB_H
 
 
 /** Access to the transaction database (blkindex.dat) */

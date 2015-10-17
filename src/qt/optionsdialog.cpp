@@ -1,9 +1,9 @@
 #include "optionsdialog.h"
 #include "optionsmodel.h"
-#include "bitcoinamountfield.h"
+#include "cryptobullionamountfield.h"
 #include "monitoreddatamapper.h"
 #include "guiutil.h"
-#include "bitcoinunits.h"
+#include "cryptobullionunits.h"
 #include "qvaluecombobox.h"
 
 #include <QHBoxLayout>
@@ -32,7 +32,7 @@ public:
     void setMapper(MonitoredDataMapper *mapper);
     QCheckBox *connect_socks4;
 private:
-    QCheckBox *bitcoin_at_startup;
+    QCheckBox *cryptobullion_at_startup;
 #ifndef Q_WS_MAC
     QCheckBox *minimize_to_tray;
 #endif
@@ -44,7 +44,7 @@ private:
     QCheckBox *detach_database;
     QLineEdit *proxy_ip;
     QLineEdit *proxy_port;
-    BitcoinAmountField *fee_edit;
+    CryptobullionAmountField *fee_edit;
 
 signals:
 
@@ -200,9 +200,9 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
 {
     QVBoxLayout *layout = new QVBoxLayout();
 
-    bitcoin_at_startup = new QCheckBox(tr("&Start CBX on window system startup"));
-    bitcoin_at_startup->setToolTip(tr("Automatically start CBX after the computer is turned on"));
-    layout->addWidget(bitcoin_at_startup);
+    cryptobullion_at_startup = new QCheckBox(tr("&Start CBX on window system startup"));
+    cryptobullion_at_startup->setToolTip(tr("Automatically start CBX after the computer is turned on"));
+    layout->addWidget(cryptobullion_at_startup);
 
 #ifndef Q_WS_MAC
     minimize_to_tray = new QCheckBox(tr("&Minimize to the tray instead of the taskbar"));
@@ -257,7 +257,7 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     fee_hbox->addSpacing(18);
     QLabel *fee_label = new QLabel(tr("Additional network &fee:"));
     fee_hbox->addWidget(fee_label);
-    fee_edit = new BitcoinAmountField();
+    fee_edit = new CryptobullionAmountField();
     fee_edit->setDisabled(true);
 
     fee_label->setBuddy(fee_edit);
@@ -291,7 +291,7 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
 void MainOptionsPage::setMapper(MonitoredDataMapper *mapper)
 {
     // Map model to widgets
-    mapper->addMapping(bitcoin_at_startup, OptionsModel::StartAtStartup);
+    mapper->addMapping(cryptobullion_at_startup, OptionsModel::StartAtStartup);
 #ifndef Q_WS_MAC
     mapper->addMapping(minimize_to_tray, OptionsModel::MinimizeToTray);
 #endif
@@ -323,7 +323,7 @@ DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):
     QLabel *unit_label = new QLabel(tr("&Unit to show amounts in: "));
     unit_hbox->addWidget(unit_label);
     unit = new QValueComboBox(this);
-    unit->setModel(new BitcoinUnits(this));
+    unit->setModel(new CryptobullionUnits(this));
     unit->setToolTip(tr("Choose the default subdivision unit to show in the interface, and when sending coins"));
 
     unit_label->setBuddy(unit);
@@ -340,7 +340,7 @@ DisplayOptionsPage::DisplayOptionsPage(QWidget *parent):
     comboTranslationLang = new QValueComboBox(this);
     /* warn only when language selection changes by user action (placed here so init via mapper doesn't trigger this) */
     connect(comboTranslationLang, SIGNAL(valueChanged()), this, SLOT(showRestartWarning_Lang()));
-    //comboTranslationLang->setModel(new BitcoinUnits(this));
+    //comboTranslationLang->setModel(new CryptobullionUnits(this));
 
     QDir translations(":translations");
     comboTranslationLang->addItem(QString("(") + tr("default") + QString(")"), QVariant(""));

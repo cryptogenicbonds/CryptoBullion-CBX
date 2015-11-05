@@ -23,7 +23,7 @@ Now you have to install Qt depedencies:
 	sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default
 
 Once it's done, you are ready for compiling, use the following command to compile:
-	cd src/leveldb/ && chmod 755 build_detect_platform && make libleveldb.a libmemenv.a && cd ../..
+	cd src/leveldb/ && chmod 755 build_detect_platform && make libleveldb.a libmemenv.a && cd ../.. &&
 	cd src/miniupnpc && make && cd ../..
 	qmake
 	make

@@ -7,7 +7,7 @@ Build instructions
 Debian, Ubuntu, Linux Mint and other varients
 ---------------------------------------------
 
-First, make sure that the required packages for Qt4 development of your
+First, make sure that the required packages for development of your
 distribution are installed, for Debian and Ubuntu these are:
 
 	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev
@@ -19,7 +19,7 @@ You can try to build it with latest BDB version, but at your own risk !
 	sudo apt-get update
 	sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
-Now you have to install Qt depedencies:
+Now you have to install Qt5 depedencies:
 	sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default
 
 Once it's done, you are ready for compiling, use the following command to compile:

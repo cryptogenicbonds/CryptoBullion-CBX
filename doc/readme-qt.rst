@@ -24,9 +24,7 @@ Now you have to install Qt depedencies:
 
 Once it's done, you are ready for compiling, use the following command to compile:
 	cd src/leveldb/ && chmod 755 build_detect_platform && make libleveldb.a libmemenv.a && cd ../.. &&
-	cd src/miniupnpc && make && cd ../..
-	qmake
-	make
+	cd src/miniupnpc && make && cd ../.. && qmake && make
 
 An executable named `cryptobillion-qt` will be built.
 

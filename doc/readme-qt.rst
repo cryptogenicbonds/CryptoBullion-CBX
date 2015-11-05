@@ -10,25 +10,33 @@ Debian, Ubuntu, Linux Mint and other varients
 First, make sure that the required packages for development of your
 distribution are installed, for Debian and Ubuntu these are:
 
-	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev
+```bash
+sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev
+```
 
 If you are on Ubuntu you have to add a new repository in order to instad BDB 4.8, if you are on an other distribution you should compile it from source or get it through an old packet.
 You can try to build it with latest BDB version, but at your own risk !
 
-	sudo add-apt-repository ppa:bitcoin/bitcoin
-	sudo apt-get update
-	sudo apt-get install libdb4.8-dev libdb4.8++-dev
+```bash
+sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt-get update
+sudo apt-get install libdb4.8-dev libdb4.8++-dev
+```
 
 Now you have to install Qt5 depedencies:
-	sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default
+```bash
+sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default
+```
 
 Once it's done, you are ready for compiling, use the following command to compile:
+```bash
 	git clone https://github.com/cryptogenicbonds/CryptoBullion-CBX
 
 	cd CryptoBullion-CBX
 
 	cd src/leveldb/ && chmod 755 build_detect_platform && make libleveldb.a libmemenv.a && cd ../.. &&
 	cd src/miniupnpc && make && cd ../.. && qmake && make
+```
 
 An executable named `cryptobillion-qt` will be built.
 
@@ -52,6 +60,7 @@ Build dependencies in sub src/ folder:
 	- src/miniupnpc
 
 Use the following command in MSYS terminal:
+```bash
 	qmake \
 		BOOST_LIB_SUFFIX=-mt \
 		BOOST_THREAD_LIB_SUFFIX=_win32-mt \
@@ -67,7 +76,7 @@ Use the following command in MSYS terminal:
 		USE_BDB=0 \
 		RELEASE=1 \
 		QMAKE_LRELEASE=PATH_TO_QMAKE cryptobullion-qt.pro
-
+```
 
 Mac OS X
 --------
@@ -80,14 +89,17 @@ Mac OS X
 
 - Execute the following commands in a terminal to get the dependencies:
 
-::
-	brew install boost berkeley-db4 miniupnpc openssl
+```bash
+brew install boost berkeley-db4 miniupnpc openssl
+```
 
 - Open the terminal and go in cd src/leveldb
 
 - Type the following command:
+```bash
 	chmod 755 build_detect_platform
 	make -f makefile.osx
+```
 
 - Open the .pro file in Qt Creator and build as normal (cmd-B)
 
@@ -100,9 +112,9 @@ UPNnP port forwarding
 
 To use UPnP for port forwarding behind a NAT router (recommended, as more connections overall allow for a faster and more stable cryptobullion experience), pass the following argument to qmake:
 
-::
-
+```bash
     qmake "USE_UPNP=1"
+```
 
 (in **Qt Creator**, you can find the setting for additional qmake arguments under "Projects" -> "Build Settings" -> "Build Steps", then click "Details" next to **qmake**)
 
@@ -125,9 +137,9 @@ Notification support for recent (k)ubuntu versions
 To see desktop notifications on (k)ubuntu versions starting from 10.04, enable usage of the
 FreeDesktop notification interface through DBUS using the following qmake option:
 
-::
-
+```bash
     qmake "USE_DBUS=1"
+```
 
 Generation of QR codes
 -----------------------
@@ -169,8 +181,8 @@ isn't yet fixed.
 Until the bug is fixed, you can remove the qt-at-spi package to work around the problem, though this will presumably
 disable screen reader functionality for Qt apps:
 
-::
-
+```bash
     sudo apt-get remove qt-at-spi
+```
 
 .. _`launchpad bug 857790`: https://bugs.launchpad.net/ubuntu/+source/qt-at-spi/+bug/857790

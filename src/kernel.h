@@ -15,7 +15,7 @@ extern unsigned int nModifierInterval;
 static const int MODIFIER_INTERVAL_RATIO = 3;
 
 // Compute the hash modifier for proof-of-stake
-bool ComputeNextStakeModifier(const CBlockIndex* pindexPrev, uint64& nStakeModifier, bool& fGeneratedStakeModifier);
+bool ComputeNextStakeModifier(const CBlockIndex* pindexPrev, uint64& nStakeModifier, bool& fGeneratedStakeModifier, unsigned int nTime);
 
 // Check whether stake kernel meets hash target
 // Sets hashProofOfStake on success return

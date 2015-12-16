@@ -223,7 +223,7 @@ void ChatWindow::showConnectOptions()
     QPushButton* buttonConnect = new QPushButton();
     buttonConnect->setObjectName(QLatin1String("buttonConnect"));
     buttonConnect->setGeometry(QRect(470, 300, 151, 41));
-    buttonConnect->setStyleSheet(QLatin1String("border-radius:40px;border:1px solid grey"));
+    // buttonConnect->setStyleSheet(QLatin1String("border-radius:40px;border:1px solid grey"));
     buttonConnect->setText(QApplication::translate("ChatWindowOldClass", "Connect to IRC", 0));
 
     QLabel* label_10 = new QLabel();

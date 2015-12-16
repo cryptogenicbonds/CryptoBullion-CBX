@@ -6,24 +6,24 @@ USE_UPNP:=0
 USE_IPV6:=1
 USE_LEVELDB:=1
 
-DEPSPATH=d:/_coindev/deps
+DEPSPATH=C:/deps
 
 INCLUDEPATHS= \
- -I"$(DEPSPATH)/boost_1_55_0" \
+ -I"$(DEPSPATH)/boost_1_57_0" \
  -I"$(DEPSPATH)/db-4.8.30.NC/build_unix" \
- -I"$(DEPSPATH)/openssl-1.0.1j/include"
+ -I"$(DEPSPATH)/openssl-1.0.1l/include"
 
 LIBPATHS= \
- -L"$(DEPSPATH)/boost_1_55_0/stage/lib" \
+ -L"$(DEPSPATH)/boost_1_57_0/stage/lib" \
  -L"$(DEPSPATH)/db-4.8.30.NC/build_unix" \
- -L"$(DEPSPATH)/openssl-1.0.1j"
+ -L"$(DEPSPATH)/openssl-1.0.1l"
 
 LIBS= \
- -lboost_system-mgw49-mt-s-1_55 \
- -lboost_filesystem-mgw49-mt-s-1_55 \
- -lboost_program_options-mgw49-mt-s-1_55 \
- -lboost_thread-mgw49-mt-s-1_55 \
- -lboost_chrono-mgw49-mt-s-1_55 \
+ -lboost_system-mgw48-mt-s-1_57 \
+ -lboost_filesystem-mgw48-mt-s-1_57 \
+ -lboost_program_options-mgw48-mt-s-1_57 \
+ -lboost_thread-mgw48-mt-s-1_57 \
+ -lboost_chrono-mgw48-mt-s-1_57 \
  -ldb_cxx \
  -lssl \
  -lcrypto

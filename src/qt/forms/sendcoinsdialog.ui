@@ -81,9 +81,7 @@
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">font-weight:bold;
-background: transparent;
-color: #FFFFFF;</string>
+             <string notr="true">font-weight:bold;</string>
             </property>
             <property name="text">
              <string>Bullion Control Features</string>
@@ -118,7 +116,7 @@ color: #FFFFFF;</string>
            <widget class="QLabel" name="labelCoinControlAutomaticallySelected">
             <property name="styleSheet">
              <string notr="true">background: transparent;
-color: #e2f5cd;</string>
+color: #8CD533;</string>
             </property>
             <property name="text">
              <string>automatically selected</string>
@@ -573,8 +571,7 @@ background: transparent;</string>
           <item>
            <widget class="QCheckBox" name="checkBoxCoinControlChange">
             <property name="styleSheet">
-             <string notr="true">background: transparent;
-color: #ffffff;</string>
+             <string notr="true">background: transparent;</string>
             </property>
             <property name="text">
              <string>custom change address</string>
@@ -593,7 +590,7 @@ color: #ffffff;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: yellow;</string>
+             <string notr="true">color: #F0C000;</string>
             </property>
            </widget>
           </item>

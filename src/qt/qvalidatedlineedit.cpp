@@ -15,14 +15,14 @@ void QValidatedLineEdit::setValid(bool valid)
         return;
     }
 
-    if(valid)
+    /*if(valid)
     {
         setStyleSheet("");
     }
     else
     {
         setStyleSheet(STYLE_INVALID);
-    }
+    }*/
     this->valid = valid;
 }
 

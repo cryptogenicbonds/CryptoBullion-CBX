@@ -3,7 +3,7 @@
 # This script is for building Crypto Bullion Qt wallet for windows using MXE on a Linux environement.
 # Please read doc/build-windows.md
 ##
-MXE_PATH=/home/alex4j/sandbox/mxe
+MXE_PATH=/home/alexandre/sandbox/mxe
 
 echo "######################"
 echo "#  Building leveldb  #"
@@ -40,6 +40,7 @@ i686-w64-mingw32.static-qmake-qt5 \
 	BDB_LIB_PATH=$MXE_LIB_PATH \
 	MINIUPNPC_INCLUDE_PATH=src/miniupnpc \
 	MINIUPNPC_LIB_PATH=src/miniupnpc \
+ 	USE_UPNP=1 \
 	USE_LEVELDB=1 \
 	USE_BDB=0 \
 	RELEASE=1 \

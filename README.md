@@ -1,4 +1,4 @@
-Crypto Bullion Cryptographic Commodity
+Crypto Bullion
 
 Proof of Stake Hybrid
 featuring PoSP (Proof-of-Stake-Participation)

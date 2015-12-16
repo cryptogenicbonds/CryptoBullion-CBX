@@ -1,6 +1,8 @@
 Crypto Bullion Cryptographic Commodity
 
-Proof of Work/Proof of Stake Hybrid
+Proof of Stake Hybrid
+featuring PoSP (Proof-of-Stake-Participation)
+http://cryptobullion.io/white-paper/
 
 Scrypt
 

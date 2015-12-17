@@ -1051,7 +1051,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 			nSubsidy = 0.01953125 * COIN; // 1,953.125 coins - 1M POW
 		else if (nHeight > 545000)
 			nSubsidy = 0.01 * COIN; // 0.5% coins per year POW Inflation
-		//printf(">>> nHeight = %d, Reward = %d\n", nHeight, nSubsidy);
+
     	return nSubsidy;
 }
 
@@ -1550,34 +1550,6 @@ bool CTransaction::ConnectInputs(CTxDB& txdb, MapPrevTx inputs,
             }
         }
 
-        /*if (IsCoinStake())
-        {
-            // ppcoin: coin stake tx earns reward instead of paying fee
-            uint64 nCoinAge;
-            if (!GetCoinAge(txdb, nCoinAge))
-                return error("ConnectInputs() : %s unable to get coin age for coinstake", GetHash().ToString().substr(0,10).c_str());
-            int64 nStakeReward = GetValueOut() - nValueIn;
-            if (nStakeReward > GetProofOfStakeReward(nCoinAge, pindexBlock->nBits, nTime) - GetMinFee() + MIN_TX_FEE)
-                return DoS(100, error("ConnectInputs() : %s stake reward exceeded", GetHash().ToString().substr(0,10).c_str()));
-        }
-        else
-        {
-            if (nValueIn < GetValueOut())
-                return DoS(100, error("ConnectInputs() : %s value in < value out", GetHash().ToString().substr(0,10).c_str()));
-
-            // Tally transaction fees
-            int64 nTxFee = nValueIn - GetValueOut();
-            if (nTxFee < 0)
-                return DoS(100, error("ConnectInputs() : %s nTxFee < 0", GetHash().ToString().substr(0,10).c_str()));
-            // ppcoin: enforce transaction fees for every block
-            if (nTxFee < GetMinFee())
-                return fBlock? DoS(100, error("ConnectInputs() : %s not paying required fee=%s, paid=%s", GetHash().ToString().substr(0,10).c_str(), FormatMoney(GetMinFee()).c_str(), FormatMoney(nTxFee).c_str())) : false;
-
-            nFees += nTxFee;
-            if (!MoneyRange(nFees))
-                return DoS(100, error("ConnectInputs() : nFees out of range"));
-        }*/
-
         if (!IsCoinStake()){
             if (nValueIn < GetValueOut())
                 return DoS(100, error("ConnectInputs() : %s value in < value out", GetHash().ToString().substr(0,10).c_str()));
@@ -1623,16 +1595,6 @@ bool CTransaction::ClientConnectInputs()
             // Verify signature
             if (!VerifySignature(txPrev, *this, i, true, 0))
                 return error("ConnectInputs() : VerifySignature failed");
-
-            ///// this is redundant with the mempool.mapNextTx stuff,
-            ///// not sure which I want to get rid of
-            ///// this has to go away now that posNext is gone
-            // // Check for conflicts
-            // if (!txPrev.vout[prevout.n].posNext.IsNull())
-            //     return error("ConnectInputs() : prev tx already used");
-            //
-            // // Flag outpoints as used
-            // txPrev.vout[prevout.n].posNext = posThisTx;
 
             nValueIn += txPrev.vout[prevout.n].nValue;
 
@@ -1772,7 +1734,6 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
              return error("ConnectInputs() : %s unable to get coin age for coinstake", GetHash().ToString().substr(0,10).c_str());
 
-        // int64_t nCalculatedStakeReward = GetProofOfStakeReward(pindex->pprev, nCoinAge, nFees);
         int64 nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->pprev->nBits, nTime, pindex->pprev->nHeight, pindex->pprev->nMoneySupply);
 
         if (nStakeReward > nCalculatedStakeReward)

@@ -45,7 +45,7 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
 unsigned int nStakeMinAge = 60 * 60; // minimum age for coin age
 unsigned int nStakeMaxAge = -1; // stake age of full weight
-unsigned int nStakeTargetSpacing = 65; // 1-minute block spacing
+unsigned int nStakeTargetSpacing = 65; // 65-seconds block spacing
 int64 nChainStartTime = 1372351910;
 int nCoinbaseMaturity = 5;
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -1181,10 +1181,9 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(bnNew.GetCompact() > (unsigned int) 503417504){
-        printf("hard coded max %u\n", bnNew.GetCompact());
-        return (unsigned int) 503421740;
-    }
+    if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
+        return POSP_TARGET_LIMIT;
+    
 
     return bnNew.GetCompact();
 }

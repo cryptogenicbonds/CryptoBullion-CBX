@@ -145,10 +145,10 @@ test check: test_cryptobullion FORCE
 -include obj/*.P
 -include obj-test/*.P
 
-obj/build.h: FORCE
-	/bin/sh ../share/genbuild.sh obj/build.h
-version.cpp: obj/build.h
-DEFS += -DHAVE_BUILD_INFO
+#obj/build.h: FORCE
+#	cp ../build/build.h obj/build.h
+#version.cpp: obj/build.h
+#DEFS += -DHAVE_BUILD_INFO
 
 obj/%.o: %.cpp
 	$(CXX) -c $(CFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<

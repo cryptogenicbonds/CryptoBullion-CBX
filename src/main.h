@@ -25,6 +25,15 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
+// Hard fork constants:
+#define HARDFORK_TIME 1451570400
+#define OLD_nStakeMinAge (60 * 60 * 24 * 30)
+#define OLD_nStakeMaxAge (60 * 60 * 24 * 90)
+#define OLD_nStakeTargetSpacing 60
+#define END_POW_TIME (HARDFORK_TIME+(60 * 60 * 24))
+#define POSP_TARGET_LIMIT ((unsigned int) 503417504)
+// -----
+
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
 static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
@@ -127,7 +136,7 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
 bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey);
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 int64 GetProofOfWorkReward(unsigned int nBits);
-int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime);
+int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply);
 unsigned int ComputeMinWork(unsigned int nBase, int64 nTime);
 int GetNumBlocksOfPeers();
 bool IsInitialBlockDownload();
@@ -139,11 +148,10 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake);
 void ResendWalletTransactions();
 
 
+unsigned int GetStakeTargetSpacing(unsigned int nTime);
+unsigned int GetStakeMinAge(unsigned int nTime);
 
-
-
-
-
+unsigned int GetStakeMaxAge(unsigned int nTime);
 
 
 

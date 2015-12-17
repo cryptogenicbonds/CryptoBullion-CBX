@@ -38,6 +38,14 @@ Compiling Boost:
 Compiling Berkley DB:
 	make MXE_TARGETS="i686-w64-mingw32.static" db
 
+(Optional) Compiling libqrencode::
+	wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+	tar zxvf qrencode-3.4.4.tar.gz
+	cd qrencode-3.4.4
+	export PATH=/home/alexandre/sandbox/mxe/usr/bin:$PATH
+	./configure --host=i686-w64-mingw32.static --enable-static --disable-shared
+	make
+
 Compile Crypto Bullion Wallet
 -----------------------------
 Now you are ready to compile the Windows Qt Wallet of Crypto Bullion !

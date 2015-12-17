@@ -357,29 +357,30 @@ void CryptobullionGUI::createToolBars()
     toolbar->addAction(addressBookAction);
     toolbar->addAction(unlockToStakeAction);    
 
-    QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
-    toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolbar2->addAction(exportAction);
+    //QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
+    //toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    //toolbar2->addAction(exportAction);
+    toolbar->addAction(exportAction);
 
     toolbar->setObjectName("tabsToolbar");
 
-    toolbar2->setObjectName("actionsToolbar");
+    //toolbar2->setObjectName("actionsToolbar");
 
-    toolbar->setStyleSheet("QToolButton { min-height:48px;color:#ffffff;border:none;margin:0px;padding:0px;} "
-                           "QToolButton::disabled { color: #808080; background-color: transparent; } "
-                           "QToolButton:hover { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #909079, stop:1.0 #7E7F81); margin:0px; padding:0px; border:none; }"
-                           "QToolButton:checked { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #474748, stop:1.0 #353536); margin:0px; padding:0px; border-right-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #3b3b3b, stop:0.5 #6c6c6f, stop:1.0 #6c6c6f);border-right-width:2px;border-right-style:inset; border-left-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #6c6c6f, stop:0.5 #6c6c6f, stop:1.0 #3b3b3b);border-left-width:2px;border-left-style:inset; } "
-                           "QToolButton:pressed { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #474748, stop:1.0 #353536); margin:0px; padding:0px; border:none;} "
-                           "QToolButton:selected { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #474748, stop:1.0 #353536); margin:0px;padding:0px;border:none; } #tabsToolbar { min-height:48px; color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #6e6e71, stop:1.0 #4e4e4f); margin:0px; padding:0px; border-top-color: rgba(160, 160, 160, 191); border-top-width: 1px; border-top-style: inset; } "
-                           "QToolBar::handle { background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #6e6e71, stop:1.0 #4e4e4f); }");
+    toolbar->setStyleSheet("QToolButton {min-height:48px;color: #4C698B;border:none;margin:0px;padding:0px;border-color: #E6EDF7; border-width: 1px;border-style: solid;} "
+                           "QToolButton::disabled { color: #000000; background-color: transparent; } "
+                           "QToolButton:hover { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-style: solid;border-width: 1px;}"
+                           "QToolButton:checked { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-style: solid;border-width: 1px;} "
+                           "QToolButton:pressed { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7;border-style: solid; border-width: 1px;} "
+                           "QToolButton:selected { color: #1A9CD8; background-color: #ffffff; margin:0px;padding:0px;border-color: #E6EDF7; border-style: solid;border-width: 1px; } #tabsToolbar { min-height:48px; color: #4C698B; background-color: #ffffff; margin:0px; padding:0px; } "
+                           "QToolBar::handle { background-color: #ffffff; }");
 
-    toolbar2->setStyleSheet("QToolButton { min-height:48px;color:#ffffff;border:none;margin:0px;padding:0px;} "
-                            "QToolButton::disabled { color: #808080; background-color: transparent; } "
-                            "QToolButton:hover { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #7a7a60, stop:1.0 #6D6F70); margin:0px; padding:0px; border:none; } "
-                            "QToolButton:checked { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #363637, stop:1.0 #242425); margin:0px; padding:0px; border-right-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #37362a, stop:0.5 #5b5b5e, stop:1.0 #5b5b5e);border-right-width:0px;border-right-style:inset; border-left-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #5b5b5e, stop:0.5 #5b5b5e, stop:1.0 #2a2a2a);border-left-width:2px;border-left-style:inset; } "
-                            "QToolButton:pressed { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #363637, stop:1.0 #242425); margin:0px; padding:0px; border:none; border-left-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #5b5b5e, stop:0.5 #5b5b5e, stop:1.0 #37362a);border-left-width:2px;border-left-style:inset;} "
-                            "QToolButton:selected { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #363637, stop:1.0 #242425); margin:0px;padding:0px;border:none; } #actionsToolbar { color: #ffffff; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #5D5D60, stop:1.0 #3D3D3F); margin:0px; padding:0px; border-top-color: rgba(160, 160, 160, 191); border-top-width: 1px; border-top-style: inset; } "
-                            "QToolBar::handle { background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #5D5D60, stop:1.0 #3D3D3F); }");
+    /*toolbar2->setStyleSheet("QToolButton {margin: 0px; width: 100%; min-height:48px;color: #4C698B;border:none;margin:0px;padding:0px;border-color: #E6EDF7; border-width: 1px;border-style: solid;} "
+                             "QToolButton::disabled { color: #000000; background-color: transparent; } "
+                             "QToolButton:hover { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-width: 1px;border-style: solid; }"
+                             "QToolButton:checked { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-width: 1px;border-style: solid; } "
+                             "QToolButton:pressed { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-width: 1px;border-style: solid;} "
+                             "QToolButton:selected { color: #1A9CD8; background-color: #ffffff; margin:0px;padding:0px; border-color: #E6EDF7; border-width: 1px; border-style: solid;} #tabsToolbar { min-height:48px; color: #4C698B; background-color: #ffffff; margin:0px; padding:0px; } "
+                             "QToolBar::handle { background-color: #ffffff; }");*/
 }
 
 
@@ -719,7 +720,10 @@ void CryptobullionGUI::incomingTransaction(const QModelIndex & parent, int start
                             TransactionTableModel::ToAddress, parent)
                         .data(Qt::DecorationRole));
 
-        notificator->notify(Notificator::Information,
+        QString tmp = "(n/a)";
+
+        if(tmp.compare(type))
+            notificator->notify(Notificator::Information,
                             (amount)<0 ? tr("Sent transaction") :
                                          tr("Incoming transaction"),
                               tr("Date: %1\n"

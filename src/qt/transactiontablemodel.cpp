@@ -556,7 +556,8 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         }
         if(index.column() == ToAddress)
         {
-            return addressColor(rec);
+            return COLOR_POSITIVE;
+            //return addressColor(rec);
         }
         break;
     case TypeRole:

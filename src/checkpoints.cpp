@@ -23,31 +23,6 @@ namespace Checkpoints
     // + Contains no strange transactions
     //
 
-/*
-    static MapCheckpoints mapCheckpoints =
-        boost::assign::map_list_of
-        ( 0, hashGenesisBlockOfficial )
-		( 95002, uint256("0x000000002005b8fcc4e971b14ef655535fde9285c913c52f3c7064d889cd6226") )
-		( 128580, uint256("0x0000000005bbf12779485036c7aa23d0c017182dabdbb58e86b66384e929fd2c") )
-		( 150002, uint256("0x00000000023d5687abb2208b1df44974a50c519f3a6f11c29b891dbe8cc84ebf") )
-        ( 183993, uint256("0x000000001da3185b0b68ac3499084fd96e95487f62700f5ffd040bd8b4d58398") )
-        ( 190000, uint256("0x000000000e226034b27a0fef11039fee830ff8027e0f17b926bb83c01bf3b688") )
-        ( 230000, uint256("0x00000000469a52e1ecddf74ebd18d034ae42122729687ecbf5e233562fdfd39f") )
-        ( 260000, uint256("0x0000000070030143c51d204917e5aaac6cf37d4b1803d72c08dafd12edc8ea72") )
-		( 290000, uint256("0x00000000af91b16f01a659894a24c879ee62133e34f9efabdc9fa08d281a4b11") )
-		( 320000, uint256("0x00000001d4ee504e892fd7597c0342079f8ec14a6bd7f0e38d77be78baa4442f") )
-		( 350000, uint256("0x000000026ff936a9f4d77ef8b3f43fb7c2202219c4246ac56c413ec37672f0e4") )
-		( 380000, uint256("0x0000000125a6f752588db314e8577e5c0126dc416929073ea50a21479d6deb69") )		
-		( 402000, uint256("0x00000002c544f0f8c83671bb5dd48b6ced70dc3db5f6588643b910c079689ce0") )		
-		( 430000, uint256("0x00000006ba35bae2e2af99bf37243488afc8d6efd0d7cf77bd96bf94e07b80e1") )
-		( 460000, uint256("0x109a874f7d794025858987cc72bac7f2baeff792a01d31afa9984a125da22fbd") )		
-		( 510000, uint256("0x00000000114e79134fa556d603c1e5230e122bd0a78f6192888362bd5091bd18") )		
-		( 541460, uint256("0x00000001ad9fc61083a76f05bc40022845e74ba9c1c67d0f7d050d7dda361c44") ) // 2014-07-11
-        ;
-*/
-
-    // 624600 blocks
-
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
         ( 0,     std::make_pair(hashGenesisBlockOfficial, 1360105017) )
@@ -84,8 +59,12 @@ namespace Checkpoints
         ( 940000, std::make_pair(uint256("0x00000000effedf62c11f4915af520ff9760fe95079274272644db33fafcc144a"), 1429238187) )
         ( 950000, std::make_pair(uint256("0x000000013d1baea87356546d2a145ab914ce3e150a1a815255c94467926b8afa"), 1429997830) )
         ( 960000, std::make_pair(uint256("0x00000005ae8130555185ada554519439bdc71c390f95bd5e55530c240db3db54"), 1430623240) )
-
-       // ( 541460, std::make_pair(uint256("0x00000001ad9fc61083a76f05bc40022845e74ba9c1c67d0f7d050d7dda361c44"), 1405084212) )
+        ( 970000, std::make_pair(uint256("0x0000000056cf659b939456d76a883cf2147c49047c950ef7415c5700e0b5b4db"), 1431227343) )
+        ( 980000, std::make_pair(uint256("0x00000002933a54248502f0091078d3c33269e6d0293358e9259f8581aa91359c"), 1431895647) )
+        ( 990000, std::make_pair(uint256("0x00000000758136b0e554e639ad6fa11b7eb5f514120240960f36a33710cfe253"), 1432502809) )
+        ( 1000000, std::make_pair(uint256("0x00000002c6f432ca95d5ea89b84d2bfd701e3253d8edef06d18fed7ec09de30c"), 1433111376) )
+        ( 1100000, std::make_pair(uint256("0x000000015ac05d2bd89aba131cc9d57cdd7edda818320516cf2f346a2515b9be"), 1439171273) )
+        ( 1200000, std::make_pair(uint256("0x000000007a41df6df9174de6483a00c6a70bfa1c2a383d723def0776b6e3601f"), 1445225088) )
     ;
 
     static MapCheckpoints mapCheckpointsTestnet =
@@ -422,7 +401,7 @@ namespace Checkpoints
         assert(mapBlockIndex.count(hashSyncCheckpoint));
         const CBlockIndex* pindexSync = mapBlockIndex[hashSyncCheckpoint];
         return (nBestHeight >= pindexSync->nHeight + nCoinbaseMaturity ||
-                pindexSync->GetBlockTime() + nStakeMinAge < GetAdjustedTime());
+                pindexSync->GetBlockTime() + GetStakeMinAge(pindexSync->GetBlockTime()) < GetAdjustedTime());
     }
 
     // Is the sync-checkpoint too old?

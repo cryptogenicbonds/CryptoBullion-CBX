@@ -63,7 +63,8 @@ public:
         }
         else
         {
-            foreground = option.palette.color(QPalette::Text);
+            foreground = COLOR_POSITIVE;
+            //foreground = option.palette.color(QPalette::Text);
         }
         painter->setPen(foreground);
         QString amountText = CryptobullionUnits::formatWithUnit(unit, amount, true);

@@ -575,10 +575,10 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     l8->setText(CryptobullionUnits::formatWithUnit(nDisplayUnit, nChange));        // Change
     
     // turn labels "red"
-    l5->setStyleSheet((nBytes >= 10000) ? "color:red;" : "");               // Bytes >= 10000
-    l6->setStyleSheet((dPriority <= 576000) ? "color:red;" : "");         // Priority < "medium"
-    l7->setStyleSheet((fLowOutput) ? "color:red;" : "");                    // Low Output = "yes"
-    l8->setStyleSheet((nChange > 0 && nChange < CENT) ? "color:red;" : ""); // Change < 0.01BTC
+    l5->setStyleSheet((nBytes >= 10000) ? "color:#EE6D6A;" : "");               // Bytes >= 10000
+    l6->setStyleSheet((dPriority <= 576000) ? "color:#EE6D6A;" : "");         // Priority < "medium"
+    l7->setStyleSheet((fLowOutput) ? "color:#EE6D6A;" : "");                    // Low Output = "yes"
+    l8->setStyleSheet((nChange > 0 && nChange < CENT) ? "color:#EE6D6A;" : ""); // Change < 0.01BTC
         
     // tool tips
     l5->setToolTip(tr("This label turns red, if the transaction size is bigger than 10000 bytes.\n\n This means a fee of at least %1 per kb is required.\n\n Can vary +/- 1 Byte per input.").arg(CryptobullionUnits::formatWithUnit(nDisplayUnit, CENT)));
@@ -711,7 +711,7 @@ void CoinControlDialog::updateView()
             itemOutput->setText(COLUMN_CONFIRMATIONS, strPad(QString::number(out.nDepth), 8, " "));
 
             // coin age
-            int nDayWeight = (min((GetAdjustedTime() - out.tx->GetTxTime()), (int64) nStakeMaxAge) - nStakeMinAge) / 86400;
+            int nDayWeight = (min((GetAdjustedTime() - out.tx->GetTxTime()), (int64) GetStakeMaxAge(out.tx->GetTxTime())) - GetStakeMinAge(out.tx->GetTxTime())) / 86400;
             double coinAge = max(out.tx->vout[out.i].nValue * (double)nDayWeight / COIN, (double) 0);
             itemOutput->setText(COLUMN_COINAGE, strPad(QString::number(coinAge), 8, " "));
 

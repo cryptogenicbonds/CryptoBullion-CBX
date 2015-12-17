@@ -23,7 +23,7 @@
    <string>About CryptoBullion</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6d6d70, stop: 1 #4f4f50);
+   <string notr="true">background-color: white;
 QLabel { background: transparent; }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">

@@ -74,10 +74,10 @@ bool CryptobullionAmountField::validate()
 
 void CryptobullionAmountField::setValid(bool valid)
 {
-    if (valid)
+    /*if (valid)
         amount->setStyleSheet("");
     else
-        amount->setStyleSheet(STYLE_INVALID);
+        amount->setStyleSheet(STYLE_INVALID);*/
 }
 
 QString CryptobullionAmountField::text() const

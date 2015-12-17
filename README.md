@@ -1,12 +1,12 @@
-Crypto Bullion Cryptographic Commodity
+Crypto Bullion
 
-Proof of Work/Proof of Stake Hybrid
+Proof of Stake Hybrid
+featuring PoSP (Proof-of-Stake-Participation)
+
+http://cryptobullion.io/white-paper/
 
 Scrypt
 
-Linear Difficulty Retarget (2 block retarget)
-
-Transactions require 6 confirmations
 
 Block reward halves after every ~50000 blocks until baseline of 0.01 CBX (reached on July 13, 2014)
 

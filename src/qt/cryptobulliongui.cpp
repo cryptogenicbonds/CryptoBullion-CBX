@@ -931,9 +931,6 @@ void CryptobullionGUI::unlockWallet(bool showMintOption)
 
 void CryptobullionGUI::showNormalIfMinimized(bool fToggleHidden)
 {
-    if (!guiLoaded)
-        return;
-
     // activateWindow() (sometimes) helps with keyboard focus on Windows
     if (isHidden())
     {
@@ -952,6 +949,7 @@ void CryptobullionGUI::showNormalIfMinimized(bool fToggleHidden)
     }
     else if(fToggleHidden)
         hide();
+    
 }
 
 void CryptobullionGUI::toggleHidden()

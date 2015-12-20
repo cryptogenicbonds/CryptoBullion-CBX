@@ -3089,6 +3089,20 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64 nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
+
+        // Hardfork protection, we avoid to have old protocol version to avoid fake informations
+        if (pindexBest->nTime >= HARDFORK_TIME)
+        {
+            if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
+                && (!strcmp(pfrom->strSubVer.c_str(),"/Vault:2.0.1/")
+                    || !strcmp(pfrom->strSubVer.c_str(),"/Vault:2.0.0/"))){
+                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+                pfrom->fDisconnect = true;
+                return false;
+            }
+        }
+
+
         if (pfrom->nVersion < MIN_PROTO_VERSION)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,

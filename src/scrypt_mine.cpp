@@ -29,8 +29,11 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+extern "C" {
+#ifndef NOSSE
 #include <xmmintrin.h>
-
+#endif
+}
 #include "scrypt_mine.h"
 #include "pbkdf2.h"
 
@@ -43,23 +46,15 @@ extern bool fGenerateCryptobullions;
 extern CBlockIndex* pindexBest;
 extern uint32_t nTransactionsUpdated;
 
+#define SCRYPT_BUFFER_SIZE (3 * 131072 + 63)
+extern "C" void scrypt_core(uint32_t *X, uint32_t *V);
 
 #if defined(__x86_64__)
 
 #define SCRYPT_3WAY
-#define SCRYPT_BUFFER_SIZE (3 * 131072 + 63)
-
 extern "C" int scrypt_best_throughput();
-extern "C" void scrypt_core(uint32_t *X, uint32_t *V);
 extern "C" void scrypt_core_2way(uint32_t *X, uint32_t *Y, uint32_t *V);
 extern "C" void scrypt_core_3way(uint32_t *X, uint32_t *Y, uint32_t *Z, uint32_t *V);
-
-#elif defined(__i386__)
-
-#define SCRYPT_BUFFER_SIZE ( defined(__i386__)||defined(__arm__) )
-
-extern  "C" void scrypt_core(uint32_t *X, uint32_t *V);
-
 #endif
 
 void *scrypt_buffer_alloc() {

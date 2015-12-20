@@ -172,7 +172,7 @@ test check: test_cryptobullion FORCE
 -include obj-test/*.P
 
 obj/scrypt-arm.o: scrypt-arm.S
-    $(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
+	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
 
 obj/scrypt-x86.o: scrypt-x86.S
 	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<

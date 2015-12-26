@@ -32,7 +32,7 @@ class CNode;
 #define OLD_nStakeTargetSpacing 60
 #define END_POW_TIME (HARDFORK_TIME+(60 * 60 * 24))
 #define POSP_TARGET_LIMIT ((unsigned int) 503417504)
-#define HARDFORK_PROTOCOL_VERSION 6007
+#define HARDFORK_PROTOCOL_VERSION 60007
 // -----
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;

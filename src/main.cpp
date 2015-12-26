@@ -1171,11 +1171,6 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if(nActualSpacing < 0)
-        nActualSpacing = 1;
-    else if(nActualSpacing > nTargetTimespan)
-        nActualSpacing = nTargetTimespan;
-
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
@@ -1226,11 +1221,6 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if(nActualSpacing < 0)
-        nActualSpacing = 1;
-    else if(nActualSpacing > nTargetTimespan)
-        nActualSpacing = nTargetTimespan;
-    
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;

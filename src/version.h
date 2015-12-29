@@ -34,7 +34,7 @@ static const int DB_MINVER_INCHASH = 70300;
 // network protocol versioning
 //
 
-static const int PROTOCOL_VERSION = 60006;
+static const int PROTOCOL_VERSION = 60007;
 
 // earlier versions not supported as of Feb 2012, and are disconnected
 static const int MIN_PROTO_VERSION = 209;

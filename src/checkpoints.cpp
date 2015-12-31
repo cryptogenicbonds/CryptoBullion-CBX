@@ -65,6 +65,8 @@ namespace Checkpoints
         ( 1000000, std::make_pair(uint256("0x00000002c6f432ca95d5ea89b84d2bfd701e3253d8edef06d18fed7ec09de30c"), 1433111376) )
         ( 1100000, std::make_pair(uint256("0x000000015ac05d2bd89aba131cc9d57cdd7edda818320516cf2f346a2515b9be"), 1439171273) )
         ( 1200000, std::make_pair(uint256("0x000000007a41df6df9174de6483a00c6a70bfa1c2a383d723def0776b6e3601f"), 1445225088) )
+        ( 1302573, std::make_pair(uint256("0x51050155f2159ecbaf3470725c50db7f34bb2a8590f1bb638474c6519e99e6ac"), 1451570400) ) // First PoSP block
+
     ;
 
     static MapCheckpoints mapCheckpointsTestnet =

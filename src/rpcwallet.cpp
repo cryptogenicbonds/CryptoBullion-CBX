@@ -9,6 +9,7 @@
 #include "cryptobullionrpc.h"
 #include "init.h"
 #include "base58.h"
+#include "main.h"
 
 using namespace json_spirit;
 using namespace std;
@@ -39,6 +40,13 @@ void WalletTxToJSON(const CWalletTx& wtx, Object& entry)
     entry.push_back(Pair("confirmations", confirms));
     if (wtx.IsCoinBase() || wtx.IsCoinStake())
         entry.push_back(Pair("generated", true));
+
+    if(wtx.IsCoinStake())
+        if((boost::int64_t)wtx.GetTxTime() >= HARDFORK_TIME)
+            entry.push_back(Pair("posp", true));
+        else
+            entry.push_back(Pair("pos", true));
+
     if (confirms)
     {
         entry.push_back(Pair("blockhash", wtx.hashBlock.GetHex()));

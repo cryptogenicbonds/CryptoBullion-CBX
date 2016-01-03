@@ -17,8 +17,8 @@
 #include <QPainter>
 #include <QFontDatabase>
 
-SplashScreen::SplashScreen(const QPixmap &pixmap, Qt::WindowFlags f, bool isTestNet) :
-    QSplashScreen(pixmap, f)
+SplashScreen::SplashScreen(const QPixmap &pixmap, bool isTestNet) :
+    QSplashScreen(pixmap)
 {
     setAutoFillBackground(true);
 

@@ -18,7 +18,7 @@
 #include "util.h"
 #include "walletdb.h"
 
-#define COMBINE_THRESHOLD (COIN*200)
+#define COMBINE_THRESHOLD (COIN*100)
 
 extern bool fWalletUnlockMintOnly;
 extern bool fNoSpendZeroConfChange;

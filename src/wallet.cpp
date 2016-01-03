@@ -1577,6 +1577,9 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         
     }
 
+    if (nCredit >= COMBINE_THRESHOLD*2)
+        txNew.vout.push_back(CTxOut(0, txNew.vout[1].scriptPubKey)); //split stake
+
     int64 nMinFee = 0;
     unsigned int nBytes;
     int nIn = 0;

@@ -4536,7 +4536,6 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
-    unsigned int nTransactionsUpdatedLast;
     CBlockIndex* pindexPrev;
 
     while (fProofOfStake)
@@ -4562,7 +4561,6 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         //
         // Create new block
         //
-        nTransactionsUpdatedLast = nTransactionsUpdated;
         pindexPrev = pindexBest;
 
         auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, fProofOfStake));

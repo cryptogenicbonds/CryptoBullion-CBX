@@ -243,12 +243,12 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     proxy_port_label->setBuddy(proxy_port);
     proxy_hbox->addWidget(proxy_port);
     proxy_hbox->addStretch(1);
+    layout->addLayout(proxy_hbox);
 
     no_spend_unconfirmed_change = new QCheckBox(tr("&Disable spending unconfirmed change:"));
     no_spend_unconfirmed_change->setToolTip(tr("If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed."));
     layout->addWidget(no_spend_unconfirmed_change);
 
-    layout->addLayout(proxy_hbox);
     QLabel *fee_help = new QLabel(tr("Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.001 CBX fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment."));
     fee_help->setWordWrap(true);
     layout->addWidget(fee_help);

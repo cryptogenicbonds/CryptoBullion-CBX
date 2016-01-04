@@ -115,7 +115,7 @@ QLabel { background: transparent; }</string>
         <string notr="true">QLabel { background: transparent; }</string>
        </property>
        <property name="text">
-        <string>Copyright © 2009-2015s The CryptoBullion Foundation</string>
+        <string>Copyright © 2009-2016s The CryptoBullion Foundation</string>
        </property>
        <property name="textInteractionFlags">
         <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Joe 'raizor' McChristmas
+* Copyright (C) 2016 Joe 'raizor' McChristmas
 * Copyright (C) 2009 Cleriot Simon
 *
 * This program is free software; you can redistribute it and/or

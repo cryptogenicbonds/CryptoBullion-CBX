@@ -15,7 +15,7 @@
     </message>
     <message>
         <location line="+47"/>
-        <source>Copyright © 2009-2015s The CryptoBullion Foundation</source>
+        <source>Copyright © 2009-2016s The CryptoBullion Foundation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

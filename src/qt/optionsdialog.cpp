@@ -222,10 +222,6 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     connect_socks4->setToolTip(tr("Connect to the CBX network through a SOCKS4 proxy (e.g. when connecting through Tor)"));
     layout->addWidget(connect_socks4);
 
-    no_spend_unconfirmed_change = new QCheckBox(tr("&Disable spending unconfirmed change:"));
-    no_spend_unconfirmed_change->setToolTip(tr("If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed."));
-    layout->addWidget(no_spend_unconfirmed_change);
-
     QHBoxLayout *proxy_hbox = new QHBoxLayout();
     proxy_hbox->addSpacing(18);
     QLabel *proxy_ip_label = new QLabel(tr("Proxy &IP: "));
@@ -247,6 +243,10 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     proxy_port_label->setBuddy(proxy_port);
     proxy_hbox->addWidget(proxy_port);
     proxy_hbox->addStretch(1);
+
+    no_spend_unconfirmed_change = new QCheckBox(tr("&Disable spending unconfirmed change:"));
+    no_spend_unconfirmed_change->setToolTip(tr("If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed."));
+    layout->addWidget(no_spend_unconfirmed_change);
 
     layout->addLayout(proxy_hbox);
     QLabel *fee_help = new QLabel(tr("Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.001 CBX fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment."));

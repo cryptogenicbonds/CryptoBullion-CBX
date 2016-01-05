@@ -3076,7 +3076,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     // We can't do the check in strCommand == "version" because subVer is coming later
     if (pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIME)
     {
-        if(strlen(pfrom->strSubVer.c_str()) > 12 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
+        if(strlen(pfrom->strSubVer.c_str()) > 14 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
             && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
                 || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/")
                 || !strcmp(pfrom->strSubVer.c_str(), ""))
@@ -3088,7 +3088,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
 
         if(pfrom->fToAdd){
-            if(strlen(pfrom->strSubVer.c_str()) > 12 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
+            if(strlen(pfrom->strSubVer.c_str()) > 14 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
                 && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
                 || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/")))){
                 pfrom->fToAdd = false;
@@ -3114,7 +3114,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64 nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION || strlen(pfrom->strSubVer.c_str()) > 12)
+        if (pfrom->nVersion < MIN_PROTO_VERSION || strlen(pfrom->strSubVer.c_str()) > 14)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported

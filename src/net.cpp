@@ -664,6 +664,10 @@ void ThreadSocketHandler2(void* parg)
     printf("ThreadSocketHandler started\n");
     list<CNode*> vNodesDisconnected;
     unsigned int nPrevNodeCount = 0;
+    SOCKET hSocketMax = 0;
+    bool have_fds = false;
+    int nSelect;
+    int nErr;
 
     while (true)
     {
@@ -750,8 +754,8 @@ void ThreadSocketHandler2(void* parg)
         FD_ZERO(&fdsetRecv);
         FD_ZERO(&fdsetSend);
         FD_ZERO(&fdsetError);
-        SOCKET hSocketMax = 0;
-        bool have_fds = false;
+        hSocketMax = 0;
+        have_fds = false;
 
         BOOST_FOREACH(SOCKET hListenSocket, vhListenSocket) {
             FD_SET(hListenSocket, &fdsetRecv);
@@ -777,7 +781,7 @@ void ThreadSocketHandler2(void* parg)
         }
 
         vnThreadsRunning[THREAD_SOCKETHANDLER]--;
-        int nSelect = select(have_fds ? hSocketMax + 1 : 0,
+        nSelect = select(have_fds ? hSocketMax + 1 : 0,
                              &fdsetRecv, &fdsetSend, &fdsetError, &timeout);
         vnThreadsRunning[THREAD_SOCKETHANDLER]++;
         if (fShutdown)
@@ -786,7 +790,7 @@ void ThreadSocketHandler2(void* parg)
         {
             if (have_fds)
             {
-                int nErr = WSAGetLastError();
+                nErr = WSAGetLastError();
                 printf("socket select error %d\n", nErr);
                 for (unsigned int i = 0; i <= hSocketMax; i++)
                     FD_SET(i, &fdsetRecv);
@@ -800,6 +804,8 @@ void ThreadSocketHandler2(void* parg)
         //
         // Accept new connections
         //
+        int nInbound;
+        SOCKET hSocket;
         BOOST_FOREACH(SOCKET hListenSocket, vhListenSocket)
         if (hListenSocket != INVALID_SOCKET && FD_ISSET(hListenSocket, &fdsetRecv))
         {
@@ -809,9 +815,9 @@ void ThreadSocketHandler2(void* parg)
             struct sockaddr sockaddr;
 #endif
             socklen_t len = sizeof(sockaddr);
-            SOCKET hSocket = accept(hListenSocket, (struct sockaddr*)&sockaddr, &len);
+            hSocket = accept(hListenSocket, (struct sockaddr*)&sockaddr, &len);
             CAddress addr;
-            int nInbound = 0;
+            nInbound = 0;
 
             if (hSocket != INVALID_SOCKET)
                 if (!addr.SetSockAddr((const struct sockaddr*)&sockaddr))
@@ -826,7 +832,7 @@ void ThreadSocketHandler2(void* parg)
 
             if (hSocket == INVALID_SOCKET)
             {
-                int nErr = WSAGetLastError();
+                nErr = WSAGetLastError();
                 if (nErr != WSAEWOULDBLOCK)
                     printf("socket error accept failed: %d\n", nErr);
             }
@@ -891,12 +897,14 @@ void ThreadSocketHandler2(void* parg)
                     }
                     else {
                         // typical socket buffer is 8K-64K
-                        char pchBuf[0x10000];
-                        int nBytes = recv(pnode->hSocket, pchBuf, sizeof(pchBuf), MSG_DONTWAIT);
+                        // char pchBuf[0x10000];
+                        char *pchBuf = malloc(0x10000*sizeof(char));
+                        int nBytes = recv(pnode->hSocket, *pchBuf, 0x10000, MSG_DONTWAIT);
+
                         if (nBytes > 0)
                         {
                             vRecv.resize(nPos + nBytes);
-                            memcpy(&vRecv[nPos], pchBuf, nBytes);
+                            memcpy(&vRecv[nPos], *pchBuf, nBytes);
                             pnode->nLastRecv = GetTime();
                         }
                         else if (nBytes == 0)
@@ -909,7 +917,7 @@ void ThreadSocketHandler2(void* parg)
                         else if (nBytes < 0)
                         {
                             // error
-                            int nErr = WSAGetLastError();
+                            nErr = WSAGetLastError();
                             if (nErr != WSAEWOULDBLOCK && nErr != WSAEMSGSIZE && nErr != WSAEINTR && nErr != WSAEINPROGRESS)
                             {
                                 if (!pnode->fDisconnect)
@@ -917,6 +925,8 @@ void ThreadSocketHandler2(void* parg)
                                 pnode->CloseSocketDisconnect();
                             }
                         }
+
+                        free(pchBuf);
                     }
                 }
             }
@@ -943,7 +953,7 @@ void ThreadSocketHandler2(void* parg)
                         else if (nBytes < 0)
                         {
                             // error
-                            int nErr = WSAGetLastError();
+                            nErr = WSAGetLastError();
                             if (nErr != WSAEWOULDBLOCK && nErr != WSAEMSGSIZE && nErr != WSAEINTR && nErr != WSAEINPROGRESS)
                             {
                                 printf("socket send error %d\n", nErr);

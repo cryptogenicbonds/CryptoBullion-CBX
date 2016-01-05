@@ -175,6 +175,7 @@ public:
     bool fOneShot;
     bool fClient;
     bool fInbound;
+    bool fToAdd;
     bool fNetworkNode;
     bool fSuccessfullyConnected;
     bool fDisconnect;
@@ -638,7 +639,7 @@ public:
     // new code.
     static void ClearBanned(); // needed for unit testing
     static bool IsBanned(CNetAddr ip);
-    bool Misbehaving(int howmuch); // 1 == a little, 100 == a lot
+    bool Misbehaving(int howmuch, bool fOldVersion=false); // 1 == a little, 100 == a lot
     void copyStats(CNodeStats &stats);
 };
 

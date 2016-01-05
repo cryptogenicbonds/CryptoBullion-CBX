@@ -586,7 +586,7 @@ bool CNode::IsBanned(CNetAddr ip)
     return fResult;
 }
 
-bool CNode::Misbehaving(int howmuch)
+bool CNode::Misbehaving(int howmuch, bool fOldVersion)
 {
     if (addr.IsLocal())
     {
@@ -595,14 +595,14 @@ bool CNode::Misbehaving(int howmuch)
     }
 
     nMisbehavior += howmuch;
-    if (nMisbehavior >= GetArg("-banscore", 100))
+    if (nMisbehavior >= GetArg("-banscore", 100) || fOldVersion)
     {
         int64 banTime = GetTime()+GetArg("-bantime", 60*60*24);  // Default 24-hour ban
         printf("Misbehaving: %s (%d -> %d) DISCONNECTING\n", addr.ToString().c_str(), nMisbehavior-howmuch, nMisbehavior);
         {
             LOCK(cs_setBanned);
-            if (setBanned[addr] < banTime)
-                setBanned[addr] = banTime;
+            if (setBanned[addr] < banTime || fOldVersion)
+                setBanned[addr] = fOldVersion ? (60*60*24*15) : (banTime);
         }
         CloseSocketDisconnect();
         return true;

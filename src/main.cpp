@@ -3080,9 +3080,21 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
                 || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/")
                 || !strcmp(pfrom->strSubVer.c_str(), ""))){
-            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            printf("partner %s using obsolete version %i; banned & disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
+            pfrom->Misbehaving(1000, true); // Banned
             return false;
+        }
+
+        if(pfrom->fToAdd){
+            if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
+                && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
+                || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/"))){
+                pfrom->fToAdd = false;
+
+                addrman.Add(pfrom->addr, pfrom->addr);
+                addrman.Good(pfrom->addr);
+            }
         }
     }
 
@@ -3167,11 +3179,16 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             }
             addrman.Good(pfrom->addr);
         } else {
-            if (((CNetAddr)pfrom->addr) == (CNetAddr)addrFrom)
-            {
-                addrman.Add(addrFrom, addrFrom);
-                addrman.Good(addrFrom);
-            }
+            if(pfrom->nVersion >= HARDFORK_PROTOCOL_VERSION){
+                pfrom->fToAdd = false;
+                if (((CNetAddr)pfrom->addr) == (CNetAddr)addrFrom)
+                {
+                    addrman.Add(addrFrom, addrFrom);
+                    addrman.Good(addrFrom);
+                }
+            }else
+                if (((CNetAddr)pfrom->addr) == (CNetAddr)addrFrom)
+                    pfrom->fToAdd = true;
         }
 
         // Ask the first connected node for block updates

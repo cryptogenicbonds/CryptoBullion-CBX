@@ -897,14 +897,13 @@ void ThreadSocketHandler2(void* parg)
                     }
                     else {
                         // typical socket buffer is 8K-64K
-                        // char pchBuf[0x10000];
-                        char *pchBuf = malloc(0x10000*sizeof(char));
-                        int nBytes = recv(pnode->hSocket, *pchBuf, 0x10000, MSG_DONTWAIT);
+                        char pchBuf[0x10000];
+                        int nBytes = recv(pnode->hSocket, pchBuf, 0x10000, MSG_DONTWAIT);
 
                         if (nBytes > 0)
                         {
                             vRecv.resize(nPos + nBytes);
-                            memcpy(&vRecv[nPos], *pchBuf, nBytes);
+                            memcpy(&vRecv[nPos], pchBuf, nBytes);
                             pnode->nLastRecv = GetTime();
                         }
                         else if (nBytes == 0)
@@ -925,8 +924,6 @@ void ThreadSocketHandler2(void* parg)
                                 pnode->CloseSocketDisconnect();
                             }
                         }
-
-                        free(pchBuf);
                     }
                 }
             }

@@ -2401,7 +2401,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         uint256 hashProofOfStake = 0;
         if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
         {
-            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at height %u\n", hash.ToString().c_str(), pblock->nHeight);
+            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at time %u\n", hash.ToString().c_str(), pblock->nTime);
             return false; // do not error here as we expect this during initial block download
         }
         if (!mapProofOfStake.count(hash)) // add to mapProofOfStake

@@ -1152,7 +1152,9 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
+unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, bool fCreate=false);
+
+unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, bool fCreate){
     CBigNum bnTargetLimit = bnProofOfWorkLimit;
 
     if(fTestNet)
@@ -1170,6 +1172,15 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
         return bnTargetLimit.GetCompact(); // second block
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+
+    if(!fCreate){
+        if(pindexLast->GetBlockTime() - pindexPrev->GetBlockTime() > 60*60*30){
+            return (unsigned int) -1; // Instamine
+        }
+    }else{
+        if(GetAdjustedTime() - pindexLast->GetBlockTime() > 60*60*30)
+            return (unsigned int) -1;
+    }
 
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
@@ -1237,12 +1248,14 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
     return bnNew.GetCompact();
 }
 
-unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
+unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, bool fCreate=false);
+
+unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, bool fCreate)
 {
     if(pindexLast->nTime < HARDFORK_TIME || !fProofOfStake)
         return GetNextTargetRequiredHybrid(pindexLast, fProofOfStake);
     else
-        return GetNextTargetRequiredPoSP(pindexLast);
+        return GetNextTargetRequiredPoSP(pindexLast, fCreate);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
@@ -2388,7 +2401,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         uint256 hashProofOfStake = 0;
         if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
         {
-            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s\n", hash.ToString().c_str());
+            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at height %u\n", hash.ToString().c_str(), pblock->nHeight);
             return false; // do not error here as we expect this during initial block download
         }
         if (!mapProofOfStake.count(hash)) // add to mapProofOfStake
@@ -4178,7 +4191,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
 
     if (fProofOfStake)  // attempt to find a coinstake
     {
-        pblock->nBits = GetNextTargetRequired(pindexPrev, true);
+        pblock->nBits = GetNextTargetRequired(pindexPrev, true, true);
         CTransaction txCoinStake;
         int64 nSearchTime = txCoinStake.nTime; // search to current time
         if (nSearchTime > nLastCoinStakeSearchTime)

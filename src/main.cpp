@@ -1177,13 +1177,14 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, boo
         if(pindexLast->GetBlockTime() - pindexPrev->GetBlockTime() > 60*60*30){
             printf("HARDFORK0 %u\n", (unsigned int) -1);
             return (unsigned int) -1; // Instamine
-        }
+        }else
+            printf("No instamine0 %u ", pindexLast->GetBlockTime() - pindexLast->GetBlockTime());
     }else{
         if(GetAdjustedTime() - pindexLast->GetBlockTime() > 60*60*30){
             printf("HARDFORK1 %u\n", (unsigned int) -1);
             return (unsigned int) -1;
         }else
-            printf("No instamine %u ", GetAdjustedTime() - pindexLast->GetBlockTime());
+            printf("No instamine1 %u ", GetAdjustedTime() - pindexLast->GetBlockTime());
     }
 
     // ppcoin: target change every block
@@ -2403,7 +2404,14 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     if (pblock->IsProofOfStake())
     {
         uint256 hashProofOfStake = 0;
-        if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
+
+        // Get prev block index
+        map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(pblock->hashPrevBlock);
+        if (mi == mapBlockIndex.end())
+            return DoS(10, error("ProcessBlock() : prev block not found"));
+        CBlockIndex* pindexPrev = (*mi).second;
+
+        if (!CheckProofOfStake(pblock->vtx[1], (pblock->GetBlockTime() - pindexPrev->GetBlockTime() > 60*30) : ((unsigned int) -1) ? pblock->nBits, hashProofOfStake))
         {
             printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at time %u\n", hash.ToString().c_str(), pblock->nTime);
             pblock->print();

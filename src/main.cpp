@@ -1152,7 +1152,9 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
+unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, bool fCreate=false);
+
+unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, bool fCreate){
     CBigNum bnTargetLimit = bnProofOfWorkLimit;
 
     if(fTestNet)
@@ -1170,6 +1172,15 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
         return bnTargetLimit.GetCompact(); // second block
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+
+    if(!fCreate){
+        if(nActualSpacing > 60*60*3/2){
+            return (unsigned int) -1; // Instamine
+        }
+    }else{
+        if(GetAdjustedTime() - pindexPrev->GetBlockTime())
+            return (unsigned int) -1;
+    }
 
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
@@ -1237,12 +1248,14 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
     return bnNew.GetCompact();
 }
 
-unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
+unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, bool fCreate=false);
+
+unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, bool fCreate)
 {
     if(pindexLast->nTime < HARDFORK_TIME || !fProofOfStake)
         return GetNextTargetRequiredHybrid(pindexLast, fProofOfStake);
     else
-        return GetNextTargetRequiredPoSP(pindexLast);
+        return GetNextTargetRequiredPoSP(pindexLast, fCreate);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
@@ -4178,7 +4191,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
 
     if (fProofOfStake)  // attempt to find a coinstake
     {
-        pblock->nBits = GetNextTargetRequired(pindexPrev, true);
+        pblock->nBits = GetNextTargetRequired(pindexPrev, true, true);
         CTransaction txCoinStake;
         int64 nSearchTime = txCoinStake.nTime; // search to current time
         if (nSearchTime > nLastCoinStakeSearchTime)

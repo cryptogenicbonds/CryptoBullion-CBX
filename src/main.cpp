@@ -1242,7 +1242,7 @@ unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fP
     if(pindexLast->nTime < HARDFORK_TIME || !fProofOfStake)
         return GetNextTargetRequiredHybrid(pindexLast, fProofOfStake);
     else
-        return GetNextTargetRequiredPoSP(pindexLast, fCreate);
+        return GetNextTargetRequiredPoSP(pindexLast);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)

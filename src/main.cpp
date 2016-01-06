@@ -1175,11 +1175,14 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, boo
 
     if(!fCreate){
         if(pindexLast->GetBlockTime() - pindexPrev->GetBlockTime() > 60*60*30){
+            printf("HARDFORK0 %u\n", (unsigned int) -1);
             return (unsigned int) -1; // Instamine
         }
     }else{
-        if(GetAdjustedTime() - pindexLast->GetBlockTime() > 60*60*30)
+        if(GetAdjustedTime() - pindexLast->GetBlockTime() > 60*60*30){
+            printf("HARDFORK1 %u\n", (unsigned int) -1);
             return (unsigned int) -1;
+        }
     }
 
     // ppcoin: target change every block
@@ -2402,6 +2405,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
         {
             printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at time %u\n", hash.ToString().c_str(), pblock->nTime);
+            pblock->print();
             return false; // do not error here as we expect this during initial block download
         }
         if (!mapProofOfStake.count(hash)) // add to mapProofOfStake

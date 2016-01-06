@@ -302,7 +302,9 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
     
     ss << nStakeModifier;
 
-    ss << nTimeBlockFrom << nTxPrevOffset << txPrev.nTime << prevout.n << nTimeTx;
+    ss << nTimeBlockFrom << txPrev.nTime << prevout.hash << prevout.n << nTimeTx;
+
+    // ss << nTimeBlockFrom << nTxPrevOffset << txPrev.nTime << prevout.n << nTimeTx;
     hashProofOfStake = Hash(ss.begin(), ss.end());
     if (fPrintProofOfStake)
     {

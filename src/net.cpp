@@ -30,7 +30,9 @@ static const int MAX_OUTBOUND_CONNECTIONS = 8;
 void ThreadMessageHandler2(void* parg);
 void ThreadSocketHandler2(void* parg);
 void ThreadOpenConnections2(void* parg);
+void ThreadAddNode(void* parg);
 void ThreadOpenAddedConnections2(void* parg);
+
 #ifdef USE_UPNP
 void ThreadMapPort2(void* parg);
 #endif
@@ -75,6 +77,11 @@ set<CNetAddr> setservAddNodeAddresses;
 CCriticalSection cs_setservAddNodeAddresses;
 
 static CSemaphore *semOutbound = NULL;
+
+void AddNewNode(char *strNewNode){
+    if (!NewThread(ThreadAddNode, strNewNode))
+        printf("Error: NewThread(ThreadAddNode) failed\n");
+}
 
 void AddOneShot(string strDest)
 {
@@ -1470,6 +1477,75 @@ void ThreadOpenAddedConnections(void* parg)
         PrintException(NULL, "ThreadOpenAddedConnections()");
     }
     printf("ThreadOpenAddedConnections exited\n");
+}
+
+void ThreadAddNode(void* parg)
+{
+    printf("ThreadAddNode started\n");
+
+    char *strAddrToAdd = (char *) parg;
+
+    if (strlen(strAddrToAdd) == 0)
+        return;
+
+    if (HaveNameProxy()) {
+        while(!fShutdown) {
+            CAddress addr;
+            CSemaphoreGrant grant(*semOutbound);
+            OpenNetworkConnection(addr, &grant, strAddrToAdd);
+            
+            vnThreadsRunning[THREAD_ADDEDCONNECTIONS]--;
+            Sleep(120000); // Retry every 2 minutes
+            vnThreadsRunning[THREAD_ADDEDCONNECTIONS]++;
+        }
+        return;
+    }
+
+    vector<vector<CService> > vservAddressesToAdd(0);
+    vector<CService> vservNode(0);
+    if(Lookup(strAddrToAdd, vservNode, GetDefaultPort(), fNameLookup, 0))
+    {
+        vservAddressesToAdd.push_back(vservNode);
+        {
+                LOCK(cs_setservAddNodeAddresses);
+                BOOST_FOREACH(CService& serv, vservNode)
+                    setservAddNodeAddresses.insert(serv);
+        }
+    }
+    
+    while (true)
+    {
+        vector<vector<CService> > vservConnectAddresses = vservAddressesToAdd;
+        // Attempt to connect to each IP for each addnode entry until at least one is successful per addnode entry
+        // (keeping in mind that addnode entries can have many IPs if fNameLookup)
+        {
+            LOCK(cs_vNodes);
+            BOOST_FOREACH(CNode* pnode, vNodes)
+                for (vector<vector<CService> >::iterator it = vservConnectAddresses.begin(); it != vservConnectAddresses.end(); it++)
+                    BOOST_FOREACH(CService& addrNode, *(it))
+                        if (pnode->addr == addrNode)
+                        {
+                            it = vservConnectAddresses.erase(it);
+                            it--;
+                            break;
+                        }
+        }
+        BOOST_FOREACH(vector<CService>& vserv, vservConnectAddresses)
+        {
+            CSemaphoreGrant grant(*semOutbound);
+            OpenNetworkConnection(CAddress(*(vserv.begin())), &grant);
+            Sleep(500);
+            if (fShutdown)
+                return;
+        }
+        if (fShutdown)
+            return;
+        vnThreadsRunning[THREAD_ADDEDCONNECTIONS]--;
+        Sleep(120000); // Retry every 2 minutes
+        vnThreadsRunning[THREAD_ADDEDCONNECTIONS]++;
+        if (fShutdown)
+            return;
+    }
 }
 
 void ThreadOpenAddedConnections2(void* parg)

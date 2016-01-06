@@ -46,7 +46,7 @@ Value addnode(const Array& params, bool fHelp)
     AddNewNode(params[0].get_str().c_str());
     
     Object result;
-    result.push_back(Pair("response", "Try to add " params[0].get_str()));
+    result.push_back(Pair("response", "Try to add node"));
     return result;
 }
 

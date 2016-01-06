@@ -1182,7 +1182,8 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, boo
         if(GetAdjustedTime() - pindexLast->GetBlockTime() > 60*60*30){
             printf("HARDFORK1 %u\n", (unsigned int) -1);
             return (unsigned int) -1;
-        }
+        }else
+            printf("No instamine %u ", GetAdjustedTime() - pindexLast->GetBlockTime());
     }
 
     // ppcoin: target change every block

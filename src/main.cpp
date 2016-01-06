@@ -3103,7 +3103,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> pfrom->strSubVer;
 
         // Hardfork protection, we avoid to have old protocol version to avoid fake informations
-        if(strlen(pfrom->strSubVer.c_str()) > 14 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
+        if(strlen(pfrom->strSubVer.c_str()) != 13 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
                 && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
                 || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/")))){
             

@@ -302,8 +302,6 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
     
     ss << nStakeModifier;
 
-    // ss << txPrev.nTime << prevout.hash << prevout.n << nTimeTx;
-
     ss << nTimeBlockFrom << nTxPrevOffset << txPrev.nTime << prevout.n << nTimeTx;
     hashProofOfStake = Hash(ss.begin(), ss.end());
     if (fPrintProofOfStake)
@@ -325,12 +323,8 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
         if (CBigNum(hashProofOfStake) > bnCoinDayWeight * bnTarget)
             return false;
     }else{
-        if (CBigNum(hashProofOfStake) > bnWeight * bnTarget && nBits < (unsigned int) -1){
-            printf("%u < %u\n", nBits, (unsigned int) -1);
+        if (CBigNum(hashProofOfStake) > bnWeight * bnTarget && nBits < (unsigned int) -1)
             return false;
-        }
-
-        printf("OK PoSP\n");
     }
     if (fDebug && !fPrintProofOfStake)
     {

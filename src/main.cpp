@@ -1152,9 +1152,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, bool fCreate=false);
-
-unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, bool fCreate){
+unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     CBigNum bnTargetLimit = bnProofOfWorkLimit;
 
     if(fTestNet)
@@ -1173,18 +1171,11 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, boo
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if(!fCreate){
-        if(pindexLast->GetBlockTime() - pindexPrev->GetBlockTime() > 60*30){
-            printf("HARDFORK0 %u\n", (unsigned int) -1);
-            return (unsigned int) -1; // Instamine
-        }else
-            printf("No instamine0 %u ", pindexLast->GetBlockTime() - pindexLast->GetBlockTime());
-    }else{
-        if(GetAdjustedTime() - pindexLast->GetBlockTime() > 60*30){
-            printf("HARDFORK1 %u\n", (unsigned int) -1);
+    if(pindexLast->nTime >= HARDFORK_TIMEV2){
+        if(nActualSpacing < 0){
+            printf("ERROR: Block from past, instamined next one");
             return (unsigned int) -1;
-        }else
-            printf("No instamine1 %u ", GetAdjustedTime() - pindexLast->GetBlockTime());
+        }
     }
 
     // ppcoin: target change every block
@@ -1197,8 +1188,13 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast, boo
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
-        return POSP_TARGET_LIMIT;
+    if(pindexLast->nTime < HARDFORK_TIMEV2){
+        if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
+            return POSP_TARGET_LIMIT;
+    }else{
+        if(bnNew > bnProofOfStakeLimitV2)
+            return bnProofOfStakeLimitV2.GetCompact();
+    }
     
 
     return bnNew.GetCompact();
@@ -1253,14 +1249,12 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
     return bnNew.GetCompact();
 }
 
-unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, bool fCreate=false);
-
-unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, bool fCreate)
+unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
     if(pindexLast->nTime < HARDFORK_TIME || !fProofOfStake)
         return GetNextTargetRequiredHybrid(pindexLast, fProofOfStake);
     else
-        return GetNextTargetRequiredPoSP(pindexLast, fCreate);
+        return GetNextTargetRequiredPoSP(pindexLast);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
@@ -2405,16 +2399,9 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     {
         uint256 hashProofOfStake = 0;
 
-        /*// Get prev block index
-        map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(pblock->hashPrevBlock);
-        if (mi == mapBlockIndex.end())
-            return DoS(10, error("ProcessBlock() : prev block not found"));
-        CBlockIndex* pindexPrev = (*mi).second;*/
-
-        if (!CheckProofOfStake(pblock->vtx[1], /*(pblock->GetBlockTime() - pindexPrev->GetBlockTime() > 60*30) : ((unsigned int) -1) ?*/ pblock->nBits, hashProofOfStake))
+        if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
         {
             printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at time %u\n", hash.ToString().c_str(), pblock->nTime);
-            pblock->print();
             return false; // do not error here as we expect this during initial block download
         }
         if (!mapProofOfStake.count(hash)) // add to mapProofOfStake
@@ -3129,13 +3116,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> pfrom->strSubVer;
 
         // Hardfork protection, we avoid to have old protocol version to avoid fake informations
-        if(strlen(pfrom->strSubVer.c_str()) != 13 || (pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
-                && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
-                || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/")))){
+        if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
             
             printf("partner %s using obsolete version %i; banned & disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
-            pfrom->Misbehaving(1000, true); // Banned
             return false;
         }
 
@@ -4204,7 +4188,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
 
     if (fProofOfStake)  // attempt to find a coinstake
     {
-        pblock->nBits = GetNextTargetRequired(pindexPrev, true, true);
+        pblock->nBits = GetNextTargetRequired(pindexPrev, true);
         CTransaction txCoinStake;
         int64 nSearchTime = txCoinStake.nTime; // search to current time
         if (nSearchTime > nLastCoinStakeSearchTime)
@@ -4228,7 +4212,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         }
     }
 
-    pblock->nBits = GetNextTargetRequired(pindexPrev, pblock->IsProofOfStake(), true);
+    pblock->nBits = GetNextTargetRequired(pindexPrev, pblock->IsProofOfStake());
 
     // Collect memory pool transactions into the block
     int64 nFees = 0;

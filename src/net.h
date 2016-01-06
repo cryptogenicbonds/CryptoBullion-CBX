@@ -175,7 +175,6 @@ public:
     bool fOneShot;
     bool fClient;
     bool fInbound;
-    bool fToAdd;
     bool fNetworkNode;
     bool fSuccessfullyConnected;
     bool fDisconnect;

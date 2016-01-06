@@ -249,8 +249,6 @@ Value setaccount(const Array& params, bool fHelp)
 
 Value getaccount(const Array& params, bool fHelp)
 {
-    if(!fDaemon)
-        throw runtime_error("This command can only be use on daemon");
 
     if (fHelp || params.size() != 1)
         throw runtime_error(
@@ -271,8 +269,6 @@ Value getaccount(const Array& params, bool fHelp)
 
 Value getaddressesbyaccount(const Array& params, bool fHelp)
 {
-    if(!fDaemon)
-        throw runtime_error("This command can only be use on daemon");
     
     if (fHelp || params.size() != 1)
         throw runtime_error(
@@ -483,8 +479,6 @@ void GetAccountAddresses(string strAccount, set<CTxDestination>& setAddress)
 
 Value getreceivedbyaccount(const Array& params, bool fHelp)
 {
-    if(!fDaemon)
-        throw runtime_error("This command can only be use on daemon");
     
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
@@ -1099,9 +1093,6 @@ void AcentryToJSON(const CAccountingEntry& acentry, const string& strAccount, Ar
 
 Value listtransactions(const Array& params, bool fHelp)
 {
-    if(!fDaemon)
-        throw runtime_error("This command can only be use on daemon");
-
     if (fHelp || params.size() > 3)
         throw runtime_error(
             "listtransactions [account] [count=10] [from=0]\n"
@@ -1160,8 +1151,6 @@ Value listtransactions(const Array& params, bool fHelp)
 
 Value listaccounts(const Array& params, bool fHelp)
 {
-    if(!fDaemon)
-        throw runtime_error("This command can only be use on daemon");
 
     if (fHelp || params.size() > 1)
         throw runtime_error(

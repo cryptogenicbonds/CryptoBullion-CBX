@@ -2294,9 +2294,6 @@ bool CBlock::AcceptBlock()
 
     int nHeight = pindexPrev->nHeight+1;
 
-    if (nHeight >= HARDFORK_HEIGHTV2 && IsProofOfStake() && GetBlockTime() - pindexPrev->GetBlockTime() < 0)
-        return DoS(100, error("AcceptBlock() : reject PoSP at height, block from past %d", nHeight));
-
     if (IsProofOfWork() 
         && pindexPrevPrev != NULL
         && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME

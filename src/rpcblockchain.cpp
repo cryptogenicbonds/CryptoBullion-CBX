@@ -21,7 +21,7 @@ double GetDifficulty(const CBlockIndex* blockindex)
         if (pindexBest == NULL)
             return 1.0;
         else
-            blockindex = GetLastBlockIndex(pindexBest, false);
+            blockindex = GetLastBlockIndex(pindexBest, true);
     }
 
     int nShift = (blockindex->nBits >> 24) & 0xff;
@@ -66,7 +66,7 @@ Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool fPri
     if (blockindex->pnext)
         result.push_back(Pair("nextblockhash", blockindex->pnext->GetBlockHash().GetHex()));
 
-    result.push_back(Pair("flags", strprintf("%s%s", blockindex->IsProofOfStake()? "proof-of-stake" : "proof-of-work", blockindex->GeneratedStakeModifier()? " stake-modifier": "")));
+    result.push_back(Pair("flags", strprintf("%s%s", blockindex->IsProofOfStake() ? (blockindex->nTime >= HARDFORK_TIME ? "PoSP" : "proof-of-stake") : ("proof-of-work"), blockindex->GeneratedStakeModifier()? " stake-modifier": "")));
     result.push_back(Pair("proofhash", blockindex->IsProofOfStake()? blockindex->hashProofOfStake.GetHex() : blockindex->GetBlockHash().GetHex()));
     result.push_back(Pair("entropybit", (int)blockindex->GetStakeEntropyBit()));
     result.push_back(Pair("modifier", strprintf("%016"PRI64x, blockindex->nStakeModifier)));
@@ -114,7 +114,8 @@ Value getdifficulty(const Array& params, bool fHelp)
 
     Object obj;
     obj.push_back(Pair("proof-of-work",        GetDifficulty()));
-    obj.push_back(Pair("proof-of-stake",       GetDifficulty(GetLastBlockIndex(pindexBest, true))));
+    if(pindexBest != NULL)
+        obj.push_back(Pair(pindexBest->nTime >= HARDFORK_TIME ? "PoSP" : "proof-of-stake",       GetDifficulty(GetLastBlockIndex(pindexBest, true))));
     obj.push_back(Pair("search-interval",      (int)nLastCoinStakeSearchInterval));
     return obj;
 }

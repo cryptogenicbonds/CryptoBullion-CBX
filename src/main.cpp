@@ -37,7 +37,7 @@ uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 24);
 static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporarily, will be used in the future to fix minimum PoS difficulty at 0.25
-static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 60);
+static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 50);
 
 
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
@@ -1171,6 +1171,13 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
+    if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
+        if(nActualSpacing < 0){
+            printf("ERROR: Block from past\n");
+            return bnProofOfStakeLimitV2.GetCompact();
+        }
+    }
+
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
@@ -1181,8 +1188,13 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
-        return POSP_TARGET_LIMIT;
+    if(pindexLast->nHeight < HARDFORK_HEIGHTV2){
+        if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
+            return POSP_TARGET_LIMIT;
+    }else{
+        if(bnNew > bnProofOfStakeLimitV2)
+            return bnProofOfStakeLimitV2.GetCompact();
+    }
     
 
     return bnNew.GetCompact();
@@ -2280,6 +2292,9 @@ bool CBlock::AcceptBlock()
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
 
+    if (nHeight >= HARDFORK_HEIGHTV2 && IsProofOfStake() && GetBlockTime() - pindexPrev->GetBlockTime() < 0)
+        return DoS(100, error("AcceptBlock() : reject PoSP at height, block from past %d", nHeight));
+
     if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
         return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
 
@@ -2386,9 +2401,10 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     if (pblock->IsProofOfStake())
     {
         uint256 hashProofOfStake = 0;
+
         if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
         {
-            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s\n", hash.ToString().c_str());
+            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at time %u\n", hash.ToString().c_str(), pblock->nTime);
             return false; // do not error here as we expect this during initial block download
         }
         if (!mapProofOfStake.count(hash)) // add to mapProofOfStake
@@ -3072,21 +3088,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     }
 
 
-    // Hardfork protection, we avoid to have old protocol version to avoid fake informations
-    // We can't do the check in strCommand == "version" because subVer is coming later
-    if (pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIME)
-    {
-        if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSION
-            && !(!strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.1/")
-                || !strcmp(pfrom->strSubVer.c_str(), "/Vault:2.0.0/")
-                || !strcmp(pfrom->strSubVer.c_str(), ""))){
-            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
-            pfrom->fDisconnect = true;
-            return false;
-        }
-    }
-
-
     if (strCommand == "version")
     {
         // Each connection can only send one version message
@@ -3101,7 +3102,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64 nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION)
+        if (pfrom->nVersion < MIN_PROTO_VERSION || strlen(pfrom->strSubVer.c_str()) > 14)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
@@ -3116,6 +3117,15 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> addrFrom >> nNonce;
         if (!vRecv.empty())
             vRecv >> pfrom->strSubVer;
+
+        // Hardfork protection, we avoid to have old protocol version to avoid fake informations
+        if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
+            
+            printf("partner %s using obsolete version %i; banned & disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            pfrom->fDisconnect = true;
+            return false;
+        }
+
         if (!vRecv.empty())
             vRecv >> pfrom->nStartingHeight;
 
@@ -3172,6 +3182,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 addrman.Add(addrFrom, addrFrom);
                 addrman.Good(addrFrom);
             }
+
         }
 
         // Ask the first connected node for block updates
@@ -4527,7 +4538,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
     void *scratchbuf = scrypt_buffer_alloc();
 
-    printf("CPUMiner started for proof-of-%s\n", fProofOfStake? "stake" : "work");
+    printf("PoSP Miner Started");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
@@ -4536,8 +4547,9 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
+    CBlockIndex* pindexPrev;
 
-    while (fGenerateCryptobullions || fProofOfStake)
+    while (fProofOfStake)
     {
         if (fShutdown)
             return;
@@ -4546,7 +4558,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
             Sleep(1000);
             if (fShutdown)
                 return;
-            if ((!fGenerateCryptobullions) && !fProofOfStake)
+            if (!fProofOfStake)
                 return;
         }
 
@@ -4560,8 +4572,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         //
         // Create new block
         //
-        unsigned int nTransactionsUpdatedLast = nTransactionsUpdated;
-        CBlockIndex* pindexPrev = pindexBest;
+        pindexPrev = pindexBest;
 
         auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, fProofOfStake));
         if (!pblock.get())
@@ -4579,130 +4590,13 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
                     continue;
                 }
                 strMintWarning = "";
-                printf("CPUMiner : proof-of-stake block found %s\n", pblock->GetHash().ToString().c_str());
+                printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
                 SetThreadPriority(THREAD_PRIORITY_NORMAL);
                 CheckWork(pblock.get(), *pwalletMain, reservekey);
                 SetThreadPriority(THREAD_PRIORITY_LOWEST);
             }
             Sleep(500);
             continue;
-        }
-
-        printf("Running CryptobullionMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
-               ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
-
-        //
-        // Pre-build hash buffers
-        //
-        char pmidstatebuf[32+16]; char* pmidstate = alignup<16>(pmidstatebuf);
-        char pdatabuf[128+16];    char* pdata     = alignup<16>(pdatabuf);
-        char phash1buf[64+16];    char* phash1    = alignup<16>(phash1buf);
-
-        FormatHashBuffers(pblock.get(), pmidstate, pdata, phash1);
-
-        unsigned int& nBlockTime = *(unsigned int*)(pdata + 64 + 4);
-        unsigned int& nBlockNonce = *(unsigned int*)(pdata + 64 + 12);
-
-
-        //
-        // Search
-        //
-        int64 nStart = GetTime();
-        uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
-
-        unsigned int max_nonce = 0xffff0000;
-        block_header res_header;
-        uint256 result;
-
-        while (true)
-        {
-            unsigned int nHashesDone = 0;
-            unsigned int nNonceFound;
-
-            nNonceFound = scanhash_scrypt(
-                        (block_header *)&pblock->nVersion,
-                        scratchbuf,
-                        max_nonce,
-                        nHashesDone,
-                        UBEGIN(result),
-                        &res_header
-            );
-
-            // Check if something found
-            if (nNonceFound != (unsigned int) -1)
-            {
-                if (result <= hashTarget)
-                {
-                    // Found a solution
-                    pblock->nNonce = nNonceFound;
-                    assert(result == pblock->GetHash());
-                    if (!pblock->SignBlock(*pwalletMain))
-                    {
-//                        strMintWarning = strMintMessage;
-                        break;
-                    }
-                    strMintWarning = "";
-
-                    SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                    CheckWork(pblock.get(), *pwalletMain, reservekey);
-                    SetThreadPriority(THREAD_PRIORITY_LOWEST);
-                    break;
-                }
-            }
-
-            // Meter hashes/sec
-            static int64 nHashCounter;
-            if (nHPSTimerStart == 0)
-            {
-                nHPSTimerStart = GetTimeMillis();
-                nHashCounter = 0;
-            }
-            else
-                nHashCounter += nHashesDone;
-            if (GetTimeMillis() - nHPSTimerStart > 4000)
-            {
-                static CCriticalSection cs;
-                {
-                    LOCK(cs);
-                    if (GetTimeMillis() - nHPSTimerStart > 4000)
-                    {
-                        dHashesPerSec = 1000.0 * nHashCounter / (GetTimeMillis() - nHPSTimerStart);
-                        nHPSTimerStart = GetTimeMillis();
-                        nHashCounter = 0;
-                        static int64 nLogTime;
-                        if (GetTime() - nLogTime > 30 * 60)
-                        {
-                            nLogTime = GetTime();
-                            printf("hashmeter %3d CPUs %6.0f khash/s\n", vnThreadsRunning[THREAD_MINER], dHashesPerSec/1000.0);
-                        }
-                    }
-                }
-            }
-
-            // Check for stop or if block needs to be rebuilt
-            if (fShutdown)
-                return;
-            if (!fGenerateCryptobullions)
-                return;
-            if (fLimitProcessors && vnThreadsRunning[THREAD_MINER] > nLimitProcessors)
-                return;
-            if (vNodes.empty())
-                break;
-            if (nBlockNonce >= 0xffff0000)
-                break;
-            if (nTransactionsUpdated != nTransactionsUpdatedLast && GetTime() - nStart > 60)
-                break;
-            if (pindexPrev != pindexBest)
-                break;
-
-            // Update nTime every few seconds
-            pblock->nTime = max(pindexPrev->GetMedianTimePast()+1, pblock->GetMaxTransactionTime());
-            pblock->nTime = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - nMaxClockDrift);
-            pblock->UpdateTime(pindexPrev);
-            nBlockTime = ByteReverse(pblock->nTime);
-
-            if (pblock->GetBlockTime() >= (int64)pblock->vtx[0].nTime + nMaxClockDrift)
-                break;  // need to update coinbase timestamp
         }
     }
 

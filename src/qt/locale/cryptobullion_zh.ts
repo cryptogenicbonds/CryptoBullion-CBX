@@ -15,8 +15,8 @@
     </message>
     <message>
         <location line="+47"/>
-        <source>Copyright © 2009-2015s The CryptoBullion Foundation</source>
-        <translation>版权所有 © 2009-2014 金银币基金会</translation>
+        <source>Copyright © 2009-2016s The CryptoBullion Foundation</source>
+        <translation>版权所有 © 2009-2016 金银币基金会</translation>
     </message>
     <message>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>

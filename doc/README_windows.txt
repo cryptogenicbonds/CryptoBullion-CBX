@@ -1,4 +1,4 @@
-Copyright (c) 2013-2015 Cryptogenic Bullion Developers
+Copyright (c) 2013-2016 Cryptogenic Bullion Developers
 
 Copyright (c) 2013 NovaCoin Developers
 Copyright (c) 2011-2012 PPCoin Developers

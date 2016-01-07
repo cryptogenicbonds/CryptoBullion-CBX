@@ -29,6 +29,7 @@ extern int nBestHeight;
 inline unsigned int ReceiveBufferSize() { return 1000*GetArg("-maxreceivebuffer", 5*1000); }
 inline unsigned int SendBufferSize() { return 1000*GetArg("-maxsendbuffer", 1*1000); }
 
+void AddNewNode(const char *strNewNode);
 void AddOneShot(std::string strDest);
 bool RecvLine(SOCKET hSocket, std::string& strLine);
 bool GetMyExternalIP(CNetAddr& ipRet);
@@ -638,7 +639,7 @@ public:
     // new code.
     static void ClearBanned(); // needed for unit testing
     static bool IsBanned(CNetAddr ip);
-    bool Misbehaving(int howmuch); // 1 == a little, 100 == a lot
+    bool Misbehaving(int howmuch, bool fOldVersion=false); // 1 == a little, 100 == a lot
     void copyStats(CNodeStats &stats);
 };
 

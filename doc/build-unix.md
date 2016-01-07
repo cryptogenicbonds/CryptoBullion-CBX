@@ -1,6 +1,6 @@
 BUILD ON UNIX
 =============
-Copyright (c) 2013-2015 CryptoBullion Developers
+Copyright (c) 2013-2016 CryptoBullion Developers
 Distributed under the MIT/X11 software license, see the accompanying file
 license.txt or http://www.opensource.org/licenses/mit-license.php.  This
 product includes software developed by the OpenSSL Project for use in the

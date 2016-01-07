@@ -2290,13 +2290,16 @@ bool CBlock::AcceptBlock()
     if (mi == mapBlockIndex.end())
         return DoS(10, error("AcceptBlock() : prev block not found"));
     CBlockIndex* pindexPrev = (*mi).second;
+    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex((const CBlockIndex*) pindexPrev, true);
+
     int nHeight = pindexPrev->nHeight+1;
 
-    if (nHeight >= HARDFORK_HEIGHTV2 && IsProofOfStake() && GetBlockTime() - pindexPrev->GetBlockTime() < 0)
-        return DoS(100, error("AcceptBlock() : reject PoSP at height, block from past %d", nHeight));
-
-    if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
-        return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
+    if (IsProofOfWork() 
+        && pindexPrevPrev != NULL
+        && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME
+        && pindexPrev->nHeight >= HARDFORK_HEIGHTV2
+        && pindexPrev->GetBlockTime()-pindexPrevPrev->GetBlockTime() < 60*30)
+        return error("AcceptBlock() : reject proof-of-work at height %d");
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))

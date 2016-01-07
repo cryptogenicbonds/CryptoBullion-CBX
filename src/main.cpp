@@ -37,7 +37,7 @@ uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 24);
 static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporarily, will be used in the future to fix minimum PoS difficulty at 0.25
-static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 60);
+static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 50);
 
 
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
@@ -1171,7 +1171,7 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
+    if(pindexLast->nHeight > HARDFORK_HEIGHTV2){
         if(nActualSpacing < 0){
             printf("ERROR: Block from past, instamined next one");
             return (unsigned int) -1;
@@ -1188,7 +1188,7 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(pindexLast->nHeight < HARDFORK_HEIGHTV2){
+    if(pindexLast->nHeight <= HARDFORK_HEIGHTV2){
         if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
             return POSP_TARGET_LIMIT;
     }else{

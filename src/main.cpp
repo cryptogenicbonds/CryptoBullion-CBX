@@ -1173,7 +1173,7 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
 
     if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
         if(nActualSpacing < 0){
-            printf("ERROR: Block from past, instamined next one\n");
+            printf("ERROR: Block from past\n");
             return bnProofOfStakeLimitV2.GetCompact();
         }
     }
@@ -2291,6 +2291,9 @@ bool CBlock::AcceptBlock()
         return DoS(10, error("AcceptBlock() : prev block not found"));
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
+
+    if (nHeight >= HARDFORK_HEIGHTV2 && IsProofOfStake() && GetBlockTime() - pindexPrev->GetBlockTime() < 0)
+        return DoS(100, error("AcceptBlock() : reject PoSP at height, block from past %d", nHeight));
 
     if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
         return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));

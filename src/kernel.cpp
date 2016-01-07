@@ -323,7 +323,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
         if (CBigNum(hashProofOfStake) > bnCoinDayWeight * bnTarget)
             return false;
     }else{
-        if (CBigNum(hashProofOfStake) > bnWeight * bnTarget && nBits < (unsigned int) -1)
+        if (CBigNum(hashProofOfStake) > bnWeight * bnTarget)
             return false;
     }
     if (fDebug && !fPrintProofOfStake)

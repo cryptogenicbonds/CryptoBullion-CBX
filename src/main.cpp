@@ -1171,7 +1171,7 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if(pindexLast->nTime >= HARDFORK_TIMEV2){
+    if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
         if(nActualSpacing < 0){
             printf("ERROR: Block from past, instamined next one");
             return (unsigned int) -1;
@@ -1188,7 +1188,7 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(pindexLast->nTime < HARDFORK_TIMEV2){
+    if(pindexLast->nHeight < HARDFORK_HEIGHTV2){
         if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
             return POSP_TARGET_LIMIT;
     }else{

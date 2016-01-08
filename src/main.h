@@ -28,7 +28,7 @@ class CNode;
 // Hard fork constants:
 #define HARDFORK_TIME 1451570400
 #define HARDFORK_HEIGHTV2 1310273
-#define HARDFORK_TIMEV3 (1452269896+(60 * 60 * 24 * 3))
+#define HARDFORK_TIMEV3 (1452272100+(60 * 60 * 12))
 #define OLD_nStakeMinAge (60 * 60 * 24 * 30)
 #define OLD_nStakeMaxAge (60 * 60 * 24 * 90)
 #define OLD_nStakeTargetSpacing 60

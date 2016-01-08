@@ -1540,7 +1540,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             && pcoin.first->GetHash() != txNew.vin[0].prevout.hash)
         {
             // Stop adding more inputs if already too many inputs
-            if (txNew.vin.size() >= 100)
+            if (txNew.vin.size() >= 80)
                 break;
             // Stop adding more inputs if value is already pretty significant
             if (nCredit > COMBINE_THRESHOLD)

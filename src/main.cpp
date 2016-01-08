@@ -1191,7 +1191,7 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
+    if(bnNew.GetCompact() > POSP_TARGET_LIMIT || bnNew <= 0)
         return POSP_TARGET_LIMIT;
 
     return bnNew.GetCompact();

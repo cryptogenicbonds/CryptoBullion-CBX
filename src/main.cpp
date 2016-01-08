@@ -3129,7 +3129,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
         // Hardfork protection, we avoid to have old protocol version to avoid fake informations
         if(pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIMEV3){
-            if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV2){
+            if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV3){
                 
                 printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
                 pfrom->fDisconnect = true;

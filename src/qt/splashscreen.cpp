@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The CBX developers
+// Copyright (c) 2014-2016 The CBX developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,8 +17,8 @@
 #include <QPainter>
 #include <QFontDatabase>
 
-SplashScreen::SplashScreen(const QPixmap &pixmap, Qt::WindowFlags f, bool isTestNet) :
-    QSplashScreen(pixmap, f)
+SplashScreen::SplashScreen(const QPixmap &pixmap, bool isTestNet) :
+    QSplashScreen(pixmap)
 {
     setAutoFillBackground(true);
 

@@ -45,13 +45,13 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile cryptobullion-1.2.0.6-win32-setup.exe
+OutFile cryptobullion-1.2.0.7-win32-setup.exe
 InstallDir $PROGRAMFILES\CryptoBullion
 CRCCheck on
 XPStyle on
 BrandingText " "
 ShowInstDetails show
-VIProductVersion 1.2.0.6
+VIProductVersion 1.2.0.7
 VIAddVersionKey ProductName CryptoBullion
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"

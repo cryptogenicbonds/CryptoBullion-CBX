@@ -244,6 +244,7 @@ static const CRPCCommand vRPCCommands[] =
     { "stop",                   &stop,                   true,   true },
     { "getblockcount",          &getblockcount,          true,   false },
     { "getconnectioncount",     &getconnectioncount,     true,   false },
+    { "addnode",                &addnode,                true,   false },
     { "getpeerinfo",            &getpeerinfo,            true,   false },
     { "getdifficulty",          &getdifficulty,          true,   false },
     { "getgenerate",            &getgenerate,            true,   false },

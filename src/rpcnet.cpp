@@ -36,6 +36,20 @@ static void CopyNodeStats(std::vector<CNodeStats>& vstats)
     }
 }
 
+Value addnode(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "addnode\n"
+            "Add new node with the given ip.");
+
+    AddNewNode(params[0].get_str().c_str());
+    
+    Object result;
+    result.push_back(Pair("response", "Try to add node"));
+    return result;
+}
+
 Value getpeerinfo(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)

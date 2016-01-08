@@ -27,12 +27,13 @@ class CNode;
 
 // Hard fork constants:
 #define HARDFORK_TIME 1451570400
+#define HARDFORK_HEIGHTV2 1310273
 #define OLD_nStakeMinAge (60 * 60 * 24 * 30)
 #define OLD_nStakeMaxAge (60 * 60 * 24 * 90)
 #define OLD_nStakeTargetSpacing 60
 #define END_POW_TIME (HARDFORK_TIME+(60 * 60 * 24))
 #define POSP_TARGET_LIMIT ((unsigned int) 503417504)
-#define HARDFORK_PROTOCOL_VERSION 60007
+#define HARDFORK_PROTOCOL_VERSION 60008
 // -----
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;

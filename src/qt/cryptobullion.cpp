@@ -152,7 +152,7 @@ void CryptobullionApplication::createWindow(bool isaTestNet)
 
 void CryptobullionApplication::createSplashScreen(bool isaTestNet)
 {
-    SplashScreen *splash = new SplashScreen(QPixmap(), Qt::WindowStaysOnTopHint, isaTestNet);
+    SplashScreen *splash = new SplashScreen(QPixmap(), isaTestNet);
     splash->setAttribute(Qt::WA_DeleteOnClose);
     splash->show();
     connect(this, SIGNAL(splashFinished(QWidget*)), splash, SLOT(slotFinish(QWidget*)));

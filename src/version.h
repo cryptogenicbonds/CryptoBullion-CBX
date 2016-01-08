@@ -34,7 +34,7 @@ static const int DB_MINVER_INCHASH = 70300;
 // network protocol versioning
 //
 
-static const int PROTOCOL_VERSION = 60007;
+static const int PROTOCOL_VERSION = 60008;
 
 // earlier versions not supported as of Feb 2012, and are disconnected
 static const int MIN_PROTO_VERSION = 209;
@@ -53,9 +53,9 @@ static const int BIP0031_VERSION = 60000;
 // "mempool" command, enhanced "getdata" behavior starts with this version:
 static const int MEMPOOL_GD_VERSION = 60002;
 
-#define DISPLAY_VERSION_MAJOR       2
-#define DISPLAY_VERSION_MINOR       1
-#define DISPLAY_VERSION_REVISION    3
-#define DISPLAY_VERSION_BUILD       0
+#define DISPLAY_VERSION_MAJOR       CLIENT_VERSION_MAJOR
+#define DISPLAY_VERSION_MINOR       CLIENT_VERSION_MINOR
+#define DISPLAY_VERSION_REVISION    CLIENT_VERSION_REVISION
+#define DISPLAY_VERSION_BUILD       CLIENT_VERSION_BUILD
 
 #endif

@@ -1174,10 +1174,18 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
+    if(pindexLast->nTime >= HARDFORK_TIMEV3){
         if(nActualSpacing < 0){
-            printf("ERROR: Block from past\n");
-            return POSP_TARGET_LIMIT;
+            nActualSpacing = 1;
+        }else if(nActualSpacing > (16*60)){
+            nActualSpacing = (16*60);
+        }
+    }else{
+        if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
+            if(nActualSpacing < 0){
+                printf("ERROR: Block from past\n");
+                return POSP_TARGET_LIMIT;
+            }
         }
     }
 
@@ -3120,6 +3128,15 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> pfrom->strSubVer;
 
         // Hardfork protection, we avoid to have old protocol version to avoid fake informations
+        if(pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIMEV3){
+            if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV2){
+                
+                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+                pfrom->fDisconnect = true;
+                return false;
+            }
+        }
+
         if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
             
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);

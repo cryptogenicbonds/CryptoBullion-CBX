@@ -1169,12 +1169,15 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     if (pindexPrevPrev->pprev == NULL)
         return bnTargetLimit.GetCompact(); // second block
 
+    if(pindexLast->nHeight == HARDFORK_HEIGHTV2) 
+        return 487245310; // Hardcoded way to unstuck wallet
+
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
     if(pindexLast->nHeight >= HARDFORK_HEIGHTV2){
         if(nActualSpacing < 0){
             printf("ERROR: Block from past\n");
-            return bnProofOfStakeLimitV2.GetCompact();
+            return POSP_TARGET_LIMIT;
         }
     }
 
@@ -1188,14 +1191,8 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if(pindexLast->nHeight < HARDFORK_HEIGHTV2){
-        if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
-            return POSP_TARGET_LIMIT;
-    }else{
-        if(bnNew > bnProofOfStakeLimitV2)
-            return bnProofOfStakeLimitV2.GetCompact();
-    }
-    
+    if(bnNew.GetCompact() > POSP_TARGET_LIMIT)
+        return POSP_TARGET_LIMIT;
 
     return bnNew.GetCompact();
 }
@@ -2294,11 +2291,7 @@ bool CBlock::AcceptBlock()
 
     int nHeight = pindexPrev->nHeight+1;
 
-    if (IsProofOfWork() 
-        && pindexPrevPrev != NULL
-        && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME
-        && pindexPrev->nHeight >= HARDFORK_HEIGHTV2
-        && pindexPrev->GetBlockTime()-pindexPrevPrev->GetBlockTime() < 60*30)
+    if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
         return error("AcceptBlock() : reject proof-of-work at height %d");
 
     // Check proof-of-work or proof-of-stake
@@ -3124,7 +3117,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         // Hardfork protection, we avoid to have old protocol version to avoid fake informations
         if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
             
-            printf("partner %s using obsolete version %i; banned & disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;
         }

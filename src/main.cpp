@@ -4484,7 +4484,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
     if(!pblock->IsProofOfWork())
-        return error("CheckWork() : %s is not a proof-of-work", hash.GetHash().c_str());
+        return error("CheckWork() : %s is not a proof-of-work", hash.GetHex().c_str());
 
     if (hash > hashTarget)
         return error("CryptobullionMiner : proof-of-work not meeting target");

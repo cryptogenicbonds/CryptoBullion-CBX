@@ -1471,18 +1471,20 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
     BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
     {
+        CTxIndex txindex;
+
         {
             LOCK2(cs_main, cs_wallet);
-
-            CTxIndex txindex;
             if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
                 continue;
         }
 
+        CBlock block;
+        
         // Read block header
         {
             LOCK2(cs_main, cs_wallet);
-            CBlock block;
+            
             if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
                 continue;
         }

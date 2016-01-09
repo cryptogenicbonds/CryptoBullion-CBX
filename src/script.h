@@ -14,7 +14,7 @@
 #include "keystore.h"
 #include "bignum.h"
 
-#define MAX_SCRIPT_ELEMENT_SIZE 520;
+#define MAX_SCRIPT_ELEMENT_SIZE 520
 
 typedef std::vector<unsigned char> valtype;
 

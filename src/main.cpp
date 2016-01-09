@@ -4609,7 +4609,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
             strMintWarning = "";
             printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
             SetThreadPriority(THREAD_PRIORITY_NORMAL);
-            CheckStake(pblock.get(), *pwallet, reservekey);
+            CheckStake(pblock.get(), *pwallet);
             SetThreadPriority(THREAD_PRIORITY_LOWEST);
         }else
             strMintWarning = fWalletUnlockMintOnly ? strMintStakingMessage : strMintMessage;

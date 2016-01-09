@@ -1294,15 +1294,17 @@ bool IsInitialBlockDownload()
 {
     if (pindexBest == NULL || nBestHeight < Checkpoints::GetTotalBlocksEstimate())
         return true;
+
+    int64 nCurrentTime = GetTime();
     static int64 nLastUpdate;
     static CBlockIndex* pindexLastBest;
     if (pindexBest != pindexLastBest)
     {
         pindexLastBest = pindexBest;
-        nLastUpdate = GetTime();
+        nLastUpdate = ;
     }
-    return (GetTime() - nLastUpdate < 10 &&
-            pindexBest->GetBlockTime() < GetTime() - 24 * 60 * 60);
+    return (nCurrentTime - nLastUpdate < 10 &&
+            pindexBest->GetBlockTime() < nCurrentTime - 24 * 60 * 60);
 }
 
 void static InvalidChainFound(CBlockIndex* pindexNew)

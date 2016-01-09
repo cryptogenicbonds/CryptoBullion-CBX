@@ -1415,29 +1415,6 @@ bool CWallet::CreateTransaction(CScript scriptPubKey, int64 nValue, CWalletTx& w
     return CreateTransaction(vecSend, wtxNew, reservekey, nFeeRet, coinControl);
 }
 
-void CWallet::AvailableCoinsMinConf(vector<COutput>& vCoins, int nConf) const
-{
-    vCoins.clear();
-
-    {
-        LOCK(cs_wallet);
-        for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
-        {
-            const CWalletTx* pcoin = &(*it).second;
-
-            if (!pcoin->IsFinal())
-                continue;
-
-            if(pcoin->GetDepthInMainChain() < nConf)
-                continue;
-
-            for (unsigned int i = 0; i < pcoin->vout.size(); i++)
-                if (!(pcoin->IsSpent(i)) && IsMine(pcoin->vout[i]) && pcoin->vout[i].nValue >= 3 * CENT * COIN)
-                    vCoins.push_back(COutput(pcoin, i, pcoin->GetDepthInMainChain()));
-        }
-    }
-}
-
 // ppcoin: create coin stake transaction
 bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew, CKey& key)
 {
@@ -1480,7 +1457,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         }
 
         CBlock block;
-        
+
         // Read block header
         {
             LOCK2(cs_main, cs_wallet);

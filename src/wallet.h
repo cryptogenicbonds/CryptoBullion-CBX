@@ -117,6 +117,13 @@ public:
         pwalletdbEncryption = NULL;
         nOrderPosNext = 0;
     }
+    
+    ~CWallet()
+    {
+        delete pwalletdbEncryption;
+        pwalletdbEncryption = NULL;
+    }
+
 
     std::map<uint256, CWalletTx> mapWallet;
     int64 nOrderPosNext;

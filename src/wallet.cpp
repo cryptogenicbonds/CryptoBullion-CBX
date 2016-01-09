@@ -294,8 +294,10 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
 
         if (!EncryptKeys(vMasterKey))
         {
-            if (fFileBacked)
+            if (fFileBacked){
                 pwalletdbEncryption->TxnAbort();
+                delete pwalletdbEncryption;
+            }
             exit(1); //We now probably have half of our keys encrypted in memory, and half not...die and let the user reload their unencrypted wallet.
         }
 
@@ -304,11 +306,11 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
 
         if (fFileBacked)
         {
-            if (!pwalletdbEncryption->TxnCommit())
+            if (!pwalletdbEncryption->TxnCommit()){
+                delete pwalletdbEncryption;
+                pwalletdbEncryption = NULL;
                 exit(1); //We now have keys encrypted in memory, but not on disk...die to avoid confusion and let the user reload their unencrypted wallet.
-
-            delete pwalletdbEncryption;
-            pwalletdbEncryption = NULL;
+            }
         }
 
         Lock();

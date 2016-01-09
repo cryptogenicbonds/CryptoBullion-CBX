@@ -1300,7 +1300,7 @@ bool IsInitialBlockDownload()
     if (pindexBest != pindexLastBest)
     {
         pindexLastBest = pindexBest;
-        nLastUpdate = ;
+        nLastUpdate = nCurrentTime;
     }
     return (nCurrentTime - nLastUpdate < 10 &&
             pindexBest->GetBlockTime() < nCurrentTime - 24 * 60 * 60);

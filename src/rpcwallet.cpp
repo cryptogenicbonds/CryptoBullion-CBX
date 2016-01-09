@@ -1024,7 +1024,6 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     // Sent
     if ((!listSent.empty() || nFee != 0) && (fAllAccounts || strAccount == strSentAccount))
     {
-        LOCK(cs_wallet);
 
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
         {
@@ -1050,8 +1049,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     // Received
     if (listReceived.size() > 0 && wtx.GetDepthInMainChain() >= nMinDepth)
     {
-        LOCK(cs_wallet);
-        
+
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& r, listReceived)
         {
             string account;

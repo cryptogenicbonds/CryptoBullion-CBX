@@ -4611,8 +4611,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
             SetThreadPriority(THREAD_PRIORITY_NORMAL);
             CheckStake(pblock.get(), *pwallet);
             SetThreadPriority(THREAD_PRIORITY_LOWEST);
-        }else
-            strMintWarning = fWalletUnlockMintOnly ? strMintStakingMessage : strMintMessage;
+        }
         
         Sleep(500);
         continue;

@@ -105,6 +105,7 @@ extern std::map<uint256, CBlock*> mapOrphanBlocks;
 
 // Settings
 extern int64 nTransactionFee;
+extern bool fStakeUsePooledKeys;
 extern bool fUseFastIndex; // cache scrypt hashes to disk
 
 // Minimum disk space required - used in CheckDiskSpace()
@@ -137,6 +138,7 @@ void GenerateCryptobullions(bool fGenerate, CWallet* pwallet);
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash1);
+bool CheckStake(CBlock* pblock, CWallet& wallet);
 bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey);
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 int64 GetProofOfWorkReward(unsigned int nBits);

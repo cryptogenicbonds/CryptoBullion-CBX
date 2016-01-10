@@ -1475,8 +1475,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     CScript scriptPubKeyKernel;
     CTxDB txdb("r");
     bool fKernelFound;
-    uint256 hashProofOfStake;
-    COutPoint prevoutStake;
 
     BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
     {
@@ -1503,8 +1501,8 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             continue; // only count coins meeting min age requirement
 
         fKernelFound = false;
-        hashProofOfStake = 0;
-        prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
+        uint256 hashProofOfStake = 0;
+        COutPoint prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
         for (unsigned int n=0; n<min(nSearchInterval,(int64)nMaxStakeSearchInterval) && !fKernelFound && !fShutdown; n++)
         {
             boost::this_thread::interruption_point();

@@ -2292,7 +2292,6 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
 
 bool CBlock::AcceptBlock()
 {
-    LOCK(pwalletMain->cs_wallet);
     // Check for duplicate
     uint256 hash = GetHash();
     if (mapBlockIndex.count(hash))

@@ -666,10 +666,11 @@ void ThreadSocketHandler(void* parg)
     printf("ThreadSocketHandler exited\n");
 }
 
+static list<CNode*> vNodesDisconnected;
+
 void ThreadSocketHandler2(void* parg)
 {
     printf("ThreadSocketHandler started\n");
-    list<CNode*> vNodesDisconnected;
     unsigned int nPrevNodeCount = 0;
     SOCKET hSocketMax = 0;
     bool have_fds = false;
@@ -1836,6 +1837,7 @@ bool BindListenPort(const CService &addrBind, string& strError)
         else
             strError = strprintf(_("Unable to bind to %s on this computer (bind returned error %d, %s)"), addrBind.ToString().c_str(), nErr, strerror(nErr));
         printf("%s\n", strError.c_str());
+        closesocket(hListenSocket);
         return false;
     }
     printf("Bound to %s\n", addrBind.ToString().c_str());
@@ -1845,6 +1847,7 @@ bool BindListenPort(const CService &addrBind, string& strError)
     {
         strError = strprintf("Error: Listening for incoming connections failed (listen returned error %d)", WSAGetLastError());
         printf("%s\n", strError.c_str());
+        closesocket(hListenSocket);
         return false;
     }
 
@@ -2037,6 +2040,17 @@ public:
             if (hListenSocket != INVALID_SOCKET)
                 if (closesocket(hListenSocket) == SOCKET_ERROR)
                     printf("closesocket(hListenSocket) failed with error %d\n", WSAGetLastError());
+        // clean up some globals (to help leak detection)
+        BOOST_FOREACH(CNode *pnode, vNodes)
+            delete pnode;
+        BOOST_FOREACH(CNode *pnode, vNodesDisconnected)
+            delete pnode;
+        vNodes.clear();
+        vNodesDisconnected.clear();
+        delete semOutbound;
+        semOutbound = NULL;
+        delete pnodeLocalHost;
+        pnodeLocalHost = NULL;
 
 #ifdef WIN32
         // Shutdown Windows Sockets

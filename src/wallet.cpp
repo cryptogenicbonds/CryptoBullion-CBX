@@ -1450,7 +1450,6 @@ bool CWallet::CreateTransaction(CScript scriptPubKey, int64 nValue, CWalletTx& w
 // ppcoin: create coin stake transaction
 bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew, CKey& key)
 {
-    LOCK2(cs_main, cs_wallet);
     txNew.vin.clear();
     txNew.vout.clear();
     // Mark coin stake transaction

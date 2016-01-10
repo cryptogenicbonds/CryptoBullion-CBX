@@ -1206,13 +1206,13 @@ private:
      // sigdata_type is (signature hash, signature, public key):
     typedef boost::tuple<uint256, std::vector<unsigned char>, std::vector<unsigned char> > sigdata_type;
     std::set< sigdata_type> setValid;
-    CCriticalSection cs_sigcache;
+    boost::shared_mutex cs_sigcache;
 
 public:
     bool
     Get(uint256 hash, const std::vector<unsigned char>& vchSig, const std::vector<unsigned char>& pubKey)
     {
-        LOCK(cs_sigcache);
+        boost::shared_lock<boost::shared_mutex> lock(cs_sigcache);
 
         sigdata_type k(hash, vchSig, pubKey);
         std::set<sigdata_type>::iterator mi = setValid.find(k);
@@ -1230,7 +1230,7 @@ public:
         int64 nMaxCacheSize = GetArg("-maxsigcachesize", 50000);
         if (nMaxCacheSize <= 0) return;
 
-        LOCK(cs_sigcache);
+        boost::shared_lock<boost::shared_mutex> lock(cs_sigcache);
 
         while (static_cast<int64>(setValid.size()) > nMaxCacheSize)
         {

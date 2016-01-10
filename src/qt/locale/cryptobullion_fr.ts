@@ -2351,7 +2351,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <name>ShutdownWindow</name>
     <message>
         <location filename="../utilitydialog.cpp" line="+48"/>
-        <source>Cryptobullion Core is finalzing and shutting down...</source>
+        <source>Cryptobullion Core is finalizing and shutting down...</source>
         <translation type="unfinished">CryptoBullion finalise et se fermera sous peu...</translation>
     </message>
     <message>

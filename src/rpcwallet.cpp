@@ -1024,13 +1024,21 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     // Sent
     if ((!listSent.empty() || nFee != 0) && (fAllAccounts || strAccount == strSentAccount))
     {
+
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
         {
+            LOCK2(cs_main, pwalletMain->cs_wallet);
             Object entry;
             entry.push_back(Pair("account", strSentAccount));
             MaybePushAddress(entry, s.first);
-            entry.push_back(Pair("address", CCryptobullionAddress(s.first).ToString()));
-            entry.push_back(Pair("category", "send"));
+
+            if (wtx.GetDepthInMainChain() < 0) {
+                entry.push_back(Pair("category", "conflicted"));
+            } else {
+                entry.push_back(Pair("category", "send"));
+            }
+
+
             entry.push_back(Pair("amount", ValueFromAmount(-s.second)));
             entry.push_back(Pair("fee", ValueFromAmount(-nFee)));
             if (fLong)
@@ -1042,8 +1050,10 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     // Received
     if (listReceived.size() > 0 && wtx.GetDepthInMainChain() >= nMinDepth)
     {
+
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& r, listReceived)
         {
+            LOCK2(cs_main, pwalletMain->cs_wallet);
             string account;
             if (pwalletMain->mapAddressBook.count(r.first))
                 account = pwalletMain->mapAddressBook[r.first];
@@ -1052,7 +1062,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
                 Object entry;
                 entry.push_back(Pair("account", account));
                 MaybePushAddress(entry, r.first);
-                entry.push_back(Pair("address", CCryptobullionAddress(r.first).ToString()));
+                
                 if (wtx.IsCoinBase())
                 {
                     if (wtx.GetDepthInMainChain() < 1)

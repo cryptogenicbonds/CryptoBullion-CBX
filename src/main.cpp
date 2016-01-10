@@ -37,12 +37,12 @@ uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 24);
 static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporarily, will be used in the future to fix minimum PoS difficulty at 0.25
-static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 50);
-
+static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 60);
 
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
+bool fStakeUsePooledKeys  = false; 
 unsigned int nStakeMinAge = 60 * 60; // minimum age for coin age
 unsigned int nStakeMaxAge = -1; // stake age of full weight
 unsigned int nStakeTargetSpacing = 65; // 65-seconds block spacing
@@ -1293,15 +1293,17 @@ bool IsInitialBlockDownload()
 {
     if (pindexBest == NULL || nBestHeight < Checkpoints::GetTotalBlocksEstimate())
         return true;
+
+    int64 nCurrentTime = GetTime();
     static int64 nLastUpdate;
     static CBlockIndex* pindexLastBest;
     if (pindexBest != pindexLastBest)
     {
         pindexLastBest = pindexBest;
-        nLastUpdate = GetTime();
+        nLastUpdate = nCurrentTime;
     }
-    return (GetTime() - nLastUpdate < 10 &&
-            pindexBest->GetBlockTime() < GetTime() - 24 * 60 * 60);
+    return (nCurrentTime - nLastUpdate < 10 &&
+            pindexBest->GetBlockTime() < nCurrentTime - 24 * 60 * 60);
 }
 
 void static InvalidChainFound(CBlockIndex* pindexNew)
@@ -2290,6 +2292,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
 
 bool CBlock::AcceptBlock()
 {
+    LOCK(pwalletMain->cs_wallet);
     // Check for duplicate
     uint256 hash = GetHash();
     if (mapBlockIndex.count(hash))
@@ -2305,7 +2308,7 @@ bool CBlock::AcceptBlock()
     int nHeight = pindexPrev->nHeight+1;
 
     if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
-        return error("AcceptBlock() : reject proof-of-work at height %d");
+        return error("AcceptBlock() : reject proof-of-work at height %u", nHeight);
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))
@@ -2344,7 +2347,8 @@ bool CBlock::AcceptBlock()
 
     // Enforce rule that the coinbase starts with serialized block height
     CScript expect = CScript() << nHeight;
-    if (!std::equal(expect.begin(), expect.end(), vtx[0].vin[0].scriptSig.begin()))
+    if (vtx[0].vin[0].scriptSig.size() < expect.size() ||
+        !std::equal(expect.begin(), expect.end(), vtx[0].vin[0].scriptSig.begin()))
         return DoS(100, error("AcceptBlock() : block height mismatch in coinbase"));
 
     // todo raizor: skip space check if fDisableSignatureChecking
@@ -2445,28 +2449,28 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     if (!mapBlockIndex.count(pblock->hashPrevBlock))
     {
         printf("ProcessBlock: ORPHAN BLOCK, prev=%s\n", pblock->hashPrevBlock.ToString().substr(0,20).c_str());
-        CBlock* pblock2 = new CBlock(*pblock);
+        
         // cgb: check proof-of-stake
-        if (pblock2->IsProofOfStake())
+        if (pblock->IsProofOfStake())
         {
             // Limited duplicity on stake: prevents block flood attack
             // Duplicate stake allowed only when there is orphan child block
-            if (setStakeSeenOrphan.count(pblock2->GetProofOfStake()) && !mapOrphanBlocksByPrev.count(hash) && !Checkpoints::WantedByPendingSyncCheckpoint(hash))
-                return error("ProcessBlock() : duplicate proof-of-stake (%s, %d) for orphan block %s", pblock2->GetProofOfStake().first.ToString().c_str(), pblock2->GetProofOfStake().second, hash.ToString().c_str());
+            if (setStakeSeenOrphan.count(pblock->GetProofOfStake()) && !mapOrphanBlocksByPrev.count(hash) && !Checkpoints::WantedByPendingSyncCheckpoint(hash))
+                return error("ProcessBlock() : duplicate proof-of-stake (%s, %d) for orphan block %s", pblock->GetProofOfStake().first.ToString().c_str(), pblock->GetProofOfStake().second, hash.ToString().c_str());
             else
-                setStakeSeenOrphan.insert(pblock2->GetProofOfStake());
+                setStakeSeenOrphan.insert(pblock->GetProofOfStake());
         }
-        mapOrphanBlocks.insert(make_pair(hash, pblock2));
-        mapOrphanBlocksByPrev.insert(make_pair(pblock2->hashPrevBlock, pblock2));
+        mapOrphanBlocks.insert(make_pair(hash, pblock));
+        mapOrphanBlocksByPrev.insert(make_pair(pblock->hashPrevBlock, pblock));
 
         // Ask this guy to fill in what we're missing
         if (pfrom)
         {
-            pfrom->PushGetBlocks(pindexBest, GetOrphanRoot(pblock2));
+            pfrom->PushGetBlocks(pindexBest, GetOrphanRoot(pblock));
             // ppcoin: getblocks may not obtain the ancestor block rejected
             // earlier by duplicate-stake check so we ask for it again directly
             if (!IsInitialBlockDownload())
-                pfrom->AskFor(CInv(MSG_BLOCK, WantedByOrphan(pblock2)));
+                pfrom->AskFor(CInv(MSG_BLOCK, WantedByOrphan(pblock)));
         }
         return true;
     }
@@ -2504,61 +2508,53 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     return true;
 }
 
-// ppcoin: sign block
-bool CBlock::SignBlock(const CKeyStore& keystore)
+// cbx: signblock 
+bool CBlock::SignBlock(CWallet& wallet)
 {
-    vector<valtype> vSolutions;
-    txnouttype whichType;
+    // if we are trying to sign
+    //    something except proof-of-stake block template
+    if (!vtx[0].vout[0].IsEmpty())
+        return false;
 
-    if(!IsProofOfStake())
+    // if we are trying to sign
+    //    a complete proof-of-stake block
+    if (IsProofOfStake())
+        return true;
+
+    static int64 nLastCoinStakeSearchTime = GetAdjustedTime(); // startup timestamp
+
+    CKey key;
+    CTransaction txCoinStake;
+    int64 nSearchTime = txCoinStake.nTime; // search to current time
+
+    if (nSearchTime > nLastCoinStakeSearchTime)
     {
-        for(unsigned int i = 0; i < vtx[0].vout.size(); i++)
+        if (wallet.CreateCoinStake(wallet, nBits, nSearchTime-nLastCoinStakeSearchTime, txCoinStake, key))
         {
-            const CTxOut& txout = vtx[0].vout[i];
-
-            if (!Solver(txout.scriptPubKey, whichType, vSolutions))
-                continue;
-
-            if (whichType == TX_PUBKEY)
+            if (txCoinStake.nTime >= max(pindexBest->GetMedianTimePast()+1, pindexBest->GetBlockTime() - nMaxClockDrift))
             {
-                // Sign
-                valtype& vchPubKey = vSolutions[0];
-                CKey key;
+                // make sure coinstake would meet timestamp protocol
+                //    as it would be the same as the block timestamp
+                vtx[0].nTime = nTime = txCoinStake.nTime;
+                nTime = max(pindexBest->GetMedianTimePast()+1, GetMaxTransactionTime());
+                nTime = max(GetBlockTime(), pindexBest->GetBlockTime() - nMaxClockDrift);
 
-                if (!keystore.GetKey(Hash160(vchPubKey), key))
-                    continue;
-                if (key.GetPubKey() != vchPubKey)
-                    continue;
-                if(!key.Sign(GetHash(), vchBlockSig))
-                    continue;
+                // we have to make sure that we have no future timestamps in
+                //    our transactions set
+                for (vector<CTransaction>::iterator it = vtx.begin(); it != vtx.end();)
+                    if (it->nTime > nTime) { it = vtx.erase(it); } else { ++it; }
 
-                return true;
+                vtx.insert(vtx.begin() + 1, txCoinStake);
+                hashMerkleRoot = BuildMerkleTree();
+
+                // append a signature to our block
+                return key.Sign(GetHash(), vchBlockSig);
             }
         }
-    }
-    else
-    {
-        const CTxOut& txout = vtx[1].vout[1];
-
-        if (!Solver(txout.scriptPubKey, whichType, vSolutions))
-            return false;
-
-        if (whichType == TX_PUBKEY)
-        {
-            // Sign
-            valtype& vchPubKey = vSolutions[0];
-            CKey key;
-
-            if (!keystore.GetKey(Hash160(vchPubKey), key))
-                return false;
-            if (key.GetPubKey() != vchPubKey)
-                return false;
-
-            return key.Sign(GetHash(), vchBlockSig);
-        }
+        nLastCoinStakeSearchInterval = nSearchTime - nLastCoinStakeSearchTime;
+        nLastCoinStakeSearchTime = nSearchTime;
     }
 
-    printf("Sign failed\n");
     return false;
 }
 
@@ -4162,8 +4158,6 @@ public:
 //   fProofOfStake: try (best effort) to make a proof-of-stake block
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
 {
-    CReserveKey reservekey(pwallet);
-
     // Create new block
     auto_ptr<CBlock> pblock(new CBlock());
     if (!pblock.get())
@@ -4174,7 +4168,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
     txNew.vout.resize(1);
-    txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
+    if(!fProofOfStake){
+        CReserveKey reservekey(pwallet);
+        txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
+    }else
+        txNew.vout[0].SetEmpty();
 
     // Add our coinbase tx as first transaction
     pblock->vtx.push_back(txNew);
@@ -4203,37 +4201,10 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     if (mapArgs.count("-mintxfee"))
         ParseMoney(mapArgs["-mintxfee"], nMinTxFee);
 
-    // ppcoin: if coinstake available add coinstake tx
-    static int64 nLastCoinStakeSearchTime = GetAdjustedTime();  // only initialized at startup
+
     CBlockIndex* pindexPrev = pindexBest;
 
-    if (fProofOfStake)  // attempt to find a coinstake
-    {
-        pblock->nBits = GetNextTargetRequired(pindexPrev, true);
-        CTransaction txCoinStake;
-        int64 nSearchTime = txCoinStake.nTime; // search to current time
-        if (nSearchTime > nLastCoinStakeSearchTime)
-        {
-            if (pwallet->CreateCoinStake(*pwallet, pblock->nBits, nSearchTime-nLastCoinStakeSearchTime, txCoinStake))
-            {
-                //if the median time is more than nMaxClockDrift into the future don't use it 
-                int64 nMedianTime = pindexPrev->GetMedianTimePast();
-                if ( txCoinStake.nTime + nMaxClockDrift > nMedianTime) nMedianTime = 0;
-
-                if (txCoinStake.nTime >= max(nMedianTime+1, pindexPrev->GetBlockTime() - nMaxClockDrift))
-                {   // make sure coinstake would meet timestamp protocol
-                    // as it would be the same as the block timestamp
-                    pblock->vtx[0].vout[0].SetEmpty();
-                    pblock->vtx[0].nTime = txCoinStake.nTime;
-                    pblock->vtx.push_back(txCoinStake);
-                }
-            }
-            nLastCoinStakeSearchInterval = nSearchTime - nLastCoinStakeSearchTime;
-            nLastCoinStakeSearchTime = nSearchTime;
-        }
-    }
-
-    pblock->nBits = GetNextTargetRequired(pindexPrev, pblock->IsProofOfStake());
+    pblock->nBits = GetNextTargetRequired(pindexPrev, fProofOfStake);
 
     // Collect memory pool transactions into the block
     int64 nFees = 0;
@@ -4348,10 +4319,10 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
                 continue;
 
             // Timestamp limit
-            if (tx.nTime > GetAdjustedTime() || (pblock->IsProofOfStake() && tx.nTime > pblock->vtx[1].nTime))
+            if (tx.nTime > GetAdjustedTime() || (fProofOfStake && tx.nTime > pblock->vtx[1].nTime))
                 continue;
 
-            // ppcoin: simplify transaction fee - allow free = false
+            // Simplify transaction fee - allow free = false
             int64 nMinFee = tx.GetMinFee(nBlockSize, false, GMF_BLOCK);
 
             // Skip free transactions if we're past the minimum block size:
@@ -4427,16 +4398,16 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (fDebug && GetBoolArg("-printpriority"))
             printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
-        if (pblock->IsProofOfWork())
+        if (!fProofOfStake)
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1);
 
         // Fill in header
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
-        if (pblock->IsProofOfStake())
-            pblock->nTime      = pblock->vtx[1].nTime; //same as coinstake timestamp
+
         pblock->nTime          = max(pindexPrev->GetMedianTimePast()+1, pblock->GetMaxTransactionTime());
         pblock->nTime          = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - nMaxClockDrift);
-        if (pblock->IsProofOfWork())
+        
+        if (!fProofOfStake)
             pblock->UpdateTime(pindexPrev);
         pblock->nNonce         = 0;
     }
@@ -4514,7 +4485,10 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     uint256 hash = pblock->GetHash();
     uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
-    if (hash > hashTarget && pblock->IsProofOfWork())
+    if(!pblock->IsProofOfWork())
+        return error("CheckWork() : %s is not a proof-of-work", hash.GetHex().c_str());
+
+    if (hash > hashTarget)
         return error("CryptobullionMiner : proof-of-work not meeting target");
 
     //// debug print
@@ -4546,6 +4520,43 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     return true;
 }
 
+bool CheckStake(CBlock* pblock, CWallet& wallet)
+{
+    uint256 proofHash = 0, hashTarget = 0;
+    uint256 hash = pblock->GetHash();
+
+    if(!pblock->IsProofOfStake())
+        return error("CheckStake() : %s is not a PoSP block", hash.GetHex().c_str());
+
+    // verify hash target and signature of coinstake tx
+    if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, proofHash))
+        return error("CheckStake() : PoSP checking failed");
+
+    //// debug print
+    printf("CheckStake() : new PoSP block found  \n  hash: %s \nproofhash: %s\n", hash.GetHex().c_str(), proofHash.GetHex().c_str());
+    pblock->print();
+    printf("out %s\n", FormatMoney(pblock->vtx[1].GetValueOut()).c_str());
+
+    // Found a solution
+    {
+        LOCK(cs_main);
+        if (pblock->hashPrevBlock != hashBestChain)
+            return error("CheckStake() : generated block is stale");
+
+        // Track how many getdata requests this block gets
+        {
+            LOCK(wallet.cs_wallet);
+            wallet.mapRequestCount[pblock->GetHash()] = 0;
+        }
+
+        // Process this block the same as if we had received it from another node
+        if (!ProcessBlock(NULL, pblock))
+            return error("CheckStake() : ProcessBlock, block not accepted");
+    }
+ 
+    return true;
+}
+
 void static ThreadCryptobullionMiner(void* parg);
 
 static bool fGenerateCryptobullions = false;
@@ -4562,8 +4573,6 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     // Make this thread recognisable as the mining thread
     RenameThread("cryptobullion-miner");
 
-    // Each thread has its own key and counter
-    CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
     CBlockIndex* pindexPrev;
 
@@ -4597,26 +4606,19 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
             return;
         IncrementExtraNonce(pblock.get(), pindexPrev, nExtraNonce);
 
-        if (fProofOfStake)
-        {
-            // ppcoin: if proof-of-stake block found then process block
-            if (pblock->IsProofOfStake())
-            {
-                if (!pblock->SignBlock(*pwalletMain))
-                {
-                    strMintWarning = fWalletUnlockMintOnly ? strMintStakingMessage : strMintMessage;
-                    continue;
-                }
-                strMintWarning = "";
-                printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
-                SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                CheckWork(pblock.get(), *pwalletMain, reservekey);
-                SetThreadPriority(THREAD_PRIORITY_LOWEST);
-            }
-            Sleep(500);
-            continue;
+        if (pblock->SignBlock(*pwallet))
+        { 
+            strMintWarning = "";
+            printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
+            SetThreadPriority(THREAD_PRIORITY_NORMAL);
+            CheckStake(pblock.get(), *pwallet);
+            SetThreadPriority(THREAD_PRIORITY_LOWEST);
         }
+        
+        Sleep(500);
+        continue;
     }
+    
 
     scrypt_buffer_free(scratchbuf);
 }

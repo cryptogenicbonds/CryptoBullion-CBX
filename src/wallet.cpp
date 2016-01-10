@@ -1506,7 +1506,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
         for (unsigned int n=0; n<min(nSearchInterval,(int64)nMaxStakeSearchInterval) && !fKernelFound && !fShutdown; n++)
         {
-            boost::this_thread::interruption_point();
             // Search backward in time from the given txNew timestamp
             // Search nSearchInterval seconds back up to nMaxStakeSearchInterval
             hashProofOfStake = 0;

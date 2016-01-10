@@ -1482,14 +1482,21 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     {
         CTxIndex txindex;
 
-        if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
-            continue;
+        {
+            LOCK2(cs_main, cs_wallet);
+            if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
+                continue;
+        }
+        
 
         CBlock block;
 
         // Read block header
-        if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
-            continue;
+        {
+            LOCK2(cs_main, cs_wallet);
+            if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
+                continue;
+        }
 
         static int nMaxStakeSearchInterval = 60;
         if (block.GetBlockTime() + GetStakeMinAge(block.GetBlockTime()) > txNew.nTime - nMaxStakeSearchInterval)
@@ -1500,6 +1507,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
         for (unsigned int n=0; n<min(nSearchInterval,(int64)nMaxStakeSearchInterval) && !fKernelFound && !fShutdown; n++)
         {
+            boost::this_thread::interruption_point();
             // Search backward in time from the given txNew timestamp
             // Search nSearchInterval seconds back up to nMaxStakeSearchInterval
             hashProofOfStake = 0;

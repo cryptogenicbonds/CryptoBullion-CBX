@@ -2307,7 +2307,7 @@ bool CBlock::AcceptBlock()
     int nHeight = pindexPrev->nHeight+1;
 
     if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
-        return error("AcceptBlock() : reject proof-of-work at height %d");
+        return error("AcceptBlock() : reject proof-of-work at height %u", nHeight);
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))

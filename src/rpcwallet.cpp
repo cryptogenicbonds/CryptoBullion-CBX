@@ -1027,7 +1027,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
 
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
         {
-            boost::this_thread::interruption_point();
+            LOCK2(cs_main, pwalletMain->cs_wallet);
             Object entry;
             entry.push_back(Pair("account", strSentAccount));
             MaybePushAddress(entry, s.first);
@@ -1053,7 +1053,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
 
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& r, listReceived)
         {
-            boost::this_thread::interruption_point();
+            LOCK2(cs_main, pwalletMain->cs_wallet);
             string account;
             if (pwalletMain->mapAddressBook.count(r.first))
                 account = pwalletMain->mapAddressBook[r.first];

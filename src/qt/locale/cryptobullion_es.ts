@@ -15,12 +15,12 @@
     </message>
     <message>
         <location line="+47"/>
-        <source>Copyright © 2009-2015s The CryptoBullion Foundation</source>
-        <translation type="unfinished">Copyright © 2009-2015 La Fundación Crypto Bullion</translation>
+        <source>Copyright © 2009-2016s The CryptoBullion Foundation</source>
+        <translation type="unfinished">Copyright © 2009-2016 La Fundación Crypto Bullion</translation>
     </message>
     <message>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
-        <translation type="unfinished">Versión &lt;b&gt;CryptoBullion&lt;/b&gt;</translation>
+        <translation type="obsolete">Versión &lt;b&gt;CryptoBullion&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -347,9 +347,9 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>CryptobullionGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+293"/>
+        <location filename="../cryptobulliongui.cpp" line="+296"/>
         <source>Sign &amp;message...</source>
         <translation type="unfinished">Firmar el mensaje...</translation>
     </message>
@@ -464,12 +464,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished">&amp;Exportar...</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-223"/>
         <source>Crypto Bullion</source>
         <translation type="unfinished">CryptoBullion</translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Send coins to a CryptoBullion address</source>
         <translation type="unfinished">Enviar CBX a una dirección CryptoBullion</translation>
     </message>
@@ -481,7 +481,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+14"/>
         <source>Export the data in the current tab to a file</source>
-        <translation type="unfinished">Exportar los datos en la ficha actual a un archivo</translation>
+        <translation type="unfinished">Exportar los datos de la ficha actual a un archivo</translation>
     </message>
     <message>
         <location line="-10"/>
@@ -517,12 +517,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">CryptoBullion</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-221"/>
         <source>Vault</source>
         <translation type="unfinished">Bóveda</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+144"/>
         <source>Show general overview of wallet</source>
         <translation type="unfinished">Mostrar la vista general de la bóveda</translation>
     </message>
@@ -559,7 +559,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+23"/>
         <source>&amp;About CryptoBullion</source>
-        <translation type="unfinished">&amp;Acerca del CryptoBullion</translation>
+        <translation type="unfinished">&amp;Acerca de CryptoBullion</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -619,7 +619,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+40"/>
         <source>Downloaded %1 blocks of transaction history.</source>
-        <translation type="unfinished">Bajé %1 bloques de historial de transacciones.</translation>
+        <translation type="unfinished">Descargué %1 bloques de historial de transacciones.</translation>
     </message>
     <message numerus="yes">
         <location line="+22"/>
@@ -689,7 +689,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="unfinished">Hubo un error al tratar de guardar los datos de la bóveda a la nueva ubicación.</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+87"/>
         <location line="+1"/>
         <source>Lock Vault</source>
         <translation type="unfinished">Bloquear la bóveda</translation>
@@ -720,7 +720,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation type="obsolete">This transaction is over the size limit.  You can still send it for a fee of %1, which goes to the nodes that process your transaction and helps to support the network.  Do you want to pay the fee?</translation>
     </message>
     <message>
-        <location line="-308"/>
+        <location line="-311"/>
         <source>Confirm transaction fee</source>
         <translation type="unfinished">Confirmar la tarifa de transacción</translation>
     </message>
@@ -788,9 +788,13 @@ Dirección: %4
         <translation type="obsolete">There was an error trying to save the vault data to the new location.</translation>
     </message>
     <message>
-        <location filename="../bitcoin.cpp" line="+111"/>
         <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Se ha producido un error fatal. CryptoBullion ya no puede continuar de forma segura y se cerrará.</translation>
+        <translation type="obsolete">Se ha producido un error fatal. CryptoBullion ya no puede continuar de forma segura y se cerrará.</translation>
+    </message>
+    <message>
+        <location filename="../cryptobullion.cpp" line="+343"/>
+        <source>A fatal error occurred. CBX Vault can no longer continue safely and will quit.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -830,7 +834,7 @@ Dirección: %4
     </message>
     <message>
         <location line="+41"/>
-        <location filename="../chatwindow.cpp" line="+193"/>
+        <location filename="../chatwindow.cpp" line="+209"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A few IRC commands :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Join a channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK nickname &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Change nickname&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Send PM &lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If userlist gets buggy, switch tabs to fix&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Algunos comandos IRC :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/JOIN #channel &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Juntarse a un channel&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/NICK apodo &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Cambiar el apodo&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;/PRIVMSG nickname message &lt;span style=&quot; color:#9a9a9a;&quot;&gt;Mandar un mensaje personal &lt;/span&gt;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Si la lista de usarios no està completa más, cambiar la lengüeta y despues volver&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1162,7 +1166,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
 <context>
     <name>DisplayOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="+305"/>
+        <location filename="../optionsdialog.cpp" line="+323"/>
         <source>&amp;Unit to show amounts in: </source>
         <translation type="unfinished">&amp;Unidad para mostrar montos:</translation>
     </message>
@@ -1213,8 +1217,12 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
     <message>
         <location line="+0"/>
+        <source>This setting will take effect after restarting CBX Vault.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>This setting will take effect after restarting CloakCoin.</source>
-        <translation type="unfinished">Este ajuste tendrá efecto después de reiniciar CryptoBullion.</translation>
+        <translation type="obsolete">Este ajuste tendrá efecto después de reiniciar CryptoBullion.</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1296,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
 <context>
     <name>GUIUtil::HelpMessageBox</name>
     <message>
-        <location filename="../guiutil.cpp" line="+459"/>
+        <location filename="../guiutil.cpp" line="+460"/>
         <location line="+12"/>
         <source>CryptoBullion-Qt</source>
         <translation type="unfinished">CryptoBullion-Qt</translation>
@@ -1330,6 +1338,64 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
 </context>
 <context>
+    <name>HelpMessageDialog</name>
+    <message>
+        <location filename="../forms/helpmessagedialog.ui" line="+19"/>
+        <source>Dash Core - Command-line options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utilitydialog.cpp" line="+31"/>
+        <source>CBX Core</source>
+        <translation type="unfinished">El núcleo del CBX</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>version</source>
+        <translation type="unfinished">versión</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Usage:</source>
+        <translation type="unfinished">Uso:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>command-line options</source>
+        <translation type="unfinished">Opciones de comandos de línea</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>UI options</source>
+        <translation type="unfinished">Opciones de UI</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Choose data directory on startup (default: 0)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set language, for example &quot;de_DE&quot; (default: system locale)</source>
+        <translation type="unfinished">Seleccione idioma, por ejemplo &quot;de_DE&quot; (predertminado: system locale)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Start minimized</source>
+        <translation type="unfinished">Iniciar minimizado</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set SSL root certificates for payment request (default: -system-)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show splash screen on startup (default: 1)</source>
+        <translation type="unfinished">Mostrar la pantalla de bienvenida al iniciar (predeterminado: 1)</translation>
+    </message>
+</context>
+<context>
     <name>IrcServer</name>
     <message>
         <location filename="../serveur.cpp" line="+39"/>
@@ -1360,7 +1426,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
 <context>
     <name>MainOptionsPage</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="-193"/>
+        <location filename="../optionsdialog.cpp" line="-196"/>
         <source>&amp;Start CBX on window system startup</source>
         <translation type="unfinished">Iniciar automáticamente CBX de ventana, cuando el equipo está encendida</translation>
     </message>
@@ -1463,7 +1529,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location line="-167"/>
+        <location line="-181"/>
         <source>Main</source>
         <translation type="unfinished">Principal</translation>
     </message>
@@ -1478,9 +1544,14 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
         <translation type="unfinished">Opciones</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+54"/>
+        <location line="+9"/>
+        <source>This setting will take effect after restarting CBX Vault.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>This setting will take effect after restarting CloakCoin.</source>
-        <translation type="unfinished">Este ajuste tendrá efecto después de reiniciar CryptoBullion.</translation>
+        <translation type="obsolete">Este ajuste tendrá efecto después de reiniciar CryptoBullion.</translation>
     </message>
     <message>
         <source>&amp;Main</source>
@@ -1619,7 +1690,8 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
         <translation type="obsolete">default</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-9"/>
+        <location line="+9"/>
         <source>Warning</source>
         <translation type="unfinished">Aviso</translation>
     </message>
@@ -1641,7 +1713,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
     <message>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">La información mostrada puede estar obsoleta. Su bóveda se sincroniza automáticamente con la red CryptoBullion después de establecer una conexión, pero este proceso todavía no ha terminado.</translation>
+        <translation type="obsolete">La información mostrada puede estar obsoleta. Su bóveda se sincroniza automáticamente con la red CryptoBullion después de establecer una conexión, pero este proceso todavía no ha terminado.</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -1714,6 +1786,14 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
         <location line="+1"/>
         <source>out of sync</source>
         <translation type="unfinished">no está sincronizado</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../cryptobullion.cpp" line="+136"/>
+        <source>CryptoBullion Core didn&apos;t yet exit safely...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1923,7 +2003,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+1"/>
         <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
-        <translation type="unfinished">Escribe &lt;b&gt;help&lt;/b&gt; para ver los comandos de línea disponibles.</translation>
+        <translation type="unfinished">Escribe &lt;b&gt;help&lt;/b&gt; para ver los mandos de línea disponibles.</translation>
     </message>
 </context>
 <context>
@@ -2268,6 +2348,19 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
 </context>
 <context>
+    <name>ShutdownWindow</name>
+    <message>
+        <location filename="../utilitydialog.cpp" line="+48"/>
+        <source>Cryptobullion Core is finalzing and shutting down...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not shut down the computer until this window disappears.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SignVerifyMessageDialog</name>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="+14"/>
@@ -2457,6 +2550,34 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
         <location line="+5"/>
         <source>Message verified.</source>
         <translation type="unfinished">Mensaje verificado.</translation>
+    </message>
+</context>
+<context>
+    <name>SplashScreen</name>
+    <message>
+        <location filename="../splashscreen.cpp" line="+33"/>
+        <source>CBX VAULT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Cryptobullion Core developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Team CBX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>[testnet]</source>
+        <translation type="unfinished">[testnet]</translation>
     </message>
 </context>
 <context>
@@ -2958,9 +3079,9 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>cryptobullion-core</name>
     <message>
-        <location filename="../bitcoinstrings.cpp" line="+126"/>
+        <location filename="../cryptobullionstrings.cpp" line="+126"/>
         <source>CryptoBullion version</source>
         <translation type="unfinished">Versión de CryptoBullion</translation>
     </message>
@@ -2970,8 +3091,8 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
         <translation type="unfinished">Uso:</translation>
     </message>
     <message>
-        <source>Send command to -server or bitcoind</source>
-        <translation type="obsolete">Send command to -server or bitcoind</translation>
+        <source>Send command to -server or cryptobulliond</source>
+        <translation type="obsolete">Send command to -server or cryptobulliond</translation>
     </message>
     <message>
         <location line="-47"/>
@@ -2995,7 +3116,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
     <message>
         <source>Specify pid file (default: CryptoBullion.pid)</source>
-        <translation type="unfinished">Indique pid file (por defecto: CryptoBullion.pid)</translation>
+        <translation type="obsolete">Indique pid file (por defecto: CryptoBullion.pid)</translation>
     </message>
     <message>
         <location line="-47"/>
@@ -3271,8 +3392,8 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     </message>
     <message>
         <location line="+3"/>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation type="unfinished">Opciones SSL: (véase el Bitcoin Wiki para instrucciones para configurar SSL)</translation>
+        <source>SSL options: (see the Cryptobullion Wiki for SSL setup instructions)</source>
+        <translation type="unfinished">Opciones SSL: (véase el Cryptobullion Wiki para instrucciones para configurar SSL)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3613,7 +3734,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
         <source>%s, you must set a rpcpassword in the configuration file:
  %s
 It is recommended you use the following random password:
-rpcuser=bitcoinrpc
+rpcuser=cryptobullionrpc
 rpcpassword=%s
 (you do not need to remember this password)
 If the file does not exist, create it with owner-readable-only file permissions.
@@ -3622,7 +3743,7 @@ If the file does not exist, create it with owner-readable-only file permissions.
         <translation type="unfinished">%s, debe establecer un rpcpassword en el archivo de configuración:
  %s
 Se recomienda que utilice la siguiente contraseña aleatoria:
-rpcuser = bitcoinrpc
+rpcuser = cryptobullionrpc
 rpcpassword =%s
 (no es necesario de recordar esta contraseña)
 Si no existe el archivo, crearlo con permisos de archivo legible por el propietario de sólo.

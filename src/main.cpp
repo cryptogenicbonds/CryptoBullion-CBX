@@ -4592,7 +4592,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         // Proof-of-stake block found then process block
         if (fProofOfStake)
         {
-            if (!pblock->SignBlock(*pwalletMain))
+            if (pblock->SignBlock(*pwalletMain))
             {
                 strMintWarning = "";
                 printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());

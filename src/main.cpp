@@ -4585,11 +4585,6 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 
         auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, fProofOfStake));
 
-        if(!pblock){
-            printf("PoSPMiner: Error, enable to allocate memory\n");
-            continue;
-        }
-
         if (!pblock.get())
             return;
         IncrementExtraNonce(pblock.get(), pindexPrev, nExtraNonce);

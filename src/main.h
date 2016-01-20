@@ -104,6 +104,7 @@ extern unsigned char pchMessageStart[4];
 extern std::map<uint256, CBlock*> mapOrphanBlocks;
 
 // Settings
+extern bool fHardStake;
 extern bool fStakeUsePooledKeys;
 extern int64 nTransactionFee;
 extern bool fUseFastIndex; // cache scrypt hashes to disk

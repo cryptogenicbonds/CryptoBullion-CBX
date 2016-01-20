@@ -68,6 +68,17 @@ string AccountFromValue(const Value& value)
     return strAccount;
 }
 
+Value hardstake(const Array& params, bool fHelp){
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "hardstake <true|false>\n"
+            "activate or not hardstake (more efficient but use more CPU / RAM).");
+
+    fHardStake = params[0].get_bool();
+
+    return Value::null;
+}
+
 Value getinfo(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)

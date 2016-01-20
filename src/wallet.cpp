@@ -1504,8 +1504,15 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     set<pair<const CWalletTx*,unsigned int> > setCoins;
     vector<const CWalletTx*> vwtxPrev;
     int64 nValueIn = 0;
-    if (!SelectCoinsForPoSP(nBalance - nReserveBalance, txNew.nTime, setCoins, nValueIn))
-        return false;
+
+    if(fHardStake){
+        if (!SelectCoins(nBalance - nReserveBalance, txNew.nTime, setCoins, nValueIn))
+            return false;
+    }else{
+        if (!SelectCoinsForPoSP(nBalance - nReserveBalance, txNew.nTime, setCoins, nValueIn))
+            return false;
+    }
+    
     if (setCoins.empty())
         return false;
     int64 nCredit = 0;

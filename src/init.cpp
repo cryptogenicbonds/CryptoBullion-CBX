@@ -11,6 +11,7 @@
 #include "util.h"
 #include "ui_interface.h"
 #include "checkpoints.h"
+#include "main.h"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -228,6 +229,7 @@ std::string HelpMessage(HelpMessageMode hmm)
         "  -conf=<file>           " + _("Specify configuration file (default: CryptoBullion.conf)") + "\n" +
         "  -pid=<file>            " + _("Specify pid file (default: CryptoBulliond.pid)") + "\n" +
         "  -nostake               " + _("Disable staking") + "\n" +
+        "  -hardstake             " + _("Staking will be more efficient but it will use more CPU / RAM") + "\n" +
         "  -datadir=<dir>         " + _("Specify data directory") + "\n" +
         "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 25)") + "\n" +
         "  -dblogsize=<n>         " + _("Set database disk log size in megabytes (default: 100)") + "\n" +
@@ -380,6 +382,9 @@ bool AppInit2(boost::thread_group& threadGroup)
     // ********************************************************* Step 2: parameter interactions
 
     fTestNet = GetBoolArg("-testnet");
+
+    fHardStake = GetBoolArg("-hardstake", false);
+
     if (fTestNet) {
         SoftSetBoolArg("-irc", true);
     }

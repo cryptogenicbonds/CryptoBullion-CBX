@@ -4549,7 +4549,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
     void *scratchbuf = scrypt_buffer_alloc();
 
-    printf("PoSP Miner Started");
+    printf("PoSP Miner Started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
@@ -4586,7 +4586,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, fProofOfStake));
 
         if(!pblock){
-            printf("PoSPMiner: Error, enable to allocate memory");
+            printf("PoSPMiner: Error, enable to allocate memory\n");
             continue;
         }
 

@@ -78,21 +78,11 @@ namespace Checkpoints
 
     bool CheckHardened(int nHeight, const uint256& hash)
     {
-        static bool fLastCheckpointPassed = false;
-
-        if(fLastCheckpointPassed)
-            return true;
-
         MapCheckpoints& checkpoints = (fTestNet ? mapCheckpointsTestnet : mapCheckpoints);
 
         MapCheckpoints::const_iterator i = checkpoints.find(nHeight);
-        if (i == checkpoints.end()){
-            fLastCheckpointPassed = true;
-            return true;
-        }
-
-        fLastCheckpointPassed = (hash == i->second.first);
-        return fLastCheckpointPassed;
+        if (i == checkpoints.end()) return true;
+        return hash == i->second.first;
     }
 
     int GetTotalBlocksEstimate()

@@ -39,10 +39,11 @@ static CBigNum bnProofOfStakeLimit(~uint256(0) >> 24);
 static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporarily, will be used in the future to fix minimum PoS difficulty at 0.25
 static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 60);
 
+
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-bool fStakeUsePooledKeys  = false; 
+bool fStakeUsePooledKeys  = false;
 unsigned int nStakeMinAge = 60 * 60; // minimum age for coin age
 unsigned int nStakeMaxAge = -1; // stake age of full weight
 unsigned int nStakeTargetSpacing = 65; // 65-seconds block spacing
@@ -1293,17 +1294,15 @@ bool IsInitialBlockDownload()
 {
     if (pindexBest == NULL || nBestHeight < Checkpoints::GetTotalBlocksEstimate())
         return true;
-
-    int64 nCurrentTime = GetTime();
     static int64 nLastUpdate;
     static CBlockIndex* pindexLastBest;
     if (pindexBest != pindexLastBest)
     {
         pindexLastBest = pindexBest;
-        nLastUpdate = nCurrentTime;
+        nLastUpdate = GetTime();
     }
-    return (nCurrentTime - nLastUpdate < 10 &&
-            pindexBest->GetBlockTime() < nCurrentTime - 24 * 60 * 60);
+    return (GetTime() - nLastUpdate < 10 &&
+            pindexBest->GetBlockTime() < GetTime() - 24 * 60 * 60);
 }
 
 void static InvalidChainFound(CBlockIndex* pindexNew)
@@ -2302,12 +2301,10 @@ bool CBlock::AcceptBlock()
     if (mi == mapBlockIndex.end())
         return DoS(10, error("AcceptBlock() : prev block not found"));
     CBlockIndex* pindexPrev = (*mi).second;
-    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex((const CBlockIndex*) pindexPrev, true);
-
     int nHeight = pindexPrev->nHeight+1;
 
     if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
-        return error("AcceptBlock() : reject proof-of-work at height %u", nHeight);
+        return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))
@@ -2349,8 +2346,6 @@ bool CBlock::AcceptBlock()
     if (vtx[0].vin[0].scriptSig.size() < expect.size() ||
         !std::equal(expect.begin(), expect.end(), vtx[0].vin[0].scriptSig.begin()))
         return DoS(100, error("AcceptBlock() : block height mismatch in coinbase"));
-
-    // todo raizor: skip space check if fDisableSignatureChecking
 
     // Write block to history file
     if (!CheckDiskSpace(::GetSerializeSize(*this, SER_DISK, CLIENT_VERSION)))
@@ -2413,10 +2408,9 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     if (pblock->IsProofOfStake())
     {
         uint256 hashProofOfStake = 0;
-
         if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, hashProofOfStake))
         {
-            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s, at time %u\n", hash.ToString().c_str(), pblock->nTime);
+            printf("WARNING: ProcessBlock(): check proof-of-stake failed for block %s\n", hash.ToString().c_str());
             return false; // do not error here as we expect this during initial block download
         }
         if (!mapProofOfStake.count(hash)) // add to mapProofOfStake
@@ -2449,7 +2443,6 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     {
         printf("ProcessBlock: ORPHAN BLOCK, prev=%s\n", pblock->hashPrevBlock.ToString().substr(0,20).c_str());
         CBlock* pblock2 = new CBlock(*pblock);
-        
         // cgb: check proof-of-stake
         if (pblock2->IsProofOfStake())
         {
@@ -2501,14 +2494,10 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
 
     printf("ProcessBlock: ACCEPTED\n");
 
-    // ppcoin: if responsible for sync-checkpoint send it
-    if (pfrom && !CSyncCheckpoint::strMasterPrivKey.empty())
-        Checkpoints::SendSyncCheckpoint(Checkpoints::AutoSelectSyncCheckpoint());
-
     return true;
 }
 
-// cbx: signblock 
+// Sign block
 bool CBlock::SignBlock(CWallet& wallet)
 {
     // if we are trying to sign
@@ -2558,7 +2547,7 @@ bool CBlock::SignBlock(CWallet& wallet)
     return false;
 }
 
-// ppcoin: check block signature
+// Check block signature
 bool CBlock::CheckBlockSignature() const
 {
     if (GetHash() == hashGenesisBlock)
@@ -3092,7 +3081,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         return true;
     }
 
-
     if (strCommand == "version")
     {
         // Each connection can only send one version message
@@ -3107,10 +3095,27 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64 nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION || strlen(pfrom->strSubVer.c_str()) > 14)
+        if (pfrom->nVersion < MIN_PROTO_VERSION)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
+            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            pfrom->fDisconnect = true;
+            return false;
+        }
+
+        // Hardfork protection, we avoid to have old protocol version to avoid fake informations
+        if(pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIMEV3){
+            if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV3){
+                
+                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+                pfrom->fDisconnect = true;
+                return false;
+            }
+        }
+
+        if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
+            
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;
@@ -3122,24 +3127,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> addrFrom >> nNonce;
         if (!vRecv.empty())
             vRecv >> pfrom->strSubVer;
-
-        // Hardfork protection, we avoid to have old protocol version to avoid fake informations
-        if(pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIMEV3){
-            if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV3){
-                
-                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
-                pfrom->fDisconnect = true;
-                return false;
-            }
-        }
-
-        if(strlen(pfrom->strSubVer.c_str()) != 13 || pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
-            
-            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
-            pfrom->fDisconnect = true;
-            return false;
-        }
-
         if (!vRecv.empty())
             vRecv >> pfrom->nStartingHeight;
 
@@ -3196,7 +3183,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 addrman.Add(addrFrom, addrFrom);
                 addrman.Good(addrFrom);
             }
-
         }
 
         // Ask the first connected node for block updates
@@ -4049,26 +4035,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
 
 
 
-class CMainCleanup
-{
-public:
-    CMainCleanup() {}
-    ~CMainCleanup() {
-        // block headers
-        std::map<uint256, CBlockIndex*>::iterator it1 = mapBlockIndex.begin();
-        for (; it1 != mapBlockIndex.end(); it1++)
-            delete (*it1).second;
-        mapBlockIndex.clear();
 
-        // orphan blocks
-        std::map<uint256, CBlock*>::iterator it2 = mapOrphanBlocks.begin();
-        for (; it2 != mapOrphanBlocks.end(); it2++)
-            delete (*it2).second;
-        mapOrphanBlocks.clear();
-
-        // orphan transactions
-    }
-} instance_of_cmaincleanup;
 
 
 
@@ -4504,11 +4471,11 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     uint256 hash = pblock->GetHash();
     uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
-    if(!pblock->IsProofOfWork())
+    if (!pblock->IsProofOfWork())
         return error("CheckWork() : %s is not a proof-of-work", hash.GetHex().c_str());
 
     if (hash > hashTarget)
-        return error("CryptobullionMiner : proof-of-work not meeting target");
+         return error("CryptobullionMiner : proof-of-work not meeting target");
 
     //// debug print
     printf("CryptobullionMiner:\n");
@@ -4541,7 +4508,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 
 bool CheckStake(CBlock* pblock, CWallet& wallet)
 {
-    uint256 proofHash = 0, hashTarget = 0;
+    uint256 proofHash = 0;
     uint256 hash = pblock->GetHash();
 
     if(!pblock->IsProofOfStake())
@@ -4552,7 +4519,7 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
         return error("CheckStake() : PoSP checking failed");
 
     //// debug print
-    printf("CheckStake() : new PoSP block found  \n  hash: %s \nproofhash: %s\n", hash.GetHex().c_str(), proofHash.GetHex().c_str());
+    printf("CheckStake() : new PoSP block found  \n  hash: %s \nproofhash: %s  \n", hash.GetHex().c_str(), proofHash.GetHex().c_str());
     pblock->print();
     printf("out %s\n", FormatMoney(pblock->vtx[1].GetValueOut()).c_str());
 
@@ -4577,10 +4544,6 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
 }
 
 void static ThreadCryptobullionMiner(void* parg);
-
-static bool fGenerateCryptobullions = false;
-static bool fLimitProcessors = false;
-static int nLimitProcessors = -1;
 
 void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
@@ -4625,69 +4588,23 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
             return;
         IncrementExtraNonce(pblock.get(), pindexPrev, nExtraNonce);
 
-        if (pblock->SignBlock(*pwallet))
-        { 
-            strMintWarning = "";
-            printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
-            SetThreadPriority(THREAD_PRIORITY_NORMAL);
-            CheckStake(pblock.get(), *pwallet);
-            SetThreadPriority(THREAD_PRIORITY_LOWEST);
+        // ppcoin: if proof-of-stake block found then process block
+        if (pblock->IsProofOfStake())
+        {
+            if (!pblock->SignBlock(*pwalletMain))
+            {
+                strMintWarning = "";
+                printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
+                SetThreadPriority(THREAD_PRIORITY_NORMAL);
+                CheckStake(pblock.get(), *pwallet);
+                SetThreadPriority(THREAD_PRIORITY_LOWEST);
+            }
         }
         
-        Sleep(500);
+        Sleep(200);
         continue;
+        
     }
-    
 
     scrypt_buffer_free(scratchbuf);
-}
-
-void static ThreadCryptobullionMiner(void* parg)
-{
-    CWallet* pwallet = (CWallet*)parg;
-    try
-    {
-        vnThreadsRunning[THREAD_MINER]++;
-        CryptobullionMiner(pwallet, false);
-        vnThreadsRunning[THREAD_MINER]--;
-    }
-    catch (std::exception& e) {
-        vnThreadsRunning[THREAD_MINER]--;
-        PrintException(&e, "ThreadCryptobullionMiner()");
-    } catch (...) {
-        vnThreadsRunning[THREAD_MINER]--;
-        PrintException(NULL, "ThreadCryptobullionMiner()");
-    }
-    nHPSTimerStart = 0;
-    if (vnThreadsRunning[THREAD_MINER] == 0)
-        dHashesPerSec = 0;
-    printf("ThreadCryptobullionMiner exiting, %d threads remaining\n", vnThreadsRunning[THREAD_MINER]);
-}
-
-
-void GenerateCryptobullions(bool fGenerate, CWallet* pwallet)
-{
-    fGenerateCryptobullions = fGenerate;
-    nLimitProcessors = GetArg("-genproclimit", -1);
-    if (nLimitProcessors == 0)
-        fGenerateCryptobullions = false;
-    fLimitProcessors = (nLimitProcessors != -1);
-
-    if (fGenerate)
-    {
-        int nProcessors = boost::thread::hardware_concurrency();
-        printf("%d processors\n", nProcessors);
-        if (nProcessors < 1)
-            nProcessors = 1;
-        if (fLimitProcessors && nProcessors > nLimitProcessors)
-            nProcessors = nLimitProcessors;
-        int nAddThreads = nProcessors - vnThreadsRunning[THREAD_MINER];
-        printf("Starting %d CryptobullionMiner threads\n", nAddThreads);
-        for (int i = 0; i < nAddThreads; i++)
-        {
-            if (!NewThread(ThreadCryptobullionMiner, pwallet))
-                printf("Error: NewThread(ThreadCryptobullionMiner) failed\n");
-            Sleep(10);
-        }
-    }
 }

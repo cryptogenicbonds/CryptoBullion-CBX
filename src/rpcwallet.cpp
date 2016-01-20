@@ -10,7 +10,6 @@
 #include "init.h"
 #include "base58.h"
 #include "main.h"
-#include "util.h"
 
 using namespace json_spirit;
 using namespace std;
@@ -249,7 +248,6 @@ Value setaccount(const Array& params, bool fHelp)
 
 Value getaccount(const Array& params, bool fHelp)
 {
-
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaccount <CryptoBullion address>\n"
@@ -269,7 +267,6 @@ Value getaccount(const Array& params, bool fHelp)
 
 Value getaddressesbyaccount(const Array& params, bool fHelp)
 {
-    
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaddressesbyaccount <account>\n"
@@ -479,7 +476,6 @@ void GetAccountAddresses(string strAccount, set<CTxDestination>& setAddress)
 
 Value getreceivedbyaccount(const Array& params, bool fHelp)
 {
-    
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
             "getreceivedbyaccount <account> [minconf=1]\n"
@@ -1024,21 +1020,12 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     // Sent
     if ((!listSent.empty() || nFee != 0) && (fAllAccounts || strAccount == strSentAccount))
     {
-
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
         {
-            LOCK2(cs_main, pwalletMain->cs_wallet);
             Object entry;
             entry.push_back(Pair("account", strSentAccount));
             MaybePushAddress(entry, s.first);
-
-            if (wtx.GetDepthInMainChain() < 0) {
-                entry.push_back(Pair("category", "conflicted"));
-            } else {
-                entry.push_back(Pair("category", "send"));
-            }
-
-
+            entry.push_back(Pair("category", "send"));
             entry.push_back(Pair("amount", ValueFromAmount(-s.second)));
             entry.push_back(Pair("fee", ValueFromAmount(-nFee)));
             if (fLong)
@@ -1050,10 +1037,8 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     // Received
     if (listReceived.size() > 0 && wtx.GetDepthInMainChain() >= nMinDepth)
     {
-
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& r, listReceived)
         {
-            LOCK2(cs_main, pwalletMain->cs_wallet);
             string account;
             if (pwalletMain->mapAddressBook.count(r.first))
                 account = pwalletMain->mapAddressBook[r.first];
@@ -1062,7 +1047,6 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
                 Object entry;
                 entry.push_back(Pair("account", account));
                 MaybePushAddress(entry, r.first);
-                
                 if (wtx.IsCoinBase())
                 {
                     if (wtx.GetDepthInMainChain() < 1)
@@ -1161,7 +1145,6 @@ Value listtransactions(const Array& params, bool fHelp)
 
 Value listaccounts(const Array& params, bool fHelp)
 {
-
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "listaccounts [minconf=1]\n"

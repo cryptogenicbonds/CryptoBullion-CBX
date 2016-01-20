@@ -1,9 +1,11 @@
 Crypto Bullion
 
-Proof of Stake
+Proof of Stake Hybrid
 featuring PoSP (Proof-of-Stake-Participation)
 
 http://cryptobullion.io/white-paper/
+
+Scrypt
 
 
 Block reward halves after every ~50000 blocks until baseline of 0.01 CBX (reached on July 13, 2014)

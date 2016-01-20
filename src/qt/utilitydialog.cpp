@@ -88,7 +88,7 @@ void ShutdownWindow::showShutdownWindow(CryptobullionGUI *window)
     QWidget *shutdownWindow = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(new QLabel(
-        tr("Cryptobullion Core is finalizing and shutting down...") + "<br /><br />" +
+        tr("Cryptobullion Core is finalzing and shutting down...") + "<br /><br />" +
         tr("Do not shut down the computer until this window disappears.")));
     shutdownWindow->setLayout(layout);
 

@@ -2366,7 +2366,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>ShutdownWindow</name>
     <message>
         <location filename="../utilitydialog.cpp" line="+48"/>
-        <source>Cryptobullion Core is finalizing and shutting down...</source>
+        <source>Cryptobullion Core is finalzing and shutting down...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

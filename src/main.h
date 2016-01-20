@@ -45,7 +45,7 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64 MIN_TX_FEE = 0.1 * CENT;
 static const int64 MIN_RELAY_TX_FEE = 0.1 * CENT;
-static const int64 MAX_MONEY = 2000000 * COIN; //Max initial coins 1 million + 50 years inflation
+static const int64 MAX_MONEY = 2000000 * COIN;
 static const int64 MAX_MINT_PROOF_OF_WORK = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 10 * COIN;
 static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
@@ -104,8 +104,8 @@ extern unsigned char pchMessageStart[4];
 extern std::map<uint256, CBlock*> mapOrphanBlocks;
 
 // Settings
-extern int64 nTransactionFee;
 extern bool fStakeUsePooledKeys;
+extern int64 nTransactionFee;
 extern bool fUseFastIndex; // cache scrypt hashes to disk
 
 // Minimum disk space required - used in CheckDiskSpace()
@@ -134,7 +134,6 @@ bool SendMessages(CNode* pto, bool fSendTrickle);
 typedef boost::signals2::signal<void (unsigned int bytesRead)> ExternalBlockFileProgress;
 bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress=NULL, int blockfileVersion = CLIENT_VERSION);
 
-void GenerateCryptobullions(bool fGenerate, CWallet* pwallet);
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash1);
@@ -1146,7 +1145,7 @@ public:
     bool AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos);
     bool CheckBlock(bool fCheckPOW=true, bool fCheckMerkleRoot=true, bool fCheckSig=true) const;
     bool AcceptBlock();
-    bool GetCoinAge(uint64& nCoinAge) const; // ppcoin: calculate total coin age spent in block
+    bool GetCoinAge(uint64& nCoinAge) const; // Calculate total coin age spent in block
     bool SignBlock(CWallet& keystore);
     bool CheckBlockSignature() const;
 

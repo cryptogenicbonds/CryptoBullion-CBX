@@ -95,7 +95,6 @@ bool CDBEnv::Open(boost::filesystem::path pathEnv_)
 #ifdef DB_LOG_AUTO_REMOVE
     dbenv.log_set_config(DB_LOG_AUTO_REMOVE, 1);
 #endif
-
     int ret = dbenv.open(strPath.c_str(),
                      DB_CREATE     |
                      DB_INIT_LOCK  |

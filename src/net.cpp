@@ -1860,10 +1860,6 @@ void StartNode(boost::thread_group& threadGroup)
     if (fUseUPnP)
         MapPort();
 
-    // Get addresses from IRC and advertise ours
-    if (!NewThread(ThreadIRCSeed, NULL))
-        printf("Error: NewThread(ThreadIRCSeed) failed\n");
-
     // Send and receive from sockets, accept connections
     if (!NewThread(ThreadSocketHandler, NULL))
         printf("Error: NewThread(ThreadSocketHandler) failed\n");

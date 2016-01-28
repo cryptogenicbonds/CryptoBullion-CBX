@@ -74,7 +74,7 @@ Value hardstake(const Array& params, bool fHelp){
             "hardstake <true|false>\n"
             "activate or not hardstake (more efficient but use more CPU / RAM).");
 
-    fHardStake = params[0].get_bool();
+    fHardStake = (params[0].get_str() == "true");
 
     return Value::null;
 }

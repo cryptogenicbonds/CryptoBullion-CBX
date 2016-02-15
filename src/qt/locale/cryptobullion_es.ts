@@ -466,7 +466,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-223"/>
         <source>Crypto Bullion</source>
-        <translation type="unfinished">CryptoBullion</translation>
+        <translation type="unfinished">Crypto Bullion</translation>
     </message>
     <message>
         <location line="+150"/>
@@ -1342,7 +1342,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location filename="../forms/helpmessagedialog.ui" line="+19"/>
         <source>Dash Core - Command-line options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opciones de comandos</translation>
     </message>
     <message>
         <location filename="../utilitydialog.cpp" line="+31"/>
@@ -1372,7 +1372,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+1"/>
         <source>Choose data directory on startup (default: 0)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Busca datos desde esta carpeta cuando inicialisa</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1400,7 +1400,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location filename="../serveur.cpp" line="+39"/>
         <source>&lt;em&gt;ERROR : can&apos;t find freenode server.&lt;/em&gt;</source>
-        <translation type="unfinished">&lt;em&gt; ERROR:. no puede encontrar un servidor freenode &lt;/em&gt;</translation>
+        <translation type="unfinished">&lt;em&gt; ERROR:. no puedo encontrar un servidor freenode &lt;/em&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1428,7 +1428,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location filename="../optionsdialog.cpp" line="-196"/>
         <source>&amp;Start CBX on window system startup</source>
-        <translation type="unfinished">Iniciar automáticamente CBX de ventana, cuando el equipo está encendida</translation>
+        <translation type="unfinished">Iniciar automáticamente CBX de ventana, cuando el equipo está encendido</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1448,7 +1448,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+3"/>
         <source>M&amp;inimize on close</source>
-        <translation type="unfinished">Minimiza cuando se cerra</translation>
+        <translation type="unfinished">Minimiza cuando se cierra</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1458,7 +1458,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+4"/>
         <source>Map port using &amp;UPnP</source>
-        <translation type="unfinished">Mapar el puerto usando UPnP</translation>
+        <translation type="unfinished">Mapear el puerto usando UPnP</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1468,7 +1468,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+3"/>
         <source>&amp;Connect through SOCKS4 proxy:</source>
-        <translation type="unfinished">&amp;Conectar a través de proxy SOCKS4:</translation>
+        <translation type="unfinished">&amp;Conectar a través del proxy SOCKS4:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1949,7 +1949,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+7"/>
         <source>Show the CryptoBullion-Qt help message to get a list with possible CryptoBullion command-line options.</source>
-        <translation type="unfinished">Mostrar el mensaje de ayuda-CryptoBullion Qt para obtener una lista con posibles CryptoBullion opciones de comandos de línea.</translation>
+        <translation type="unfinished">Mostrar el mensaje de ayuda-de CryptoBullion Qt para una lista con las opciones de los comandos de línea posibles en CryptoBullion.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2003,7 +2003,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="+1"/>
         <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
-        <translation type="unfinished">Escribe &lt;b&gt;help&lt;/b&gt; para ver los mandos de línea disponibles.</translation>
+        <translation type="unfinished">Escribe &lt;b&gt;help&lt;/b&gt; para ver los comandos de línea disponibles.</translation>
     </message>
 </context>
 <context>
@@ -3587,7 +3587,7 @@ Esta etiqueta se convierte en rojo, si la prioridad es menor que &quot;medio&quo
     <message>
         <location line="-72"/>
         <source>Connect through socks proxy</source>
-        <translation type="unfinished">Conectar a través de proxy socks</translation>
+        <translation type="unfinished">Conectar a través del proxy socks</translation>
     </message>
     <message>
         <location line="-11"/>

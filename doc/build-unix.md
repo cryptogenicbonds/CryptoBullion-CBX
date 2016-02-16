@@ -14,13 +14,23 @@ Every user that wants to use Vault on Linux should build it from source.
 Here is how to do it on Debian/Ubuntu-like Linux distribution:
 
 1. First add bitcoin repository in order to be able to get libdb4.8:
-	sudo add-apt-repository ppa:bitcoin/bitcoin
-	sudo apt-get update
+```
+sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt-get update
+```
 2. Install all dependances:
-	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev
+```
+sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev
+```
 3. Build leveldb:
-	cd src/leveldb/ && make libleveldb.a libmemenv.a && cd ..
+```
+cd src/leveldb/ && make libleveldb.a libmemenv.a && cd ..
+```
 4. Build miniupnpc (option, if you don't build it just use make "USE_UPNP=-" in the next step)
-	cd src/miniupnpc && make && cd ..
+```
+cd src/miniupnpc && make && cd ..
+```
 5. Build CrytpoBullion daemon:
-	make -f makefile.unix
+```
+make -f makefile.unix
+```

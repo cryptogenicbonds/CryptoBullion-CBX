@@ -23,7 +23,7 @@
    <string>About CryptoBullion</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: white;
+   <string notr="true">
 QLabel { background: transparent; }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">

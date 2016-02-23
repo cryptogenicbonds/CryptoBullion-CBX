@@ -5,6 +5,7 @@
 #include "optionsmodel.h"
 #include "guiutil.h"
 #include "guiconstants.h"
+#include "main.h"
 
 #include "init.h"
 #include "ui_interface.h"
@@ -366,7 +367,17 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(cryptobullion);
     CryptobullionApplication app(argc, argv);
 
-    QFile f(":/style/cgbstyle.qss");
+    QSettings mySettings("CryptoBullion Foundation", "Vault");
+    mySettings.beginGroup("Skin");
+
+    fSkinUI = false;
+
+    if(mySettings.contains("white_skin"))
+        fSkinUI = mySettings.value("white_skin").toBool();
+    
+    mySettings.endGroup();
+
+    QFile f(fSkinUI ? ":/style/cgbstyle_white.qss" : ":/style/cgbstyle.qss");
     if (!f.exists())
     {
         printf("Unable to set stylesheet, file not found\n");

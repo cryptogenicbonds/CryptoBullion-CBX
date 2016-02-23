@@ -90,6 +90,7 @@ private:
     QAction *aboutAction;
     QAction *receiveCoinsAction;
     QAction *optionsAction;
+    QAction *switchSkinAction;
     QAction *toggleHideAction;
     QAction *exportAction;
     QAction *encryptWalletAction;
@@ -159,6 +160,9 @@ private slots:
 
     /** Show configuration dialog */
     void optionsClicked();
+
+    void switchSkinClicked();
+
     /** Show about dialog */
     void aboutClicked();
 #ifndef Q_OS_MAC

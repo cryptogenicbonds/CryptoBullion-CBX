@@ -43,6 +43,7 @@ static CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 60);
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
+bool fSkinUI = false;
 bool fHardStake = false;
 bool fStakeUsePooledKeys  = false;
 unsigned int nStakeMinAge = 60 * 60; // minimum age for coin age

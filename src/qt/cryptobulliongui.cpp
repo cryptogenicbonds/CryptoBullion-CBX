@@ -26,6 +26,7 @@
 #include "notificator.h"
 #include "guiutil.h"
 #include "rpcconsole.h"
+#include "main.h"
 
 #ifdef Q_OS_MAC
 #include "macdockiconhandler.h"
@@ -279,12 +280,15 @@ void CryptobullionGUI::createActions()
     aboutAction = new QAction(QIcon(":/icons/cryptobullion"), tr("&About CryptoBullion"), this);
     aboutAction->setToolTip(tr("Show information about CryptoBullion"));
     aboutAction->setMenuRole(QAction::AboutRole);
-    aboutQtAction = new QAction(QIcon(":/trolltech/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
+    aboutQtAction = new QAction(QIcon(":/qt-project.org/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
     aboutQtAction->setToolTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
     optionsAction->setToolTip(tr("Modify configuration options for CryptoBullion"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
+    switchSkinAction = new QAction(QIcon(":/icons/switchskin"), tr("&Swtich skin to black/white"), this);
+    switchSkinAction->setToolTip(tr("Swtich skin to black/white"));
+    switchSkinAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(QIcon(":/icons/cryptobullion"), tr("&Show / Hide"), this);
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Vault..."), this);
     encryptWalletAction->setToolTip(tr("Encrypt or decrypt vault"));
@@ -305,6 +309,7 @@ void CryptobullionGUI::createActions()
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
+    connect(switchSkinAction, SIGNAL(triggered()), this, SLOT(switchSkinClicked()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(encryptWalletAction, SIGNAL(triggered(bool)), this, SLOT(encryptWallet(bool)));
     connect(backupWalletAction, SIGNAL(triggered()), this, SLOT(backupWallet()));
@@ -337,6 +342,7 @@ void CryptobullionGUI::createMenuBar()
     settings->addAction(changePassphraseAction);
     settings->addSeparator();
     settings->addAction(optionsAction);
+    settings->addAction(switchSkinAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     help->addAction(openRPCConsoleAction);
@@ -366,13 +372,7 @@ void CryptobullionGUI::createToolBars()
 
     //toolbar2->setObjectName("actionsToolbar");
 
-    toolbar->setStyleSheet("QToolButton {min-height:48px;color: #4C698B;border:none;margin:0px;padding:0px;border-color: #E6EDF7; border-width: 1px;border-style: solid;} "
-                           "QToolButton::disabled { color: #000000; background-color: transparent; } "
-                           "QToolButton:hover { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-style: solid;border-width: 1px;}"
-                           "QToolButton:checked { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-style: solid;border-width: 1px;} "
-                           "QToolButton:pressed { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7;border-style: solid; border-width: 1px;} "
-                           "QToolButton:selected { color: #1A9CD8; background-color: #ffffff; margin:0px;padding:0px;border-color: #E6EDF7; border-style: solid;border-width: 1px; } #tabsToolbar { min-height:48px; color: #4C698B; background-color: #ffffff; margin:0px; padding:0px; } "
-                           "QToolBar::handle { background-color: #ffffff; }");
+    // toolbar->setStyleSheet("");
 
     /*toolbar2->setStyleSheet("QToolButton {margin: 0px; width: 100%; min-height:48px;color: #4C698B;border:none;margin:0px;padding:0px;border-color: #E6EDF7; border-width: 1px;border-style: solid;} "
                              "QToolButton::disabled { color: #000000; background-color: transparent; } "
@@ -511,6 +511,39 @@ void CryptobullionGUI::optionsClicked()
     OptionsDialog dlg;
     dlg.setModel(clientModel->getOptionsModel());
     dlg.exec();
+}
+
+void CryptobullionGUI::switchSkinClicked()
+{
+    QFile f;
+    if(fSkinUI){
+        f.setFileName(":/style/cgbstyle.qss");
+    }else{
+        f.setFileName(":/style/cgbstyle_white.qss");
+    }
+
+
+    if (!f.exists())
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+    }
+
+    fSkinUI = !fSkinUI;
+
+   
+    QSettings mySettings("CryptoBullion Foundation", "Vault");
+    mySettings.beginGroup("Skin");
+
+    mySettings.setValue("white_skin", fSkinUI);
+    
+    mySettings.endGroup();
+
 }
 
 void CryptobullionGUI::aboutClicked()

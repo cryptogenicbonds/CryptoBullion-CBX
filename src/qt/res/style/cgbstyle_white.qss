@@ -1,0 +1,86 @@
+QWidget{
+    color: #4C698B;
+    border-color: #E4E4E4;
+    background-color: #ffffff;
+}
+
+QProgressBar:horizontal {
+    border: 1px solid white;
+    text-align: center;
+    padding: 1px;
+    background-color: #D9DEE1;
+    border-radius: 5px;
+}
+
+QProgressBar::chunk:horizontal {
+    background-color: #95D946;
+    border-radius: 5px;
+}
+
+QToolBar{
+    margin: 0px;
+    width: 100%;
+}
+
+QToolButton {min-height:48px;color: #4C698B;border:none;margin:0px;padding:0px;border-color: #E6EDF7; border-width: 1px;border-style: solid;}
+QToolButton::disabled { color: #000000; background-color: transparent; } 
+QToolButton:hover { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-style: solid;border-width: 1px;}
+QToolButton:checked { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7; border-style: solid;border-width: 1px;}
+QToolButton:pressed { color: #1A9CD8; background-color: #ffffff; margin:0px; padding:0px; border-color: #E6EDF7;border-style: solid; border-width: 1px;}
+QToolButton:selected { color: #1A9CD8; background-color: #ffffff; margin:0px;padding:0px;border-color: #E6EDF7; border-style: solid;border-width: 1px; } #tabsToolbar { min-height:48px; color: #4C698B; background-color: #ffffff; margin:0px; padding:0px; }
+QToolBar::handle { background-color: #ffffff; }
+
+QMenu{
+    color: black;
+    background-color: white;
+}
+
+QMenu::item{
+    padding: 2px 25px 2px 20px;
+}
+
+QMenu::item:hover{
+    color: black;
+    background-color: #E4E4E4;
+    border: none;
+}
+
+QMenu::item:selected{
+    color: black;
+    background-color: #E4E4E4;
+    border: none;
+}
+
+QMenu::icon:hover{
+    border: none;
+}
+
+QMenu::icon:selected{
+    border: none;
+}
+
+QMenu::icon{
+    border: none;
+}
+
+QLineEdit{
+    background-color: #ffffff;
+    border: 1px solid #E4E4E4;
+}
+
+QLineEdit:selected{
+    border-color: #4C698B;
+}
+
+QPushButton{
+    border-radius: 2px;
+    background-color: white;
+    border: 1px solid #E6EDF7;
+    background-color: #E4E4E4;
+    padding: 10px;
+}
+
+QPushButton:hover{
+    border-color: #4C698B;
+    background-color: #C9C9C9;
+}

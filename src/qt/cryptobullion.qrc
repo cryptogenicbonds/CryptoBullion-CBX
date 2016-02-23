@@ -87,6 +87,7 @@
     </qresource>
     <qresource prefix="/style">
         <file alias="cgbstyle.qss">res/style/cgbstyle.qss</file>
+        <file alias="cgbstyle_white.qss">res/style/cgbstyle_white.qss</file>
     </qresource>
     <qresource prefix="/fonts">
         <file alias="font_segoe">res/fonts/segoeui.ttf</file>

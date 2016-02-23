@@ -4513,12 +4513,15 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
     uint256 proofHash = 0;
     uint256 hash = pblock->GetHash();
 
-    if(!pblock->IsProofOfStake())
-        return error("CheckStake() : %s is not a PoSP block", hash.GetHex().c_str());
+    {
+        LOCK(cs_main);
+        if(!pblock->IsProofOfStake())
+            return error("CheckStake() : %s is not a PoSP block", hash.GetHex().c_str());
 
-    // verify hash target and signature of coinstake tx
-    if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, proofHash))
-        return error("CheckStake() : PoSP checking failed");
+        // verify hash target and signature of coinstake tx
+        if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, proofHash))
+            return error("CheckStake() : PoSP checking failed");
+    }
 
     //// debug print
     printf("CheckStake() : new PoSP block found  \n  hash: %s \nproofhash: %s  \n", hash.GetHex().c_str(), proofHash.GetHex().c_str());

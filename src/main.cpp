@@ -3598,18 +3598,22 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
     else if (strCommand == "block")
     {
-        CBlock block;
-        vRecv >> block;
+        {
+            LOCK(cs_main);
+            CBlock block;
+            vRecv >> block;
+            uint256 hashBlock = block.GetHash();
 
-        printf("received block %s\n", block.GetHash().ToString().substr(0,20).c_str());
-        // block.print();
+            printf("received block %s\n", hashBlock.ToString().substr(0,20).c_str());
+            // block.print();
 
-        CInv inv(MSG_BLOCK, block.GetHash());
-        pfrom->AddInventoryKnown(inv);
+            CInv inv(MSG_BLOCK, hashBlock);
+            pfrom->AddInventoryKnown(inv);
 
-        if ( ProcessBlock(pfrom, &block))
-            mapAlreadyAskedFor.erase(inv);
-        if (block.nDoS) pfrom->Misbehaving(block.nDoS);
+            if ( ProcessBlock(pfrom, &block))
+                mapAlreadyAskedFor.erase(inv);
+            if (block.nDoS) pfrom->Misbehaving(block.nDoS);
+        }
     }
 
 

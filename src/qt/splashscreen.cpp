@@ -31,7 +31,7 @@ SplashScreen::SplashScreen(const QPixmap &pixmap, bool isTestNet) :
 
     // define text to place
     QString titleText       = tr("CBX VAULT");
-    QString versionText     = QString(tr("Version %1")).arg(QString::fromStdString(FormatFullVersion()));
+    QString versionText     = "";
     QString copyrightTextBtc   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
     QString copyrightTextCbx   = QChar(0xA9)+QString(" 2013-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Team CBX"));
     QString testnetAddText  = QString(tr("[testnet]")); // define text to place as single text object

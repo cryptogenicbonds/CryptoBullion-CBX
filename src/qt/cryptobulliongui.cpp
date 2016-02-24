@@ -287,7 +287,7 @@ void CryptobullionGUI::createActions()
     optionsAction->setToolTip(tr("Modify configuration options for CryptoBullion"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     switchSkinAction = new QAction(QIcon(":/icons/switchskin"), tr("&Swtich skin to black/white"), this);
-    switchSkinAction->setToolTip(tr("Swtich skin to black/white"));
+    switchSkinAction->setToolTip(tr("Toggle Dark/Light skin"));
     switchSkinAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(QIcon(":/icons/cryptobullion"), tr("&Show / Hide"), this);
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Vault..."), this);

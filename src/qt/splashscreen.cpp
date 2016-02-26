@@ -30,7 +30,7 @@ SplashScreen::SplashScreen(const QPixmap &pixmap, bool isTestNet) :
     float fontFactor            = 1.0;
 
     // define text to place
-    QString titleText       = tr("CBX VAULT");
+    QString titleText       = "";
     QString versionText     = "";
     QString copyrightTextBtc   = QChar(0xA9)+QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
     QString copyrightTextCbx   = QChar(0xA9)+QString(" 2013-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("Team CBX"));

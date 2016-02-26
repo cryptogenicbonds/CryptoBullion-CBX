@@ -1064,9 +1064,9 @@ QStatusBar::item {
  }
 
  QTreeWidget{
-    background: #3E3C3C;
+    background: #494747;
  }
 
  QTreeView{
-    background: #3E3C3C;
+    background: #494747;
  }

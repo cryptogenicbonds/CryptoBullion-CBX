@@ -1155,6 +1155,42 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
+unsigned int static GetNextTargetRequiredPoSPV2(const CBlockIndex* pindexLast){
+    int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+
+    if (pindexLast == NULL)
+        return bnProofOfStakeLimitV2.GetCompact(); // genesis block
+
+    const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, true);
+    if (pindexPrev->pprev == NULL)
+        return bnProofOfStakeLimitV2.GetCompact(); // first block
+
+    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, true);
+    if (pindexPrevPrev->pprev == NULL)
+        return bnProofOfStakeLimitV2.GetCompact(); // second block
+
+    if(nActualSpacing < 0){
+        nActualSpacing = 1;
+    }else if(nActualSpacing > (16*60)){
+        nActualSpacing = (16*60);
+    }
+
+    // target change every block
+    // retarget with exponential moving toward target spacing
+    CBigNum bnNew;
+    bnNew.SetCompact(pindexPrev->nBits);
+
+    int64 nTargetSpacing = GetStakeTargetSpacing(pindexLast->nTime);
+    int64 nInterval = (16*60) / nTargetSpacing;
+    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
+    bnNew /= ((nInterval + 1) * nTargetSpacing);
+
+    if(bnNew > bnProofOfStakeLimitV2 || bnNew <= 0)
+        return bnProofOfStakeLimitV2.GetCompact();
+
+    return bnNew.GetCompact();
+}
+
 unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
     CBigNum bnTargetLimit = bnProofOfWorkLimit;
 
@@ -1192,8 +1228,8 @@ unsigned int static GetNextTargetRequiredPoSP(const CBlockIndex* pindexLast){
         }
     }
 
-    // ppcoin: target change every block
-    // ppcoin: retarget with exponential moving toward target spacing
+    // target change every block
+    // retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
 

@@ -3147,9 +3147,16 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
 
         // Hardfork protection, we avoid to have old protocol version to avoid fake informations
+        if(pindexBest != NULL && pindexBest->nHeight >= HARDFORK_HEIGHTV4){
+            if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV4){
+                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+                pfrom->fDisconnect = true;
+                return false;
+            }
+        }
+
         if(pindexBest != NULL && pindexBest->nTime >= HARDFORK_TIMEV3){
             if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV3){
-                
                 printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
                 pfrom->fDisconnect = true;
                 return false;
@@ -3157,7 +3164,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
 
         if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSION){
-            
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;

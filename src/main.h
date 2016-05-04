@@ -36,6 +36,7 @@ class CNode;
 #define POSP_TARGET_LIMIT ((unsigned int) 503417504)
 #define HARDFORK_PROTOCOL_VERSION 60008
 #define HARDFORK_PROTOCOL_VERSIONV3 60009
+#define HARDFORK_PROTOCOL_VERSIONV4 60010
 #define HARDFORK_HEIGHTV4 (1462350+(60*24*90)) // TODO change this value to fit with the desired fork height
 // -----
 

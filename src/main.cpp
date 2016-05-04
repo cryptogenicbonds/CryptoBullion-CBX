@@ -1058,16 +1058,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
     	return nSubsidy;
 }
 
-// miner's coin stake reward based on nBits and coin age spent (coin-days)
-int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply, int nFees)
-{
-
-    if(nHeight >= HARDFORK_HEIGHTV4)
-        return ((nMoneySupply*0.02)/485169)+nFees;
-
-    if(nTime >= (unsigned int) HARDFORK_TIME)
-        return (nMoneySupply*0.02)/485169;
-
+int64 GetPoSReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime){
     int64 nRewardCoinYear;
 
     if(fTestNet || nTime > PROTOCOL_SWITCH_TIME)
@@ -1103,10 +1094,10 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
 
         nRewardCoinYear = bnUpperBound.getuint64();
 
-		if (nTime > ROUND_SWITCH_TIME)
-			nRewardCoinYear = min(nRewardCoinYear, MAX_MINT_PROOF_OF_STAKE);
-		else
-		nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
+        if (nTime > ROUND_SWITCH_TIME)
+            nRewardCoinYear = min(nRewardCoinYear, MAX_MINT_PROOF_OF_STAKE);
+        else
+        nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
     }
     else
     {
@@ -1116,14 +1107,33 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
 
     int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
 
-	if (nTime > ROUND_SWITCH_TIME)
-		nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8) ;
-	else
-		nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+    if (nTime > ROUND_SWITCH_TIME)
+        nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8) ;
+    else
+        nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
     return nSubsidy;
+}
+
+int64 GetPoSPRewardV1(int64 nMoneySupply){
+    return (nMoneySupply*0.02)/485169;
+}
+
+int64 GetPoSPRewardV2(int64 nMoneySupply, int nFees){
+    return ((nMoneySupply*0.02)/485169)+nFees;
+}
+
+int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply, int nFees){
+
+    if(nHeight >= HARDFORK_HEIGHTV4)
+        return GetPoSPRewardV2(nMoneySupply, nFees);
+
+    if(nTime >= (unsigned int) HARDFORK_TIME)
+        return GetPoSPRewardV1(nMoneySupply);
+
+    return GetPoSReward(nCoinAge, nBits, nTime);
 }
 
 static const int64 nTargetTimespan = 0.16 * 24 * 60 * 60;  // 0.16 of a day

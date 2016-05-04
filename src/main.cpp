@@ -1241,13 +1241,10 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
     if (pindexPrevPrev->pprev == NULL)
         return bnTargetLimit.GetCompact(); // second block
 
-    if(pindexLast->nTime >= HARDFORK_TIME && fProofOfStake)
-        bnTargetLimit = bnProofOfStakeLimitV2;
-
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    // ppcoin: target change every block
-    // ppcoin: retarget with exponential moving toward target spacing
+    // target change every block
+    // retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
 

@@ -1059,12 +1059,16 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 }
 
 // miner's coin stake reward based on nBits and coin age spent (coin-days)
-int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply)
+int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply, int nFees)
 {
-    int64 nRewardCoinYear;
+
+    if(nHeight >= HARDFORK_HEIGHTV4)
+        return ((nMoneySupply*0.02)/485169)+nFees;
 
     if(nTime >= (unsigned int) HARDFORK_TIME)
         return (nMoneySupply*0.02)/485169;
+
+    int64 nRewardCoinYear;
 
     if(fTestNet || nTime > PROTOCOL_SWITCH_TIME)
     {
@@ -1297,6 +1301,9 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
 
 unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
+    if(pindexLast->nHeight >= HARDFORK_HEIGHTV4 && fProofOfStake)
+        return GetNextTargetRequiredPoSPV2(pindexLast);
+
     if(pindexLast->nTime < HARDFORK_TIME || !fProofOfStake)
         return GetNextTargetRequiredHybrid(pindexLast, fProofOfStake);
     else
@@ -1787,26 +1794,26 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
     if (IsProofOfStake())
     {
-        // ppcoin: coin stake tx earns reward instead of paying fee
+        // coin stake tx earns reward instead of paying fee
         uint64 nCoinAge;
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
              return error("ConnectInputs() : %s unable to get coin age for coinstake", GetHash().ToString().substr(0,10).c_str());
 
-        int64 nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->pprev->nBits, nTime, pindex->pprev->nHeight, pindex->pprev->nMoneySupply);
+        int64 nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->pprev->nBits, nTime, pindex->pprev->nHeight, pindex->pprev->nMoneySupply, nFees);
 
         if (nStakeReward > nCalculatedStakeReward)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%lld vs calculated=%lld)", nStakeReward, nCalculatedStakeReward));
     }
 
-    // ppcoin: track money supply and mint amount info
+    // track money supply and mint amount info
     pindex->nMint = nValueOut - nValueIn + nFees;
     pindex->nMoneySupply = (pindex->pprev? pindex->pprev->nMoneySupply : 0) + nValueOut - nValueIn;
     if (!txdb.WriteBlockIndex(CDiskBlockIndex(pindex)))
         return error("Connect() : WriteBlockIndex for pindex failed");
 
-    // ppcoin: fees are not collected by miners as in cryptobullion
-    // ppcoin: fees are destroyed to compensate the entire network
-    if (fDebug && GetBoolArg("-printcreation"))
+    // Before hardfork v4 height, fees are not collected by miners as in cryptobullion
+    // Before hardfork v4 height, fees are destroyed to compensate the entire network
+    if (fDebug && GetBoolArg("-printcreation") && pindex->pprev->nHeight < HARDFORK_HEIGHTV4)
         printf("ConnectBlock() : destroy=%s nFees=%"PRI64d"\n", FormatMoney(nFees).c_str(), nFees);
 
     if (fJustCheck)
@@ -2533,7 +2540,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
 }
 
 // Sign block
-bool CBlock::SignBlock(CWallet& wallet)
+bool CBlock::SignBlock(CWallet& wallet, int nFees)
 {
     // if we are trying to sign
     //    something except proof-of-stake block template
@@ -2553,7 +2560,7 @@ bool CBlock::SignBlock(CWallet& wallet)
 
     if (nSearchTime > nLastCoinStakeSearchTime)
     {
-        if (wallet.CreateCoinStake(wallet, nBits, nSearchTime-nLastCoinStakeSearchTime, txCoinStake, key))
+        if (wallet.CreateCoinStake(wallet, nBits, nSearchTime-nLastCoinStakeSearchTime, txCoinStake, key, nFees))
         {
             if (txCoinStake.nTime >= max(pindexBest->GetMedianTimePast()+1, pindexBest->GetBlockTime() - nMaxClockDrift))
             {
@@ -4181,7 +4188,7 @@ public:
 
 // CreateNewBlock:
 //   fProofOfStake: try (best effort) to make a proof-of-stake block
-CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
+CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int *pFees)
 {
     // Create new block
     auto_ptr<CBlock> pblock(new CBlock());
@@ -4417,6 +4424,9 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
             }
         }
 
+        if(pfees != NULL)
+            *pFees = nFees;
+
         nLastBlockTx = nBlockTx;
         nLastBlockSize = nBlockSize;
 
@@ -4599,6 +4609,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 
     unsigned int nExtraNonce = 0;
     CBlockIndex* pindexPrev;
+    int *pFees = malloc(sizeof(int));
 
     while (fProofOfStake)
     {
@@ -4625,7 +4636,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         //
         pindexPrev = pindexBest;
 
-        auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, fProofOfStake));
+        auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, fProofOfStake, pFees));
 
         if (!pblock.get())
             return;
@@ -4634,7 +4645,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         // Proof-of-stake block found then process block
         if (fProofOfStake)
         {
-            if (pblock->SignBlock(*pwalletMain))
+            if (pblock->SignBlock(*pwalletMain, *pFees))
             {
                 strMintWarning = "";
                 printf("PoSPMiner : PoSP block found %s Yaaay !\n", pblock->GetHash().ToString().c_str());
@@ -4649,5 +4660,6 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
         
     }
 
+    free(pFees);
     scrypt_buffer_free(scratchbuf);
 }

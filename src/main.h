@@ -36,6 +36,7 @@ class CNode;
 #define POSP_TARGET_LIMIT ((unsigned int) 503417504)
 #define HARDFORK_PROTOCOL_VERSION 60008
 #define HARDFORK_PROTOCOL_VERSIONV3 60009
+#define HARDFORK_HEIGHTV4 (1462350+(60*24*90)) // TODO change this value to fit with the desired fork height
 // -----
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
@@ -135,14 +136,14 @@ bool SendMessages(CNode* pto, bool fSendTrickle);
 typedef boost::signals2::signal<void (unsigned int bytesRead)> ExternalBlockFileProgress;
 bool LoadExternalBlockFile(FILE* fileIn, ExternalBlockFileProgress *progress=NULL, int blockfileVersion = CLIENT_VERSION);
 
-CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);
+CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false, int *pFees=NULL);
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash1);
 bool CheckStake(CBlock* pblock, CWallet& wallet);
 bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey);
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 int64 GetProofOfWorkReward(unsigned int nBits);
-int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply);
+int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, unsigned int nHeight, int64 nMoneySupply, int nFees);
 unsigned int ComputeMinWork(unsigned int nBase, int64 nTime);
 int GetNumBlocksOfPeers();
 bool IsInitialBlockDownload();
@@ -1147,7 +1148,7 @@ public:
     bool CheckBlock(bool fCheckPOW=true, bool fCheckMerkleRoot=true, bool fCheckSig=true) const;
     bool AcceptBlock();
     bool GetCoinAge(uint64& nCoinAge) const; // Calculate total coin age spent in block
-    bool SignBlock(CWallet& keystore);
+    bool SignBlock(CWallet& keystore, int nFees=0);
     bool CheckBlockSignature() const;
 
 private:

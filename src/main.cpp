@@ -46,6 +46,7 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 bool fSkinUI = false;
 bool fHardStake = false;
 bool fStakeUsePooledKeys  = false;
+bool fUseChangeAddress = false;
 unsigned int nStakeMinAge = 60 * 60; // minimum age for coin age
 unsigned int nStakeMaxAge = -1; // stake age of full weight
 unsigned int nStakeTargetSpacing = 65; // 65-seconds block spacing

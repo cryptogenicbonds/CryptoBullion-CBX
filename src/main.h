@@ -108,6 +108,7 @@ extern bool fHardStake;
 extern bool fStakeUsePooledKeys;
 extern int64 nTransactionFee;
 extern bool fUseFastIndex; // cache scrypt hashes to disk
+extern bool fUseChangeAddress;
 
 // Minimum disk space required - used in CheckDiskSpace()
 static const uint64 nMinDiskSpace = 52428800;

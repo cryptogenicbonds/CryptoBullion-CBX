@@ -1353,7 +1353,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                     // change transaction isn't always pay-to-cryptobullion-address
                     CScript scriptChange;
 
-                    if (coinControl && coinControl->destChange){
+                    if (coinControl && !boost::get<CNoDestination>(&coinControl->destChange)){
                         scriptChange.SetDestination(coinControl->destChange);
                     }else if(fUseChangeAddress){
                         // Note: We use a new key here to keep it from being obvious which side is the change.

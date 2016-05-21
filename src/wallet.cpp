@@ -1353,9 +1353,9 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                     // change transaction isn't always pay-to-cryptobullion-address
                     CScript scriptChange;
 
-                    if (coinControl && coinControl->destChange.IsValid())
+                    if (coinControl && coinControl->destChange){
                         scriptChange.SetDestination(coinControl->destChange);
-                    else(fUseChangeAddress){
+                    }else if(fUseChangeAddress){
                         // Note: We use a new key here to keep it from being obvious which side is the change.
                         //  The drawback is that by not reusing a previous key, the change may be lost if a
                         //  backup is restored, if the backup doesn't have the new private key for the change.

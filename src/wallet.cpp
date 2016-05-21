@@ -1354,7 +1354,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                     CScript scriptChange;
 
                     if (coinControl && coinControl->destChange.IsValid())
-                        scriptChange.SetDestination(coinControl->destChange.GetID());
+                        scriptChange.SetDestination(coinControl->destChange);
                     else{
                         // Note: We use a new key here to keep it from being obvious which side is the change.
                         //  The drawback is that by not reusing a previous key, the change may be lost if a

@@ -1170,8 +1170,6 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 }
 
 unsigned int static GetNextTargetRequiredPoSPV2(const CBlockIndex* pindexLast){
-    int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
-
     if (pindexLast == NULL)
         return bnProofOfStakeLimitV2.GetCompact(); // genesis block
 
@@ -1182,6 +1180,8 @@ unsigned int static GetNextTargetRequiredPoSPV2(const CBlockIndex* pindexLast){
     const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, true);
     if (pindexPrevPrev->pprev == NULL)
         return bnProofOfStakeLimitV2.GetCompact(); // second block
+
+    int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
     if(nActualSpacing < 0){
         nActualSpacing = 1;

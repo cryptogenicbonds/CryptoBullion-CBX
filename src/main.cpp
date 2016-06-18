@@ -1311,7 +1311,7 @@ unsigned int static GetNextTargetRequiredHybrid(const CBlockIndex* pindexLast, b
 
 unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    if(pindexLast->nHeight >= HARDFORK_HEIGHTV4 && fProofOfStake)
+    if((fTestNet && pindexLast->nHeight > 10 && fProofOfStake) || (pindexLast->nHeight >= HARDFORK_HEIGHTV4 && fProofOfStake))
         return GetNextTargetRequiredPoSPV2(pindexLast);
 
     if(pindexLast->nTime < HARDFORK_TIME || !fProofOfStake)
@@ -2355,7 +2355,7 @@ bool CBlock::AcceptBlock()
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
 
-    if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME)
+    if (IsProofOfWork() && pindexPrev->GetBlockTime() >= (unsigned int) END_POW_TIME && !fTestNet)
         return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
 
     // Check proof-of-work or proof-of-stake

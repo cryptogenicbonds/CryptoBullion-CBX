@@ -4440,7 +4440,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int *pFees)
             }
         }
 
-        if(pfees != NULL)
+        if(pFees != NULL)
             *pFees = nFees;
 
         nLastBlockTx = nBlockTx;
@@ -4625,7 +4625,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 
     unsigned int nExtraNonce = 0;
     CBlockIndex* pindexPrev;
-    int *pFees = malloc(sizeof(int));
+    int *pFees = (int*) malloc(sizeof(int));
 
     while (fProofOfStake)
     {

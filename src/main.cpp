@@ -4613,6 +4613,10 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
 
 void static ThreadCryptobullionMiner(void* parg);
 
+static bool fGenerateCryptobullions = false;
+static bool fLimitProcessors = false;
+static int nLimitProcessors = -1;
+
 void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
     void *scratchbuf = scrypt_buffer_alloc();
@@ -4623,6 +4627,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     // Make this thread recognisable as the mining thread
     RenameThread("cryptobullion-miner");
 
+    CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
     unsigned int nTransactionsUpdatedLast;
     CBlockIndex* pindexPrev;

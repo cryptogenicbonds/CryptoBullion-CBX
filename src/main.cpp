@@ -4624,6 +4624,7 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     RenameThread("cryptobullion-miner");
 
     unsigned int nExtraNonce = 0;
+    unsigned int nTransactionsUpdatedLast;
     CBlockIndex* pindexPrev;
     int *pFees = (int*) malloc(sizeof(int));
 

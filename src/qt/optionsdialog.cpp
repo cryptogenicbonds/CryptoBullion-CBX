@@ -5,6 +5,7 @@
 #include "guiutil.h"
 #include "cryptobullionunits.h"
 #include "qvaluecombobox.h"
+#include "main.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -32,6 +33,7 @@ public:
     void setMapper(MonitoredDataMapper *mapper);
     QCheckBox *connect_socks4;
 private:
+    QCheckBox *use_change_address;
     QCheckBox *cryptobullion_at_startup;
 #ifndef Q_WS_MAC
     QCheckBox *minimize_to_tray;
@@ -153,6 +155,13 @@ void OptionsDialog::changePage(int index)
 void OptionsDialog::okClicked()
 {
     mapper->submit();
+    
+    QSettings mySettings("CryptoBullion Foundation", "Vault");
+    mySettings.beginGroup("UseChangeAddress");
+    mySettings.setValue("UseChangeAddress", use_change_address->isChecked());
+    mySettings.endGroup();
+
+    fUseChangeAddress = use_change_address->isChecked();
     accept();
 }
 
@@ -248,6 +257,10 @@ MainOptionsPage::MainOptionsPage(QWidget *parent):
     no_spend_unconfirmed_change = new QCheckBox(tr("&Disable spending unconfirmed change:"));
     no_spend_unconfirmed_change->setToolTip(tr("If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed."));
     layout->addWidget(no_spend_unconfirmed_change);
+
+    use_change_address = new QCheckBox(tr("&Use change address (not recommended)"));
+    use_change_address->setChecked(fUseChangeAddress);
+    layout->addWidget(use_change_address);
 
     QLabel *fee_help = new QLabel(tr("Mandatory network transaction fee per kB transferred. Most transactions are 1 kB and incur a 0.001 CBX fee. Note: transfer size may increase depending on the number of input transactions required to be added together to fund the payment."));
     fee_help->setWordWrap(true);

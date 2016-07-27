@@ -23,7 +23,7 @@
 
 extern bool fNoSpendZeroConfChange;
 extern bool fNoSpendZeroConfChangeForced;
-
+QCheckBox *use_change_address;
 /* First page of options */
 class MainOptionsPage : public QWidget
 {
@@ -33,7 +33,6 @@ public:
     void setMapper(MonitoredDataMapper *mapper);
     QCheckBox *connect_socks4;
 private:
-    QCheckBox *use_change_address;
     QCheckBox *cryptobullion_at_startup;
 #ifndef Q_WS_MAC
     QCheckBox *minimize_to_tray;

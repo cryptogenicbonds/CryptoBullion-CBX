@@ -1491,7 +1491,7 @@ bool CWallet::SelectCoinsForPoSP(int64 nTargetValue, unsigned int nSpendTime, se
 }
 
 // Create coin stake transaction
-bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew, CKey& key)
+bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew, CKey& key, int nFees)
 {
     LOCK2(cs_main, cs_wallet);
     txNew.vin.clear();
@@ -1658,7 +1658,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     }
     // Calculate reward
     {
-        uint64 nReward = GetProofOfStakeReward(0, nBits, txNew.nTime, pindexBest->nHeight, pindexBest->nMoneySupply);
+        uint64 nReward = GetProofOfStakeReward(0, nBits, txNew.nTime, pindexBest->nHeight, pindexBest->nMoneySupply, nFees);
         if (nReward <= 0)
             return false;
 

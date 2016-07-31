@@ -3138,6 +3138,14 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         return true;
     }
 
+    if(pfrom->nVersion != 0 && pindexBest != NULL && pindexBest->nHeight >= HARDFORK_HEIGHTV4){
+        if(pfrom->nVersion < HARDFORK_PROTOCOL_VERSIONV4){
+            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            pfrom->fDisconnect = true;
+            return false;
+        }
+    }
+
     if (strCommand == "version")
     {
         // Each connection can only send one version message

@@ -37,7 +37,7 @@ class CNode;
 #define HARDFORK_PROTOCOL_VERSION 60008
 #define HARDFORK_PROTOCOL_VERSIONV3 60009
 #define HARDFORK_PROTOCOL_VERSIONV4 60010
-#define HARDFORK_HEIGHTV4 (1575000) // TODO change this value to fit with the desired fork height
+#define HARDFORK_HEIGHTV4 (1584000) // TODO change this value to fit with the desired fork height
 // -----
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;

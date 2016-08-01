@@ -77,6 +77,11 @@ private:
     QLabel *labelConnectionsIcon;
     QLabel *labelBlocksIcon;
     QLabel *progressBarLabel;
+    QLabel *labelStakeIcon;
+
+    bool fSynced = false;
+    bool fEncrypted = false;
+
     QProgressBar *progressBar;
 
     QMenuBar *appMenuBar;
@@ -127,6 +132,8 @@ public slots:
        @see WalletModel::EncryptionStatus
     */
     void setEncryptionStatus(int status);
+
+    void updateSyncIcon();
 
     /** Notify the user of an error in the network or transaction handling code. */
     void error(const QString &title, const QString &message, bool modal);

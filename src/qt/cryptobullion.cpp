@@ -377,6 +377,12 @@ int main(int argc, char *argv[])
     
     mySettings.endGroup();
 
+    mySettings.beginGroup("UseChangeAddress");
+
+    if(mySettings.contains("UseChangeAddress"))
+        fUseChangeAddress = mySettings.value("UseChangeAddress").toBool();
+    mySettings.endGroup();
+
     QFile f(fSkinUI ? ":/style/cgbstyle_white.qss" : ":/style/cgbstyle.qss");
     if (!f.exists())
     {

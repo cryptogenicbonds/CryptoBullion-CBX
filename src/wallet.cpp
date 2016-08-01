@@ -1347,22 +1347,28 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
 
                 if (nChange > 0)
                 {
-                    // Note: We use a new key here to keep it from being obvious which side is the change.
-                    //  The drawback is that by not reusing a previous key, the change may be lost if a
-                    //  backup is restored, if the backup doesn't have the new private key for the change.
-                    //  If we reused the old key, it would be possible to add code to look for and
-                    //  rediscover unknown transactions that were written with keys of ours to recover
-                    //  post-backup change.
-
-                    // Reserve a new key pair from key pool
-                    CPubKey vchPubKey = reservekey.GetReservedKey();
-                    // assert(mapKeys.count(vchPubKey));
-
+                    
                     // Fill a vout to ourself
                     // TODO: pass in scriptChange instead of reservekey so
                     // change transaction isn't always pay-to-cryptobullion-address
                     CScript scriptChange;
-                    scriptChange.SetDestination(vchPubKey.GetID());
+
+                    if (coinControl && !boost::get<CNoDestination>(&coinControl->destChange)){
+                        scriptChange.SetDestination(coinControl->destChange);
+                    }else if(fUseChangeAddress){
+                        // Note: We use a new key here to keep it from being obvious which side is the change.
+                        //  The drawback is that by not reusing a previous key, the change may be lost if a
+                        //  backup is restored, if the backup doesn't have the new private key for the change.
+                        //  If we reused the old key, it would be possible to add code to look for and
+                        //  rediscover unknown transactions that were written with keys of ours to recover
+                        //  post-backup change.
+
+                        // Reserve a new key pair from key pool
+                        CPubKey vchPubKey = reservekey.GetReservedKey();
+                        scriptChange.SetDestination(vchPubKey.GetID());
+                    }else
+                        scriptChange.SetDestination(mapAddressBook.begin()->first);
+                    
 
                     // Insert change txn at random position:
                     vector<CTxOut>::iterator position = wtxNew.vout.begin()+GetRandInt(wtxNew.vout.size());
@@ -1485,7 +1491,7 @@ bool CWallet::SelectCoinsForPoSP(int64 nTargetValue, unsigned int nSpendTime, se
 }
 
 // Create coin stake transaction
-bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew, CKey& key)
+bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew, CKey& key, int nFees)
 {
     LOCK2(cs_main, cs_wallet);
     txNew.vin.clear();
@@ -1652,7 +1658,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     }
     // Calculate reward
     {
-        uint64 nReward = GetProofOfStakeReward(0, nBits, txNew.nTime, pindexBest->nHeight, pindexBest->nMoneySupply);
+        uint64 nReward = GetProofOfStakeReward(0, nBits, txNew.nTime, pindexBest->nHeight, pindexBest->nMoneySupply, nFees);
         if (nReward <= 0)
             return false;
 

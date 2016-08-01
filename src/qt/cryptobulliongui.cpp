@@ -144,7 +144,12 @@ CryptobullionGUI::CryptobullionGUI(bool fIsTestnet, QWidget *parent):
     frameBlocksLayout->setSpacing(3);
     labelEncryptionIcon = new QLabel();
     labelConnectionsIcon = new QLabel();
+    labelStakeIcon = new QLabel();
     labelBlocksIcon = new QLabel();
+    frameBlocksLayout->addStretch();
+    frameBlocksLayout->addWidget(labelStakeIcon);
+    labelStakeIcon->setPixmap(QIcon(":/icons/stakeOk").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+    labelStakeIcon->hide();
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelEncryptionIcon);
     frameBlocksLayout->addStretch();
@@ -648,6 +653,8 @@ void CryptobullionGUI::setNumBlocks(int count, int nTotalBlocks)
         tooltip = tr("Up to date") + QString(".<br>") + tooltip;
         labelBlocksIcon->setPixmap(QIcon(":/icons/synced").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
 
+        fSynced = true;
+
         overviewPage->showOutOfSyncWarning(false);
     }
     else
@@ -656,8 +663,12 @@ void CryptobullionGUI::setNumBlocks(int count, int nTotalBlocks)
         labelBlocksIcon->setMovie(syncIconMovie);
         syncIconMovie->start();
 
+        fSynced = false;
+
         overviewPage->showOutOfSyncWarning(true);
     }
+
+    updateSyncIcon();
 
     if(!text.isEmpty())
     {
@@ -888,6 +899,7 @@ void CryptobullionGUI::setEncryptionStatus(int status)
         encryptWalletAction->setChecked(false);
         changePassphraseAction->setEnabled(false);
         encryptWalletAction->setEnabled(true);
+        fEncrypted = false;
         break;
     case WalletModel::Unlocked:
         labelEncryptionIcon->show();
@@ -895,9 +907,11 @@ void CryptobullionGUI::setEncryptionStatus(int status)
         {
             labelEncryptionIcon->setPixmap(QIcon(":/icons/lockStake_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
             labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked for staking only</b>"));
+            fEncrypted = false;
         }else{
             labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
             labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked</b>"));
+            fEncrypted = true;
         }
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
@@ -910,8 +924,18 @@ void CryptobullionGUI::setEncryptionStatus(int status)
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
         encryptWalletAction->setEnabled(false); // TODO: decrypt currently not supported
+        fEncrypted = true;
         break;
     }
+
+    updateSyncIcon();
+}
+
+void CryptobullionGUI::updateSyncIcon(){
+    if(!fEncrypted && fSynced)
+        labelStakeIcon->show();
+    else
+        labelStakeIcon->hide();
 }
 
 void CryptobullionGUI::encryptWallet(bool status)

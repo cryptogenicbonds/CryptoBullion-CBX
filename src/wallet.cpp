@@ -1367,7 +1367,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                         CPubKey vchPubKey = reservekey.GetReservedKey();
                         scriptChange.SetDestination(vchPubKey.GetID());
                     }else
-                        scriptChange.SetDestination(mapAddressBook.begin()->first);
+                        scriptChange.SetDestination(vchDefaultKey.GetID());
                     
 
                     // Insert change txn at random position:

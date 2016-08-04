@@ -911,7 +911,7 @@ void CryptobullionGUI::setEncryptionStatus(int status)
         }else{
             labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
             labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked</b>"));
-            fEncrypted = true;
+            fEncrypted = false;
         }
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);

@@ -148,8 +148,8 @@ CryptobullionGUI::CryptobullionGUI(bool fIsTestnet, QWidget *parent):
     labelBlocksIcon = new QLabel();
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelStakeIcon);
-    labelStakeIcon->setPixmap(QIcon(":/icons/stakeOk").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelStakeIcon->hide();
+    labelStakeIcon->setPixmap(QIcon(":/icons/stakeOff").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+    labelStakeIcon->setToolTip("Vault is not staking");
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelEncryptionIcon);
     frameBlocksLayout->addStretch();
@@ -932,10 +932,13 @@ void CryptobullionGUI::setEncryptionStatus(int status)
 }
 
 void CryptobullionGUI::updateSyncIcon(){
-    if(!fEncrypted && fSynced)
-        labelStakeIcon->show();
-    else
-        labelStakeIcon->hide();
+    if(!fEncrypted && fSynced){
+        labelStakeIcon->setPixmap(QIcon(":/icons/stakeOk").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+        labelStakeIcon->setToolTip("Vault is staking...");
+    }else{
+        labelStakeIcon->setPixmap(QIcon(":/icons/stakeOff").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+        labelStakeIcon->setToolTip("Vault is not staking");
+    }
 }
 
 void CryptobullionGUI::encryptWallet(bool status)

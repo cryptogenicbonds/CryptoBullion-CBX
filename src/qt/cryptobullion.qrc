@@ -62,6 +62,7 @@
         <file alias="tx_inout">res/icons/tx_inout.png</file>
         <file alias="lock_closed">res/icons/lock_closed.png</file>
         <file alias="stakeOk">res/icons/stakeOk.png</file>
+        <file alias="stakeOff">res/icons/stakeOff.png</file>
         <file alias="lock_open">res/icons/lock_open.png</file>
         <file alias="lock_openStake">res/icons/lock_openStake.png</file>
         <file alias="key">res/icons/key.png</file>

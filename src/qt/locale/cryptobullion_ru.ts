@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<TS version="2.0" language="ru">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -557,7 +557,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+397"/>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1. The fee amount will be destroyed, thus taken out of circulation, which is meant to increase incentive to both miners and stake holders as transaction volume increases over time. Do you want to pay the fee?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Комиссия за эту транзакцию составит %1 CBX. Комиссия за транзакцию пойдёт как награда кошельку, участвующему в стейкинге, который сформирует блок, включающий эту транзакцию CBX.</translation>
     </message>
     <message>
         <location line="+137"/>

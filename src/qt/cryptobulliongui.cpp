@@ -137,8 +137,8 @@ CryptobullionGUI::CryptobullionGUI(bool fIsTestnet, QWidget *parent):
     // Status bar notification icons
     QFrame *frameBlocks = new QFrame();
     frameBlocks->setContentsMargins(0,0,0,0);
-    frameBlocks->setMinimumWidth(56);
-    frameBlocks->setMaximumWidth(56);
+    frameBlocks->setMinimumWidth(74);
+    frameBlocks->setMaximumWidth(74);
     QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
     frameBlocksLayout->setContentsMargins(3,0,3,0);
     frameBlocksLayout->setSpacing(3);
@@ -148,8 +148,8 @@ CryptobullionGUI::CryptobullionGUI(bool fIsTestnet, QWidget *parent):
     labelBlocksIcon = new QLabel();
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelStakeIcon);
-    labelStakeIcon->setPixmap(QIcon(":/icons/stakeOk").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelStakeIcon->hide();
+    labelStakeIcon->setPixmap(QIcon(":/icons/stakeOff").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+    labelStakeIcon->setToolTip("Vault is not staking");
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelEncryptionIcon);
     frameBlocksLayout->addStretch();
@@ -911,7 +911,7 @@ void CryptobullionGUI::setEncryptionStatus(int status)
         }else{
             labelEncryptionIcon->setPixmap(QIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
             labelEncryptionIcon->setToolTip(tr("Vault is <b>encrypted</b> and currently <b>unlocked</b>"));
-            fEncrypted = true;
+            fEncrypted = false;
         }
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
@@ -932,10 +932,13 @@ void CryptobullionGUI::setEncryptionStatus(int status)
 }
 
 void CryptobullionGUI::updateSyncIcon(){
-    if(!fEncrypted && fSynced)
-        labelStakeIcon->show();
-    else
-        labelStakeIcon->hide();
+    if(!fEncrypted && fSynced){
+        labelStakeIcon->setPixmap(QIcon(":/icons/stakeOk").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+        labelStakeIcon->setToolTip("Vault is staking...");
+    }else{
+        labelStakeIcon->setPixmap(QIcon(":/icons/stakeOff").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+        labelStakeIcon->setToolTip("Vault is not staking");
+    }
 }
 
 void CryptobullionGUI::encryptWallet(bool status)

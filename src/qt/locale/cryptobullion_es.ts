@@ -671,7 +671,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+59"/>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1. The fee amount will be destroyed, thus taken out of circulation, which is meant to increase incentive to both miners and stake holders as transaction volume increases over time. Do you want to pay the fee?</source>
-        <translation type="unfinished">Esta transacción es sobre el límite de tamaño. Usted todavía puede enviarla, a un costo de 1%. El importe que la tarifa sea destruida, sacada de circulación, que está destinada a aumentar el incentivo para los mineros y los titulares, ya que el volumen de transacciones aumenta con el tiempo. ¿Quiere usted pagar la tarifa?</translation>
+        <translation type="unfinished">Esta transacción cuesta %1 CBX en derechos para formarla (tx fees). Este monto será otorgado a la direccion CBX que va crear el bloque que contiene esta transaccion.</translation>
     </message>
     <message>
         <location line="+170"/>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr">
+<TS version="2.0" language="fr">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+23"/>
         <source>About CryptoBullion</source>
-        <translation type="unfinished">Au sujet du Cryptobullion</translation>
+        <translation type="unfinished">Au sujet du Crypto Bullion</translation>
     </message>
     <message>
         <location line="+48"/>
@@ -16,7 +16,7 @@
     <message>
         <location line="+47"/>
         <source>Copyright © 2009-2016s The CryptoBullion Foundation</source>
-        <translation type="unfinished">Copyright © 2009-2016 La Fondation CryptoBullion</translation>
+        <translation type="unfinished">Copyright © 2009-2016 La Fondation Crypto Bullion</translation>
     </message>
     <message>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
@@ -197,7 +197,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../askpassphrasedialog.cpp" line="+47"/>
         <source>Enter the new passphrase to the vault.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Entrez le nouveau mot de passe de la voûte&lt;br/&gt;Utilisez un mot de passe d&apos;au moins &lt;b&gt;10 caractères aléatoires ou plus&lt;/b&gt;, ou &lt;b&gt;huit à dix mots&lt;/b&gt;.</translation>
+        <translation type="unfinished">Entrez le nouveau mot de passe de votre Coffre-fort CBX.&lt;br/&gt;Utilisez un mot de passe d&apos;au moins &lt;b&gt;10 caractères aléatoires ou plus&lt;/b&gt;, ou &lt;b&gt;huit à dix mots&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>Encrypt vault</source>
@@ -206,19 +206,19 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Encrypt Vault</source>
-        <translation type="unfinished">Crypter la voûte</translation>
+        <translation type="unfinished">Crypter le Coffre-fort</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+10"/>
         <source>This operation needs your vault passphrase to unlock the vault.</source>
-        <translation type="unfinished">Il est nécessaire d&apos;entrer votre mot de passe pour déverrouiller la voûte.</translation>
+        <translation type="unfinished">Il est nécessaire d&apos;entrer votre mot de passe pour déverrouiller le Coffre-fort.</translation>
     </message>
     <message>
         <location line="-5"/>
         <location line="+10"/>
         <source>Unlock vault</source>
-        <translation type="unfinished">Déverrouiller la voûte</translation>
+        <translation type="unfinished">Déverrouiller le coffre-fort</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -228,7 +228,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+5"/>
         <source>Decrypt Vault</source>
-        <translation type="unfinished">Décrypter la voûte</translation>
+        <translation type="unfinished">Décrypter le coffre-fort</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -266,27 +266,27 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Enter the old and new passphrase to the vault.</source>
-        <translation type="unfinished">Entrer l&apos;ancien ainsi que le nouveau mot de passe de la voûte.</translation>
+        <translation type="unfinished">Entrer l&apos;ancien ainsi que le nouveau mot de passe du coffre-fort.</translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Confirm vault encryption</source>
-        <translation type="unfinished">Confirmer le cryptage de la voûte</translation>
+        <translation type="unfinished">Confirmer le cryptage du coffre-fort</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Warning: If you encrypt your vault and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Avertissement : si vous cryptez votre voûte et perdez le mot de passe par la suite&lt;/b&gt;Vous perdrez tous vos CBX!</translation>
+        <translation type="unfinished">Avertissement : si vous cryptez votre coffre-fort et oubliez le mot de passe par la suite&lt;/b&gt;Vous perdrez tous vos CBX!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Are you sure you wish to encrypt your vault?</source>
-        <translation type="unfinished">Êtes-vous bien certain de vouloir crypter votre voûte?</translation>
+        <translation type="unfinished">Êtes-vous bien certain de vouloir crypter votre coffre-fort?</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>IMPORTANT: Any previous backups you have made of your vault file should be replaced with the newly generated, encrypted vault file. For security reasons, previous backups of the unencrypted vault file will become useless as soon as you start using the new, encrypted vault.</source>
-        <translation type="unfinished">IMPORTANT : vous devriez remplacer toutes les sauvegardes précédentes de votre voûte avec le fichier de voûte crypté que vous venez de générer. Pour des raisons de sécurité, les sauvegardes antérieures des fichiers de voûte vont devenir inutilisables, suite à l&apos;utilisation de ce nouveau fichier crypté.</translation>
+        <translation type="unfinished">IMPORTANT : vous devriez remplacer toutes les sauvegardes précédentes de votre coffre-fort avec le fichier de coffre-fort crypté que vous venez de générer. Pour des raisons de sécurité, les sauvegardes antérieures des fichiers du coffre-fort vont devenir inutilisables, suite à l&apos;utilisation de ce nouveau fichier crypté.</translation>
     </message>
     <message>
         <location line="+111"/>
@@ -298,12 +298,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="-141"/>
         <location line="+60"/>
         <source>Vault encrypted</source>
-        <translation type="unfinished">Voûte cryptée</translation>
+        <translation type="unfinished">Coffre-fort crypté</translation>
     </message>
     <message>
         <location line="-58"/>
         <source>CryptoBullion will close now to finish the encryption process. Remember that encrypting your vault cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Le logiciel CryptoBullion va se fermer maintenant pour compléter le cryptage. N&apos;oubliez pas que le cryptage de votre voûte ne protège pas contre les logiciels malveillants qui peuvent infecter votre ordinateur.</translation>
+        <translation type="unfinished">Le logiciel Crypto Bullion va se fermer maintenant pour compléter le cryptage. N&apos;oubliez pas que le cryptage de votre coffre-fort ne protège pas contre les logiciels malveillants qui peuvent infecter votre ordinateur présentement.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -311,12 +311,12 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+44"/>
         <location line="+6"/>
         <source>Vault encryption failed</source>
-        <translation type="unfinished">Le cryptage de la voûte a échoué</translation>
+        <translation type="unfinished">Le cryptage du coffre-fort a échoué</translation>
     </message>
     <message>
         <location line="-56"/>
         <source>Vault encryption failed due to an internal error. Your vault was not encrypted.</source>
-        <translation type="unfinished">Le cryptage de la voûte a échoué à cause d&apos;une erreur interne.</translation>
+        <translation type="unfinished">Le cryptage du coffre-fort a échoué à cause d&apos;une erreur interne.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -327,24 +327,24 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-38"/>
         <source>Vault unlock failed</source>
-        <translation type="unfinished">Le déverrouillage de la voûte a échoué.</translation>
+        <translation type="unfinished">Le déverrouillage du coffre-fort a échoué.</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+12"/>
         <location line="+19"/>
         <source>The passphrase entered for the vault decryption was incorrect.</source>
-        <translation type="unfinished">Ce mot de passe entré pour la voûte est incorrrect.</translation>
+        <translation type="unfinished">Ce mot de passe entré pour le Coffre-fort est inexact.</translation>
     </message>
     <message>
         <location line="-20"/>
         <source>Vault decryption failed</source>
-        <translation type="unfinished">Le décryptage de la voûte a échoué</translation>
+        <translation type="unfinished">Le décryptage du coffre-fort a échoué</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Vault passphrase was successfully changed.</source>
-        <translation type="unfinished">Le mot de passe de la voûte a été modifié avec succès.</translation>
+        <translation type="unfinished">Le mot de passe du Coffre-fort a été modifié avec succès.</translation>
     </message>
 </context>
 <context>
@@ -434,12 +434,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+4"/>
         <source>&amp;Encrypt Vault...</source>
-        <translation type="unfinished">Crypt&amp;er la voûte...</translation>
+        <translation type="unfinished">Crypt&amp;er le Coffre-fort...</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Backup Vault...</source>
-        <translation type="unfinished">Copie de sécurité de la voûte</translation>
+        <translation type="unfinished">Copie de sécurité du Coffre-fort...</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -487,12 +487,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-10"/>
         <source>Encrypt or decrypt vault</source>
-        <translation type="unfinished">Crypter ou décrypter la voûte</translation>
+        <translation type="unfinished">Crypter ou décrypter le Coffre-fort</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Backup vault to another location</source>
-        <translation type="unfinished">Faire une copie de sécurité de la voûte à un autre endroit</translation>
+        <translation type="unfinished">Faire une copie de sécurité du coffre-fort à un autre endroit</translation>
     </message>
     <message>
         <source>Change the passphrase used for vault encryption</source>
@@ -520,7 +520,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-221"/>
         <source>Vault</source>
-        <translation type="unfinished">Voûte</translation>
+        <translation type="unfinished">Coffre-fort</translation>
     </message>
     <message>
         <location line="+144"/>
@@ -540,12 +540,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+18"/>
         <source>&amp;Unlock Vault</source>
-        <translation type="unfinished">Déverrouiller la voûte</translation>
+        <translation type="unfinished">Déverrouiller le Coffre-fort</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Unlock Vault for Staking</source>
-        <translation type="unfinished">Déverrouiller la voûte pour activer les intérêts de participation seulement</translation>
+        <translation type="unfinished">Déverrouiller le Coffre-fort pour activer la participation aux intérêts seulement</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -672,17 +672,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+59"/>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1. The fee amount will be destroyed, thus taken out of circulation, which is meant to increase incentive to both miners and stake holders as transaction volume increases over time. Do you want to pay the fee?</source>
-        <translation type="unfinished">Cette transaction dépasse le poids limite d&apos;une transaction normale. Vous pouvez quand même l&apos;effectuer pour de légers frais de %1. Ces frais sont des CBX qui seront enlevés de la circulation, et détruits; cette mesure est en place pour encourager le renouvellement de la masse monétaire à travers la participation aux intérêts.  Acceptez-vous de payer ces frais?</translation>
+        <translation type="unfinished">Cette transaction coûtera des frais de %1 CBX. Ces frais de transfert (tx fees) sont attribués à l&apos;adresse CBX qui formera le bloque qui contiendra cette transaction.</translation>
     </message>
     <message>
         <location line="+170"/>
         <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked for staking only&lt;/b&gt;</source>
-        <translation type="unfinished">Voûte &lt;b&gt;cryptée&lt;/b&gt; et &lt;b&gt;déverrouillée pour la seule participation aux intérêts.&lt;/b&gt;</translation>
+        <translation type="unfinished">Coffre-fort &lt;b&gt;crypté&lt;/b&gt; et &lt;b&gt;déverrouillé pour la seule participation aux intérêts.&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Wallet Vault (*.dat)</source>
-        <translation type="unfinished">Portefeuille-voûte (*.dat)</translation>
+        <translation type="unfinished">Portefeuille-Coffre-fort (*.dat)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -693,28 +693,28 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+87"/>
         <location line="+1"/>
         <source>Lock Vault</source>
-        <translation type="unfinished">Verrouiller la voûte</translation>
+        <translation type="unfinished">Verrouiller le Coffre-fort</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Vault unlocked for staking. Please click again or close the applicaton to re-lock the vault.</source>
-        <translation type="unfinished">Voûte déverrouillée pour la participation aux intérêts. Recliquez ou fermez l&apos;application pour reverrouiller la voûte.</translation>
+        <translation type="unfinished">Coffre-fort déverrouillé pour la participation aux intérêts. Recliquez ou fermez l&apos;application pour le reverrouiller de nouveau.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Vault unlocked. Please click again or close the applicaton to re-lock the vault.</source>
-        <translation type="unfinished">Voûte déverrouillée. S&apos;il vous plaît recliquez ou fermez cette application pour verrouiller de nouveau.</translation>
+        <translation type="unfinished">Coffre-fort déverrouillé. S&apos;il vous plaît recliquez ou fermez cette application pour verrouiller de nouveau.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Vault Unlocked</source>
-        <translation type="unfinished">Voûte déverrouillée</translation>
+        <translation type="unfinished">Coffre-fort déverrouillé</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+1"/>
         <source>Unlock Vault</source>
-        <translation type="unfinished">Déverrouiller la voûte</translation>
+        <translation type="unfinished">Déverrouiller le Coffre-fort</translation>
     </message>
     <message>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1, which goes to the nodes that process your transaction and helps to support the network.  Do you want to pay the fee?</source>
@@ -763,17 +763,17 @@ Adresse: %4
     <message>
         <location line="+21"/>
         <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">La voûte est &lt;b&gt;cryptée&lt;/b&gt; et présentement &lt;b&gt;déverrouillée&lt;/b&gt;</translation>
+        <translation type="unfinished">Le Coffre-fort est &lt;b&gt;crypté&lt;/b&gt; et présentement &lt;b&gt;déverrouillé&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Vault is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">La voûte est &lt;b&gt;cryptée&lt;/b&gt; et présentement &lt;b&gt;verrouillée&lt;/b&gt;</translation>
+        <translation type="unfinished">Le Coffre-fort est &lt;b&gt;crypté&lt;/b&gt; et présentement &lt;b&gt;verrouillé&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Backup Vault</source>
-        <translation type="unfinished">Copie de sécurité de la voûte</translation>
+        <translation type="unfinished">Copie de sécurité du Coffre-fort</translation>
     </message>
     <message>
         <source>Vault Data (*.dat)</source>
@@ -795,7 +795,7 @@ Adresse: %4
     <message>
         <location filename="../cryptobullion.cpp" line="+343"/>
         <source>A fatal error occurred. CBX Vault can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Une erreur fatale s&apos;est rpoduite.  La voûte CBX ne peut pas continuer et va se fermer.</translation>
+        <translation type="unfinished">Une erreur fatale s&apos;est rpoduite.  Le Coffre-fort CBX ne peut pas continuer et va se fermer.</translation>
     </message>
 </context>
 <context>
@@ -1286,7 +1286,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+5"/>
         <source>Could not unlock vault.</source>
-        <translation type="unfinished">Impossible de déverrouiller la voûte.</translation>
+        <translation type="unfinished">Impossible de déverrouiller le Coffre-fort.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1739,13 +1739,13 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="-116"/>
         <source>Vault</source>
-        <translation type="unfinished">Voûte</translation>
+        <translation type="unfinished">Coffre-fort</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+342"/>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptogenicBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">L&apos;information affichée est peut-être désuète. Votre voûte se synchonisera automatiquement au réseau Crypto Bullion après qu&apos;une connection soit établie, mais ce processus n&apos;est pas terminé.</translation>
+        <translation type="unfinished">L&apos;information affichée est peut-être désuète. Votre Coffre-fort se synchonisera automatiquement au réseau Crypto Bullion après qu&apos;une connection soit établie, mais ce processus n&apos;est pas terminé.</translation>
     </message>
     <message>
         <location line="-204"/>
@@ -1780,7 +1780,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+75"/>
         <source>Total number of transactions in vault</source>
-        <translation type="unfinished">Nombre total de transactions dans la voûte</translation>
+        <translation type="unfinished">Nombre total de transactions dans le Coffre-fort</translation>
     </message>
     <message>
         <location filename="../overviewpage.cpp" line="+113"/>
@@ -2101,7 +2101,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+54"/>
         <source>custom change address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">adresse de change spécifique</translation>
     </message>
     <message>
         <location line="+121"/>
@@ -2251,7 +2251,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+5"/>
         <source>Error: The transaction was rejected. This might happen if some of the bullion in your wallet were already spent, such as if you used a copy of wallet.dat and bullion was spent in the copy but not marked as spent here.</source>
-        <translation type="unfinished">Erreur: la transaction a été rejetée. Ceci peut se produire si des CBX de votre Voûte ont déjà été dépensés, comme par exemple si vous utilisez une copie du fichier wallet.dat et que ces CBX ont été dépensés à partir de la copie mans non tenus en compte ici.</translation>
+        <translation type="unfinished">Erreur: la transaction a été rejetée. Ceci peut se produire si des CBX de votre Coffre-fort ont déjà été dépensés, comme par exemple si vous utilisez une copie du fichier wallet.dat et que ces CBX ont été dépensés à partir de la copie mans non tenus en compte ici.</translation>
     </message>
     <message>
         <location line="+256"/>
@@ -2261,7 +2261,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location line="+9"/>
         <source>Warning: Unknown change address</source>
-        <translation type="unfinished">Attention: Changement d&apos;adresse inconnu</translation>
+        <translation type="unfinished">Attention: adresse de change inconnue</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -2557,7 +2557,7 @@ Ce qui impliquera des frais d&apos;au moins %2.</translation>
     <message>
         <location filename="../splashscreen.cpp" line="+33"/>
         <source>CBX VAULT</source>
-        <translation type="unfinished">Voûte CBX</translation>
+        <translation type="unfinished">Coffre-fort CBX</translation>
     </message>
     <message>
         <location line="+1"/>

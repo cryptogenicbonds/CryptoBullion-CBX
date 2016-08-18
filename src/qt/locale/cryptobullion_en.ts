@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS version="2.0" language="en">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>&lt;b&gt;CryptoBullion&lt;/b&gt; version</source>
-        <translation type="vanished">&lt;b&gt;CryptoBullion&lt;/b&gt; version</translation>
+        <translation>&lt;b&gt;CryptoBullion&lt;/b&gt; version</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -671,7 +671,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+59"/>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1. The fee amount will be destroyed, thus taken out of circulation, which is meant to increase incentive to both miners and stake holders as transaction volume increases over time. Do you want to pay the fee?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">This transaction will cost %1 CBX in tx fees. Tx fees are awarded to the staking Vault that will form the block that will contain this CBX transaction.</translation>
     </message>
     <message>
         <location line="+170"/>
@@ -789,7 +789,7 @@ Address: %4
     </message>
     <message>
         <source>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</source>
-        <translation type="vanished">A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</translation>
+        <translation>A fatal error occurred. CryptoBullion can no longer continue safely and will quit.</translation>
     </message>
     <message>
         <location filename="../cryptobullion.cpp" line="+343"/>
@@ -1691,7 +1691,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <source>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</source>
-        <translation type="vanished">The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</translation>
+        <translation>The displayed information may be out of date. Your vault automatically synchronizes with the CryptoBullion network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -3092,7 +3092,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <source>Specify pid file (default: CryptoBullion.pid)</source>
-        <translation type="vanished">Specify pid file (default: CryptoBullion.pid)</translation>
+        <translation>Specify pid file (default: CryptoBullion.pid)</translation>
     </message>
     <message>
         <location line="-47"/>

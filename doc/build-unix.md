@@ -13,6 +13,12 @@ Every user that wants to use Vault on Linux should build it from source.
 
 Here is how to do it on Debian/Ubuntu-like Linux distribution:
 
+0. Install Git and clone repo
+```
+sudo apt-get install git
+git clone https://github.com/cryptogenicbonds/CryptoBullion-CBX
+cd CryptoBullion-CBX
+```
 1. First add bitcoin repository in order to be able to get libdb4.8:
 ```
 sudo add-apt-repository ppa:bitcoin/bitcoin

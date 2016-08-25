@@ -14,12 +14,16 @@ Set up softwares
 We will install cross-compiler environement.
 
 First, download all dependancies of MXE:
-	sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils g++-multilib libc6-dev-i386
+```
+sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils g++-multilib libc6-dev-i386
+```
 
 Secondly you have to download MXE and put it where you want your cross-compiler environment.
 I put it in a folder that I named "sandbox" in my personal directory, if you want to install it for all user you can install it in /opt/ or in /mnt/ or whatever you like.
-	mkdir /home/alexandre/sandbox
-	git clone https://github.com/mxe/mxe.git
+```
+mkdir /home/alexandre/sandbox
+git clone https://github.com/mxe/mxe.git
+```
 
 Prepare the building dependencies
 ---------------------------------
@@ -27,33 +31,47 @@ Now we have to build/install all dependencies (librairies) needed by Crypto Bull
 Thanks to MXE this step is pretty easy to do because MXE build it automatically for you.
 
 Here is how to proceed:
-	cd /home/alexandre/sandbox/mxe
+```
+cd /home/alexandre/sandbox/mxe
+```
 
 Compiling Qt5:
-	make MXE_TARGETS="i686-w64-mingw32.static" qttools
+```
+make MXE_TARGETS="i686-w64-mingw32.static" qttools
+```
 
 Compiling Boost:
-	make MXE_TARGETS="i686-w64-mingw32.static" boost
+```
+make MXE_TARGETS="i686-w64-mingw32.static" boost
+```
 
 Compiling Berkley DB:
-	make MXE_TARGETS="i686-w64-mingw32.static" db
+```
+make MXE_TARGETS="i686-w64-mingw32.static" db
+```
 
 (Optional) Compiling libqrencode::
-	wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
-	tar zxvf qrencode-3.4.4.tar.gz
-	cd qrencode-3.4.4
-	export PATH=/home/alexandre/sandbox/mxe/usr/bin:$PATH
-	./configure --host=i686-w64-mingw32.static --enable-static --disable-shared
-	make
+```
+wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+tar zxvf qrencode-3.4.4.tar.gz
+cd qrencode-3.4.4
+export PATH=/home/alexandre/sandbox/mxe/usr/bin:$PATH
+./configure --host=i686-w64-mingw32.static --enable-static --disable-shared
+make
+```
 
 Compile Crypto Bullion Wallet
 -----------------------------
 Now you are ready to compile the Windows Qt Wallet of Crypto Bullion !
 In order to do it, edit the mxeBuild.sh file in root folder and replace:
-	MXE_PATH=/home/alex4j/sandbox/mxe
+```
+MXE_PATH=/home/alex4j/sandbox/mxe
+```
 By your own MXE path.
 Then simply give permission to the file (chmod 755 mxeBuild.sh) and excute it:
-	./mxeBuild.sh
+```
+./mxeBuild.sh
+```
 
 The compilation can take a while, so it's a good time to take a coffee :)
 Once the compilation is finished, the exe file should be in release/cryptobullion-qt.exe, you just have to get this file and launch it on your Windows computer.

@@ -4629,8 +4629,6 @@ void static ThreadCryptobullionMiner(void* parg);
 
 void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
-    void *scratchbuf = scrypt_buffer_alloc();
-
     printf("PoSP Miner Started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
@@ -4691,5 +4689,4 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     }
 
     free(pFees);
-    scrypt_buffer_free(scratchbuf);
 }

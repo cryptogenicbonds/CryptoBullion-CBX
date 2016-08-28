@@ -537,7 +537,10 @@ void CNode::CloseSocketDisconnect()
         printf("disconnecting node %s\n", addrName.c_str());
         closesocket(hSocket);
         hSocket = INVALID_SOCKET;
-        vRecv.clear();
+
+        TRY_LOCK(cs_vRecvMsg, lockRecv);
+        if (lockRecv)
+            vRecv.clear();
     }
 }
 

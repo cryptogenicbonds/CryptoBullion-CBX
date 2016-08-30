@@ -538,9 +538,7 @@ void CNode::CloseSocketDisconnect()
         closesocket(hSocket);
         hSocket = INVALID_SOCKET;
 
-        TRY_LOCK(cs_vRecvMsg, lockRecv);
-        if (lockRecv)
-            vRecv.clear();
+        vRecv.clear();
     }
 }
 

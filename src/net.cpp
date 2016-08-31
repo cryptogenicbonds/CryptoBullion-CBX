@@ -1547,17 +1547,13 @@ void ThreadOpenAddedConnections2(void* parg)
 {
     printf("ThreadOpenAddedConnections started\n");
 
+    AddNewNode("node.alex4j.cryptobullion.io");
+    AddNewNode("forum.cryptobullion.io");
+    AddNewNode("185.69.53.242");
+    AddNewNode("82.9.77.178");
+
     if (mapArgs.count("-addnode") == 0)
         return;
-
-    char* nNodes[] = {"node.alex4j.cryptobullion.io", "185.69.53.242", "46.188.1.45", "82.9.77.178", "86.174.4.80", NULL};
-
-    for (char **iList = nNodes; *iList != NULL; ++iList){
-        CAddress addr;
-        CSemaphoreGrant grant(*semOutbound);
-        OpenNetworkConnection(addr, &grant, *iList);
-        Sleep(100);
-    }
 
     if (HaveNameProxy()) {
         while(!fShutdown) {

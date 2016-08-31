@@ -3819,9 +3819,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
 
     // Update the last seen time for this node's address
-    if (pfrom->fNetworkNode)
+    if (pfrom != NULL && pfrom->fNetworkNode)
         if (strCommand == "version" || strCommand == "addr" || strCommand == "inv" || strCommand == "getdata" || strCommand == "ping")
-            AddressCurrentlyConnected(pfrom->addr);
+            if(pfrom != NULL)
+                AddressCurrentlyConnected(pfrom->addr);
 
 
     return true;

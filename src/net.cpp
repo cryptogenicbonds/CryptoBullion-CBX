@@ -36,7 +36,6 @@ void ThreadMapPort2(void* parg);
 #endif
 void ThreadDNSAddressSeed2(void* parg);
 bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOutbound = NULL, const char *strDest = NULL, bool fOneShot = false);
-void ThreadAddNode(void* parg);
 
 
 struct LocalServiceInfo {
@@ -78,77 +77,8 @@ CCriticalSection cs_setservAddNodeAddresses;
 static CSemaphore *semOutbound = NULL;
 
 void AddNewNode(const char *strNewNode){
-    if (!NewThread(ThreadAddNode, const_cast<char*>(strNewNode)))
-        printf("Error: NewThread(ThreadAddNode) failed\n");
-}
-
-void ThreadAddNode(void* parg)
-{
-    printf("ThreadAddNode started\n");
-
-    char *strAddrToAdd = (char *) parg;
-
-    if (strlen(strAddrToAdd) == 0)
-        return;
-
-    if (HaveNameProxy()) {
-        while(!fShutdown) {
-            CAddress addr;
-            CSemaphoreGrant grant(*semOutbound);
-            OpenNetworkConnection(addr, &grant, strAddrToAdd);
-            
-            vnThreadsRunning[THREAD_ADDEDCONNECTIONS]--;
-            Sleep(120000); // Retry every 2 minutes
-            vnThreadsRunning[THREAD_ADDEDCONNECTIONS]++;
-        }
-        return;
-    }
-
-    vector<vector<CService> > vservAddressesToAdd(0);
-    vector<CService> vservNode(0);
-    if(Lookup(strAddrToAdd, vservNode, GetDefaultPort(), fNameLookup, 0))
-    {
-        vservAddressesToAdd.push_back(vservNode);
-        {
-                LOCK(cs_setservAddNodeAddresses);
-                BOOST_FOREACH(CService& serv, vservNode)
-                    setservAddNodeAddresses.insert(serv);
-        }
-    }
-    
-    while (true)
-    {
-        vector<vector<CService> > vservConnectAddresses = vservAddressesToAdd;
-        // Attempt to connect to each IP for each addnode entry until at least one is successful per addnode entry
-        // (keeping in mind that addnode entries can have many IPs if fNameLookup)
-        {
-            LOCK(cs_vNodes);
-            BOOST_FOREACH(CNode* pnode, vNodes)
-                for (vector<vector<CService> >::iterator it = vservConnectAddresses.begin(); it != vservConnectAddresses.end(); it++)
-                    BOOST_FOREACH(CService& addrNode, *(it))
-                        if (pnode->addr == addrNode)
-                        {
-                            it = vservConnectAddresses.erase(it);
-                            it--;
-                            break;
-                        }
-        }
-        BOOST_FOREACH(vector<CService>& vserv, vservConnectAddresses)
-        {
-            CSemaphoreGrant grant(*semOutbound);
-            OpenNetworkConnection(CAddress(*(vserv.begin())), &grant);
-            Sleep(500);
-            if (fShutdown)
-                return;
-        }
-        if (fShutdown)
-            return;
-        vnThreadsRunning[THREAD_ADDEDCONNECTIONS]--;
-        Sleep(120000); // Retry every 2 minutes
-        vnThreadsRunning[THREAD_ADDEDCONNECTIONS]++;
-        if (fShutdown)
-            return;
-    }
+    CAddress addr;
+    ConnectNode(addr, strNewNode);
 }
 
 void AddOneShot(string strDest)

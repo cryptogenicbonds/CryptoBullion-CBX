@@ -77,8 +77,8 @@ CCriticalSection cs_setservAddNodeAddresses;
 
 static CSemaphore *semOutbound = NULL;
 
-void AddNewNode(char *strNewNode){
-    if (!NewThread(ThreadAddNode, strNewNode))
+void AddNewNode(const char *strNewNode){
+    if (!NewThread(ThreadAddNode, const_cast<char*>(strNewNode)))
         printf("Error: NewThread(ThreadAddNode) failed\n");
 }
 

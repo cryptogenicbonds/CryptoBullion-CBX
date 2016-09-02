@@ -3819,9 +3819,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
 
     // Update the last seen time for this node's address
-    if (pfrom->fNetworkNode)
+    if (pfrom != NULL && pfrom->fNetworkNode)
         if (strCommand == "version" || strCommand == "addr" || strCommand == "inv" || strCommand == "getdata" || strCommand == "ping")
-            AddressCurrentlyConnected(pfrom->addr);
+            if(pfrom != NULL)
+                AddressCurrentlyConnected(pfrom->addr);
 
 
     return true;
@@ -4629,8 +4630,6 @@ void static ThreadCryptobullionMiner(void* parg);
 
 void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
 {
-    void *scratchbuf = scrypt_buffer_alloc();
-
     printf("PoSP Miner Started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
@@ -4691,5 +4690,4 @@ void CryptobullionMiner(CWallet *pwallet, bool fProofOfStake)
     }
 
     free(pFees);
-    scrypt_buffer_free(scratchbuf);
 }

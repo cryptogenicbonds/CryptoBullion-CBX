@@ -76,6 +76,11 @@ CCriticalSection cs_setservAddNodeAddresses;
 
 static CSemaphore *semOutbound = NULL;
 
+void AddNewNode(const char *strNewNode){
+    CAddress addr;
+    ConnectNode(addr, strNewNode);
+}
+
 void AddOneShot(string strDest)
 {
     LOCK(cs_vOneShots);
@@ -537,6 +542,7 @@ void CNode::CloseSocketDisconnect()
         printf("disconnecting node %s\n", addrName.c_str());
         closesocket(hSocket);
         hSocket = INVALID_SOCKET;
+
         vRecv.clear();
     }
 }
@@ -1470,6 +1476,11 @@ void ThreadOpenAddedConnections(void* parg)
 void ThreadOpenAddedConnections2(void* parg)
 {
     printf("ThreadOpenAddedConnections started\n");
+
+    AddNewNode("node.alex4j.cryptobullion.io");
+    AddNewNode("forum.cryptobullion.io");
+    AddNewNode("185.69.53.242");
+    AddNewNode("82.9.77.178");
 
     if (mapArgs.count("-addnode") == 0)
         return;

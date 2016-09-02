@@ -1521,14 +1521,14 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     
     if (setCoins.empty())
         return false;
+
     int64 nCredit = 0;
     CScript scriptPubKeyKernel;
+    CTxDB txdb("r");
 
     BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
     {
-        CTxDB txdb("r");
         CTxIndex txindex;
-        
         if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
             continue;
 
@@ -1637,7 +1637,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             && pcoin.first->GetHash() != txNew.vin[0].prevout.hash)
         {
             // Stop adding more inputs if already too many inputs
-            if (txNew.vin.size() >= 100)
+            if (txNew.vin.size() >= fHardStake ? 100 : 50)
                 break;
             // Stop adding more inputs if value is already pretty significant
             if (nCredit > COMBINE_THRESHOLD)

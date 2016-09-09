@@ -671,7 +671,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+59"/>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1. The fee amount will be destroyed, thus taken out of circulation, which is meant to increase incentive to both miners and stake holders as transaction volume increases over time. Do you want to pay the fee?</source>
-        <translation type="unfinished">This transaction will cost %1 CBX in tx fees. Tx fees are awarded to the staking Vault that will form the block that will contain this CBX transaction.</translation>
+        <translation type="unfinished">This transaction will cost %1 in tx fees. Tx fees are awarded to the staking Vault that will form the block that will contain this CBX transaction.</translation>
     </message>
     <message>
         <location line="+170"/>

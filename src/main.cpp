@@ -1810,7 +1810,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
              return error("ConnectInputs() : %s unable to get coin age for coinstake", GetHash().ToString().substr(0,10).c_str());
 
-        int64 nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->pprev->nBits, nTime, pindex->pprev->nHeight, pindex->pprev->nMoneySupply, nFees);
+        int64 nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, (pindex != NULL && pindex->pprev != NULL) ? pindex->pprev->nBits : 0, nTime, (pindex != NULL && pindex->pprev != NULL) ? pindpindex->pprev->nHeight : ((pindex != NULL && pindex->pprev == NULL) ? 1 : 0), (pindex != NULL && pindex->pprev != NULL) ? pindex->pprev->nMoneySupply : 0, nFees);
 
         if (nStakeReward > nCalculatedStakeReward)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%lld vs calculated=%lld)", nStakeReward, nCalculatedStakeReward));

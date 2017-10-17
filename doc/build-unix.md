@@ -24,7 +24,7 @@ cd CryptoBullion-CBX
 sudo add-apt-repository ppa:bitcoin/bitcoin
 sudo apt-get update
 ```
-2. Install all dependances:
+2. Install all dependencies:
 ```
 sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev
 ```
@@ -34,7 +34,7 @@ cd src/leveldb/ && make libleveldb.a libmemenv.a && cd ..
 ```
 4. Build miniupnpc (option, if you don't build it just use make "USE_UPNP=-" in the next step)
 ```
-cd src/miniupnpc && make && cd ..
+cd src/miniupnpc && make && make install && cd ..
 ```
 5. Build CrytpoBullion daemon:
 ```

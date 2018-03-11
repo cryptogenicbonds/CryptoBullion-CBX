@@ -69,6 +69,8 @@ namespace Checkpoints
         ( 1309160, std::make_pair(uint256("0x97ba36ecbcd66d6894b2766aec2b74c128afb5070ed4ba2243ae36f996fbfca8"), 1452014385) )
         ( 1310272, std::make_pair(uint256("0x720b51ded661eb7fd9ba0b4e47743dd80aeeba9adbc22dd4dad8ca58198390df"), 1452091921) )
         ( 1310670, std::make_pair(uint256("0x0abd54495d29078ea17efaae129c97224f6db03292bde04a905ca72bf1bd4547"), 1452268352) )
+        ( 2318178, std::make_pair(uint256("0xfc3c5cd0ee81c62e1166c887d79977f040f2620ce189812f7aa0b701217f3441"), 1520703501) )
+        ( 2319474, std::make_pair(uint256("0xd19281d0ae3644a487cb3b339a0e8f29093df69e26de068d38d148eb996bcbc5"), 1520786127) )
     ;
 
     static MapCheckpoints mapCheckpointsTestnet =

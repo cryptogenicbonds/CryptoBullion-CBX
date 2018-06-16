@@ -4,7 +4,7 @@ CryptoBullion-qt: Qt5 GUI for CryptoBullion
 Build instructions
 ===================
 
-Debian, Ubuntu, Linux Mint and other varients
+Debian, Ubuntu, Linux Mint and other variants
 ---------------------------------------------
 
 First, make sure that the required packages for development of your
@@ -23,7 +23,7 @@ sudo apt-get update
 sudo apt-get install libdb4.8-dev libdb4.8++-dev
 ```
 
-Now you have to install Qt5 depedencies:
+Now you have to install Qt5 dependencies:
 ```bash
 sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default
 ```
@@ -107,7 +107,7 @@ brew install boost berkeley-db4 miniupnpc openssl
 Build configuration options
 ============================
 
-UPNnP port forwarding
+UPnP port forwarding
 ---------------------
 
 To use UPnP for port forwarding behind a NAT router (recommended, as more connections overall allow for a faster and more stable cryptobullion experience), pass the following argument to qmake:
